@@ -1,51 +1,54 @@
 package co.ex.palacepetz.Activitys;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
+import android.speech.RecognizerIntent;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.UUID;
 
+import co.ex.palacepetz.Adapters.LoadingDialog;
 import co.ex.palacepetz.Iot.ActivityHelper;
 import co.ex.palacepetz.R;
 
 public class DeviceControlling extends AppCompatActivity {
 
     private static final String TAG = "BlueTest5-Controlling";
-    private int mMaxChars = 50000;//Default//change this to string..........
+    int mMaxChars = 50000;//Default//change this to string......
     private UUID mDeviceUUID;
     private BluetoothSocket mBTSocket;
     private ReadInput mReadThread = null;
 
-    private boolean mIsUserInitiatedDisconnect = false;
+    boolean mIsUserInitiatedDisconnect = false;
     private boolean mIsBluetoothConnected = false;
+    int MEU_REQUEST_CODE = 100;
 
-
-    private Button mBtnDisconnect;
+    //  Bluetooth Device
     private BluetoothDevice mDevice;
 
-    final static String on = "92";//on
-    final static String off = "79";//off
-    final static String offDisconect = "00";//off
-    final static String onConnectBlue = "01";//off
-    Handler timer = new Handler();
+    //  Bluetooth Commands
+    final static String passPutWater = "92"; // Password to device put water
+    final static String lightOn = "79";//off
+    final static String lightOFF = "78";//off
+    final static String offDisconect = "000";//off
+    final static String onConnectBlue = "001";//off
 
 
-    private ProgressDialog progressDialog;
-    Button btnOn, btnOff;
+    LoadingDialog loadingDialog;
+    Button btnOn, btnLigthOn, btnLigthoff, btnVoice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +56,11 @@ public class DeviceControlling extends AppCompatActivity {
         setContentView(R.layout.activity_device_controlling);
 
         ActivityHelper.initialize(this);
-        // mBtnDisconnect = (Button) findViewById(R.id.btnDisconnect);
+        loadingDialog = new LoadingDialog(this);
         btnOn = findViewById(R.id.on);
-        btnOff = findViewById(R.id.off);
+        btnLigthOn = findViewById(R.id.btnLigthOn);
+        btnLigthoff = findViewById(R.id.btnLigthoff);
+        btnVoice = findViewById(R.id.btnVoice);
 
 
         Intent intent = getIntent();
@@ -63,42 +68,85 @@ public class DeviceControlling extends AppCompatActivity {
         mDevice = b.getParcelable(PairDeviceActivity.DEVICE_EXTRA);
         mDeviceUUID = UUID.fromString(b.getString(PairDeviceActivity.DEVICE_UUID));
         mMaxChars = b.getInt(PairDeviceActivity.BUFFER_SIZE);
+        if (mBTSocket == null || !mIsBluetoothConnected) {
+            new ConnectBT().execute();
+        }
 
         Log.d(TAG, "Ready");
 
+        btnVoice.setOnClickListener(v -> {
+            Intent i = new Intent(
+                    RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
-        btnOn.setOnClickListener(new View.OnClickListener() {
+            i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 
-            @Override
-            public void onClick(View v) {
-// TODO Auto-generated method stub
+            i.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                    "Say something");
 
-                try {
-                    mBTSocket.getOutputStream().write(on.getBytes());
-                    //onResume();
+            startActivityForResult(i, MEU_REQUEST_CODE);
+        });
 
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+
+        btnOn.setOnClickListener(v -> {
+            try {
+                mBTSocket.getOutputStream().write(passPutWater.getBytes());
+                //onResume();
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
 
-        btnOff.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-// TODO Auto-generated method stub
-
-
-                try {
-                    mBTSocket.getOutputStream().write(off.getBytes());
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+        btnLigthOn.setOnClickListener(v -> {
+            try {
+                mBTSocket.getOutputStream().write(lightOn.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
+
+        btnLigthoff.setOnClickListener(v -> {
+            try {
+                mBTSocket.getOutputStream().write(lightOFF.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    protected void onActivityResult(
+            int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == MEU_REQUEST_CODE
+                && resultCode == RESULT_OK) {
+
+            // Contém a lista com os resultados
+            ArrayList matches =
+                    data.getStringArrayListExtra(
+                            RecognizerIntent.EXTRA_RESULTS);
+            String VoiceResult = (String) matches.get(0);
+            Toast.makeText(this, VoiceResult, Toast.LENGTH_SHORT).show();
+            if (VoiceResult.equals("put water") || VoiceResult.equals("Put Water") || VoiceResult.equals("Coloque Água") || VoiceResult.equals("coloque água")){
+                try {
+                    mBTSocket.getOutputStream().write(lightOn.getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else
+            if (VoiceResult.equals("remove water") || VoiceResult.equals("Remove Water") || VoiceResult.equals("Remova a Água") || VoiceResult.equals("remova a água")){
+                try {
+                    mBTSocket.getOutputStream().write(lightOFF.getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                Toast.makeText(this, "No Results", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -106,17 +154,20 @@ public class DeviceControlling extends AppCompatActivity {
         try {
             mBTSocket.getOutputStream().write(offDisconect.getBytes());
             finish();
+            if (mBTSocket != null && mIsBluetoothConnected) {
+                new DisConnectBT().execute();
+            }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             finish();
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private class ReadInput implements Runnable {
 
         private boolean bStop = false;
-        private Thread t;
+        private final Thread t;
 
         public ReadInput() {
             t = new Thread(this, "Input Thread");
@@ -127,17 +178,17 @@ public class DeviceControlling extends AppCompatActivity {
             return t.isAlive();
         }
 
+        @SuppressWarnings("BusyWait")
         @Override
         public void run() {
             InputStream inputStream;
-
             try {
                 inputStream = mBTSocket.getInputStream();
                 while (!bStop) {
                     byte[] buffer = new byte[256];
                     if (inputStream.available() > 0) {
                         inputStream.read(buffer);
-                        int i = 0;
+                        int i;
                         /*
                          * This is needed because new String(buffer) is taking the entire buffer i.e. 256 chars on Android 2.3.4 http://stackoverflow.com/a/8843462/1287554
                          */
@@ -148,16 +199,10 @@ public class DeviceControlling extends AppCompatActivity {
                         /*
                          * If checked then receive text, better design would probably be to stop thread if unchecked and free resources, but this is a quick fix
                          */
-
-
                     }
                     Thread.sleep(500);
                 }
-            } catch (IOException e) {
-// TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-// TODO Auto-generated catch block
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
 
@@ -166,9 +211,10 @@ public class DeviceControlling extends AppCompatActivity {
         public void stop() {
             bStop = true;
         }
-
     }
 
+    @SuppressWarnings("deprecation")
+    @SuppressLint("StaticFieldLeak")
     private class DisConnectBT extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -189,7 +235,6 @@ public class DeviceControlling extends AppCompatActivity {
             try {
                 mBTSocket.close();
             } catch (IOException e) {
-// TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -206,11 +251,7 @@ public class DeviceControlling extends AppCompatActivity {
         }
 
     }
-
-    private void msg(String s) {
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-    }
-
+/*
     @Override
     protected void onPause() {
         if (mBTSocket != null && mIsBluetoothConnected) {
@@ -219,7 +260,7 @@ public class DeviceControlling extends AppCompatActivity {
         Log.d(TAG, "Paused");
         super.onPause();
     }
-
+/*
     @Override
     protected void onResume() {
         if (mBTSocket == null || !mIsBluetoothConnected) {
@@ -228,32 +269,24 @@ public class DeviceControlling extends AppCompatActivity {
         Log.d(TAG, "Resumed");
         super.onResume();
     }
-
+*/
     @Override
-    protected void onStop() {
-        Log.d(TAG, "Stopped");
-        super.onStop();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-// TODO Auto-generated method stub
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 
+    @SuppressWarnings("deprecation")
+    @SuppressLint("StaticFieldLeak")
     private class ConnectBT extends AsyncTask<Void, Void, Void> {
         private boolean mConnectSuccessful = true;
 
         @Override
         protected void onPreExecute() {
-
-            progressDialog = ProgressDialog.show(DeviceControlling.this, "Hold on", "Connecting");// http://stackoverflow.com/a/11130220/1287554
-
+            loadingDialog.startLoading();
         }
 
         @Override
         protected Void doInBackground(Void... devices) {
-
             try {
                 if (mBTSocket == null || !mIsBluetoothConnected) {
                     mBTSocket = mDevice.createInsecureRfcommSocketToServiceRecord(mDeviceUUID);
@@ -261,11 +294,9 @@ public class DeviceControlling extends AppCompatActivity {
                     mBTSocket.connect();
                 }
             } catch (IOException e) {
-// Unable to connect to device`
-                // e.printStackTrace();
+                // Unable to connect to device
                 mConnectSuccessful = false;
-
-
+                Log.d("ConnectBTStatus", e.toString());
             }
             return null;
         }
@@ -273,30 +304,21 @@ public class DeviceControlling extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-
             if (!mConnectSuccessful) {
-                Toast.makeText(getApplicationContext(), "Could not connect to device.Please turn on your Hardware", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.could_connect_verify_device, Toast.LENGTH_LONG).show();
+                Intent goTo_main = new Intent(DeviceControlling.this, MainActivity.class);
+                startActivity(goTo_main);
                 finish();
             } else {
-                msg("Connected to device");
                 mIsBluetoothConnected = true;
                 mReadThread = new ReadInput();
                 try {
                     mBTSocket.getOutputStream().write(onConnectBlue.getBytes());
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }// Kick off input reader
             }
-
-            progressDialog.dismiss();
+            loadingDialog.dimissDialog();
         }
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        // TODO Auto-generated method stub
-        super.onDestroy();
     }
 }

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:orientation="vertical"
     tools:context=".Activitys.DeviceControlling">
 
     <Button
@@ -14,8 +15,20 @@
         android:text="Put Water"/>
 
     <Button
-        android:id="@+id/off"
+        android:id="@+id/btnLigthOn"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:text="Light ON"/>
+
+    <Button
+    android:id="@+id/btnLigthoff"
+    android:layout_width="150dp"
+    android:layout_height="100dp"
+    android:text="Light OFF"/>
+
+    <Button
+        android:id="@+id/btnVoice"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:text="VOICE"/>
 </LinearLayout>

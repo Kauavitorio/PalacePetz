@@ -3,6 +3,7 @@ package co.ex.palacepetz.Activitys;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -47,7 +48,7 @@ public class PairDeviceActivity extends AppCompatActivity {
     private static final String DEVICE_LIST = "com.example.lightcontrol.devicelist";
     private static final String DEVICE_LIST_SELECTED = "com.example.lightcontrol.devicelistselected";
     public static final String BUFFER_SIZE = "com.example.lightcontrol.buffersize";
-    private static final String TAG = "BlueTest5-MainActivity";
+    private static final String TAG = "BlueTest5-PairDevice";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,10 +111,10 @@ public class PairDeviceActivity extends AppCompatActivity {
         switch (requestCode) {
             case BT_ENABLE_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    msg("Bluetooth Enabled successfully");
+                    Toast.makeText(this, R.string.bluetooth_enable_success, Toast.LENGTH_SHORT).show();
                     new SearchDevices().execute();
                 } else {
-                    msg("Bluetooth couldn't be enabled");
+                    Toast.makeText(this, R.string.bluetooth_couldnt_success, Toast.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -145,11 +146,6 @@ public class PairDeviceActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    //  Quick way to call the Toast
-    private void msg(String str) {
-        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
-    }
-
     //  Initialize the List adapter
     private void initList(List<BluetoothDevice> objects) {
         final MyAdapter adapter = new MyAdapter(getApplicationContext(), R.layout.adapter_list_devices, R.id.lstContent, objects);
@@ -173,22 +169,25 @@ public class PairDeviceActivity extends AppCompatActivity {
             Set<BluetoothDevice> pairedDevices = mBTAdapter.getBondedDevices();
             List<BluetoothDevice> listDevices = new ArrayList<>();
             for (BluetoothDevice device : pairedDevices) {
-                listDevices.add(device);
-                /*String deviceHardwareAddress = device.getAddress(); // MAC address
-                if (deviceHardwareAddress.equals("00:21:13:00:BC:20")) {
-                    BluetoothDevice devices = device;
-                    Intent intent = new Intent(getApplicationContext(), DeviceControlling.class);
-                    intent.putExtra(DEVICE_EXTRA, devices);
-                    intent.putExtra(DEVICE_UUID, mDeviceUUID.toString());
-                    intent.putExtra(BUFFER_SIZE, mBufferSize);
-                    startActivity(intent);
-                    Activity context = PairDeviceActivity.this;
-                    context.finish();
-                    return listDevices;
-                }*/
+                String deviceName = device.getName();
+                String[] array = deviceName.split("_");
+                if (array[0].equals("Palace") || array[0].equals("PALACE")){
+                    listDevices.add(device);
+                    String deviceHardwareAddress = device.getAddress(); // MAC address
+                    if (deviceHardwareAddress.equals("00:21:13:00:BC:20")) {
+                        BluetoothDevice devices = device;
+                        Intent intent = new Intent(getApplicationContext(), DeviceControlling.class);
+                        intent.putExtra(DEVICE_EXTRA, devices);
+                        intent.putExtra(DEVICE_UUID, mDeviceUUID.toString());
+                        intent.putExtra(BUFFER_SIZE, mBufferSize);
+                        startActivity(intent);
+                        Activity context = PairDeviceActivity.this;
+                        context.finish();
+                        return listDevices;
+                    }
+                }
             }
             return listDevices;
-
         }
 
         @Override
@@ -198,7 +197,7 @@ public class PairDeviceActivity extends AppCompatActivity {
                 MyAdapter adapter = (MyAdapter) listView.getAdapter();
                 adapter.replaceItems(listDevices);
             } else {
-                msg("No paired devices found, please pair your serial BT device and try again");
+                Toast.makeText(PairDeviceActivity.this, R.string.no_paired_device, Toast.LENGTH_SHORT).show();
             }
         }
 

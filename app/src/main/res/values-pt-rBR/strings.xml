@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bluetooth_enable_success">Bluetooth ativado com sucesso</string>
+    <string name="bluetooth_couldnt_success">Bluetooth não pôde ser habilitado</string>
+    <string name="no_paired_device">Nenhum dispositivo emparelhado encontrado, por favor, emparelhe seu dispositivo PalacePetz e tente novamente</string>
+    <string name="loading">Carregando…</string>
+    <string name="connecting">Conectando</string>
+    <string name="could_connect_verify_device">Não foi possível conectar ao dispositivo.\nVerifique se o seu dispositivo está ligado.</string>
+</resources>
