@@ -54,6 +54,7 @@ public class PairDeviceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pair_device);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
         search = findViewById(R.id.search);
@@ -125,18 +126,13 @@ public class PairDeviceActivity extends AppCompatActivity {
                 Log.d(TAG, "UUID: " + uuid);
                 String bufSize = prefs.getString("prefTextBuffer", "Null");
                 mBufferSize = Integer.parseInt(bufSize);
-
                 String orientation = prefs.getString("prefOrientation", "Null");
                 Log.d(TAG, "Orientation: " + orientation);
                 switch (orientation) {
                     case "Landscape":
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                        break;
                     case "Portrait":
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                        break;
                     case "Auto":
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                         break;
                 }
                 break;
