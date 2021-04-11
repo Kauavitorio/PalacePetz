@@ -31,7 +31,6 @@ public class DevicePresentationActivity extends AppCompatActivity {
     Animation btnAnim ;
     TextView tvSkip;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +59,6 @@ public class DevicePresentationActivity extends AppCompatActivity {
 
 
         // fill list screen
-
         final List<DevicePresentation> mList = new ArrayList<>();
         mList.add(new DevicePresentation("Palace Fountain","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.device_presentation_palace_fountain));
         mList.add(new DevicePresentation("Conforto e agilidade","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.device_presentation_cat));
@@ -73,11 +71,9 @@ public class DevicePresentationActivity extends AppCompatActivity {
         screenPager.setAdapter(introViewPagerAdapter);
 
         // setup Tab layout with viewpager
-
         tab_indicator.setupWithViewPager(screenPager);
 
         // next button click Listener
-
         btnNext.setOnClickListener(v -> {
             position = screenPager.getCurrentItem();
             if (position < mList.size()) {
@@ -86,7 +82,7 @@ public class DevicePresentationActivity extends AppCompatActivity {
 
             }
 
-            if (position == mList.size()-1) { // when we rech to the last screen
+            if (position == mList.size()-1) { // when we reach to the last screen
                 loadLastScreen();
             }
         });
