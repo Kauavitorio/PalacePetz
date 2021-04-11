@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name" translatable="false">PalacePetz</string>
-    
+
     <!-- Tools -->
     <string name="loading">Loading…</string>
+
+    <!-- Device Presentation -->
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="pair_my_fountain">Pair my fountain</string>
 
     <!-- PairDevice -->
     <string name="bluetooth_enable_success">Bluetooth Enabled successfully</string>

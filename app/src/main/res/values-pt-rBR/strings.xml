@@ -6,4 +6,7 @@
     <string name="loading">Carregando…</string>
     <string name="connecting">Conectando</string>
     <string name="could_connect_verify_device">Não foi possível conectar ao dispositivo.\nVerifique se o seu dispositivo está ligado.</string>
+    <string name="next">Próximo</string>
+    <string name="skip">Pular</string>
+    <string name="pair_my_fountain">Emparelhar minha fonte</string>
 </resources>

@@ -8,8 +8,11 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.widget.Button;
@@ -45,6 +48,7 @@ public class DeviceControlling extends AppCompatActivity {
     final static String lightOFF = "78";//off
     final static String offDisconect = "000";//off
     final static String onConnectBlue = "001";//off
+    SharedPreferences prefs;
 
 
     LoadingDialog loadingDialog;
@@ -61,6 +65,17 @@ public class DeviceControlling extends AppCompatActivity {
         btnLigthOn = findViewById(R.id.btnLigthOn);
         btnLigthoff = findViewById(R.id.btnLigthoff);
         btnVoice = findViewById(R.id.btnVoice);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String orientation = prefs.getString("prefOrientation", "Null");
+                Log.d(TAG, "Orientation: " + orientation);
+                switch (orientation) {
+                    case "Landscape":
+                    case "Portrait":
+                    case "Auto":
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                        break;
+                }
 
 
         Intent intent = getIntent();
@@ -120,6 +135,16 @@ public class DeviceControlling extends AppCompatActivity {
     protected void onActivityResult(
             int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        String orientation = prefs.getString("prefOrientation", "Null");
+        Log.d(TAG, "Orientation: " + orientation);
+        switch (orientation) {
+            case "Landscape":
+            case "Portrait":
+            case "Auto":
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                break;
+        }
 
         if (requestCode == MEU_REQUEST_CODE
                 && resultCode == RESULT_OK) {
