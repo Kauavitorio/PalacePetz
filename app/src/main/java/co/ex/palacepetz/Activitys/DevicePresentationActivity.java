@@ -17,13 +17,20 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.ex.palacepetz.Adapters.IntroViewPagerAdapter;
+import co.ex.palacepetz.Adapters.DeviceSliderViewPagerAdapter;
 import co.ex.palacepetz.Data.DevicePresentation.DevicePresentation;
 import co.ex.palacepetz.R;
 
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ * @author Kaua Vitorio
+ **/
+
 public class DevicePresentationActivity extends AppCompatActivity {
     private ViewPager screenPager;
-    IntroViewPagerAdapter introViewPagerAdapter ;
+    DeviceSliderViewPagerAdapter deviceSliderViewPagerAdapter;
     TabLayout tab_indicator;
     Button btnNext;
     int position = 0 ;
@@ -67,8 +74,8 @@ public class DevicePresentationActivity extends AppCompatActivity {
 
         // setup viewpager
         screenPager = findViewById(R.id.screen_viewpager);
-        introViewPagerAdapter = new IntroViewPagerAdapter(this,mList);
-        screenPager.setAdapter(introViewPagerAdapter);
+        deviceSliderViewPagerAdapter = new DeviceSliderViewPagerAdapter(this,mList);
+        screenPager.setAdapter(deviceSliderViewPagerAdapter);
 
         // setup Tab layout with viewpager
         tab_indicator.setupWithViewPager(screenPager);

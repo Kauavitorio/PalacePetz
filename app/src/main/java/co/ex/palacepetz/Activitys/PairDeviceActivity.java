@@ -34,6 +34,13 @@ import java.util.UUID;
 import co.ex.palacepetz.Iot.PreferencesActivity;
 import co.ex.palacepetz.R;
 
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ * @author Kaua Vitorio
+ **/
+
 public class PairDeviceActivity extends AppCompatActivity {
     Button search;
     Button connect;
@@ -56,7 +63,6 @@ public class PairDeviceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pair_device);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-
         search = findViewById(R.id.search);
         connect = findViewById(R.id.connect);
 
@@ -75,7 +81,6 @@ public class PairDeviceActivity extends AppCompatActivity {
             } else {
                 initList(new ArrayList<>());
             }
-
         } else {
             initList(new ArrayList<>());
         }
@@ -104,7 +109,6 @@ public class PairDeviceActivity extends AppCompatActivity {
             intent.putExtra(BUFFER_SIZE, mBufferSize);
             startActivity(intent);
         });
-
 
     }
     @Override
@@ -158,6 +162,8 @@ public class PairDeviceActivity extends AppCompatActivity {
      *
      * @author Kauã Vitorio
      */
+    @SuppressWarnings("deprecation")
+    @SuppressLint("StaticFieldLeak")
     private class SearchDevices extends AsyncTask<Void, Void, List<BluetoothDevice>> {
 
         @Override
@@ -166,22 +172,23 @@ public class PairDeviceActivity extends AppCompatActivity {
             List<BluetoothDevice> listDevices = new ArrayList<>();
             for (BluetoothDevice device : pairedDevices) {
                 String deviceName = device.getName();
-                String[] array = deviceName.split("_");
-                if (array[0].equals("Palace") || array[0].equals("PALACE")){
+                String[] arrayDeviceName = deviceName.split("_");
+                if (arrayDeviceName[0].equals("Palace") || arrayDeviceName[0].equals("PALACE")){
                     listDevices.add(device);
                     String deviceHardwareAddress = device.getAddress(); // MAC address
-                    if (deviceHardwareAddress.equals("00:21:13:00:BC:20")) {
-                        BluetoothDevice devices = device;
-                        Intent intent = new Intent(getApplicationContext(), DeviceControlling.class);
-                        intent.putExtra(DEVICE_EXTRA, devices);
-                        intent.putExtra(DEVICE_UUID, mDeviceUUID.toString());
-                        intent.putExtra(BUFFER_SIZE, mBufferSize);
-                        startActivity(intent);
-                        Activity context = PairDeviceActivity.this;
-                        context.finish();
-                        return listDevices;
-                    }
+                    //BluetoothDevice devices = device;
+                    Intent intent = new Intent(getApplicationContext(), DeviceControlling.class);
+                    intent.putExtra(DEVICE_EXTRA, device);
+                    intent.putExtra(DEVICE_UUID, mDeviceUUID.toString());
+                    intent.putExtra(BUFFER_SIZE, mBufferSize);
+                    startActivity(intent);
+                    Activity context = PairDeviceActivity.this;
+                    context.finish();
+                    /*if (deviceHardwareAddress.equals("00:21:13:00:BC:20")) {
+
+                    }*/
                 }
+                return listDevices;
             }
             return listDevices;
         }

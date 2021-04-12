@@ -15,12 +15,19 @@ import java.util.List;
 import co.ex.palacepetz.Data.DevicePresentation.DevicePresentation;
 import co.ex.palacepetz.R;
 
-public class IntroViewPagerAdapter extends PagerAdapter {
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ * @author Kaua Vitorio
+ **/
+
+public class DeviceSliderViewPagerAdapter extends PagerAdapter {
 
    Context mContext ;
    List<DevicePresentation> mListScreen;
 
-    public IntroViewPagerAdapter(Context mContext, List<DevicePresentation> mListScreen) {
+    public DeviceSliderViewPagerAdapter(Context mContext, List<DevicePresentation> mListScreen) {
         this.mContext = mContext;
         this.mListScreen = mListScreen;
     }
