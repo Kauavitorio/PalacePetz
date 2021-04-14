@@ -1,4 +1,4 @@
-package co.ex.palacepetz.Activitys;
+package com.kaua.palacepetz.Activitys;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,9 +23,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import co.ex.palacepetz.Adapters.LoadingDialog;
-import co.ex.palacepetz.Iot.ActivityHelper;
-import co.ex.palacepetz.R;
+import com.kaua.palacepetz.Adapters.LoadingDialog;
+import com.kaua.palacepetz.Iot.ActivityHelper;
+import com.kaua.palacepetz.R;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório
@@ -224,6 +224,7 @@ public class DeviceControlling extends AppCompatActivity {
                         /*
                          * This is needed because new String(buffer) is taking the entire buffer i.e. 256 chars on Android 2.3.4 http://stackoverflow.com/a/8843462/1287554
                          */
+                        //noinspection StatementWithEmptyBody
                         for (i = 0; i < buffer.length && buffer[i] != 0; i++) {
                         }
                         final String strInput = new String(buffer, 0, i);

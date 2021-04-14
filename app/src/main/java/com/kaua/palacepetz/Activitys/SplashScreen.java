@@ -1,4 +1,4 @@
-package co.ex.palacepetz.Activitys;
+package com.kaua.palacepetz.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
-import co.ex.palacepetz.R;
+import com.kaua.palacepetz.R;
 
 public class SplashScreen extends AppCompatActivity {
     ConstraintLayout base_animation_splash;
@@ -31,6 +31,7 @@ public class SplashScreen extends AppCompatActivity {
 
         //  Set Containers on Screen
         base_animation_splash.setVisibility(View.VISIBLE);
+        GoToLogin();
 
         timer.postDelayed(this::verifyIfUsersLogged,2700);
     }

@@ -1,10 +1,10 @@
-package co.ex.palacepetz.Activitys;
+package com.kaua.palacepetz.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import co.ex.palacepetz.R;
+import com.kaua.palacepetz.R;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório

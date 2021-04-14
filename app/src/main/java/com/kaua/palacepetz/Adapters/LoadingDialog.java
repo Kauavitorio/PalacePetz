@@ -1,12 +1,11 @@
-package co.ex.palacepetz.Adapters;
+package com.kaua.palacepetz.Adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.widget.TextView;
 
-import co.ex.palacepetz.R;
+import com.kaua.palacepetz.R;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório
