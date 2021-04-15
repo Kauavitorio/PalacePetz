@@ -14,7 +14,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "co.ex.palacepetz"
+        applicationId "com.kaua.palacepetz"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1

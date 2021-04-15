@@ -1,4 +1,4 @@
-package co.ex.palacepetz.Activitys;
+package com.kaua.palacepetz.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import co.ex.palacepetz.Iot.PreferencesActivity;
-import co.ex.palacepetz.R;
+import com.kaua.palacepetz.Iot.PreferencesActivity;
+import com.kaua.palacepetz.R;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório

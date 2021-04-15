@@ -1,4 +1,4 @@
-package co.ex.palacepetz.Iot;
+package com.kaua.palacepetz.Iot;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;

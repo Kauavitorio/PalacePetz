@@ -1,4 +1,4 @@
-package co.ex.palacepetz.Data.DevicePresentation;
+package com.kaua.palacepetz.Data.DevicePresentation;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório

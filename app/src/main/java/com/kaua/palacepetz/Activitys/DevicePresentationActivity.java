@@ -1,4 +1,4 @@
-package co.ex.palacepetz.Activitys;
+package com.kaua.palacepetz.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -17,9 +17,9 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.ex.palacepetz.Adapters.DeviceSliderViewPagerAdapter;
-import co.ex.palacepetz.Data.DevicePresentation.DevicePresentation;
-import co.ex.palacepetz.R;
+import com.kaua.palacepetz.Adapters.DeviceSliderViewPagerAdapter;
+import com.kaua.palacepetz.Data.DevicePresentation.DevicePresentation;
+import com.kaua.palacepetz.R;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório

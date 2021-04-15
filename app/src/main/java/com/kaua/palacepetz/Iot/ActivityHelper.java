@@ -1,4 +1,4 @@
-package co.ex.palacepetz.Iot;
+package com.kaua.palacepetz.Iot;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

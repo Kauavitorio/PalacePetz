@@ -1,4 +1,4 @@
-package co.ex.palacepetz.Adapters;
+package com.kaua.palacepetz.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,8 +12,8 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.List;
 
-import co.ex.palacepetz.Data.DevicePresentation.DevicePresentation;
-import co.ex.palacepetz.R;
+import com.kaua.palacepetz.Data.DevicePresentation.DevicePresentation;
+import com.kaua.palacepetz.R;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório
