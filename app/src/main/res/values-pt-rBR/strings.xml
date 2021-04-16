@@ -25,4 +25,9 @@
     <string name="haveAccount_singin">Já tem uma conta? <u>Entrar.</u></string>
     <string name="necessary_to_insert_the_last_name">Necessário inserir o sobrenome</string>
     <string name="necessary_to_insert_the_First_name">Necessário inserir o primeiro nome</string>
+    <string name="email_required">Necessário inserir um email</string>
+    <string name="informed_email_is_invalid">Email informado é invalido</string>
+    <string name="password_required">Senha requerida</string>
+    <string name="password_cannot_contain_spaces">Senhas não podem conter espaços</string>
+    <string name="password_needs">Sua senha precisa de pelo menos 8 caracteres, 1 letra, 1 numero e um caratecter especial</string>
 </resources>

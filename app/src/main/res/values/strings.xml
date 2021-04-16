@@ -35,5 +35,10 @@
     <string name="haveAccount_singin">Already have an account? <u>Sign in.</u></string>
     <string name="necessary_to_insert_the_last_name">Necessary to insert the last name</string>
     <string name="necessary_to_insert_the_First_name">Necessary to insert the first name</string>
+    <string name="email_required">Email required</string>
+    <string name="informed_email_is_invalid">Informed email is invalid</string>
+    <string name="password_required">Password required</string>
+    <string name="password_cannot_contain_spaces">Password cannot contain spaces</string>
+    <string name="password_needs">Your password needs at least 8 characters, 1 letter, 1 number and a special character</string>
 
 </resources>

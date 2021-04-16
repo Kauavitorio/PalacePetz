@@ -7,6 +7,7 @@
     android:background="@drawable/background"
     tools:context=".Activitys.LoginActivity">
 
+    <!-- Container  -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -36,6 +37,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/segoe_ui"
             android:text="@string/login"
+            android:textColor="@color/titles"
             android:textSize="50sp"
             android:textStyle="bold"
             android:textAllCaps="true"
@@ -47,9 +49,11 @@
         <!-- EditText Email -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_text_input_layout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_login_login">
 
             <!-- EditText Email -->
@@ -61,14 +65,14 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:background="@drawable/custom_edittext_base"
-                android:inputType="textEmailAddress"
                 android:ems="10"
                 android:fontFamily="@font/segoe_ui"
                 android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 android:minHeight="50sp"
                 android:textColor="#000"
-                android:textSize="21sp"
                 android:textColorHint="@color/hint"
+                android:textSize="21sp"
                 tools:ignore="Autofill,TextFields" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -76,9 +80,11 @@
         <!-- EditText Password -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/password_text_input_layout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/email_text_input_layout"
             app:passwordToggleEnabled="true">
 
@@ -94,12 +100,12 @@
                 android:ems="10"
                 android:fontFamily="@font/segoe_ui"
                 android:hint="@string/password"
+                android:inputType="textPassword"
                 android:minHeight="50sp"
                 android:textColor="#000"
-                android:textSize="21sp"
                 android:textColorHint="@color/hint"
-                tools:ignore="Autofill,TextFields"
-                android:inputType="textPassword" />
+                android:textSize="21sp"
+                tools:ignore="Autofill,TextFields" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -156,7 +162,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             app:layout_constraintTop_toBottomOf="@+id/cardBtn_SingIn">
 
             <!-- Text Forgot Password -->

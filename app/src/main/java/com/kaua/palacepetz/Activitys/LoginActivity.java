@@ -5,10 +5,12 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,8 +30,9 @@ public class LoginActivity extends AppCompatActivity {
     //  Login bottom
     CardView cardBtn_SingIn;
 
-    //  Loading Dialog
+    //  Tools
     LoadingDialog loadingDialog = new LoadingDialog(LoginActivity.this);
+    InputMethodManager imm;
 
     //  Set preferences
     SharedPreferences mPrefs;
@@ -43,12 +46,21 @@ public class LoginActivity extends AppCompatActivity {
         Ids();
         cardBtn_SingIn.setElevation(20);
         verifyIfUsersLogged();
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         cardBtn_SingIn.setOnClickListener(v -> {
-            cardBtn_SingIn.setElevation(0);
-            cardBtn_SingIn.setEnabled(false);
-            loadingDialog.startLoading();
-            timer.postDelayed(() -> loadingDialog.dimissDialog(),3000);
+            if (editLogin_emailUser.getText().length() == 0)
+                showError(editLogin_emailUser, getString(R.string.email_required));
+            else if(editLogin_passwordUser.getText().length() == 0)
+                showError(editLogin_passwordUser, getString(R.string.password_required));
+            else{
+                email = editLogin_emailUser.getText().toString();
+                password = editLogin_passwordUser.getText().toString();
+                cardBtn_SingIn.setElevation(0);
+                cardBtn_SingIn.setEnabled(false);
+                loadingDialog.startLoading();
+                timer.postDelayed(() -> loadingDialog.dimissDialog(),3000);
+            }
         });
 
         txt_SingUp.setOnClickListener(v -> {
@@ -57,6 +69,13 @@ public class LoginActivity extends AppCompatActivity {
             ActivityCompat.startActivity(this, goTo_SingUp, activityOptionsCompat.toBundle());
             finish();
         });
+    }
+
+    private void showError(EditText editText, String error){
+        editText.requestFocus();
+        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+        editText.setError(error);
+        cardBtn_SingIn.setElevation(20);
     }
 
     private void Ids() {
