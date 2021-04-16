@@ -14,7 +14,7 @@
 
         <!-- Title Create Account -->
         <TextView
-            android:id="@+id/txt_create_account_login"
+            android:id="@+id/txt_create_account_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/segoe_ui"
@@ -37,11 +37,11 @@
             android:layout_marginTop="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_create_account_login">
+            app:layout_constraintTop_toBottomOf="@+id/txt_create_account_title">
 
             <!-- EditText Email -->
             <EditText
-                android:id="@+id/editLogin_FirstNameUserRegister"
+                android:id="@+id/editRegister_FirstNameUser"
                 android:layout_width="333dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -72,7 +72,7 @@
 
             <!-- EditText Email -->
             <EditText
-                android:id="@+id/editLogin_LastNameUserRegister"
+                android:id="@+id/editRegister__LastNameUser"
                 android:layout_width="333dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -103,7 +103,7 @@
 
             <!-- EditText Email -->
             <EditText
-                android:id="@+id/editLogin_EmailUserRegister"
+                android:id="@+id/editRegister_EmailUser"
                 android:layout_width="333dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -135,7 +135,7 @@
 
             <!-- EditText Email -->
             <EditText
-                android:id="@+id/editLogin_PassowrdUserRegister"
+                android:id="@+id/editRegister_PassowrdUser"
                 android:layout_width="333dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -167,7 +167,7 @@
 
             <!-- EditText Email -->
             <EditText
-                android:id="@+id/editLogin_ConfirmPasswordUserRegister"
+                android:id="@+id/editRegister_ConfirmPasswordUser"
                 android:layout_width="333dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -205,7 +205,7 @@
 
                 <!-- Text Sing In -->
                 <TextView
-                    android:id="@+id/txt_SingInLogin"
+                    android:id="@+id/txt_SingInRegister"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sing_in"
@@ -230,7 +230,7 @@
             android:minHeight="40dp"
             android:layout_marginTop="23dp"
             android:layout_marginBottom="20dp"
-            android:text="@string/haveAccount_singin"
+            android:text="@string/haveAccount_signIn"
             android:textColor="#444B54"
             android:textSize="16sp"
             android:fontFamily="@font/segoe_ui"

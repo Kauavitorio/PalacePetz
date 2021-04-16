@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="233dp" />
+            app:layout_constraintGuide_begin="195dp" />
 
         <!-- Title Login -->
         <TextView
@@ -185,7 +185,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="35sp"
-                android:layout_marginTop="15sp"
+                android:layout_marginTop="10sp"
                 android:minWidth="100dp"
                 android:minHeight="40dp"
                 android:text="@string/sing_up"

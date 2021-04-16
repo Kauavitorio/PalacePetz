@@ -18,6 +18,15 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="minimum_eight_characters">Minimum 8 characters</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="haveAccount_signIn">Already have an account? <u>Sign in.</u></string>
+    <string name="necessary_to_insert_the_last_name">Necessary to insert the last name</string>
+    <string name="necessary_to_insert_the_First_name">Necessary to insert the first name</string>
+    <string name="email_required">Email required</string>
+    <string name="informed_email_is_invalid">Informed email is invalid</string>
+    <string name="password_required">Password required</string>
+    <string name="password_cannot_contain_spaces">Password cannot contain spaces</string>
+    <string name="password_needs">Your password needs at least 8 characters, 1 letter, 1 number and a special character</string>
+    <string name="forgot_the_password">FORGOT PASSWORD?</string>
 
     <!-- Device Presentation -->
     <string name="next">Next</string>
@@ -32,13 +41,7 @@
 
     <!-- Controlling Device -->
     <string name="could_connect_verify_device">Could not connect to device.\nPlease verify if your device is on.</string>
-    <string name="haveAccount_singin">Already have an account? <u>Sign in.</u></string>
-    <string name="necessary_to_insert_the_last_name">Necessary to insert the last name</string>
-    <string name="necessary_to_insert_the_First_name">Necessary to insert the first name</string>
-    <string name="email_required">Email required</string>
-    <string name="informed_email_is_invalid">Informed email is invalid</string>
-    <string name="password_required">Password required</string>
-    <string name="password_cannot_contain_spaces">Password cannot contain spaces</string>
-    <string name="password_needs">Your password needs at least 8 characters, 1 letter, 1 number and a special character</string>
+    <string name="noProblem_lets_help_you">NO PROBLEM,\nLET\'S HELP YOU.</string>
+    <string name="change_password">Change Passowrd</string>
 
 </resources>

@@ -13,6 +13,7 @@ import android.util.Patterns;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.kaua.palacepetz.Adapters.LoadingDialog;
@@ -85,6 +86,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 String fullName_User = firstName + " " + lastName;
 
                 loadingDialog.startLoading();
+                Toast.makeText(this, "Agora tem que fazer o app registrar kkkk ", Toast.LENGTH_SHORT).show();
 
                 timer.postDelayed(() -> {
                     Intent goTo_SingIn = new Intent(CreateAccountActivity.this, LoginActivity.class);
@@ -98,11 +100,11 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private void Ids() {
         cardBtn_SingUp = findViewById(R.id.cardBtn_SingUp);
-        editLogin_PasswordUserRegister = findViewById(R.id.editLogin_PassowrdUserRegister);
-        editLogin_ConfirmPasswordUserRegister = findViewById(R.id.editLogin_ConfirmPasswordUserRegister);
-        editLogin_FirstNameUserRegister = findViewById(R.id.editLogin_FirstNameUserRegister);
-        editLogin_LastNameUserRegister = findViewById(R.id.editLogin_LastNameUserRegister);
-        editLogin_EmailUserRegister = findViewById(R.id.editLogin_EmailUserRegister);
+        editLogin_PasswordUserRegister = findViewById(R.id.editRegister_PassowrdUser);
+        editLogin_ConfirmPasswordUserRegister = findViewById(R.id.editRegister_ConfirmPasswordUser);
+        editLogin_FirstNameUserRegister = findViewById(R.id.editRegister_FirstNameUser);
+        editLogin_LastNameUserRegister = findViewById(R.id.editRegister__LastNameUser);
+        editLogin_EmailUserRegister = findViewById(R.id.editRegister_EmailUser);
         txt_haveAccount = findViewById(R.id.txt_haveAccount);
     }
 
