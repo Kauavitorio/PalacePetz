@@ -10,10 +10,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Patterns;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kaua.palacepetz.Adapters.LoadingDialog;
 import com.kaua.palacepetz.R;
@@ -51,14 +53,17 @@ public class LoginActivity extends AppCompatActivity {
         cardBtn_SingIn.setOnClickListener(v -> {
             if (editLogin_emailUser.getText().length() == 0)
                 showError(editLogin_emailUser, getString(R.string.email_required));
+            else if (!Patterns.EMAIL_ADDRESS.matcher(editLogin_emailUser.getText()).matches())
+                showError(editLogin_emailUser, getString(R.string.informed_email_is_invalid));
             else if(editLogin_passwordUser.getText().length() == 0)
                 showError(editLogin_passwordUser, getString(R.string.password_required));
-            else{
+            else {
                 email = editLogin_emailUser.getText().toString();
                 password = editLogin_passwordUser.getText().toString();
                 cardBtn_SingIn.setElevation(0);
                 cardBtn_SingIn.setEnabled(false);
                 loadingDialog.startLoading();
+                Toast.makeText(this, "Agora tem que fazer o login kkkk ", Toast.LENGTH_SHORT).show();
                 timer.postDelayed(() -> loadingDialog.dimissDialog(),3000);
             }
         });
@@ -68,6 +73,11 @@ public class LoginActivity extends AppCompatActivity {
             ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),R.anim.move_to_left, R.anim.move_to_right);
             ActivityCompat.startActivity(this, goTo_SingUp, activityOptionsCompat.toBundle());
             finish();
+        });
+
+        txt_forgot_your_password.setOnClickListener(v -> {
+            Intent goTo_ForgotPassowrd = new Intent(this, ForgotPasswordActivity.class);
+            startActivity(goTo_ForgotPassowrd);
         });
     }
 

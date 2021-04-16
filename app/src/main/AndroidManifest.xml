@@ -17,7 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PalacePetz">
-        <activity android:name=".Activitys.CreateAccountActivity"></activity>
+        <activity android:name=".Activitys.DeviceControlling" android:screenOrientation="portrait" />
+        <activity android:name=".Activitys.PairDeviceActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activitys.MainActivity" />
+        <activity android:name=".Activitys.ForgotPasswordActivity"/>
+        <activity android:name=".Activitys.CreateAccountActivity" />
         <activity android:name=".Activitys.LoginActivity" />
         <activity android:name=".Activitys.SplashScreen">
             <intent-filter>
@@ -27,13 +31,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activitys.DevicePresentationActivity" />
-        <activity
-            android:name=".Activitys.DeviceControlling"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Activitys.PairDeviceActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Activitys.MainActivity" />
     </application>
 
 </manifest>
