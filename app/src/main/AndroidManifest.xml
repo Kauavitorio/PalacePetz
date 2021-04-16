@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PalacePetz">
-        <activity android:name=".Activitys.LoginActivity"/>
+        <activity android:name=".Activitys.CreateAccountActivity"></activity>
+        <activity android:name=".Activitys.LoginActivity" />
         <activity android:name=".Activitys.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
