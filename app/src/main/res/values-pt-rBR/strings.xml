@@ -9,4 +9,11 @@
     <string name="next">Próximo</string>
     <string name="skip">Pular</string>
     <string name="pair_my_fountain">Emparelhar minha fonte</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Senha</string>
+    <string name="sing_in">Entrar</string>
+    <string name="forgot_your_password_recover">Esqueceu a senha? Recupere.</string>
+    <string name="sing_up"><u>Criar Conta.</u></string>
+    <string name="remember_me">Lembre de mim</string>
 </resources>

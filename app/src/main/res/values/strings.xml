@@ -4,6 +4,9 @@
     <!-- Tools -->
     <string name="loading">Loading…</string>
 
+    <!-- Login Screen -->
+    <string name="login">Login</string>
+
     <!-- Device Presentation -->
     <string name="next">Next</string>
     <string name="skip">Skip</string>
@@ -17,5 +20,11 @@
 
     <!-- Controlling Device -->
     <string name="could_connect_verify_device">Could not connect to device.\nPlease verify if your device is on.</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sing_in">Sing in</string>
+    <string name="forgot_your_password_recover">Forgot your password? Recover.</string>
+    <string name="sing_up"><u>Sing up</u></string>
+    <string name="remember_me">Remember me</string>
 
 </resources>
