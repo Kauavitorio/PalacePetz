@@ -2,22 +2,18 @@ package com.kaua.palacepetz.Adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.view.LayoutInflater;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.kaua.palacepetz.R;
-
-/**
- *  Copyright (c) 2021 Kauã Vitório
- *  Official repository https://github.com/Kauavitorio/PalacePetz
- *  Responsible developer: https://github.com/Kauavitorio
- * @author Kaua Vitorio
- **/
 
 public class LoadingDialog {
 
     private final Activity activity;
-    private AlertDialog dialog;
+    private Dialog dialog;
 
     public LoadingDialog(Activity myactivity){
         activity = myactivity;
@@ -25,11 +21,15 @@ public class LoadingDialog {
 
     @SuppressLint("InflateParams")
     public void  startLoading(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        LayoutInflater inflater = activity.getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.adapter_custom_loading,null));
-        builder.setCancelable(false);
-        dialog = builder.create();
+        Handler timer = new Handler();
+        dialog = new Dialog(activity);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.adapter_custom_loading);
+        LottieAnimationView progressBarDialog = dialog.findViewById(R.id.progressBarDialog);
+
+        timer.postDelayed(() -> progressBarDialog.setSpeed((float) 2.5),5500);
+
         dialog.show();
     }
 

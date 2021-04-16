@@ -31,9 +31,9 @@ public class SplashScreen extends AppCompatActivity {
 
         //  Set Containers on Screen
         base_animation_splash.setVisibility(View.VISIBLE);
-        GoToLogin();
 
-        timer.postDelayed(this::verifyIfUsersLogged,2700);
+        verifyIfUsersLogged();
+        GoToLogin();
     }
 
     public void verifyIfUsersLogged() {
@@ -42,10 +42,12 @@ public class SplashScreen extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         if (sp.contains("pref_email") && sp.contains("pref_password"))
             GoToLogin();
+
+        //timer.postDelayed(this::GoToLogin,2700);
     }
 
     private void GoToLogin() {
-        Intent goto_login = new Intent(SplashScreen.this, DevicePresentationActivity.class);
+        Intent goto_login = new Intent(SplashScreen.this, LoginActivity.class);
         ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),R.anim.move_to_left, R.anim.move_to_right);
         ActivityCompat.startActivity(SplashScreen.this, goto_login, activityOptionsCompat.toBundle());
         finish();

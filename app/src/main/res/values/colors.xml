@@ -4,10 +4,14 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background_bottom">#88D6FF</color>
     <color name="background_top">#CFEDFD</color>
+    <color name="hint">#444B54</color>
+    <color name="cards_background">#F89B28</color>
+    <color name="titles">#444B54</color>
 
     <!-- Device Presentation -->
     <color name="gradient_start_color">#4c84ff</color>
     <color name="gradient_end_color">#18a3fe</color>
+    <color name="transparent">#00FFFFFF</color>
     <color name="tab_indicator_gray">#A8C0C0C0</color>
     <color name="device_presentation_title_color">#fff</color>
     <color name="device_presentation_description_color">#807F7F</color>
