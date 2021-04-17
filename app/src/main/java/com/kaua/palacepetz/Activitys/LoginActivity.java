@@ -1,5 +1,6 @@
 package com.kaua.palacepetz.Activitys;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -15,7 +16,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kaua.palacepetz.Adapters.LoadingDialog;
 import com.kaua.palacepetz.R;
@@ -58,13 +58,12 @@ public class LoginActivity extends AppCompatActivity {
             else if(editLogin_passwordUser.getText().length() == 0)
                 showError(editLogin_passwordUser, getString(R.string.password_required));
             else {
-                email = editLogin_emailUser.getText().toString();
+               email = editLogin_emailUser.getText().toString();
                 password = editLogin_passwordUser.getText().toString();
                 cardBtn_SingIn.setElevation(0);
                 cardBtn_SingIn.setEnabled(false);
                 loadingDialog.startLoading();
-                Toast.makeText(this, "Agora tem que fazer o login kkkk ", Toast.LENGTH_SHORT).show();
-                timer.postDelayed(() -> loadingDialog.dimissDialog(),3000);
+                DoLogin(email, password);
             }
         });
 
@@ -81,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void showError(EditText editText, String error){
+    private void showError(@NonNull EditText editText, String error){
         editText.requestFocus();
         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
         editText.setError(error);
@@ -112,5 +111,24 @@ public class LoginActivity extends AppCompatActivity {
     private void DoLogin(String email, String password) {
         loadingDialog.startLoading();
 
+        if (checkbox_rememberMe.isChecked()){
+            mPrefs.edit().clear().apply();
+            boolean boollsChecked = checkbox_rememberMe.isChecked();
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.putString("pref_email", email);
+            editor.putString("pref_password", password);
+            editor.putBoolean("pref_check", boollsChecked);
+            editor.apply();
+            timer.postDelayed(this::GoToMain,1200);
+        }else{
+            mPrefs.edit().clear().apply();
+            timer.postDelayed(this::GoToMain,1200);
+        }
+    }
+
+    private void GoToMain(){
+        Intent goTo_Main = new Intent(this, MainActivity.class);
+        startActivity(goTo_Main);
+        finish();
     }
 }

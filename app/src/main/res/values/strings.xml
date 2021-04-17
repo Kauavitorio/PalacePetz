@@ -3,6 +3,7 @@
 
     <!-- Tools -->
     <string name="loading">Loading…</string>
+    <string name="one" translatable="false">1</string>
 
     <!-- Sing In / Sing Up Screen -->
     <string name="login">Login</string>
@@ -42,6 +43,6 @@
     <!-- Controlling Device -->
     <string name="could_connect_verify_device">Could not connect to device.\nPlease verify if your device is on.</string>
     <string name="noProblem_lets_help_you">NO PROBLEM,\nLET\'S HELP YOU.</string>
-    <string name="change_password">Change Passowrd</string>
+    <string name="change_password">Change Password</string>
 
 </resources>
