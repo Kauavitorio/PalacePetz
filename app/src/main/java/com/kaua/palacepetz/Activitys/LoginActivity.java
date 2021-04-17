@@ -17,7 +17,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kaua.palacepetz.Adapters.LoadingDialog;
+import com.kaua.palacepetz.Firebase.Conf_Firebase;
 import com.kaua.palacepetz.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -41,6 +43,9 @@ public class LoginActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "myPrefs";
     Handler timer = new Handler();
 
+    //  Set FirebaseAnalytics
+    FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         Ids();
         cardBtn_SingIn.setElevation(20);
         verifyIfUsersLogged();
+
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         cardBtn_SingIn.setOnClickListener(v -> {
@@ -109,6 +115,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void DoLogin(String email, String password) {
+        /*// Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = Conf_Firebase.getFirebaseAnalytics(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, email);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Test of while");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);*/
         loadingDialog.startLoading();
 
         if (checkbox_rememberMe.isChecked()){

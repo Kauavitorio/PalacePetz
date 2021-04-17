@@ -45,4 +45,10 @@
     <string name="noProblem_lets_help_you">NO PROBLEM,\nLET\'S HELP YOU.</string>
     <string name="change_password">Change Password</string>
 
+    <!-- Sheet Menu -->
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="really_want_logOut">Do you really want to log out?</string>
+    <string name="logout">LogOut</string>
+
 </resources>

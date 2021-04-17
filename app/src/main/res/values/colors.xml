@@ -7,6 +7,8 @@
     <color name="hint">#444B54</color>
     <color name="cards_background">#F89B28</color>
     <color name="titles">#444B54</color>
+    <color name="background_menu_sheet">#444B54</color>
+    <color name="selected_menu_sheet">#3D434B</color>
 
     <!-- Device Presentation -->
     <color name="gradient_start_color">#4c84ff</color>

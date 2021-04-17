@@ -33,4 +33,8 @@
     <string name="forgot_the_password">ESQUECEU A SENHA?</string>
     <string name="noProblem_lets_help_you">SEM PROBLEMAS,\nVAMOS LHE AJUDAR.</string>
     <string name="change_password">TROCAR SENHA</string>
+    <string name="really_want_logOut">Deseja realmente deslogar?</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="logout">Deslogar</string>
 </resources>
