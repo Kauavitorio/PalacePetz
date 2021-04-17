@@ -33,7 +33,6 @@ public class SplashScreen extends AppCompatActivity {
         base_animation_splash.setVisibility(View.VISIBLE);
 
         verifyIfUsersLogged();
-        GoToLogin();
     }
 
     public void verifyIfUsersLogged() {
@@ -42,8 +41,8 @@ public class SplashScreen extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         if (sp.contains("pref_email") && sp.contains("pref_password"))
             GoToLogin();
-
-        //timer.postDelayed(this::GoToLogin,2700);
+        else
+            timer.postDelayed(this::GoToLogin,2800);
     }
 
     private void GoToLogin() {
