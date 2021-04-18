@@ -4,15 +4,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".Activitys.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Header -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/btnMenu_Main"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="40dp"
+            app:lottie_autoPlay="true"
+            app:lottie_speed="2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_rawRes="@raw/menu_anim" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/icon_ProfileUser_principal"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/default_profile_image"
+            android:visibility="visible"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp"
+            app:layout_constraintEnd_toStartOf="@+id/container_ShoppingCart"
+            app:layout_constraintStart_toEndOf="@+id/btnMenu_Main"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RedundantNamespace" />
+
+        <!-- Container Shopping Cart -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_ShoppingCart"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="45dp">
+
+            <!-- Card Quantity Shopping Cart -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/base_QuantityItemsCart_main"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:cardBackgroundColor="@color/cards_background"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <!-- Container -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!-- Text Quantity Shopping Cart -->
+                    <TextView
+                        android:id="@+id/txt_QuantityCart_main"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/one"
+                        android:textColor="@color/hint"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animCat_Main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:lottie_autoPlay="true"
+                app:lottie_rawRes="@raw/empty_cart" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
