@@ -7,8 +7,12 @@
     *  Responsible developer: https://github.com/Kauavitorio
     -->
     <!-- Set user permission -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -17,10 +21,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PalacePetz">
-        <activity android:name=".Activitys.DeviceControlling" android:screenOrientation="portrait" />
-        <activity android:name=".Activitys.PairDeviceActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activitys.EditProfileActivity"/>
+        <activity android:name=".Activitys.ProfileActivity" />
+        <activity
+            android:name=".Activitys.DeviceControlling"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.PairDeviceActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".Activitys.MainActivity" />
-        <activity android:name=".Activitys.ForgotPasswordActivity"/>
+        <activity android:name=".Activitys.ForgotPasswordActivity" />
         <activity android:name=".Activitys.CreateAccountActivity" />
         <activity android:name=".Activitys.LoginActivity" />
         <activity android:name=".Activitys.SplashScreen">

@@ -16,4 +16,18 @@
         <item name="colorControlActivated">#06AAFF</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <!-- Start BottomSheet Theme -->
+    <style name="BottomSheetTheme" parent="Theme.Design.BottomSheetDialog">
+
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+
+    </style>
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+
+        <item name="android:background">@android:color/transparent</item>
+
+    </style>
+    <!-- End BottomSheet Theme -->
+
 </resources>

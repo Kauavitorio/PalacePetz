@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:scrollbarSize="4dp"
+    android:scrollbarThumbVertical="@drawable/custom_scroll_style_vertical"
     tools:context=".Activitys.CreateAccountActivity">
 
     <!-- Container  -->
@@ -29,7 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- EditText First Name -->
+        <!-- TextInputLayout First Name -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/firstName_text_input_layout"
             android:layout_width="wrap_content"
@@ -39,7 +41,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_create_account_title">
 
-            <!-- EditText Email -->
+            <!-- EditText First Name -->
             <EditText
                 android:id="@+id/editRegister_FirstNameUser"
                 android:layout_width="333dp"
@@ -60,7 +62,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- EditText Last Name -->
+        <!-- TextInputLayout Last Name -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/lastName_text_input_layout"
             android:layout_width="wrap_content"
@@ -70,7 +72,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/firstName_text_input_layout">
 
-            <!-- EditText Email -->
+            <!-- EditText Last Name -->
             <EditText
                 android:id="@+id/editRegister__LastNameUser"
                 android:layout_width="333dp"
@@ -91,7 +93,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- EditText Email -->
+        <!-- TextInputLayout Email -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailCreateAccount_text_input_layout"
             android:layout_width="wrap_content"
@@ -122,7 +124,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- EditText Password -->
+        <!-- TextInputLayout Password -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordCreateAccount_text_input_layout"
             android:layout_width="wrap_content"
@@ -133,7 +135,7 @@
             app:layout_constraintTop_toBottomOf="@+id/emailCreateAccount_text_input_layout"
             app:passwordToggleEnabled="true">
 
-            <!-- EditText Email -->
+            <!-- EditText Password -->
             <EditText
                 android:id="@+id/editRegister_PassowrdUser"
                 android:layout_width="333dp"
@@ -154,7 +156,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- EditText Confirm Password -->
+        <!-- TextInputLayout Confirm Password -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ConfirmpasswordCreateAccount_text_input_layout"
             android:layout_width="wrap_content"
@@ -165,7 +167,7 @@
             app:layout_constraintTop_toBottomOf="@+id/passwordCreateAccount_text_input_layout"
             app:passwordToggleEnabled="true">
 
-            <!-- EditText Email -->
+            <!-- EditText Confirm Password -->
             <EditText
                 android:id="@+id/editRegister_ConfirmPasswordUser"
                 android:layout_width="333dp"
@@ -220,7 +222,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
-
 
         <!-- Text Have Account? -->
         <TextView

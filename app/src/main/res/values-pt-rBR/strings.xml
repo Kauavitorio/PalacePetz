@@ -33,4 +33,17 @@
     <string name="forgot_the_password">ESQUECEU A SENHA?</string>
     <string name="noProblem_lets_help_you">SEM PROBLEMAS,\nVAMOS LHE AJUDAR.</string>
     <string name="change_password">TROCAR SENHA</string>
+    <string name="really_want_logOut">Deseja realmente deslogar?</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="logout">Deslogar</string>
+    <string name="personalname">Nome pessoal</string>
+    <string name="address">Endereço</string>
+    <string name="complement">Complemento</string>
+    <string name="editProfile">Editar Perfil</string>
+    <string name="gallery">Galeria</string>
+    <string name="cancel">Cancelar</string>
+    <string name="select_payment_method">Selecione o método de upload</string>
+    <string name="change_profile_photo">Trocar foto de perfil</string>
+    <string name="camera">Câmera</string>
 </resources>
