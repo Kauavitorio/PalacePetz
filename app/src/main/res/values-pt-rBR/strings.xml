@@ -46,4 +46,5 @@
     <string name="select_payment_method">Selecione o método de upload</string>
     <string name="change_profile_photo">Trocar foto de perfil</string>
     <string name="camera">Câmera</string>
+    <string name="cpf">CPF</string>
 </resources>

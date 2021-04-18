@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,14 +28,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileActivity extends AppCompatActivity {
     //  Activity Items
     TextView txt_userName_profile, txt_email_profile;
-    EditText editProfile_FirstNameUser, editProfile__LastNameUser, editProfile__CFCUser,
-            editProfile__CepUser, editProfile__AddressUser, editProfile__ComplementUser;
-    CircleImageView icon_ProfileUser_main;
-    CardView cardBtn_EditProfile;
+    EditText Profile_FirstNameUser, Profile__LastNameUser, Profile__CFCUser,
+            Profile__CepUser, Profile__AddressUser, Profile__ComplementUser;
+    CircleImageView icon_ProfileUser_profile;
     LottieAnimationView arrowGoBackProfile;
+    CardView cardBtn_EditProfile;
     Handler timer = new Handler();
-    String[] permissions = {Manifest.permission.CAMERA
-            , Manifest.permission.READ_EXTERNAL_STORAGE};
+    private final String[] permissions = { Manifest.permission.CAMERA
+            , Manifest.permission.READ_EXTERNAL_STORAGE };
     AlertDialog.Builder msg;
     private final int CAMERA = 1;
     private final int GALLERY = 2;
@@ -51,7 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         DoProfileImgAlert();
 
-        icon_ProfileUser_main.setOnClickListener(v -> {
+        icon_ProfileUser_profile.setOnClickListener(v -> {
             Userpermissions.validatePermissions(permissions, ProfileActivity.this, 1);
             int CameraPermission = ContextCompat.checkSelfPermission(ProfileActivity.this, Manifest.permission.CAMERA);
             int GalleryPermission = ContextCompat.checkSelfPermission(ProfileActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -84,22 +85,24 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void DoProfileImgAlert() {
-        icon_ProfileUser_main.setBorderColor(getColor(R.color.gradient_end_color));
-        timer.postDelayed(() -> icon_ProfileUser_main.setBorderColor(getColor(R.color.black)),1000);
+        icon_ProfileUser_profile.setBorderColor(getColor(R.color.gradient_end_color));
+        timer.postDelayed(() -> icon_ProfileUser_profile.setBorderColor(getColor(R.color.black)),1000);
+        timer.postDelayed(() -> icon_ProfileUser_profile.setBorderColor(getColor(R.color.gradient_end_color)),1500);
+        timer.postDelayed(() -> icon_ProfileUser_profile.setBorderColor(getColor(R.color.black)),2500);
     }
 
     private void Ids() {
         arrowGoBackProfile = findViewById(R.id.arrowGoBackProfile);
         txt_userName_profile = findViewById(R.id.txt_userName_profile);
         txt_email_profile = findViewById(R.id.txt_email_profile);
-        editProfile_FirstNameUser = findViewById(R.id.editProfile_FirstNameUser);
-        editProfile__AddressUser = findViewById(R.id.editProfile__AddressUser);
+        Profile_FirstNameUser = findViewById(R.id.Profile_FirstNameUser);
+        Profile__AddressUser = findViewById(R.id.Profile__AddressUser);
         cardBtn_EditProfile = findViewById(R.id.cardBtn_EditProfile);
-        icon_ProfileUser_main = findViewById(R.id.icon_ProfileUser_main);
-        editProfile__LastNameUser = findViewById(R.id.editProfile__LastNameUser);
-        editProfile__CFCUser = findViewById(R.id.editProfile__CFCUser);
-        editProfile__CepUser = findViewById(R.id.editProfile__CepUser);
-        editProfile__ComplementUser = findViewById(R.id.editProfile__ComplementUser);
+        icon_ProfileUser_profile = findViewById(R.id.icon_ProfileUser_profile);
+        Profile__LastNameUser = findViewById(R.id.Profile__LastNameUser);
+        Profile__CFCUser = findViewById(R.id.Profile__CFCUser);
+        Profile__CepUser = findViewById(R.id.Profile__CepUser);
+        Profile__ComplementUser = findViewById(R.id.Profile__ComplementUser);
     }
 
     @Override
@@ -114,10 +117,11 @@ public class ProfileActivity extends AppCompatActivity {
         for (int i = 0; i < permissions.length; i++) {
             if (permissions[i].equals("android.permission.CAMERA")  && grantResults[i] == 0){
                 // Camera ok
+                Log.d("PermissionStatus", "Camera permission has been GRANTED");
             }
             if (permissions[i].equals("android.permission.READ_EXTERNAL_STORAGE")  && grantResults[i] == 0){
                 // Gallery ok
-
+                Log.d("PermissionStatus", "Gallery permission has been GRANTED");
             }
         }
     }

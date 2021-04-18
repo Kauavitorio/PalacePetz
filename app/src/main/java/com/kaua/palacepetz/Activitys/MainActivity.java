@@ -25,8 +25,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  **/
 
 public class MainActivity extends AppCompatActivity {
-    LottieAnimationView btnMenu_Main;
-    CircleImageView icon_ProfileUser_main;
+    private LottieAnimationView btnMenu_Main;
+    private CircleImageView icon_ProfileUser_main;
     private BottomSheetDialog bottomSheetDialog;
 
     //  User information
