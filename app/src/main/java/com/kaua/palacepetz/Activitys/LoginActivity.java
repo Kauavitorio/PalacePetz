@@ -132,15 +132,16 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("pref_password", password);
             editor.putBoolean("pref_check", boollsChecked);
             editor.apply();
-            timer.postDelayed(this::GoToMain,1200);
+            timer.postDelayed(() -> GoToMain(email),1200);
         }else{
             mPrefs.edit().clear().apply();
-            timer.postDelayed(this::GoToMain,1200);
+            timer.postDelayed(() -> GoToMain(email),1200);
         }
     }
 
-    private void GoToMain(){
+    private void GoToMain(String email){
         Intent goTo_Main = new Intent(this, MainActivity.class);
+        goTo_Main.putExtra("email_user", email);
         startActivity(goTo_Main);
         finish();
     }

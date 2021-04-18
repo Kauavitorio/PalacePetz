@@ -16,7 +16,7 @@
     <item android:state_enabled="true"><layer-list>
         <item android:bottom="0dp" android:left="-10dp" android:right="-10dp" android:top="-10dp"><shape android:shape="rectangle">
 
-            <stroke android:width="4dp" android:color="#27B5FF" />
+            <stroke android:width="4dp" android:color="@color/edittext_base" />
 
             <corners android:radius="15dp" />
             <solid

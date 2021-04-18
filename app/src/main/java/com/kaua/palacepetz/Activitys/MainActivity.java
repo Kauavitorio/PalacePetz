@@ -15,6 +15,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.kaua.palacepetz.Fragments.MainFragment;
 import com.kaua.palacepetz.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  *  Copyright (c) 2021 Kauã Vitório
  *  Official repository https://github.com/Kauavitorio/PalacePetz
@@ -24,8 +26,13 @@ import com.kaua.palacepetz.R;
 
 public class MainActivity extends AppCompatActivity {
     LottieAnimationView btnMenu_Main;
+    CircleImageView icon_ProfileUser_main;
     private BottomSheetDialog bottomSheetDialog;
 
+    //  User information
+    String email_user;
+
+    //  Set preferences
     private SharedPreferences mPrefs;
     private static final String PREFS_NAME = "myPrefs";
 
@@ -34,14 +41,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Ids();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        email_user = bundle.getString("email_user");
 
         //  Get all SharedPreferences
         mPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
         MainFragment mainFragment = new MainFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putString("email_user", email_user);
+        mainFragment.setArguments(args);
         transaction.replace(R.id.frameLayoutMain, mainFragment);
         transaction.commit();
+
+        icon_ProfileUser_main.setOnClickListener(v -> {
+            Intent goTo_profile = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(goTo_profile);
+        });
 
 
         CreatingMenuSheet();
@@ -49,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void Ids() {
         btnMenu_Main = findViewById(R.id.btnMenu_Main);
+        icon_ProfileUser_main = findViewById(R.id.icon_ProfileUser_main);
     }
 
     private void CreatingMenuSheet() {

@@ -51,4 +51,18 @@
     <string name="really_want_logOut">Do you really want to log out?</string>
     <string name="logout">LogOut</string>
 
+    <!-- Profile / EditProfile Screen -->
+    <string name="personalname">Personal Name</string>
+    <string name="emailexample" translatable="false">emailexample@gmail.com</string>
+    <string name="cfcExample" translatable="false">000.000.000-00</string>
+    <string name="cepexample" translatable="false">00000-000</string>
+    <string name="address">Address</string>
+    <string name="complement">Complement</string>
+    <string name="editProfile">Edit Profile</string>
+    <string name="gallery">Gallery</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_payment_method">Select the upload method</string>
+    <string name="change_profile_photo">Change profile photo</string>
+    <string name="camera">Camera</string>
+
 </resources>
