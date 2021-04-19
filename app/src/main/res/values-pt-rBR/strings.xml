@@ -47,4 +47,7 @@
     <string name="change_profile_photo">Trocar foto de perfil</string>
     <string name="camera">Câmera</string>
     <string name="cpf">CPF</string>
+    <string name="register_address">CADASTRAR ENDEREÇO</string>
+    <string name="street">Rua</string>
+    <string name="number">Número</string>
 </resources>
