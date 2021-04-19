@@ -1,5 +1,6 @@
 package com.kaua.palacepetz.Activitys;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -15,9 +16,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kaua.palacepetz.Adapters.LoadingDialog;
+import com.kaua.palacepetz.Firebase.Conf_Firebase;
 import com.kaua.palacepetz.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -41,6 +43,9 @@ public class LoginActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "myPrefs";
     Handler timer = new Handler();
 
+    //  Set FirebaseAnalytics
+    FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         Ids();
         cardBtn_SingIn.setElevation(20);
         verifyIfUsersLogged();
+
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         cardBtn_SingIn.setOnClickListener(v -> {
@@ -58,13 +64,12 @@ public class LoginActivity extends AppCompatActivity {
             else if(editLogin_passwordUser.getText().length() == 0)
                 showError(editLogin_passwordUser, getString(R.string.password_required));
             else {
-                email = editLogin_emailUser.getText().toString();
+               email = editLogin_emailUser.getText().toString();
                 password = editLogin_passwordUser.getText().toString();
                 cardBtn_SingIn.setElevation(0);
                 cardBtn_SingIn.setEnabled(false);
                 loadingDialog.startLoading();
-                Toast.makeText(this, "Agora tem que fazer o login kkkk ", Toast.LENGTH_SHORT).show();
-                timer.postDelayed(() -> loadingDialog.dimissDialog(),3000);
+                DoLogin(email, password);
             }
         });
 
@@ -81,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void showError(EditText editText, String error){
+    private void showError(@NonNull EditText editText, String error){
         editText.requestFocus();
         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
         editText.setError(error);
@@ -110,7 +115,34 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void DoLogin(String email, String password) {
+        /*// Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = Conf_Firebase.getFirebaseAnalytics(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, email);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Test of while");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);*/
         loadingDialog.startLoading();
 
+        if (checkbox_rememberMe.isChecked()){
+            mPrefs.edit().clear().apply();
+            boolean boollsChecked = checkbox_rememberMe.isChecked();
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.putString("pref_email", email);
+            editor.putString("pref_password", password);
+            editor.putBoolean("pref_check", boollsChecked);
+            editor.apply();
+            timer.postDelayed(() -> GoToMain(email),1200);
+        }else{
+            mPrefs.edit().clear().apply();
+            timer.postDelayed(() -> GoToMain(email),1200);
+        }
+    }
+
+    private void GoToMain(String email){
+        Intent goTo_Main = new Intent(this, MainActivity.class);
+        goTo_Main.putExtra("email_user", email);
+        startActivity(goTo_Main);
+        finish();
     }
 }
