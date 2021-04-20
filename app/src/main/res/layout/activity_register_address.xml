@@ -8,6 +8,7 @@
     android:orientation="vertical"
     tools:context=".Activitys.RegisterAddressActivity">
 
+    <!-- Map Fragment -->
     <fragment
         android:id="@+id/map_register_address"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -219,6 +220,18 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <!-- Arrow Back -->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/arrowGoBackRegisterAddress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/arrow_back" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
