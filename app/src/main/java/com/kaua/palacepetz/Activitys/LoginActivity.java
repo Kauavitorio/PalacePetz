@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kaua.palacepetz.Adapters.LoadingDialog;
-import com.kaua.palacepetz.Firebase.Conf_Firebase;
 import com.kaua.palacepetz.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -42,6 +41,9 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences mPrefs;
     private static final String PREFS_NAME = "myPrefs";
     Handler timer = new Handler();
+
+    //  Fountain info
+    boolean isDevicePre;
 
     //  Set FirebaseAnalytics
     FirebaseAnalytics mFirebaseAnalytics;
@@ -109,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
         if (sp.contains("pref_email") && sp.contains("pref_password")) {
             String emailPref = sp.getString("pref_email", "not found");
             String PassPref = sp.getString("pref_password", "not found");
+            isDevicePre = sp.getBoolean("isDevicePre", false);
             checkbox_rememberMe.setChecked(sp.getBoolean("pref_check", true));
             DoLogin(emailPref, PassPref);
         }
@@ -131,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("pref_email", email);
             editor.putString("pref_password", password);
             editor.putBoolean("pref_check", boollsChecked);
+            editor.putBoolean("isDevicePre", isDevicePre);
             editor.apply();
             timer.postDelayed(() -> GoToMain(email),1200);
         }else{

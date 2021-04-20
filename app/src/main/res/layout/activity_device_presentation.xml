@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activitys.DevicePresentationActivity"
-    android:background="@drawable/background">
+    android:background="@drawable/background_device_presentation">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/screen_viewpager"
@@ -25,9 +25,9 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/device_presentation_button_border"
         android:drawableEnd="@drawable/ic_arrow_forward_black_24dp"
-        android:drawableTint="@color/gradient_start_color"
+        android:drawableTint="@color/white"
         android:text="@string/next"
-        android:textColor="@color/gradient_start_color"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -42,7 +42,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_next"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:tabIndicatorColor="@color/gradient_start_color"
+        app:tabIndicatorColor="#44BFFF"
         app:tabBackground="@drawable/device_presentation_indicator_selector">
 
     </com.google.android.material.tabs.TabLayout>
@@ -57,7 +57,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="84dp"
         android:background="@drawable/device_presentation_btn_gradient_style"
         android:text="@string/pair_my_fountain"
         android:textColor="@color/white"
@@ -80,5 +80,17 @@
         android:text="@string/skip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Arrow Back -->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/arrowGoBackDevicePresentation"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/arrow_back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
