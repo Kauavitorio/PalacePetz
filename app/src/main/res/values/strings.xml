@@ -66,9 +66,18 @@
     <string name="camera">Camera</string>
     <string name="cpf">CPF</string>
     <string name="cep" translatable="false">CEP</string>
-    <string name="title_activity_register_address">Map</string>
+    <string name="title_activity_register_address" translatable="false">Map</string>
     <string name="register_address">REGISTER ADDRESS</string>
     <string name="street">Street</string>
     <string name="number">Number</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="products">Products</string>
+    <string name="palaceFountain">Palace Fountain</string>
+    <string name="myOrders">My Orders</string>
+    <string name="less">-</string>
+    <string name="plus">+</string>
+    <string name="buyNow">Buy Now</string>
+    <string name="product_name">Product Name</string>
+    <string name="price">Price</string>
 
 </resources>

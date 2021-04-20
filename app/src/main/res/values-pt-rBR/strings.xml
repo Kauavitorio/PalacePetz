@@ -50,4 +50,10 @@
     <string name="register_address">CADASTRAR ENDEREÇO</string>
     <string name="street">Rua</string>
     <string name="number">Número</string>
+    <string name="products">Produtos</string>
+    <string name="palaceFountain">Palace Fountain</string>
+    <string name="myOrders">Meus Pedidos</string>
+    <string name="buyNow">Comprar Agora</string>
+    <string name="product_name">Nome do Produto</string>
+    <string name="price">Preço</string>
 </resources>

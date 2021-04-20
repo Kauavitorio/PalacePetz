@@ -25,11 +25,13 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <activity android:name=".Activitys.RegisterAddressActivity" android:label="@string/title_activity_register_address"/>
+        <activity
+            android:name=".Activitys.RegisterAddressActivity"
+            android:label="@string/title_activity_register_address" />
         <activity android:name=".Activitys.EditProfileActivity" />
         <activity android:name=".Activitys.ProfileActivity" />
         <activity android:name=".Activitys.DeviceControlling" />
-        <activity android:name=".Activitys.PairDeviceActivity"/>
+        <activity android:name=".Activitys.PairDeviceActivity" />
         <activity android:name=".Activitys.MainActivity" />
         <activity android:name=".Activitys.ForgotPasswordActivity" />
         <activity android:name=".Activitys.CreateAccountActivity" />

@@ -10,6 +10,8 @@
     <color name="background_menu_sheet">#444B54</color>
     <color name="selected_menu_sheet">#3D434B</color>
     <color name="edittext_base">#27B5FF</color>
+    <color name="sheetNoSelected">#6E7680</color>
+    <color name="background_Details_Products">#444B54</color>
 
     <!-- Device Presentation -->
     <color name="gradient_start_color">#4c84ff</color>
