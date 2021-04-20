@@ -30,15 +30,25 @@
     <string name="forgot_the_password">FORGOT PASSWORD?</string>
 
     <!-- Device Presentation -->
-    <string name="next">Next</string>
+    <string name="next">Next </string>
     <string name="skip">Skip</string>
     <string name="pair_my_fountain">Pair my fountain</string>
+    <string name="text_one_devicePresentation">The Palace Fountain is an equipment where you put the food and water for your pet you will have total control through our app.</string>
 
     <!-- PairDevice -->
     <string name="bluetooth_enable_success">Bluetooth Enabled successfully</string>
     <string name="bluetooth_couldnt_success">Bluetooth couldn\'t be enabled</string>
     <string name="no_paired_device">No paired devices found, please pair your PalacePetz device and try again</string>
     <string name="connecting">Connecting</string>
+    <string name="tips_pair_device">Pairing Tips</string>
+
+    <!-- Tips Device -->
+    <string name="tip01">1 - Turn on your phone\'s bluetooth;</string>
+    <string name="tip02">2 - Click on Palace_Fountain;</string>
+    <string name="tip03">3 - Then click Connect;</string>
+    <string name="tip04">4 - Then return here and click on continue.</string>
+    <string name="tip05_connect">If you are unable to connect, please contact PalacePetz</string>
+    <string name="txt_continue">Continue</string>
 
     <!-- Controlling Device -->
     <string name="could_connect_verify_device">Could not connect to device.\nPlease verify if your device is on.</string>
@@ -66,9 +76,22 @@
     <string name="camera">Camera</string>
     <string name="cpf">CPF</string>
     <string name="cep" translatable="false">CEP</string>
-    <string name="title_activity_register_address">Map</string>
+
+    <!-- Register Address -->
+    <string name="title_activity_register_address" translatable="false">Map</string>
     <string name="register_address">REGISTER ADDRESS</string>
     <string name="street">Street</string>
     <string name="number">Number</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="products">Products</string>
+    <string name="palaceFountain">Palace Fountain</string>
+    <string name="myOrders">My Orders</string>
+
+    <!-- Products Details -->
+    <string name="less" translatable="false">-</string>
+    <string name="plus" translatable="false">+</string>
+    <string name="buyNow">Buy Now</string>
+    <string name="product_name">Product Name</string>
+    <string name="price">Price</string>
 
 </resources>

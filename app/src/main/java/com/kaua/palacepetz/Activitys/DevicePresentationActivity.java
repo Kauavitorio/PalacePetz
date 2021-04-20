@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -37,25 +38,31 @@ public class DevicePresentationActivity extends AppCompatActivity {
     Button btnGetStarted;
     Animation btnAnim ;
     TextView tvSkip;
+    LottieAnimationView arrowGoBackDevicePresentation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_presentation);
+        setTheme(R.style.DevicePresentation);
+        arrowGoBackDevicePresentation = findViewById(R.id.arrowGoBackDevicePresentation);
 
         // make the activity on full screen
-        View decorView = getWindow().getDecorView();
+        /*View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
+        decorView.setSystemUiVisibility(uiOptions);*/
 
 
         // when this activity is about to be launch we need to check if its opened before or not
         if (restorePrefData()) {
-            Intent pairdevice = new Intent(getApplicationContext(),PairDeviceActivity.class );
-            startActivity(pairdevice);
+            Intent PairDevice = new Intent(getApplicationContext(), DevicePairActivity.class );
+            startActivity(PairDevice);
             finish();
         }
+
+        //  When click will finish this activity
+        arrowGoBackDevicePresentation.setOnClickListener(v -> finish());
 
         // init views
         btnNext = findViewById(R.id.btn_next);
@@ -67,10 +74,9 @@ public class DevicePresentationActivity extends AppCompatActivity {
 
         // fill list screen
         final List<DevicePresentation> mList = new ArrayList<>();
-        mList.add(new DevicePresentation("Palace Fountain","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.device_presentation_palace_fountain));
-        mList.add(new DevicePresentation("Conforto e agilidade","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.device_presentation_cat));
-        mList.add(new DevicePresentation("Tecnologia","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.img3));
-        mList.add(new DevicePresentation("Easy Payment","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.img3));
+        mList.add(new DevicePresentation("Palace Fountain", getString(R.string.text_one_devicePresentation) ,R.drawable.device_presentation_palace_fountain));
+        mList.add(new DevicePresentation("Conforto e agilidade","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.device_presentation_dog_bread));
+        mList.add(new DevicePresentation("Tecnologia","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.device_presentation_with_chicken));
 
         // setup viewpager
         screenPager = findViewById(R.id.screen_viewpager);
@@ -117,8 +123,8 @@ public class DevicePresentationActivity extends AppCompatActivity {
         // Get Started button click listener
         btnGetStarted.setOnClickListener(v -> {
             //open Pair Device activity
-            Intent pairdevice = new Intent(getApplicationContext(),PairDeviceActivity.class );
-            startActivity(pairdevice);
+            Intent PairDevice = new Intent(getApplicationContext(), DevicePairActivity.class );
+            startActivity(PairDevice);
             // also we need to save a boolean value to storage so next time when the user run the app
             // we could know that he is already checked the intro screen activity
             // i'm going to use shared preferences to that process
@@ -132,13 +138,13 @@ public class DevicePresentationActivity extends AppCompatActivity {
 
     private boolean restorePrefData() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
-        return pref.getBoolean("isDevicePresentationOpened",false);
+        return pref.getBoolean("isDevicePre",false);
     }
 
     private void savePrefsData() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("isDevicePresentationOpened",true);
+        editor.putBoolean("isDevicePre",true);
         editor.apply();
     }
 

@@ -20,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,6 +30,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import com.kaua.palacepetz.Adapters.LoadingDialog;
 import com.kaua.palacepetz.Iot.PreferencesActivity;
 import com.kaua.palacepetz.R;
 
@@ -38,35 +38,31 @@ import com.kaua.palacepetz.R;
  *  Copyright (c) 2021 Kauã Vitório
  *  Official repository https://github.com/Kauavitorio/PalacePetz
  *  Responsible developer: https://github.com/Kauavitorio
- * @author Kaua Vitorio
+ *  @author Kaua Vitorio
  **/
 
-public class PairDeviceActivity extends AppCompatActivity {
-    Button search;
-    Button connect;
+public class DevicePairActivity extends AppCompatActivity {
     private ListView listView;
     private BluetoothAdapter mBTAdapter;
     private static final int BT_ENABLE_REQUEST = 10; // This is the code we use for BT Enable
     private static final int SETTINGS = 20;
     private UUID mDeviceUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    private int mBufferSize = 50000; //Default
+    private int mBufferSize = 50000; // Default
     public static final String DEVICE_EXTRA = "com.example.lightcontrol.SOCKET";
     public static final String DEVICE_UUID = "com.example.lightcontrol.uuid";
     private static final String DEVICE_LIST = "com.example.lightcontrol.devicelist";
     private static final String DEVICE_LIST_SELECTED = "com.example.lightcontrol.devicelistselected";
     public static final String BUFFER_SIZE = "com.example.lightcontrol.buffersize";
     private static final String TAG = "BlueTest5-PairDevice";
+    private final LoadingDialog loadingDialog = new LoadingDialog(DevicePairActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pair_device);
+        setTheme(R.style.DevicePresentation);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        search = findViewById(R.id.search);
-        connect = findViewById(R.id.connect);
-
-        listView = findViewById(R.id.listview);
+        listView = findViewById(R.id.listView_devices);
 
         if (savedInstanceState != null) {
             ArrayList<BluetoothDevice> list = savedInstanceState.getParcelableArrayList(DEVICE_LIST);
@@ -76,7 +72,6 @@ public class PairDeviceActivity extends AppCompatActivity {
                 int selectedIndex = savedInstanceState.getInt(DEVICE_LIST_SELECTED);
                 if (selectedIndex != -1) {
                     adapter.setSelectedIndex(selectedIndex);
-                    connect.setEnabled(true);
                 }
             } else {
                 initList(new ArrayList<>());
@@ -95,21 +90,6 @@ public class PairDeviceActivity extends AppCompatActivity {
         } else {
             new SearchDevices().execute();
         }
-
-        search.setOnClickListener(arg0 -> {
-
-        });
-
-        connect.setOnClickListener(arg0 -> {
-            BluetoothDevice device = ((MyAdapter) (listView.getAdapter())).getSelectedItem();
-            Intent intent = new Intent(getApplicationContext(), DeviceControlling.class);
-            Toast.makeText(PairDeviceActivity.this, "" + device, Toast.LENGTH_SHORT).show();
-            intent.putExtra(DEVICE_EXTRA, device);
-            intent.putExtra(DEVICE_UUID, mDeviceUUID.toString());
-            intent.putExtra(BUFFER_SIZE, mBufferSize);
-            startActivity(intent);
-        });
-
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -152,7 +132,6 @@ public class PairDeviceActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             adapter.setSelectedIndex(position);
-            connect.setEnabled(true);
         });
     }
 
@@ -167,9 +146,15 @@ public class PairDeviceActivity extends AppCompatActivity {
     private class SearchDevices extends AsyncTask<Void, Void, List<BluetoothDevice>> {
 
         @Override
+        protected void onPreExecute() {
+            loadingDialog.startLoading();
+        }
+
+        @Override
         protected List<BluetoothDevice> doInBackground(Void... params) {
             Set<BluetoothDevice> pairedDevices = mBTAdapter.getBondedDevices();
             List<BluetoothDevice> listDevices = new ArrayList<>();
+            Activity context = DevicePairActivity.this;
             for (BluetoothDevice device : pairedDevices) {
                 String deviceName = device.getName();
                 String[] arrayDeviceName = deviceName.split("_");
@@ -182,11 +167,17 @@ public class PairDeviceActivity extends AppCompatActivity {
                     intent.putExtra(DEVICE_UUID, mDeviceUUID.toString());
                     intent.putExtra(BUFFER_SIZE, mBufferSize);
                     startActivity(intent);
-                    Activity context = PairDeviceActivity.this;
                     context.finish();
+                    Log.d("PairStatus", "Device Is found");
                     /*if (deviceHardwareAddress.equals("00:21:13:00:BC:20")) {
 
                     }*/
+                }else{
+                    Log.d("PairStatus", "Device Is not found");
+                    Intent goTo_tips = new Intent(getApplicationContext(), DeviceTipsActivity.class);
+                    goTo_tips.putExtra("NotFound", true);
+                    startActivity(goTo_tips);
+                    context.finish();
                 }
                 return listDevices;
             }
@@ -196,11 +187,12 @@ public class PairDeviceActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<BluetoothDevice> listDevices) {
             super.onPostExecute(listDevices);
+            loadingDialog.dimissDialog();
             if (listDevices.size() > 0) {
                 MyAdapter adapter = (MyAdapter) listView.getAdapter();
                 adapter.replaceItems(listDevices);
             } else {
-                Toast.makeText(PairDeviceActivity.this, R.string.no_paired_device, Toast.LENGTH_SHORT).show();
+                Log.d("PairStatus", "Device Is not found");
             }
         }
 
@@ -302,7 +294,7 @@ public class PairDeviceActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(PairDeviceActivity.this, PreferencesActivity.class);
+        Intent intent = new Intent(DevicePairActivity.this, PreferencesActivity.class);
         startActivityForResult(intent, SETTINGS);
         return super.onOptionsItemSelected(item);
     }

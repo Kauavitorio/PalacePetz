@@ -65,6 +65,7 @@ public class DeviceControlling extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_controlling);
+        setTheme(R.style.DevicePresentation);
 
         ActivityHelper.initialize(this);
         loadingDialog = new LoadingDialog(this);
@@ -87,9 +88,9 @@ public class DeviceControlling extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
-        mDevice = b.getParcelable(PairDeviceActivity.DEVICE_EXTRA);
-        mDeviceUUID = UUID.fromString(b.getString(PairDeviceActivity.DEVICE_UUID));
-        mMaxChars = b.getInt(PairDeviceActivity.BUFFER_SIZE);
+        mDevice = b.getParcelable(DevicePairActivity.DEVICE_EXTRA);
+        mDeviceUUID = UUID.fromString(b.getString(DevicePairActivity.DEVICE_UUID));
+        mMaxChars = b.getInt(DevicePairActivity.BUFFER_SIZE);
         if (mBTSocket == null || !mIsBluetoothConnected) {
             new ConnectBT().execute();
         }

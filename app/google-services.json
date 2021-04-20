@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "298016380249",
-    "project_id": "palacepetz-66baf",
-    "storage_bucket": "palacepetz-66baf.appspot.com"
+    "project_number": "599169235119",
+    "project_id": "palacepetz-22a1b",
+    "storage_bucket": "palacepetz-22a1b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:298016380249:android:99709d2245922bbce1a848",
+        "mobilesdk_app_id": "1:599169235119:android:f91ef895f19a84a007bc5a",
         "android_client_info": {
           "package_name": "com.kaua.palacepetz"
         }
       },
       "oauth_client": [
         {
-          "client_id": "298016380249-p5hef884u3phhhjcju03hau00rkeg9kl.apps.googleusercontent.com",
+          "client_id": "599169235119-nnp64br4q7u6tbcm7bmbgucsnuoptld5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.kaua.palacepetz",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "298016380249-4a4v190p04if3ju2gnhlk1cb515cg8ec.apps.googleusercontent.com",
+          "client_id": "599169235119-qc197op0gjjjnkcnukv0bi3sae13rb7b.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBnlYJbCsoRLEHNKGNdohTHydjlzRAKoT0"
+          "current_key": "AIzaSyDoXGw0oVxYd4BQfEIEy2yjs7PGsZfmbiI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "298016380249-4a4v190p04if3ju2gnhlk1cb515cg8ec.apps.googleusercontent.com",
+              "client_id": "599169235119-qc197op0gjjjnkcnukv0bi3sae13rb7b.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

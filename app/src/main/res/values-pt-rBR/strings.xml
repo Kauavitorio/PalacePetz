@@ -6,7 +6,7 @@
     <string name="loading">Carregando…</string>
     <string name="connecting">Conectando</string>
     <string name="could_connect_verify_device">Não foi possível conectar ao dispositivo.\nVerifique se o seu dispositivo está ligado.</string>
-    <string name="next">Próximo</string>
+    <string name="next">Próximo </string>
     <string name="skip">Pular</string>
     <string name="pair_my_fountain">Emparelhar minha fonte</string>
     <string name="login">Login</string>
@@ -50,4 +50,18 @@
     <string name="register_address">CADASTRAR ENDEREÇO</string>
     <string name="street">Rua</string>
     <string name="number">Número</string>
+    <string name="products">Produtos</string>
+    <string name="palaceFountain">Palace Fountain</string>
+    <string name="myOrders">Meus Pedidos</string>
+    <string name="buyNow">Comprar Agora</string>
+    <string name="product_name">Nome do Produto</string>
+    <string name="price">Preço</string>
+    <string name="text_one_devicePresentation">A Palace Fountain é um equipamento onde você coloca a ração e água para o seu pet você terá o controle total através do nosso app.</string>
+    <string name="tips_pair_device">Dicas de Emparelhamento</string>
+    <string name="tip01">1 - Ligue o bluetooth do seu celular;</string>
+    <string name="tip02">2 - Clique em cima de Palace_Fountain;</string>
+    <string name="tip03">3 - Depois clique em Conectar;</string>
+    <string name="tip04">4 - Depois retorne aqui e clique em continuar.</string>
+    <string name="tip05_connect">Se não estiver conseguindo se conectar, por favor entrar em contato com a PalacePetz</string>
+    <string name="txt_continue">Continuar</string>
 </resources>

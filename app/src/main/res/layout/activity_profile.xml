@@ -153,7 +153,7 @@
             android:background="@drawable/edittext_profile"
             android:ems="10"
             android:fontFamily="@font/segoe_ui"
-            android:hint="@string/cepexample"
+            android:hint="@string/cep"
             android:inputType="textPersonName"
             android:minHeight="50sp"
             android:textColor="#000"

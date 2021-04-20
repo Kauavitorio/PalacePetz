@@ -1,6 +1,8 @@
 package com.kaua.palacepetz.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
@@ -9,9 +11,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.kaua.palacepetz.Adapters.IOnBackPressed;
+import com.kaua.palacepetz.Fragments.AllProductsFragment;
+import com.kaua.palacepetz.Fragments.DetailsProductsFragment;
 import com.kaua.palacepetz.Fragments.MainFragment;
 import com.kaua.palacepetz.R;
 
@@ -74,13 +80,65 @@ public class MainActivity extends AppCompatActivity {
         btnMenu_Main.setOnClickListener(v -> {
             btnMenu_Main.playAnimation();
             bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetTheme);
-
             //  Creating View for SheetMenu
             View sheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.adapter_menu_sheet,
                     findViewById(R.id.menu_sheet_principal));
 
+            ConstraintLayout home = sheetView.findViewById(R.id.BtnHomeSheetMenu);
+            ConstraintLayout products = sheetView.findViewById(R.id.BtnProductsSheetMenu);
+            ConstraintLayout palaceFountain = sheetView.findViewById(R.id.BtnFountainsSheetMenu);
+            ConstraintLayout myOrders = sheetView.findViewById(R.id.BtnMyOrdersSheetMenu);
+            TextView txt_home = sheetView.findViewById(R.id.txt_sheet_home);
+            TextView txt_products = sheetView.findViewById(R.id.txt_sheet_Products);
+            TextView txt_palaceFountain = sheetView.findViewById(R.id.txt_sheet_Fountain);
+            TextView txt_myOrders = sheetView.findViewById(R.id.txt_sheet_MyOrders);
+
+            //  Show Main Fragment
+            home.setOnClickListener(v1 -> {
+                MainFragment mainFragment = new MainFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                Bundle args = new Bundle();
+                args.putString("email_user", email_user);
+                mainFragment.setArguments(args);
+                transaction.replace(R.id.frameLayoutMain, mainFragment);
+                transaction.commit();
+                bottomSheetDialog.dismiss();
+            });
+
+            //  Show All Products fragment
+            products.setOnClickListener(v1 -> {
+                AllProductsFragment allProductsFragment = new AllProductsFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                Bundle args = new Bundle();
+                args.putString("email_user", email_user);
+                allProductsFragment.setArguments(args);
+                transaction.replace(R.id.frameLayoutMain, allProductsFragment);
+                transaction.commit();
+                bottomSheetDialog.dismiss();
+            });
+
+            //  Show Palace Fountain Fragment
+            palaceFountain.setOnClickListener(v1 -> {
+                Intent goTo_DevicePresentation = new Intent(this, DevicePresentationActivity.class);
+                startActivity(goTo_DevicePresentation);
+                bottomSheetDialog.dismiss();
+            });
+
+
+            //  Show My Orders Fragment
+            myOrders.setOnClickListener(v1 -> {
+                DetailsProductsFragment detailsProductsFragment = new DetailsProductsFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                Bundle args = new Bundle();
+                args.putString("email_user", email_user);
+                detailsProductsFragment.setArguments(args);
+                transaction.replace(R.id.frameLayoutMain, detailsProductsFragment);
+                transaction.commit();
+                bottomSheetDialog.dismiss();
+            });
+
             //  When click in this linear will to LoginActivity
-            sheetView.findViewById(R.id.BtnLogOut_sheet).setOnClickListener(v1 -> {
+            sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> {
                 AlertDialog.Builder warning_alert = new AlertDialog.Builder(MainActivity.this);
                 warning_alert.setTitle(getString(R.string.logout));
                 warning_alert.setMessage(getString(R.string.really_want_logOut));
@@ -97,5 +155,12 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetDialog.setContentView(sheetView);
             bottomSheetDialog.show();
         });
+    }
+
+    @Override public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frameLayoutMain);
+        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
+            super.onBackPressed();
+        }
     }
 }
