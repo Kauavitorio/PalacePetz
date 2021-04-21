@@ -58,6 +58,13 @@ dependencies {
     /***** End Firebase Dependencies ******/
 
     /***** Another Dependencies ****/
+
+    //  Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //  Swipe Refresh
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
     //  LottieFiles Animations
     implementation "com.airbnb.android:lottie:3.7.0"
 
