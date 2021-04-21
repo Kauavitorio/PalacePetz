@@ -30,19 +30,73 @@
     <string name="forgot_the_password">FORGOT PASSWORD?</string>
 
     <!-- Device Presentation -->
-    <string name="next">Next</string>
+    <string name="next">Next </string>
     <string name="skip">Skip</string>
     <string name="pair_my_fountain">Pair my fountain</string>
+    <string name="text_one_devicePresentation">The Palace Fountain is an equipment where you put the food and water for your pet you will have total control through our app.</string>
 
     <!-- PairDevice -->
     <string name="bluetooth_enable_success">Bluetooth Enabled successfully</string>
     <string name="bluetooth_couldnt_success">Bluetooth couldn\'t be enabled</string>
     <string name="no_paired_device">No paired devices found, please pair your PalacePetz device and try again</string>
     <string name="connecting">Connecting</string>
+    <string name="tips_pair_device">Pairing Tips</string>
+
+    <!-- Tips Device -->
+    <string name="tip01">1 - Turn on your phone\'s bluetooth;</string>
+    <string name="tip02">2 - Click on Palace_Fountain;</string>
+    <string name="tip03">3 - Then click Connect;</string>
+    <string name="tip04">4 - Then return here and click on continue.</string>
+    <string name="tip05_connect">If you are unable to connect, please contact PalacePetz</string>
+    <string name="txt_continue">Continue</string>
 
     <!-- Controlling Device -->
     <string name="could_connect_verify_device">Could not connect to device.\nPlease verify if your device is on.</string>
     <string name="noProblem_lets_help_you">NO PROBLEM,\nLET\'S HELP YOU.</string>
     <string name="change_password">Change Password</string>
+
+    <!-- Sheet Menu -->
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="really_want_logOut">Do you really want to log out?</string>
+    <string name="logout">LogOut</string>
+
+    <!-- Profile / EditProfile Screen -->
+    <string name="personalname">Personal Name</string>
+    <string name="emailexample" translatable="false">emailexample@gmail.com</string>
+    <string name="cpfExample" translatable="false">000.000.000-00</string>
+    <string name="cepexample" translatable="false">00000-000</string>
+    <string name="address">Address</string>
+    <string name="complement">Complement</string>
+    <string name="editProfile">Edit Profile</string>
+    <string name="gallery">Gallery</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_payment_method">Select the upload method</string>
+    <string name="change_profile_photo">Change profile photo</string>
+    <string name="camera">Camera</string>
+    <string name="cpf">CPF</string>
+    <string name="cep" translatable="false">CEP</string>
+
+    <!-- Register Address -->
+    <string name="title_activity_register_address" translatable="false">Map</string>
+    <string name="register_address">REGISTER ADDRESS</string>
+    <string name="street">Street</string>
+    <string name="number">Number</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="palaceFountain">Palace Fountain</string>
+    <string name="myOrders">My Orders</string>
+
+    <!-- Products -->
+    <string name="products">Products</string>
+    <string name="lowest_price">LOWEST PRICE</string>
+    <string name="biggest_price">BIGGEST PRICE</string>
+    <string name="popular" translatable="false">Popular</string>
+
+    <!-- Products Details -->
+    <string name="less" translatable="false">-</string>
+    <string name="plus" translatable="false">+</string>
+    <string name="buyNow">Buy Now</string>
+    <string name="product_name">Product Name</string>
+    <string name="price">Price</string>
 
 </resources>

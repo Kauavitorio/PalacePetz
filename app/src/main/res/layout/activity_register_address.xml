@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    tools:context=".Activitys.RegisterAddressActivity">
+
+    <!-- Map Fragment -->
+    <fragment
+        android:id="@+id/map_register_address"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_register_address"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".Activitys.RegisterAddressActivity" />
+
+    <!-- Guide Line -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_register_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="373dp" />
+
+    <!-- Container for edits -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:background="@drawable/container_register_address"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <!--Text Tittle-->
+            <TextView
+                android:id="@+id/txt_title_register_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/register_address"
+                android:textColor="#000"
+                android:textSize="27sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- EditText CEP -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cep_textInputLayout_registerAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_register_address">
+
+                <!-- EditText CEP -->
+                <EditText
+                    android:id="@+id/editRegisterAddress_CepUser"
+                    android:layout_width="333dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/custom_edittext_base"
+                    android:ems="10"
+                    android:fontFamily="@font/segoe_ui"
+                    android:hint="@string/cep"
+                    android:inputType="textEmailAddress"
+                    android:minHeight="50sp"
+                    android:textColor="#000"
+                    android:textColorHint="@color/hint"
+                    android:textSize="21sp"
+                    tools:ignore="Autofill,TextFields" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- EditText Street -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Street_textInputLayout_registerAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cep_textInputLayout_registerAddress">
+
+                <!-- EditText Street -->
+                <EditText
+                    android:id="@+id/editRegisterAddress_StreetUser"
+                    android:layout_width="333dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/custom_edittext_base"
+                    android:ems="10"
+                    android:fontFamily="@font/segoe_ui"
+                    android:hint="@string/street"
+                    android:inputType="textEmailAddress"
+                    android:minHeight="50sp"
+                    android:textColor="#000"
+                    android:textColorHint="@color/hint"
+                    android:textSize="21sp"
+                    tools:ignore="Autofill,TextFields" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- EditText Number -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Number_textInputLayout_registerAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Street_textInputLayout_registerAddress">
+
+                <!-- EditText Number -->
+                <EditText
+                    android:id="@+id/editRegisterAddress_NumberUser"
+                    android:layout_width="333dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/custom_edittext_base"
+                    android:ems="10"
+                    android:fontFamily="@font/segoe_ui"
+                    android:hint="@string/number"
+                    android:inputType="textEmailAddress"
+                    android:minHeight="50sp"
+                    android:textColor="#000"
+                    android:textColorHint="@color/hint"
+                    android:textSize="21sp"
+                    tools:ignore="Autofill,TextFields" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- EditText Complement -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Complement_textInputLayout_registerAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Number_textInputLayout_registerAddress">
+
+                <!-- EditText Complement -->
+                <EditText
+                    android:id="@+id/editRegisterAddress_ComplementUser"
+                    android:layout_width="333dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/custom_edittext_base"
+                    android:ems="10"
+                    android:fontFamily="@font/segoe_ui"
+                    android:hint="@string/complement"
+                    android:inputType="textEmailAddress"
+                    android:minHeight="50sp"
+                    android:textColor="#000"
+                    android:textColorHint="@color/hint"
+                    android:textSize="21sp"
+                    tools:ignore="Autofill,TextFields" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Card Register -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardBtn_RegisterAddress"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20sp"
+                android:layout_marginBottom="20dp"
+                app:cardBackgroundColor="@color/cards_background"
+                app:cardCornerRadius="35dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Complement_textInputLayout_registerAddress">
+
+                <!-- Container  -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!-- Text Sing In -->
+                    <TextView
+                        android:id="@+id/txt_SingInLogin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="@string/sing_in"
+                        android:textColor="#F5FBFF"
+                        android:textSize="30sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <!-- Arrow Back -->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/arrowGoBackRegisterAddress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/arrow_back" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

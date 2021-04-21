@@ -7,8 +7,13 @@
     *  Responsible developer: https://github.com/Kauavitorio
     -->
     <!-- Set user permission -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,10 +22,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PalacePetz">
-        <activity android:name=".Activitys.DeviceControlling" android:screenOrientation="portrait" />
-        <activity android:name=".Activitys.PairDeviceActivity" android:screenOrientation="portrait" />
+
+        <!-- Palace Fountain Activitys -->
+        <activity android:name=".Activitys.DeviceTipsActivity"
+            android:theme="@style/DevicePresentation"/>
+        <activity android:name=".Activitys.DeviceControlling"
+            android:theme="@style/DevicePresentation" />
+        <activity android:name=".Activitys.DevicePairActivity"
+            android:theme="@style/DevicePresentation" />
+        <activity
+            android:name=".Activitys.DevicePresentationActivity"
+            android:theme="@style/DevicePresentation" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".Activitys.RegisterAddressActivity"
+            android:label="@string/title_activity_register_address" />
+        <activity android:name=".Activitys.EditProfileActivity" />
+        <activity android:name=".Activitys.ProfileActivity" />
         <activity android:name=".Activitys.MainActivity" />
-        <activity android:name=".Activitys.ForgotPasswordActivity"/>
+        <activity android:name=".Activitys.ForgotPasswordActivity" />
         <activity android:name=".Activitys.CreateAccountActivity" />
         <activity android:name=".Activitys.LoginActivity" />
         <activity android:name=".Activitys.SplashScreen">
@@ -30,7 +54,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activitys.DevicePresentationActivity" />
     </application>
 
 </manifest>
