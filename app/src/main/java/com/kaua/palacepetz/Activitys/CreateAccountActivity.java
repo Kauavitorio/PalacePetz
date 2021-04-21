@@ -129,7 +129,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }else {
                     floating_Password_Label.setErrorEnabled(false);
                 }
-                if (!editLogin_PasswordUserRegister.getText().toString().matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&.])[A-Za-z\\d@$!%*#?&.]{8,}$")){
+                if (!editLogin_PasswordUserRegister.getText().toString().matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")){
                     floating_Password_Label.setError(getString(R.string.password_needs));
                     floating_Password_Label.setErrorEnabled(true);
                 }else {
