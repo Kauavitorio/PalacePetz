@@ -1,34 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background_device_presentation"
     android:orientation="vertical"
     tools:context=".Activitys.DeviceControlling">
 
-    <Button
-        android:id="@+id/on"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:text="Put Water"/>
+    <!-- Arrow Back -->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/arrowGoBackDeviceControlling"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/arrow_back" />
 
-    <Button
-        android:id="@+id/btnLigthOn"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:text="Light ON"/>
+    <!-- Arrow Voice -->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/btnVoice_Controlling"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/assistant_animation" />
 
-    <Button
-    android:id="@+id/btnLigthoff"
-    android:layout_width="150dp"
-    android:layout_height="100dp"
-    android:text="Light OFF"/>
+    <!-- Title Palace Fountain -->
+    <TextView
+        android:id="@+id/textViewPalaceFontainControlling"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35sp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/segoe_ui"
+        android:text="@string/palaceFountain"
+        android:textColor="@color/white"
+        android:textSize="29sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arrowGoBackDeviceControlling" />
 
-    <Button
-        android:id="@+id/btnVoice"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:text="VOICE"/>
-</LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_tips_device"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Btn Put Water -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_PutWater"
+            android:layout_width="300dp"
+            android:layout_height="85dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/putwater_bg_controlling"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Text Put Water -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/put_water"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Btn PLACE RATION -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_PutRacao"
+            android:layout_width="300dp"
+            android:layout_height="85dp"
+            android:background="@drawable/putracao_bg_controlling"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_PutWater">
+
+            <!-- Text PLACE RATION -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/put_racao"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Btn Disconnect -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_Disconnect"
+            android:layout_width="300dp"
+            android:layout_height="85dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/discornnect_bg_controlling"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_PutRacao">
+
+            <!-- Text DISCONNECT -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/disconnect"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
