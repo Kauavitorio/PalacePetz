@@ -66,4 +66,7 @@
     <string name="txt_continue">Continuar</string>
     <string name="lowest_price">MENOR PREÇO</string>
     <string name="biggest_price">MAIOR PREÇO</string>
+    <string name="put_water">COLOCAR ÁGUA</string>
+    <string name="put_racao">COLOCAR RAÇÃO</string>
+    <string name="disconnect">DESCONECTAR</string>
 </resources>

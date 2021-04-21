@@ -2,6 +2,7 @@ package com.kaua.palacepetz.Activitys;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
@@ -15,7 +16,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.kaua.palacepetz.Adapters.LoadingDialog;
 import com.kaua.palacepetz.Iot.ActivityHelper;
 import com.kaua.palacepetz.R;
@@ -59,7 +60,8 @@ public class DeviceControlling extends AppCompatActivity {
 
 
     LoadingDialog loadingDialog;
-    Button btnOn, btnLigthOn, btnLigthoff, btnVoice;
+    LottieAnimationView arrowGoBackDeviceControlling, btnVoice_Controlling;
+    ConstraintLayout btn_PutWater, btn_PutRacao, btn_Disconnect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +71,11 @@ public class DeviceControlling extends AppCompatActivity {
 
         ActivityHelper.initialize(this);
         loadingDialog = new LoadingDialog(this);
-        btnOn = findViewById(R.id.on);
-        btnLigthOn = findViewById(R.id.btnLigthOn);
-        btnLigthoff = findViewById(R.id.btnLigthoff);
-        btnVoice = findViewById(R.id.btnVoice);
+        btn_PutWater = findViewById(R.id.btn_PutWater);
+        btn_PutRacao = findViewById(R.id.btn_PutRacao);
+        btn_Disconnect = findViewById(R.id.btn_Disconnect);
+        arrowGoBackDeviceControlling = findViewById(R.id.arrowGoBackDeviceControlling);
+        btnVoice_Controlling = findViewById(R.id.btnVoice_Controlling);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String orientation = prefs.getString("prefOrientation", "Null");
@@ -97,7 +100,7 @@ public class DeviceControlling extends AppCompatActivity {
 
         Log.d(TAG, "Ready");
 
-        btnVoice.setOnClickListener(v -> {
+        btnVoice_Controlling.setOnClickListener(v -> {
             Intent i = new Intent(
                     RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
@@ -111,27 +114,11 @@ public class DeviceControlling extends AppCompatActivity {
         });
 
 
-        btnOn.setOnClickListener(v -> {
+        btn_PutWater.setOnClickListener(v -> {
             try {
                 mBTSocket.getOutputStream().write(passPutWater.getBytes());
                 //onResume();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        btnLigthOn.setOnClickListener(v -> {
-            try {
-                mBTSocket.getOutputStream().write(lightOn.getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        btnLigthoff.setOnClickListener(v -> {
-            try {
-                mBTSocket.getOutputStream().write(lightOFF.getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
             }
