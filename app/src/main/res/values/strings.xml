@@ -83,9 +83,14 @@
     <string name="street">Street</string>
     <string name="number">Number</string>
     <string name="home" translatable="false">Home</string>
-    <string name="products">Products</string>
     <string name="palaceFountain">Palace Fountain</string>
     <string name="myOrders">My Orders</string>
+
+    <!-- Products -->
+    <string name="products">Products</string>
+    <string name="lowest_price">LOWEST PRICE</string>
+    <string name="biggest_price">BIGGEST PRICE</string>
+    <string name="popular" translatable="false">Popular</string>
 
     <!-- Products Details -->
     <string name="less" translatable="false">-</string>

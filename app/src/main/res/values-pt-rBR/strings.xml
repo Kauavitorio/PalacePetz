@@ -64,4 +64,6 @@
     <string name="tip04">4 - Depois retorne aqui e clique em continuar.</string>
     <string name="tip05_connect">Se não estiver conseguindo se conectar, por favor entrar em contato com a PalacePetz</string>
     <string name="txt_continue">Continuar</string>
+    <string name="lowest_price">MENOR PREÇO</string>
+    <string name="biggest_price">MAIOR PREÇO</string>
 </resources>
