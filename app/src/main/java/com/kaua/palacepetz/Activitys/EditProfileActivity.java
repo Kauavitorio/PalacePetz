@@ -23,10 +23,12 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.kaua.palacepetz.Adapters.Userpermissions;
-import com.kaua.palacepetz.MaskEditUtil;
+import com.kaua.palacepetz.Methods.MaskEditUtil;
 import com.kaua.palacepetz.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.kaua.palacepetz.Methods.ValidateCPF.isValidCPF;
 
 public class EditProfileActivity extends AppCompatActivity {
     private TextView txt_userName_EditProfile, txt_email_EditProfile;
@@ -87,9 +89,9 @@ public class EditProfileActivity extends AppCompatActivity {
                 showError(editProfile_FirstNameUser, getString(R.string.necessary_to_insert_the_First_name));
             else if (editProfile__LastNameUser.getText().length() == 0 || editProfile__LastNameUser.getText().length() < 3)
                 showError(editProfile__LastNameUser, getString(R.string.necessary_to_insert_the_last_name));
-            else{
-                EditUserProfile();
-            }
+            else if(!isValidCPF(editProfile__CPFUser.getText().toString())){
+                showError(editProfile__CPFUser, getString(R.string.cpfinformedisInvalid));
+            }else{ EditUserProfile(); }
         });
     }
 

@@ -1,4 +1,4 @@
-package com.kaua.palacepetz;
+package com.kaua.palacepetz.Methods;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -43,7 +43,7 @@ public abstract class MaskEditUtil {
 
             @Override
             public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
-                final String str = com.kaua.palacepetz.MaskEditUtil.unmask(s.toString());
+                final String str = MaskEditUtil.unmask(s.toString());
                 String mascara = "";
                 if (isUpdating) {
                     old = str;

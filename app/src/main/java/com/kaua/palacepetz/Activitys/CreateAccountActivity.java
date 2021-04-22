@@ -17,14 +17,17 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.kaua.palacepetz.Adapters.LoadingDialog;
+import com.kaua.palacepetz.Methods.MaskEditUtil;
 import com.kaua.palacepetz.R;
 
 import java.util.Objects;
 
+import static com.kaua.palacepetz.Methods.ValidateCPF.isValidCPF;
+
 
 public class CreateAccountActivity extends AppCompatActivity {
-    EditText editLogin_FirstNameUserRegister, editLogin_LastNameUserRegister, editLogin_EmailUserRegister,
-    editLogin_PasswordUserRegister, editLogin_ConfirmPasswordUserRegister;
+    EditText editLogin_FirstNameUserRegister, editLogin_LastNameUserRegister, editRegister_CpfUser,
+    editLogin_EmailUserRegister, editLogin_PasswordUserRegister, editLogin_ConfirmPasswordUserRegister;
     TextView txt_haveAccount;
     CardView cardBtn_SingUp;
     String password_base = "", password_confirm = "";
@@ -44,8 +47,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         checking_password_have_minimum_characters();
         checking_if_all_password_is_equal();
 
-
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        //  Set Mask
+        editRegister_CpfUser.addTextChangedListener(MaskEditUtil.mask(editRegister_CpfUser, MaskEditUtil.FORMAT_CPF));
 
         txt_haveAccount.setOnClickListener(v -> {
             Intent go_SingIn = new Intent(this, LoginActivity.class);
@@ -71,6 +76,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                 showError(editLogin_EmailUserRegister, getString(R.string.email_required));
             }else if(!Patterns.EMAIL_ADDRESS.matcher(editLogin_EmailUserRegister.getText()).matches()){
                 showError(editLogin_EmailUserRegister, getString(R.string.informed_email_is_invalid));
+            }else if(!isValidCPF(editRegister_CpfUser.getText().toString())){
+                showError(editRegister_CpfUser, getString(R.string.cpfinformedisInvalid));
             }else if(editLogin_PasswordUserRegister.getText().toString().indexOf(' ') >= 0){
                 showError(editLogin_PasswordUserRegister, getString(R.string.password_cannot_contain_spaces));
             }else if (!editLogin_PasswordUserRegister.getText().toString().matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")){
@@ -95,7 +102,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                 },2000);
             }
         });
-
     }
 
     private void Ids() {
@@ -105,6 +111,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         editLogin_FirstNameUserRegister = findViewById(R.id.editRegister_FirstNameUser);
         editLogin_LastNameUserRegister = findViewById(R.id.editRegister__LastNameUser);
         editLogin_EmailUserRegister = findViewById(R.id.editRegister_EmailUser);
+        editRegister_CpfUser = findViewById(R.id.editRegister_CpfUser);
         txt_haveAccount = findViewById(R.id.txt_haveAccount);
     }
 
