@@ -1,4 +1,4 @@
-package com.kaua.palacepetz;
+package com.kaua.palacepetz.Methods;
 
 import android.util.Log;
 

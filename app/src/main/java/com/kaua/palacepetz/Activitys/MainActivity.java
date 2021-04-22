@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
 
         icon_ProfileUser_main.setOnClickListener(v -> {
-            Intent goTo_profile = new Intent(MainActivity.this, RegisterAddressActivity.class);
+            Intent goTo_profile = new Intent(MainActivity.this, ProfileActivity.class);
             startActivity(goTo_profile);
         });
 

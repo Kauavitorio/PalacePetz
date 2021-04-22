@@ -69,4 +69,5 @@
     <string name="put_water">COLOCAR ÁGUA</string>
     <string name="put_racao">COLOCAR RAÇÃO</string>
     <string name="disconnect">DESCONECTAR</string>
+    <string name="cpfinformedisInvalid">O CPF informado é invalido</string>
 </resources>
