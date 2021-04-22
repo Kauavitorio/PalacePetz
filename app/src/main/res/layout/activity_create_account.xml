@@ -124,6 +124,37 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- TextInputLayout Cpf -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/CpfCreateAccount_text_input_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailCreateAccount_text_input_layout">
+
+            <!-- EditText Cpf -->
+            <EditText
+                android:id="@+id/editRegister_CpfUser"
+                android:layout_width="333dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@drawable/custom_edittext_base"
+                android:ems="10"
+                android:fontFamily="@font/segoe_ui"
+                android:hint="@string/cpf"
+                android:inputType="number"
+                android:minHeight="50sp"
+                android:textColor="#000"
+                android:textColorHint="@color/hint"
+                android:textSize="21sp"
+                tools:ignore="Autofill,TextFields" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <!-- TextInputLayout Password -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordCreateAccount_text_input_layout"
@@ -132,7 +163,7 @@
             android:layout_marginTop="23sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailCreateAccount_text_input_layout"
+            app:layout_constraintTop_toBottomOf="@+id/CpfCreateAccount_text_input_layout"
             app:passwordToggleEnabled="true">
 
             <!-- EditText Password -->
