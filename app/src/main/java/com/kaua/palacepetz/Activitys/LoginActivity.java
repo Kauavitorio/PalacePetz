@@ -146,6 +146,7 @@ public class LoginActivity extends AppCompatActivity {
     private void GoToMain(String email){
         Intent goTo_Main = new Intent(this, MainActivity.class);
         goTo_Main.putExtra("email_user", email);
+        goTo_Main.putExtra("AddressAlert", true);
         startActivity(goTo_Main);
         finish();
     }

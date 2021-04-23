@@ -73,4 +73,7 @@
     <string name="my_shopping_cart">MEU CARRINHO</string>
     <string name="your_ShoppingCart_asEmpty">SEU CARRINHO ESTÁ VAZIO.</string>
     <string name="see_products">VER PRODUTOS</string>
+    <string name="you_dont_haveAddressRegistered">VOCÊ AINDA NÃO TEM UM ENDEREÇO CADASTRADO.</string>
+    <string name="sign_up_now">CADASTRAR AGORA</string>
+    <string name="sign_up_latter">CADASTRAR DEPOIS</string>
 </resources>

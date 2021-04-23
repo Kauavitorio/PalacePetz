@@ -1,14 +1,19 @@
 package com.kaua.palacepetz.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -27,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  *  Copyright (c) 2021 Kauã Vitório
  *  Official repository https://github.com/Kauavitorio/PalacePetz
  *  Responsible developer: https://github.com/Kauavitorio
- * @author Kaua Vitorio
+ *  @author Kaua Vitorio
  **/
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private static FragmentTransaction transaction;
     //  Fragments Arguments
     private static Bundle args;
+    private Bundle bundle;
 
     //  User information
     String email_user;
@@ -46,17 +52,19 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences mPrefs;
     private static final String PREFS_NAME = "myPrefs";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Ids();
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        bundle = intent.getExtras();
         email_user = bundle.getString("email_user");
 
         //  Get all SharedPreferences
         mPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        ShowAddressAlert();
 
         MainFragment mainFragment = new MainFragment();
         args = new Bundle();
@@ -135,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetDialog.dismiss();
             });
 
-
             //  Show My Orders Fragment
             myOrders.setOnClickListener(v1 -> {
                 DetailsProductsFragment detailsProductsFragment = new DetailsProductsFragment();
@@ -166,6 +173,33 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetDialog.setContentView(sheetView);
             bottomSheetDialog.show();
         });
+    }
+
+    private void ShowAddressAlert(){
+        if (bundle.getBoolean("AddressAlert")){
+            Log.d("AddressAlertStatus", "Alert ON");
+            Dialog dialog = new Dialog(MainActivity.this);
+            dialog.setCancelable(false);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setContentView(R.layout.adapter_address_alert);
+            CardView btn_registerNow_addressAlert = dialog.findViewById(R.id.btn_registerNow_addressAlert);
+            CardView btn_registerLatter_addressAlert = dialog.findViewById(R.id.btn_registerLatter_addressAlert);
+            btn_registerNow_addressAlert.setElevation(20);
+            btn_registerLatter_addressAlert.setElevation(20);
+
+            //  When click will go to RegisterAddressActivity
+            btn_registerNow_addressAlert.setOnClickListener(v -> {
+                btn_registerNow_addressAlert.setElevation(0);
+                Intent goTo_AddressRegister = new Intent(MainActivity.this, RegisterAddressActivity.class);
+                startActivity(goTo_AddressRegister);
+                dialog.dismiss();
+            });
+
+            //  When click will dismiss dialog
+            btn_registerLatter_addressAlert.setOnClickListener(v -> dialog.dismiss());
+
+            dialog.show();
+        }
     }
 
     @Override public void onBackPressed() {
