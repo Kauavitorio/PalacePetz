@@ -70,4 +70,7 @@
     <string name="put_racao">COLOCAR RAÇÃO</string>
     <string name="disconnect">DESCONECTAR</string>
     <string name="cpfinformedisInvalid">O CPF informado é invalido</string>
+    <string name="my_shopping_cart">MEU CARRINHO</string>
+    <string name="your_ShoppingCart_asEmpty">SEU CARRINHO ESTÁ VAZIO.</string>
+    <string name="see_products">VER PRODUTOS</string>
 </resources>

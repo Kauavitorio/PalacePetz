@@ -102,5 +102,8 @@
     <string name="product_name">Product Name</string>
     <string name="price">Price</string>
     <string name="cpfinformedisInvalid">The CPF informed is invalid</string>
+    <string name="my_shopping_cart">My Shopping Cart</string>
+    <string name="your_ShoppingCart_asEmpty">YOUR SHOPPING CART IS EMPTY.</string>
+    <string name="see_products">SEE PRODUCTS</string>
 
 </resources>
