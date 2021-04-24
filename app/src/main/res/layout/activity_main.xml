@@ -37,14 +37,14 @@
             app:civ_border_color="@color/black"
             app:civ_border_width="1dp"
             android:layout_marginStart="7dp"
-            app:layout_constraintEnd_toStartOf="@+id/container_ShoppingCart"
+            app:layout_constraintEnd_toStartOf="@+id/Btn_container_ShoppingCart"
             app:layout_constraintStart_toEndOf="@+id/btnMenu_Main"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RedundantNamespace" />
 
         <!-- Container Shopping Cart -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container_ShoppingCart"
+            android:id="@+id/Btn_container_ShoppingCart"
             android:layout_width="60dp"
             android:layout_height="60dp"
             app:layout_constraintEnd_toEndOf="parent"
