@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -23,6 +25,7 @@ import com.kaua.palacepetz.Adapters.IOnBackPressed;
 import com.kaua.palacepetz.Fragments.AllProductsFragment;
 import com.kaua.palacepetz.Fragments.DetailsProductsFragment;
 import com.kaua.palacepetz.Fragments.MainFragment;
+import com.kaua.palacepetz.Fragments.MyCardsFragment;
 import com.kaua.palacepetz.Fragments.ShoppingCartFragment;
 import com.kaua.palacepetz.R;
 
@@ -36,21 +39,28 @@ import de.hdodenhof.circleimageview.CircleImageView;
  **/
 
 public class MainActivity extends AppCompatActivity {
+    //  Screen items
+    private CardView base_QuantityItemsCart_main;
     private LottieAnimationView btnMenu_Main;
     private CircleImageView icon_ProfileUser_main;
     private BottomSheetDialog bottomSheetDialog;
     private ConstraintLayout Btn_container_ShoppingCart;
     private static FragmentTransaction transaction;
+    private TextView txt_QuantityCart_main;
+
     //  Fragments Arguments
     private static Bundle args;
     private Bundle bundle;
 
     //  User information
-    String email_user;
+    String _Email;
 
     //  Set preferences
     private SharedPreferences mPrefs;
     private static final String PREFS_NAME = "myPrefs";
+
+    //  Shopping Cart Items
+    private static int cartSize = 0;
 
 
     @Override
@@ -60,7 +70,10 @@ public class MainActivity extends AppCompatActivity {
         Ids();
         Intent intent = getIntent();
         bundle = intent.getExtras();
-        email_user = bundle.getString("email_user");
+        _Email = bundle.getString("email_user");
+
+        //  Set items gone
+        base_QuantityItemsCart_main.setVisibility(View.GONE);
 
         //  Get all SharedPreferences
         mPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -68,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         MainFragment mainFragment = new MainFragment();
         args = new Bundle();
-        args.putString("email_user", email_user);
+        args.putString("email_user", _Email);
         mainFragment.setArguments(args);
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameLayoutMain, mainFragment);
@@ -83,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         Btn_container_ShoppingCart.setOnClickListener(v -> {
             ShoppingCartFragment shoppingCartFragment = new ShoppingCartFragment();
             args = new Bundle();
-            args.putString("email_user", email_user);
+            args.putString("email_user", _Email);
             shoppingCartFragment.setArguments(args);
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frameLayoutMain, shoppingCartFragment);
@@ -93,10 +106,19 @@ public class MainActivity extends AppCompatActivity {
         CreatingMenuSheet();
     }
 
+    @SuppressLint("SetTextI18n")
+    public void updateCart(){
+        cartSize++;
+        txt_QuantityCart_main.setText(cartSize + "");
+        base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
+    }
+
     private void Ids() {
         btnMenu_Main = findViewById(R.id.btnMenu_Main);
         icon_ProfileUser_main = findViewById(R.id.icon_ProfileUser_main);
         Btn_container_ShoppingCart = findViewById(R.id.Btn_container_ShoppingCart);
+        txt_QuantityCart_main = findViewById(R.id.txt_QuantityCart_main);
+        base_QuantityItemsCart_main = findViewById(R.id.base_QuantityItemsCart_main);
     }
 
     private void CreatingMenuSheet() {
@@ -111,12 +133,13 @@ public class MainActivity extends AppCompatActivity {
             ConstraintLayout products = sheetView.findViewById(R.id.BtnProductsSheetMenu);
             ConstraintLayout palaceFountain = sheetView.findViewById(R.id.BtnFountainsSheetMenu);
             ConstraintLayout myOrders = sheetView.findViewById(R.id.BtnMyOrdersSheetMenu);
+            ConstraintLayout myCards = sheetView.findViewById(R.id.BtnMyCardsSheetMenu);
 
             //  Show Main Fragment
             home.setOnClickListener(v1 -> {
                 MainFragment mainFragment = new MainFragment();
                 args = new Bundle();
-                args.putString("email_user", email_user);
+                args.putString("email_user", _Email);
                 mainFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, mainFragment);
@@ -128,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             products.setOnClickListener(v1 -> {
                 AllProductsFragment allProductsFragment = new AllProductsFragment();
                 args = new Bundle();
-                args.putString("email_user", email_user);
+                args.putString("email_user", _Email);
                 allProductsFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, allProductsFragment);
@@ -147,10 +170,22 @@ public class MainActivity extends AppCompatActivity {
             myOrders.setOnClickListener(v1 -> {
                 DetailsProductsFragment detailsProductsFragment = new DetailsProductsFragment();
                 args = new Bundle();
-                args.putString("email_user", email_user);
+                args.putString("email_user", _Email);
                 detailsProductsFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, detailsProductsFragment);
+                transaction.commit();
+                bottomSheetDialog.dismiss();
+            });
+
+            //  Show My Cards Fragment
+            myCards.setOnClickListener(v1 -> {
+                MyCardsFragment myCardsFragment = new MyCardsFragment();
+                args = new Bundle();
+                args.putString("email_user", _Email);
+                myCardsFragment.setArguments(args);
+                transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayoutMain, myCardsFragment);
                 transaction.commit();
                 bottomSheetDialog.dismiss();
             });

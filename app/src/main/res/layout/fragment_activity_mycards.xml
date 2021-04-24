@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Main Container -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Text Title Registered Cards -->
+        <TextView
+            android:id="@+id/txt_title_registered_cards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registered_cards"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- RecyclerView Cards -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_Cards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_registered_cards" />
+
+        <!-- Card Add New Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/BtnMyCard_AddNewCard"
+            android:layout_width="280dp"
+            android:layout_height="74dp"
+            android:layout_marginTop="30dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="#44BFFF"
+            app:cardCornerRadius="22dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView_Cards">
+
+            <!-- Text Add New Card -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/add_new_card"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Container No Card Registered -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:minHeight="200dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_registered_cards">
+
+            <!-- Card Text No Card Registered -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardContainer_AddCard"
+                android:layout_width="350dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="#C9ECFF"
+                app:cardCornerRadius="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- Text No Card Registered -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/no_card_registered"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="25sp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Card Add Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/BtnMyCard_AddCard"
+                android:layout_width="280dp"
+                android:layout_height="74dp"
+                app:cardBackgroundColor="#44BFFF"
+                app:cardCornerRadius="22dp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline_myCards"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <!-- Text Add Card -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/add_card"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- GuideLine -->
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_myCards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="183dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -108,5 +108,10 @@
     <string name="you_dont_haveAddressRegistered">YOU DON\'T HAVE YET A REGISTERED ADDRESS.</string>
     <string name="sign_up_now">SING UP NOW</string>
     <string name="sign_up_latter">REGISTER LATER</string>
+    <string name="myCards">My Cards</string>
+    <string name="registered_cards">REGISTERED CARDS</string>
+    <string name="no_card_registered">No card registered</string>
+    <string name="add_card">Add Card</string>
+    <string name="add_new_card">Add new Card</string>
 
 </resources>
