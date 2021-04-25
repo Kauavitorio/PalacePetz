@@ -119,7 +119,7 @@
     <string name="add_card">Add Card</string>
     <string name="add_new_card">Add new Card</string>
     <string name="cardNumber">Card Number</string>
-    <string name="validade">Expiration date</string>
+    <string name="expiration_date">Expiration date</string>
     <string name="cvv" translatable="false">CVV</string>
     <string name="name_printed_on_the_card">Name Printed on the card</string>
     <string name="no_flag_selected">The card`s flag was not requested</string>
@@ -127,5 +127,11 @@
     <string name="shelfLife_incorrectly">Expiration date entered incorrectly</string>
     <string name="cvv_inserted_incorrectly">CVV inserted incorrectly</string>
     <string name="name_incorrectly_inserted">Name entered incorrectly</string>
+    <string name="yours_cards">Your cards</string>
+    <string name="what_would_you_this_card">What would you this card</string>
+    <string name="remove">Remove</string>
+    <string name="card_not_found">Card not found</string>
+    <string name="weHaveAProblem">We have a problem with our server.\nTry again later</string>
+    <string name="leave">Leave</string>
 
 </resources>
