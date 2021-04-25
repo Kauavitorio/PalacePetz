@@ -108,10 +108,24 @@
     <string name="you_dont_haveAddressRegistered">YOU DON\'T HAVE YET A REGISTERED ADDRESS.</string>
     <string name="sign_up_now">SING UP NOW</string>
     <string name="sign_up_latter">REGISTER LATER</string>
+
+    <!-- Card / Card Registration -->
+    <string name="ex_shelfLife_card" translatable="false">XX/XX</string>
+    <string name="ex_numberCard_card" translatable="false">•••• •••• •••• ••••</string>
+    <string name="fulanodetal" translatable="false">Falano de Tal</string>
     <string name="myCards">My Cards</string>
     <string name="registered_cards">REGISTERED CARDS</string>
     <string name="no_card_registered">No card registered</string>
     <string name="add_card">Add Card</string>
     <string name="add_new_card">Add new Card</string>
+    <string name="cardNumber">Card Number</string>
+    <string name="validade">Expiration date</string>
+    <string name="cvv" translatable="false">CVV</string>
+    <string name="name_printed_on_the_card">Name Printed on the card</string>
+    <string name="no_flag_selected">The card`s flag was not requested</string>
+    <string name="cardNumber_wrongInsert">Card number inserted incorrectly</string>
+    <string name="shelfLife_incorrectly">Expiration date entered incorrectly</string>
+    <string name="cvv_inserted_incorrectly">CVV inserted incorrectly</string>
+    <string name="name_incorrectly_inserted">Name entered incorrectly</string>
 
 </resources>

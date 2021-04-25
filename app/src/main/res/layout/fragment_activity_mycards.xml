@@ -128,7 +128,6 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_begin="183dp" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
