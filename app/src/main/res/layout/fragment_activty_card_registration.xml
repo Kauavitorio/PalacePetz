@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="bottom">
+
+    <!-- Container -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Main Container -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="580dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <!-- Card Pre View -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardPreView_register"
+                android:layout_width="330dp"
+                android:layout_height="160dp"
+                app:cardBackgroundColor="@color/mastercard"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline_cardRegistration"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- Container -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="23dp">
+
+                    <ImageView
+                        android:id="@+id/imgFlag_Pre_view_Card"
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <!-- Text Shelf Life -->
+                    <TextView
+                        android:id="@+id/txt_shelfLife_cardRegister"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#fff"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:text="@string/ex_shelfLife_card"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Text Shelf Life -->
+                    <TextView
+                        android:id="@+id/txt_numberCard_cardRegister"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ex_numberCard_card"
+                        android:textColor="#fff"
+                        android:textSize="23sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.1"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imgFlag_Pre_view_Card" />
+
+                    <!-- Text Shelf Life -->
+                    <TextView
+                        android:id="@+id/txt_nmCard_cardRegister"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fulanodetal"
+                        android:textColor="#fff"
+                        android:textSize="18sp"
+                        android:layout_marginTop="15dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_numberCard_cardRegister"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Container -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="468dp"
+                android:background="@drawable/background_details_products"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <!-- Base Flags Cards -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/base_flags_cards"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="80dp"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- MasterCard -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cardBtn_MasterCard"
+                        android:layout_width="54dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="40dp"
+                        android:background="@drawable/default_card_flag"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/img_btnMasterCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:ignore="ContentDescription" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Visa -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cardBtnVisa"
+                        android:layout_width="54dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="20dp"
+                        android:background="@drawable/default_card_flag"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/cardBtn_MasterCard"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/img_btnVisaCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:ignore="ContentDescription" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Maestro -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cardBtn_Maestro"
+                        android:layout_width="54dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="20dp"
+                        android:background="@drawable/default_card_flag"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/cardBtnVisa"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/img_btnMaestroCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:ignore="ContentDescription" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Edit Card Numbers -->
+                <EditText
+                    android:id="@+id/edit_cardNumber_cardRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_edittext_cardregistration"
+                    android:hint="@string/cardNumber"
+                    android:inputType="number"
+                    android:maxLength="19"
+                    android:minWidth="328dp"
+                    android:minHeight="50dp"
+                    android:textColor="#232323"
+                    android:textColorHint="@color/hint"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/base_flags_cards"
+                    tools:ignore="Autofill,TextFields" />
+
+
+                <!-- Edit Card Shelf life -->
+                <EditText
+                    android:id="@+id/edit_shelf_life_cardRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_edittext_cardregistration"
+                    android:hint="@string/validade"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:minWidth="157dp"
+                    android:minHeight="50dp"
+                    android:textColor="#232323"
+                    android:textColorHint="@color/hint"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_LeftVertical_cardRegistration"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_cardNumber_cardRegister"
+                    tools:ignore="Autofill,TextFields" />
+
+                <!-- Edit Card CVV -->
+                <EditText
+                    android:id="@+id/edit_cvv_cardRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_edittext_cardregistration"
+                    android:hint="@string/cvv"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:minWidth="160dp"
+                    android:minHeight="50dp"
+                    android:textColor="#232323"
+                    android:textColorHint="@color/hint"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_RightVertical_cardRegistration"
+                    app:layout_constraintStart_toEndOf="@+id/edit_shelf_life_cardRegister"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_cardNumber_cardRegister"
+                    tools:ignore="Autofill,TextFields" />
+
+                <!-- Edit Card Name on the card -->
+                <EditText
+                    android:id="@+id/edit_nameCard_cardRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_edittext_cardregistration"
+                    android:hint="@string/name_printed_on_the_card"
+                    android:inputType="textPersonName"
+                    android:minWidth="328dp"
+                    android:minHeight="50dp"
+                    android:textColor="#232323"
+                    android:textColorHint="@color/hint"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_shelf_life_cardRegister"
+                    tools:ignore="Autofill,TextFields" />
+
+                <!-- Card Btn ADD CARD -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardBtn_addCard_registration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:minWidth="288dp"
+                    android:minHeight="55dp"
+                    app:cardBackgroundColor="#F89B28"
+                    app:cardCornerRadius="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_nameCard_cardRegister">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/add_card"
+                        android:textColor="@color/white"
+                        android:textSize="22sp" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_LeftVertical_cardRegistration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="32dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_RightVertical_cardRegistration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="33dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_cardRegistration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="192dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:minHeight="420dp"
             android:padding="30dp"
-            android:background="@drawable/background_detailsproducts"
+            android:background="@drawable/background_details_products"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
