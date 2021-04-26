@@ -194,7 +194,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/bg_edittext_cardregistration"
-                    android:hint="@string/validade"
+                    android:hint="@string/expiration_date"
                     android:inputType="number"
                     android:maxLength="5"
                     android:minWidth="157dp"
