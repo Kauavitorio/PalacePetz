@@ -4,6 +4,11 @@
     <!-- Tools -->
     <string name="loading">Loading…</string>
     <string name="one" translatable="false">1</string>
+    <string name="filter_animals">Filter animals</string>
+    <string name="dogs">Dogs</string>
+    <string name="cats">Cats</string>
+    <string name="hamster" translatable="false">hamster</string>
+    <string name="birds">Birds</string>
 
     <!-- Sing In / Sing Up Screen -->
     <string name="login">Login</string>
