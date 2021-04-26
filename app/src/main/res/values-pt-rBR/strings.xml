@@ -70,4 +70,23 @@
     <string name="put_racao">COLOCAR RAÇÃO</string>
     <string name="disconnect">DESCONECTAR</string>
     <string name="cpfinformedisInvalid">O CPF informado é invalido</string>
+    <string name="my_shopping_cart">MEU CARRINHO</string>
+    <string name="your_ShoppingCart_asEmpty">SEU CARRINHO ESTÁ VAZIO.</string>
+    <string name="see_products">VER PRODUTOS</string>
+    <string name="you_dont_haveAddressRegistered">VOCÊ AINDA NÃO TEM UM ENDEREÇO CADASTRADO.</string>
+    <string name="sign_up_now">CADASTRAR AGORA</string>
+    <string name="sign_up_latter">CADASTRAR DEPOIS</string>
+    <string name="myCards">Meus Cartões</string>
+    <string name="registered_cards">REGISTERED CARDS</string>
+    <string name="no_card_registered">Nenhum cartão cadastrado</string>
+    <string name="add_card">Adicionar Cartão</string>
+    <string name="add_new_card">Adicionar novo cartão</string>
+    <string name="cardNumber">Número do cartão</string>
+    <string name="validade">Vencimento</string>
+    <string name="name_printed_on_the_card">Nome impresso no cartão</string>
+    <string name="no_flag_selected">A bandeira do cartão não foi solicitado</string>
+    <string name="cardNumber_wrongInsert">Número do cartão inserido incorretamente</string>
+    <string name="shelfLife_incorrectly">Validade inserida incorretamente</string>
+    <string name="cvv_inserted_incorrectly">CVV inserido incorretamente</string>
+    <string name="name_incorrectly_inserted">Nome inserido incorretamente</string>
 </resources>

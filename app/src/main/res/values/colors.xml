@@ -14,6 +14,13 @@
     <color name="background_Details_Products">#444B54</color>
     <color name="background_bottom_devicePresentation">#141517</color>
     <color name="background_top_devicePresentation">#32373E</color>
+    <color name="background_address_alert">#C9ECFF</color>
+
+
+    <!-- Cards Colors -->
+    <color name="mastercard" >#000</color>
+    <color name="visacard">#A3831C</color>
+    <color name="maestrocard">#0a3a44</color>
 
     <!-- Device Presentation -->
     <color name="gradient_start_color">#4c84ff</color>
