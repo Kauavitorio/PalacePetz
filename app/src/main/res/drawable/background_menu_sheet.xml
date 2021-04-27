@@ -4,7 +4,7 @@
 
     <solid android:color="@color/background_menu_sheet"/>
 
-    <corners android:topLeftRadius="60dp"
-        android:topRightRadius="60dp"/>
+    <corners android:topLeftRadius="40dp"
+        android:topRightRadius="40dp"/>
 
 </shape>

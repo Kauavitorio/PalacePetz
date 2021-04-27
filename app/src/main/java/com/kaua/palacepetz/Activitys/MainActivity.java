@@ -129,11 +129,13 @@ public class MainActivity extends AppCompatActivity {
             View sheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.adapter_menu_sheet,
                     findViewById(R.id.menu_sheet_principal));
 
-            ConstraintLayout home = sheetView.findViewById(R.id.BtnHomeSheetMenu);
-            ConstraintLayout products = sheetView.findViewById(R.id.BtnProductsSheetMenu);
-            ConstraintLayout palaceFountain = sheetView.findViewById(R.id.BtnFountainsSheetMenu);
-            ConstraintLayout myOrders = sheetView.findViewById(R.id.BtnMyOrdersSheetMenu);
-            ConstraintLayout myCards = sheetView.findViewById(R.id.BtnMyCardsSheetMenu);
+            CardView home = sheetView.findViewById(R.id.BtnHomeSheetMenu);
+            CardView products = sheetView.findViewById(R.id.BtnProductsSheetMenu);
+            CardView palaceFountain = sheetView.findViewById(R.id.BtnFountainsSheetMenu);
+            CardView myOrders = sheetView.findViewById(R.id.BtnMyOrdersSheetMenu);
+            CardView myCards = sheetView.findViewById(R.id.BtnMyCardsSheetMenu);
+            CardView historic = sheetView.findViewById(R.id.BtnHistoricSheetMenu);
+            CardView consultation = sheetView.findViewById(R.id.BtnConsultationSheetMenu);
 
             //  Show Main Fragment
             home.setOnClickListener(v1 -> {

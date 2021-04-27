@@ -138,5 +138,7 @@
     <string name="card_not_found">Card not found</string>
     <string name="weHaveAProblem">We have a problem with our server.\nTry again later</string>
     <string name="leave">Leave</string>
+    <string name="consultations">Consultation</string>
+    <string name="historic">Historic</string>
 
 </resources>

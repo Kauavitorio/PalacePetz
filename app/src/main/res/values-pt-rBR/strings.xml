@@ -99,4 +99,6 @@
     <string name="cats">Gatos</string>
     <string name="birds">Aves</string>
     <string name="filter_animals">Filtrar animais</string>
+    <string name="consultations">Consultas</string>
+    <string name="historic">Histórico</string>
 </resources>
