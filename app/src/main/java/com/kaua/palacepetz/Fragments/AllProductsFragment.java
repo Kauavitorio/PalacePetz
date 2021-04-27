@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +33,9 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
     private RecyclerView recyclerView_Products;
     private SwipeRefreshLayout SwipeRefreshProducts;
     private LottieAnimationView anim_loading_allProducts;
+    private Spinner spinner_petFilter;
+
+    private static String[] petFilter;
 
     //  User information
     String email_user;
@@ -47,6 +53,32 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         assert args != null;
         email_user = args.getString("email_user");
         loadAllProducts();
+
+        //create an adapter to describe how the items are displayed, adapters are used in several places in android.
+        //There are multiple variations of this, but this is the basic variant.
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, petFilter);
+        spinner_petFilter.setAdapter(adapter);
+
+
+        // Spinner click listener
+        spinner_petFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                String ItemSelect = parent.getItemAtPosition(position).toString();
+                if (ItemSelect.equals(getString(R.string.dogs))){
+                    Toast.makeText(getActivity(), ItemSelect, Toast.LENGTH_SHORT).show();
+                }else if (ItemSelect.equals(getString(R.string.cats))){
+                    Toast.makeText(getActivity(), ItemSelect, Toast.LENGTH_SHORT).show();
+                }else if (ItemSelect.equals(getString(R.string.birds))){
+                    Toast.makeText(getActivity(), ItemSelect, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         SwipeRefreshProducts.setOnRefreshListener(this::loadAllProducts);
 
@@ -85,15 +117,18 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         card_filter_lowestPrice.setElevation(20);
         card_filter_biggestPrice.setElevation(20);
         card_filter_popular.setElevation(20);
+        spinner_petFilter.setElevation(20);
     }
 
     private void Ids() {
+        petFilter = new String[]{ getString(R.string.filter_animals), getString(R.string.dogs), getString(R.string.cats), getString(R.string.birds) };
         card_filter_lowestPrice = view.findViewById(R.id.card_filter_lowestPrice);
         card_filter_biggestPrice = view.findViewById(R.id.card_filter_biggestPrice);
         card_filter_popular = view.findViewById(R.id.card_filter_popular);
         recyclerView_Products = view.findViewById(R.id.recyclerView_Products);
         SwipeRefreshProducts = view.findViewById(R.id.SwipeRefreshProducts);
         anim_loading_allProducts = view.findViewById(R.id.anim_loading_allProducts);
+        spinner_petFilter = view.findViewById(R.id.spinner_petFilter);
         setFilterElevation();
     }
 

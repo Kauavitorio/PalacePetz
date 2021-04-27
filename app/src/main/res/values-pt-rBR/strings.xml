@@ -82,11 +82,23 @@
     <string name="add_card">Adicionar Cartão</string>
     <string name="add_new_card">Adicionar novo cartão</string>
     <string name="cardNumber">Número do cartão</string>
-    <string name="validade">Vencimento</string>
+    <string name="expiration_date">Vencimento</string>
     <string name="name_printed_on_the_card">Nome impresso no cartão</string>
     <string name="no_flag_selected">A bandeira do cartão não foi solicitado</string>
     <string name="cardNumber_wrongInsert">Número do cartão inserido incorretamente</string>
     <string name="shelfLife_incorrectly">Validade inserida incorretamente</string>
     <string name="cvv_inserted_incorrectly">CVV inserido incorretamente</string>
     <string name="name_incorrectly_inserted">Nome inserido incorretamente</string>
+    <string name="yours_cards">Seus cartões</string>
+    <string name="what_would_you_this_card">O que você gostaria este cartãod</string>
+    <string name="remove">Remover</string>
+    <string name="card_not_found">Cartão não encontrado</string>
+    <string name="weHaveAProblem">Estamos com problema em nosso servidor.\nTente mais tarde</string>
+    <string name="leave">Sair</string>
+    <string name="dogs">Cachorros</string>
+    <string name="cats">Gatos</string>
+    <string name="birds">Aves</string>
+    <string name="filter_animals">Filtrar animais</string>
+    <string name="consultations">Consultas</string>
+    <string name="historic">Histórico</string>
 </resources>
