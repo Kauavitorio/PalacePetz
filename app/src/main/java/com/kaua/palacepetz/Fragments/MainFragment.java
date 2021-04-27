@@ -8,25 +8,64 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.kaua.palacepetz.R;
 
+import java.util.Objects;
+
 public class MainFragment extends Fragment {
+    private ConstraintLayout btn_consultation_shortCut, btn_cards_shortCut, btn_myOrders_shortCut;
+
+    private Bundle args;
+    private View view;
+    private static FragmentTransaction transaction;
 
     //  User information
-    String email_user;
+    private static String _Email;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_activity_main, container, false);
-        Bundle args = getArguments();
+        view = inflater.inflate(R.layout.fragment_activity_main, container, false);
+        Ids();
+        args = getArguments();
         assert args != null;
-        email_user = args.getString("email_user");
-        Toast.makeText(getContext(), email_user, Toast.LENGTH_SHORT).show();
+        _Email = args.getString("email_user");
+        createShortCutsClick();
 
         return view;
+    }
+
+    private void createShortCutsClick() {
+        //  Consultation click
+        btn_consultation_shortCut.setOnClickListener(v -> {
+
+        });
+
+        //  My Cards click
+        btn_cards_shortCut.setOnClickListener(v -> {
+            MyCardsFragment myCardsFragment = new MyCardsFragment();
+            args = new Bundle();
+            args.putString("email_user", _Email);
+            myCardsFragment.setArguments(args);
+            transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameLayoutMain, myCardsFragment);
+            transaction.commit();
+        });
+
+        //  My Orders click
+        btn_myOrders_shortCut.setOnClickListener(v -> {
+
+        });
+    }
+
+    private void Ids() {
+        btn_consultation_shortCut = view.findViewById(R.id.btn_consultation_shortCut);
+        btn_cards_shortCut = view.findViewById(R.id.btn_cards_shortCut);
+        btn_myOrders_shortCut = view.findViewById(R.id.btn_myOrders_shortCut);
     }
 
     @Override

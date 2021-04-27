@@ -95,4 +95,10 @@
     <string name="card_not_found">Cartão não encontrado</string>
     <string name="weHaveAProblem">Estamos com problema em nosso servidor.\nTente mais tarde</string>
     <string name="leave">Sair</string>
+    <string name="dogs">Cachorros</string>
+    <string name="cats">Gatos</string>
+    <string name="birds">Aves</string>
+    <string name="filter_animals">Filtrar animais</string>
+    <string name="consultations">Consultas</string>
+    <string name="historic">Histórico</string>
 </resources>

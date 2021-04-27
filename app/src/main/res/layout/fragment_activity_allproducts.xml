@@ -59,7 +59,7 @@
                 <!-- Card LOWEST PRICE -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card_filter_lowestPrice"
-                    android:layout_width="174dp"
+                    android:layout_width="160dp"
                     android:layout_height="50dp"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="30dp"
@@ -84,7 +84,7 @@
                 <!-- Card BIGGEST PRICE -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card_filter_biggestPrice"
-                    android:layout_width="174dp"
+                    android:layout_width="160dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -110,16 +110,14 @@
                 <!-- Card Popular -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card_filter_popular"
-                    android:layout_width="174dp"
+                    android:layout_width="160dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="20dp"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="30dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/card_filter_biggestPrice"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -134,6 +132,19 @@
                         android:textSize="18sp" />
 
                 </androidx.cardview.widget.CardView>
+
+                <!-- Spinner Pet Filter -->
+                <Spinner
+                    android:id="@+id/spinner_petFilter"
+                    android:layout_width="160dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_spinner_petfilter"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/card_filter_popular"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
