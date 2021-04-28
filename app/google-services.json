@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:599169235119:android:f91ef895f19a84a007bc5a",
+        "mobilesdk_app_id": "1:599169235119:android:4fc53a13cc7124d007bc5a",
         "android_client_info": {
-          "package_name": "com.kaua.palacepetz"
+          "package_name": "co.kaua.palacepetz"
         }
       },
       "oauth_client": [
         {
-          "client_id": "599169235119-nnp64br4q7u6tbcm7bmbgucsnuoptld5.apps.googleusercontent.com",
+          "client_id": "599169235119-745q1h28m0lof29naaq9v2d5kpfvgrh9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.kaua.palacepetz",
+            "package_name": "co.kaua.palacepetz",
             "certificate_hash": "df28ca53f08a007a44090fde04d330d38da203c4"
           }
         },

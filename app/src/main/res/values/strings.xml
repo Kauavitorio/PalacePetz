@@ -140,5 +140,8 @@
     <string name="leave">Leave</string>
     <string name="consultations">Consultation</string>
     <string name="historic">Historic</string>
+    <string name="couldnt_insert">Couldn\'t insert your profile image</string>
+    <string name="select_an_image">Select an image</string>
+    <string name="uploadFailed">Upload failed please try again later</string>
 
 </resources>

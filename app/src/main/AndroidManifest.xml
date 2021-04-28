@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kaua.palacepetz">
+    package="co.kaua.palacepetz">
     <!--
     *  Copyright (c) 2021 Kauã Vitório
     *  Official repository https://github.com/Kauavitorio/PalacePetz
