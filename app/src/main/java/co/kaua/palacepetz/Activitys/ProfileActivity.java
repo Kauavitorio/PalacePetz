@@ -1,4 +1,4 @@
-package com.kaua.palacepetz.Activitys;
+package co.kaua.palacepetz.Activitys;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,17 +10,24 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.kaua.palacepetz.Adapters.Userpermissions;
-import com.kaua.palacepetz.R;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.Objects;
+
+import co.kaua.palacepetz.Adapters.LoadingDialog;
+import co.kaua.palacepetz.Adapters.Userpermissions;
+
+import co.kaua.palacepetz.Firebase.ConfFirebase;
+import co.kaua.palacepetz.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -34,17 +41,27 @@ public class ProfileActivity extends AppCompatActivity {
     LottieAnimationView arrowGoBackProfile;
     CardView cardBtn_EditProfile;
     Handler timer = new Handler();
-    private final String[] permissions = { Manifest.permission.CAMERA
-            , Manifest.permission.READ_EXTERNAL_STORAGE };
+    private final String[] permissions = { Manifest.permission.READ_EXTERNAL_STORAGE };
     AlertDialog.Builder msg;
-    private final int CAMERA = 1;
-    private final int GALLERY = 2;
+
+    //  User information
+    private String _Email;
+
+    //  Firebase
+    StorageReference storageReference;
+    //  Loading and IMAGE REQUEST
+    private LoadingDialog loadingDialog;
+    int PICK_IMAGE_REQUEST = 111;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Ids();
+        loadingDialog = new LoadingDialog(ProfileActivity.this);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        _Email = bundle.getString("email_user");
         msg = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.change_profile_photo))
                 .setNegativeButton(getString(R.string.cancel), null)
@@ -54,21 +71,11 @@ public class ProfileActivity extends AppCompatActivity {
 
         icon_ProfileUser_profile.setOnClickListener(v -> {
             Userpermissions.validatePermissions(permissions, ProfileActivity.this, 1);
-            int CameraPermission = ContextCompat.checkSelfPermission(ProfileActivity.this, Manifest.permission.CAMERA);
             int GalleryPermission = ContextCompat.checkSelfPermission(ProfileActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-            if (CameraPermission == PackageManager.PERMISSION_GRANTED){
-                msg.setPositiveButton(getString(R.string.camera), (dialog, which) -> {
-                    Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intentCamera, CAMERA);
-                });
-            }
             if (GalleryPermission == PackageManager.PERMISSION_GRANTED){
-                msg.setNeutralButton(getString(R.string.gallery), (dialog, which) -> {
-                    Intent intentGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intentGallery, GALLERY);
-                });
+                msg.setNeutralButton(getString(R.string.gallery), (dialog, which) -> OpenGallery());
             }
-            if (GalleryPermission == PackageManager.PERMISSION_GRANTED || CameraPermission == PackageManager.PERMISSION_GRANTED)
+            if (GalleryPermission == PackageManager.PERMISSION_GRANTED)
                 msg.show();
         });
 
@@ -77,11 +84,19 @@ public class ProfileActivity extends AppCompatActivity {
         cardBtn_EditProfile.setOnClickListener(v -> {
             cardBtn_EditProfile.setElevation(0);
             Intent goTo_EditProfile = new Intent(ProfileActivity.this, EditProfileActivity.class);
+            goTo_EditProfile.putExtra("email_user", _Email);
             startActivity(goTo_EditProfile);
             finish();
         });
 
         arrowGoBackProfile.setOnClickListener(v -> finish());
+    }
+
+    private void OpenGallery() {
+        Intent openGallery = new Intent();
+        openGallery.setType("image/*");
+        openGallery.setAction(Intent.ACTION_PICK);
+        startActivityForResult(Intent.createChooser(openGallery, "Select Image"), PICK_IMAGE_REQUEST);
     }
 
     private void DoProfileImgAlert() {
@@ -108,19 +123,51 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(this, "Under development", Toast.LENGTH_SHORT).show();
+        storageReference = ConfFirebase.getFirebaseStorage().child("user").child("profile").child("User_" + _Email);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+            try {
+                //getting image from gallery
+                if(filePath != null) {
+                    loadingDialog.startLoading();
+
+                    //uploading the image
+                    storageReference .putFile(filePath).continueWithTask(task -> {
+                        if (!task.isSuccessful()) {
+                            loadingDialog.dimissDialog();
+                            Toast.makeText(ProfileActivity.this, R.string.couldnt_insert , Toast.LENGTH_SHORT).show();
+                            Log.d("ProfileUpload", Objects.requireNonNull(task.getException()).toString());
+                        }
+                        return storageReference .getDownloadUrl();
+                    }).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            loadingDialog.dimissDialog();
+                            Uri downloadUri = task.getResult();
+                            Toast.makeText(this, ""+ downloadUri, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this, getString(R.string.uploadFailed), Toast.LENGTH_SHORT).show();
+                            Log.d("ProfileUpload", Objects.requireNonNull(task.getException()).getMessage());
+                            loadingDialog.dimissDialog();
+                        }
+                    });
+                }
+                else {
+                    Toast.makeText(ProfileActivity.this, R.string.select_an_image, Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception ex) {
+                Toast.makeText(this, getString(R.string.weHaveAProblem), Toast.LENGTH_SHORT).show();
+                Log.d("ProfileUpload", ex.toString());
+            }
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         for (int i = 0; i < permissions.length; i++) {
-            if (permissions[i].equals("android.permission.CAMERA")  && grantResults[i] == 0){
-                // Camera ok
-                Log.d("PermissionStatus", "Camera permission has been GRANTED");
-            }
             if (permissions[i].equals("android.permission.READ_EXTERNAL_STORAGE")  && grantResults[i] == 0){
                 // Gallery ok
+                OpenGallery();
                 Log.d("PermissionStatus", "Gallery permission has been GRANTED");
             }
         }
