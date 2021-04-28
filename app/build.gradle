@@ -14,7 +14,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.kaua.palacepetz"
+        applicationId "co.kaua.palacepetz"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
@@ -56,6 +56,12 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:27.0.0')
     // Add Firebase Google Analytics
     implementation 'com.google.firebase:firebase-analytics'
+
+    //  Auth
+    implementation 'com.google.firebase:firebase-auth'
+
+    // Declare the dependency for the Cloud Storage library
+    implementation 'com.google.firebase:firebase-storage'
     /***** End Firebase Dependencies ******/
 
 
