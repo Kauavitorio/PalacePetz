@@ -21,11 +21,13 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
 import co.kaua.palacepetz.Fragments.AllProductsFragment;
 import co.kaua.palacepetz.Fragments.DetailsProductsFragment;
 import co.kaua.palacepetz.Fragments.MainFragment;
 import co.kaua.palacepetz.Fragments.MyCardsFragment;
+import co.kaua.palacepetz.Fragments.ServicesFragment;
 import co.kaua.palacepetz.Fragments.ShoppingCartFragment;
 import co.kaua.palacepetz.R;
 
@@ -136,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             CardView myOrders = sheetView.findViewById(R.id.BtnMyOrdersSheetMenu);
             CardView myCards = sheetView.findViewById(R.id.BtnMyCardsSheetMenu);
             CardView historic = sheetView.findViewById(R.id.BtnHistoricSheetMenu);
-            CardView consultation = sheetView.findViewById(R.id.BtnConsultationSheetMenu);
+            CardView services = sheetView.findViewById(R.id.BtnServicesSheetMenu);
 
             //  Show Main Fragment
             home.setOnClickListener(v1 -> {
@@ -191,6 +193,16 @@ public class MainActivity extends AppCompatActivity {
                 transaction.replace(R.id.frameLayoutMain, myCardsFragment);
                 transaction.commit();
                 bottomSheetDialog.dismiss();
+            });
+
+            services.setOnClickListener(v1 -> {
+                ServicesFragment servicesFragment = new ServicesFragment();
+                args = new Bundle();
+                args.putString("email_user", _Email);
+                servicesFragment.setArguments(args);
+                transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayoutMain, servicesFragment);
+                transaction.commit();
             });
 
             //  When click in this linear will to LoginActivity

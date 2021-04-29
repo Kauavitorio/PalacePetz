@@ -9,6 +9,8 @@
     <string name="cats">Cats</string>
     <string name="hamster" translatable="false">hamster</string>
     <string name="birds">Birds</string>
+    <string name="consultations">Consultation</string>
+    <string name="weHaveAProblem">We have a problem with our server.\nTry again later</string>
 
     <!-- Sing In / Sing Up Screen -->
     <string name="login">Login</string>
@@ -68,6 +70,8 @@
     <string name="yes">Yes</string>
     <string name="really_want_logOut">Do you really want to log out?</string>
     <string name="logout">LogOut</string>
+    <string name="historic">Historic</string>
+    <string name="leave">Leave</string>
 
     <!-- Profile / EditProfile Screen -->
     <string name="personalname">Personal Name</string>
@@ -84,6 +88,9 @@
     <string name="camera">Camera</string>
     <string name="cpf">CPF</string>
     <string name="cep" translatable="false">CEP</string>
+    <string name="couldnt_insert">Couldn\'t insert your profile image</string>
+    <string name="select_an_image">Select an image</string>
+    <string name="uploadFailed">Upload failed please try again later</string>
 
     <!-- Register Address -->
     <string name="title_activity_register_address" translatable="false">Map</string>
@@ -136,12 +143,19 @@
     <string name="what_would_you_this_card">What would you this card</string>
     <string name="remove">Remove</string>
     <string name="card_not_found">Card not found</string>
-    <string name="weHaveAProblem">We have a problem with our server.\nTry again later</string>
-    <string name="leave">Leave</string>
-    <string name="consultations">Consultation</string>
-    <string name="historic">Historic</string>
-    <string name="couldnt_insert">Couldn\'t insert your profile image</string>
-    <string name="select_an_image">Select an image</string>
-    <string name="uploadFailed">Upload failed please try again later</string>
+
+    <!-- Services -->
+    <string name="services">Services</string>
+    <string name="choose_a_service">CHOOSE A SERVICE</string>
+    <string name="veterinary_consultation">VETERINARY CONSULTATION</string>
+    <string name="bath_and_tosa">BATH AND TOSA</string>
+    <string name="schedule_consultation">SCHEDULE CONSULTATION</string>
+    <string name="schedule_bath_and_tosa">SCHEDULE BATH AND TOSA</string>
+    <string name="select_a_time">Select a time</string>
+    <string name="select_a_date">Select a date</string>
+    <string name="its_not_possible_scheduleYear">It is not possible to schedule an appointment in the given year.</string>
+    <string name="its_not_possible_scheduleMonth">It is not possible to schedule an appointment in the given month.</string>
+    <string name="its_not_possible_scheduleDay">It is not possible to schedule an appointment on the day informed.</string>
+    <string name="sorryButPalaceWillBeCosed">Sorry, but at the selected time PalacePetz will be closed</string>
 
 </resources>

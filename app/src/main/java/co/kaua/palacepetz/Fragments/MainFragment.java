@@ -16,7 +16,7 @@ import co.kaua.palacepetz.R;
 import java.util.Objects;
 
 public class MainFragment extends Fragment {
-    private ConstraintLayout btn_consultation_shortCut, btn_cards_shortCut, btn_myOrders_shortCut;
+    private ConstraintLayout btn_services_shortCut, btn_cards_shortCut, btn_myOrders_shortCut;
 
     private Bundle args;
     private View view;
@@ -39,9 +39,16 @@ public class MainFragment extends Fragment {
     }
 
     private void createShortCutsClick() {
-        //  Consultation click
-        btn_consultation_shortCut.setOnClickListener(v -> {
 
+        //  Ser click
+        btn_services_shortCut.setOnClickListener(v -> {
+            ServicesFragment servicesFragment = new ServicesFragment();
+            args = new Bundle();
+            args.putString("email_user", _Email);
+            servicesFragment.setArguments(args);
+            transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameLayoutMain, servicesFragment);
+            transaction.commit();
         });
 
         //  My Cards click
@@ -62,7 +69,7 @@ public class MainFragment extends Fragment {
     }
 
     private void Ids() {
-        btn_consultation_shortCut = view.findViewById(R.id.btn_consultation_shortCut);
+        btn_services_shortCut = view.findViewById(R.id.btn_services_shortCut);
         btn_cards_shortCut = view.findViewById(R.id.btn_cards_shortCut);
         btn_myOrders_shortCut = view.findViewById(R.id.btn_myOrders_shortCut);
     }

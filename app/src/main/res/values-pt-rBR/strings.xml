@@ -104,4 +104,16 @@
     <string name="couldnt_insert">Não foi possível inserir imagem de perfil</string>
     <string name="select_an_image">Selecione uma imagem</string>
     <string name="uploadFailed">O upload falhou tente novamente mais tarde</string>
+    <string name="services">Serviços</string>
+    <string name="choose_a_service">ESCOLHA UM SERVIÇO</string>
+    <string name="veterinary_consultation">CONSULTA VETERINÁRIA</string>
+    <string name="bath_and_tosa">BANHO E TOSA</string>
+    <string name="schedule_consultation">AGENDAR CONSULTA</string>
+    <string name="schedule_bath_and_tosa">AGENDAR BANHO E TOSA</string>
+    <string name="select_a_time">Selecione um horário</string>
+    <string name="select_a_date">Selecione uma data</string>
+    <string name="its_not_possible_scheduleYear">Não é possível agendar uma consulta no ano informado.</string>
+    <string name="its_not_possible_scheduleMonth">Não é possível agendar uma consulta no mês informado.</string>
+    <string name="its_not_possible_scheduleDay">Não é possível agendar uma consulta no dia informado.</string>
+    <string name="sorryButPalaceWillBeCosed">Desculpe, mas no horário selecionado a PalacePetz estara fechada</string>
 </resources>
