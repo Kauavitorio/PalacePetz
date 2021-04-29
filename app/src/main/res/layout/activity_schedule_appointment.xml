@@ -37,38 +37,102 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/arrowGoBack_ScheduleConsultation" />
 
-        <!-- Spinner Pet -->
-        <Spinner
-            android:id="@+id/spinner_animal"
-            android:layout_width="334dp"
-            android:layout_height="50dp"
+        <!-- Container Spinner Animal -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/baseSpinnerAnimal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/edittext_schedule"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_title_scheduleAppointment" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_scheduleAppointment">
 
-        <!-- Spinner Veterinary -->
-        <Spinner
-            android:id="@+id/spinner_veterinary"
-            android:layout_width="334dp"
-            android:layout_height="50dp"
+            <!-- Spinner Pet -->
+            <Spinner
+                android:id="@+id/spinner_animal"
+                android:layout_width="334dp"
+                android:layout_height="50dp"
+                android:background="@drawable/edittext_schedule"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Btn Arrow Down -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginEnd="38dp"
+                app:cardBackgroundColor="#27B5FF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <!-- Img Arrow -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrowdown"
+                    tools:ignore="ContentDescription" />
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Container Spinner Veterinary -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/baseSpinnerVeterinary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/edittext_schedule"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_animal" />
+            app:layout_constraintTop_toBottomOf="@+id/baseSpinnerAnimal" >
+
+            <!-- Spinner Veterinary -->
+            <Spinner
+                android:id="@+id/spinner_veterinary"
+                android:layout_width="334dp"
+                android:layout_height="50dp"
+                android:background="@drawable/edittext_schedule"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <!-- Btn Arrow Down -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginEnd="38dp"
+                app:cardBackgroundColor="#27B5FF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <!-- Img Arrow -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrowdown"
+                    tools:ignore="ContentDescription" />
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Container Select Time -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ScheduleAppoint_time"
             android:layout_width="333dp"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/edittext_profile"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_veterinary">
+            app:layout_constraintTop_toBottomOf="@+id/baseSpinnerVeterinary">
 
             <!-- Container Text -->
             <TextView
@@ -100,7 +164,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ScheduleAppoint_date"
             android:layout_width="333dp"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/edittext_profile"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -133,16 +197,48 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Spinner Payment Form -->
-        <Spinner
-            android:id="@+id/spinner_paymentForm"
-            android:layout_width="334dp"
-            android:layout_height="50dp"
+        <!-- Container Spinner PaymentForm -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/baseSpinnerPaymentForm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/edittext_schedule"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ScheduleAppoint_date" />
+            app:layout_constraintTop_toBottomOf="@+id/ScheduleAppoint_date">
+
+            <!-- Spinner Payment Form -->
+            <Spinner
+                android:id="@+id/spinner_paymentForm"
+                android:layout_width="334dp"
+                android:layout_height="50dp"
+                android:background="@drawable/edittext_schedule"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Btn Arrow Down -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginEnd="38dp"
+                app:cardBackgroundColor="#27B5FF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <!-- Img Arrow -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrowdown"
+                    tools:ignore="ContentDescription" />
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Edit Description -->
         <EditText
@@ -162,7 +258,7 @@
             android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_paymentForm"
+            app:layout_constraintTop_toBottomOf="@+id/baseSpinnerPaymentForm"
             tools:ignore="Autofill,RtlCompat" />
 
         <!-- Btn Schedule -->

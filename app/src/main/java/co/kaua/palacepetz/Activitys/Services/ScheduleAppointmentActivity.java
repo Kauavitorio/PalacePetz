@@ -14,6 +14,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,6 +28,7 @@ import co.kaua.palacepetz.R;
 public class ScheduleAppointmentActivity extends AppCompatActivity {
     private ConstraintLayout ScheduleAppoint_time, ScheduleAppoint_date;
     private Spinner spinner_animal, spinner_veterinary, spinner_paymentForm;
+    private LottieAnimationView arrowGoBack_ScheduleConsultation;
     private CardView btnScheduleAppointment;
     private EditText edit_Description_consultation;
     private TextView txt_scheduleAppoint_date, txt_scheduleAppoint_time;
@@ -60,6 +63,8 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
 
         });
 
+        arrowGoBack_ScheduleConsultation.setOnClickListener(v -> finish());
+
         ScheduleAppoint_time.setOnClickListener(v -> ShowTimerDialog());
 
         ScheduleAppoint_date.setOnClickListener(v -> ShowCalendar());
@@ -88,6 +93,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         edit_Description_consultation = findViewById(R.id.edit_Description_consultation);
         txt_scheduleAppoint_date = findViewById(R.id.txt_scheduleAppoint_date);
         txt_scheduleAppoint_time = findViewById(R.id.txt_scheduleAppoint_time);
+        arrowGoBack_ScheduleConsultation = findViewById(R.id.arrowGoBack_ScheduleConsultation);
     }
 
     private void ShowTimerDialog() {
