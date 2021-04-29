@@ -129,4 +129,5 @@
     <string name="add_to_cart">ADICIONAR AO CARRINHO</string>
     <string name="one_is_the_minumum_quantity">1 é a quantidade mínima</string>
     <string name="maximum_amount_reached">Quantidade máxima atingida</string>
+    <string name="see_my_pets">Ver meus animais</string>
 </resources>

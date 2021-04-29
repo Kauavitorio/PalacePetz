@@ -170,5 +170,6 @@
     <string name="add_to_cart">ADD TO CART</string>
     <string name="one_is_the_minumum_quantity">1 is the minimum quantity</string>
     <string name="maximum_amount_reached">Maximum amount reached</string>
+    <string name="see_my_pets">See my pets</string>
 
 </resources>
