@@ -22,7 +22,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PalacePetz">
-        <activity android:name=".Activitys.Services.ScheduleAppointmentActivity"></activity>
         <!-- Palace Fountain Activitys -->
         <activity
             android:name=".Activitys.DeviceTipsActivity"
@@ -50,6 +49,7 @@
         <activity android:name=".Activitys.ForgotPasswordActivity" />
         <activity android:name=".Activitys.CreateAccountActivity" />
         <activity android:name=".Activitys.LoginActivity" />
+        <activity android:name=".Activitys.Services.ScheduleAppointmentActivity"/>
         <activity android:name=".Activitys.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

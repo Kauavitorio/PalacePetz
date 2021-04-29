@@ -203,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, servicesFragment);
                 transaction.commit();
+                bottomSheetDialog.dismiss();
             });
 
             //  When click in this linear will to LoginActivity

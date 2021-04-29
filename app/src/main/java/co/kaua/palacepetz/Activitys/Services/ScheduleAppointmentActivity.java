@@ -1,12 +1,16 @@
 package co.kaua.palacepetz.Activitys.Services;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,15 +25,28 @@ import co.kaua.palacepetz.R;
 
 public class ScheduleAppointmentActivity extends AppCompatActivity {
     private ConstraintLayout ScheduleAppoint_time, ScheduleAppoint_date;
+    private Spinner spinner_animal, spinner_veterinary, spinner_paymentForm;
+    private CardView btnScheduleAppointment;
+    private EditText edit_Description_consultation;
     private TextView txt_scheduleAppoint_date, txt_scheduleAppoint_time;
     private final Calendar myCalendar = Calendar.getInstance();
     private static DatePickerDialog.OnDateSetListener date;
+
+    //  Spinner Lists
+    private static String[] UserPets, VeterinaryList, PaymentFormList;
+
+    //  Schedule Info
+    String PetSelected, VeterinarySelected, TimeSelected, DateSelected, PaymentFormSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_appointment);
         Ids();
+        UserPets = new String[]{ getString(R.string.select_your_pet) };
+        VeterinaryList = new String[]{ getString(R.string.select_a_veterinarian) };
+        PaymentFormList = new String[]{ getString(R.string.select_payment_method) };
+        SetSpinnerAdapter();
 
         //  Creating Calendar
         date = (view, year, month, dayOfMonth) -> {
@@ -39,9 +56,38 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
             updateLabel();
         };
 
+        btnScheduleAppointment.setOnClickListener(v -> {
+
+        });
+
         ScheduleAppoint_time.setOnClickListener(v -> ShowTimerDialog());
 
         ScheduleAppoint_date.setOnClickListener(v -> ShowCalendar());
+    }
+
+    private void SetSpinnerAdapter() {
+        //  Set User pet spinner Adapter
+        ArrayAdapter<String> adapterUserPet = new ArrayAdapter<>(ScheduleAppointmentActivity.this, android.R.layout.simple_spinner_dropdown_item, UserPets);
+        spinner_animal.setAdapter(adapterUserPet);
+        //  Set VeterinaryList spinner Adapter
+        ArrayAdapter<String> adapterVeterinaryList = new ArrayAdapter<>(ScheduleAppointmentActivity.this, android.R.layout.simple_spinner_dropdown_item, VeterinaryList);
+        spinner_veterinary.setAdapter(adapterVeterinaryList);
+        //  Set PaymentFormList spinner Adapter
+        ArrayAdapter<String> adapterPaymentFormList = new ArrayAdapter<>(ScheduleAppointmentActivity.this, android.R.layout.simple_spinner_dropdown_item, PaymentFormList);
+        spinner_paymentForm.setAdapter(adapterPaymentFormList);
+    }
+
+
+    private void Ids() {
+        ScheduleAppoint_date = findViewById(R.id.ScheduleAppoint_date);
+        ScheduleAppoint_time = findViewById(R.id.ScheduleAppoint_time);
+        btnScheduleAppointment = findViewById(R.id.btnScheduleAppointment);
+        spinner_animal = findViewById(R.id.spinner_animal);
+        spinner_veterinary = findViewById(R.id.spinner_veterinary);
+        spinner_paymentForm = findViewById(R.id.spinner_paymentForm);
+        edit_Description_consultation = findViewById(R.id.edit_Description_consultation);
+        txt_scheduleAppoint_date = findViewById(R.id.txt_scheduleAppoint_date);
+        txt_scheduleAppoint_time = findViewById(R.id.txt_scheduleAppoint_time);
     }
 
     private void ShowTimerDialog() {
@@ -57,32 +103,29 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
                 (view, hourOfDay, minute) -> {
 
-            String minuteFix = String.valueOf(minute);
-            if (minuteFix.length() < 2)
-                minuteFix = "0" + minute;
+                    String minuteFix = String.valueOf(minute);
+                    if (minuteFix.length() < 2)
+                        minuteFix = "0" + minute;
 
-            String fullTime = hourOfDay + ":" + minuteFix;
+                    String fullTime = hourOfDay + ":" + minuteFix;
                     try {
                         Date present = parser.parse(fullTime);
                         Date closed = parser.parse(closeTime);
                         assert present != null;
                         if (present.after(closed)) {
                             ShowTimerDialog();
-                            Toast.makeText(this, getString(R.string.sorryButPalaceWillBeCosed), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, getString(R.string.sorryButPalaceWillBeCosed), Toast.LENGTH_LONG).show();
+                            TimeSelected = null;
+                            txt_scheduleAppoint_time.setText(getString(R.string.select_a_time));
+                        }else{
+                            TimeSelected = fullTime;
+                            txt_scheduleAppoint_time.setText(fullTime);
                         }
-                        txt_scheduleAppoint_time.setText(fullTime);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
-    }
-
-    private void Ids() {
-        ScheduleAppoint_date = findViewById(R.id.ScheduleAppoint_date);
-        ScheduleAppoint_time = findViewById(R.id.ScheduleAppoint_time);
-        txt_scheduleAppoint_date = findViewById(R.id.txt_scheduleAppoint_date);
-        txt_scheduleAppoint_time = findViewById(R.id.txt_scheduleAppoint_time);
     }
 
     private void ShowCalendar(){
@@ -115,15 +158,19 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
             ShowCalendar();
             txt_scheduleAppoint_date.setText(getString(R.string.select_a_date));
             Toast.makeText(this, getString(R.string.its_not_possible_scheduleYear), Toast.LENGTH_LONG).show();
+            DateSelected = null;
         }else if (month < NowMonth){
             ShowCalendar();
             txt_scheduleAppoint_date.setText(getString(R.string.select_a_date));
             Toast.makeText(this, getString(R.string.its_not_possible_scheduleMonth), Toast.LENGTH_LONG).show();
+            DateSelected = null;
         }else if (month == NowMonth && day < NowDay){
             ShowCalendar();
             txt_scheduleAppoint_date.setText(getString(R.string.select_a_date));
             Toast.makeText(this, getString(R.string.its_not_possible_scheduleDay), Toast.LENGTH_LONG).show();
+            DateSelected = null;
         }else{
+            DateSelected = sdf.format(myCalendar.getTime());
             txt_scheduleAppoint_date.setText(sdf.format(myCalendar.getTime()));
         }
     }

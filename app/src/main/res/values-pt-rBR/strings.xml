@@ -43,7 +43,7 @@
     <string name="editProfile">Editar Perfil</string>
     <string name="gallery">Galeria</string>
     <string name="cancel">Cancelar</string>
-    <string name="select_payment_method">Selecione o método de upload</string>
+    <string name="select_upload_method">Selecione o método de upload</string>
     <string name="change_profile_photo">Trocar foto de perfil</string>
     <string name="camera">Câmera</string>
     <string name="cpf">CPF</string>
@@ -116,4 +116,9 @@
     <string name="its_not_possible_scheduleMonth">Não é possível agendar uma consulta no mês informado.</string>
     <string name="its_not_possible_scheduleDay">Não é possível agendar uma consulta no dia informado.</string>
     <string name="sorryButPalaceWillBeCosed">Desculpe, mas no horário selecionado a PalacePetz estara fechada</string>
+    <string name="description">Descrição…</string>
+    <string name="to_schedule">AGENDAR</string>
+    <string name="select_your_pet">Selecione seu animal de estimação.</string>
+    <string name="select_a_veterinarian">Selecione um veterinário..</string>
+    <string name="select_payment_method">Selecione um método de pagamento.</string>
 </resources>

@@ -65,7 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
         msg = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.change_profile_photo))
                 .setNegativeButton(getString(R.string.cancel), null)
-                .setMessage(getString(R.string.select_payment_method));
+                .setMessage(getString(R.string.select_upload_method));
 
         DoProfileImgAlert();
 
