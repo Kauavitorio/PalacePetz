@@ -121,4 +121,9 @@
     <string name="select_your_pet">Selecione seu animal de estimação.</string>
     <string name="select_a_veterinarian">Selecione um veterinário..</string>
     <string name="select_payment_method">Selecione um método de pagamento.</string>
+    <string name="WITHDRAWAL_DELIVERY">RETIRADA/ENTREGA</string>
+    <string name="optionOneDeliveryMethod">1 - Levarei o Pet | Receber na residencia</string>
+    <string name="optionTwoDeliveryMethod">2 - Levarei o Pet | Retirar no PetShop</string>
+    <string name="optionThreeDeliveryMethod">3 - PetShop ira busca o animal | irei retira no PetShop</string>
+    <string name="optionFourDeliveryMethod" >4 - PetShop ira busca o animal | Receber na residencia</string>
 </resources>

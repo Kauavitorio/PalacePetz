@@ -24,7 +24,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.Objects;
 
 import co.kaua.palacepetz.Adapters.LoadingDialog;
-import co.kaua.palacepetz.Adapters.Userpermissions;
+import co.kaua.palacepetz.Methods.Userpermissions;
 
 import co.kaua.palacepetz.Firebase.ConfFirebase;
 import co.kaua.palacepetz.R;

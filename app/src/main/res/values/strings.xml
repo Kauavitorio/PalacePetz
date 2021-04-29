@@ -162,5 +162,10 @@
     <string name="to_schedule">TO SCHEDULE</string>
     <string name="select_your_pet">Select your pet.</string>
     <string name="select_a_veterinarian">Select a veterinarian.</string>
+    <string name="WITHDRAWAL_DELIVERY">WITHDRAWAL / DELIVERY</string>
+    <string name="optionOneDeliveryMethod">1 - I will take the Pet | Receive at the residence</string>
+    <string name="optionTwoDeliveryMethod">2 - I will take the Pet | Withdraw in PetShop</string>
+    <string name="optionThreeDeliveryMethod">3 - PetShop will fetch the animal | I will withdraw in the PetShop</string>
+    <string name="optionFourDeliveryMethod" >4 - PetShop will fetch the animal | Receive at the residence</string>
 
 </resources>

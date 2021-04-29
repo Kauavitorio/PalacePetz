@@ -12,9 +12,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import java.util.Objects;
 
 import co.kaua.palacepetz.Activitys.Services.ScheduleAppointmentActivity;
+import co.kaua.palacepetz.Activitys.Services.ScheduleBathAndTosaActivity;
 import co.kaua.palacepetz.R;
 
 public class ServicesFragment extends Fragment {
@@ -39,12 +39,15 @@ public class ServicesFragment extends Fragment {
         //  Consultation click
         btn_consultation_services.setOnClickListener(v -> {
             Intent goTo_Schedule = new Intent(getActivity(), ScheduleAppointmentActivity.class);
+            goTo_Schedule.putExtra("email_user", _Email);
             startActivity(goTo_Schedule);
         });
 
         //  My Bath and Tosa click
         btn_bath_services.setOnClickListener(v -> {
-
+            Intent goTo_ScheduleBath = new Intent(getActivity(), ScheduleBathAndTosaActivity.class);
+            goTo_ScheduleBath.putExtra("email_user", _Email);
+            startActivity(goTo_ScheduleBath);
         });
 
         return view;

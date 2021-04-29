@@ -39,7 +39,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     private static String[] UserPets, VeterinaryList, PaymentFormList;
 
     //  Schedule Info
-    String PetSelected, VeterinarySelected, TimeSelected, DateSelected, PaymentFormSelected;
+    String PetSelected, VeterinarySelected, TimeSelected, DateSelected, PaymentFormSelected, DescriptionInsert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         };
 
         btnScheduleAppointment.setOnClickListener(v -> {
+            DescriptionInsert = edit_Description_consultation.getText().toString();
 
         });
 
