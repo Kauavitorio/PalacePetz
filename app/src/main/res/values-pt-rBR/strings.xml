@@ -126,4 +126,7 @@
     <string name="optionTwoDeliveryMethod">2 - Levarei o Pet | Retirar no PetShop</string>
     <string name="optionThreeDeliveryMethod">3 - PetShop ira busca o animal | irei retira no PetShop</string>
     <string name="optionFourDeliveryMethod" >4 - PetShop ira busca o animal | Receber na residencia</string>
+    <string name="add_to_cart">ADICIONAR AO CARRINHO</string>
+    <string name="one_is_the_minumum_quantity">1 é a quantidade mínima</string>
+    <string name="maximum_amount_reached">Quantidade máxima atingida</string>
 </resources>

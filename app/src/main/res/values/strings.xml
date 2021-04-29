@@ -166,6 +166,9 @@
     <string name="optionOneDeliveryMethod">1 - I will take the Pet | Receive at the residence</string>
     <string name="optionTwoDeliveryMethod">2 - I will take the Pet | Withdraw in PetShop</string>
     <string name="optionThreeDeliveryMethod">3 - PetShop will fetch the animal | I will withdraw in the PetShop</string>
-    <string name="optionFourDeliveryMethod" >4 - PetShop will fetch the animal | Receive at the residence</string>
+    <string name="optionFourDeliveryMethod">4 - PetShop will fetch the animal | Receive at the residence</string>
+    <string name="add_to_cart">ADD TO CART</string>
+    <string name="one_is_the_minumum_quantity">1 is the minimum quantity</string>
+    <string name="maximum_amount_reached">Maximum amount reached</string>
 
 </resources>

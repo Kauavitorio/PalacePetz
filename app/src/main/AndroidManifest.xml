@@ -50,7 +50,9 @@
         <activity android:name=".Activitys.CreateAccountActivity" />
         <activity android:name=".Activitys.LoginActivity" />
         <activity android:name=".Activitys.Services.ScheduleAppointmentActivity" />
-        <activity android:name=".Activitys.Services.ScheduleBathAndTosaActivity"/>
+        <activity android:name=".Activitys.Services.ScheduleBathAndTosaActivity" />
+        <activity android:name=".Activitys.ProductDetailsActivity"
+            android:theme="@style/ProductDetails"/>
         <activity android:name=".Activitys.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

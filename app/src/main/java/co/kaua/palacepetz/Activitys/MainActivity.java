@@ -24,7 +24,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
 import co.kaua.palacepetz.Fragments.AllProductsFragment;
-import co.kaua.palacepetz.Fragments.DetailsProductsFragment;
 import co.kaua.palacepetz.Fragments.MainFragment;
 import co.kaua.palacepetz.Fragments.MyCardsFragment;
 import co.kaua.palacepetz.Fragments.ServicesFragment;
@@ -173,13 +172,9 @@ public class MainActivity extends AppCompatActivity {
 
             //  Show My Orders Fragment
             myOrders.setOnClickListener(v1 -> {
-                DetailsProductsFragment detailsProductsFragment = new DetailsProductsFragment();
-                args = new Bundle();
-                args.putString("email_user", _Email);
-                detailsProductsFragment.setArguments(args);
-                transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayoutMain, detailsProductsFragment);
-                transaction.commit();
+                Intent goTo_ProductDetails = new Intent(this, ProductDetailsActivity.class);
+                goTo_ProductDetails.putExtra("email_user", _Email);
+                startActivity(goTo_ProductDetails);
                 bottomSheetDialog.dismiss();
             });
 
