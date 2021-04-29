@@ -21,11 +21,12 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
 import co.kaua.palacepetz.Fragments.AllProductsFragment;
-import co.kaua.palacepetz.Fragments.DetailsProductsFragment;
 import co.kaua.palacepetz.Fragments.MainFragment;
 import co.kaua.palacepetz.Fragments.MyCardsFragment;
+import co.kaua.palacepetz.Fragments.ServicesFragment;
 import co.kaua.palacepetz.Fragments.ShoppingCartFragment;
 import co.kaua.palacepetz.R;
 
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             CardView myOrders = sheetView.findViewById(R.id.BtnMyOrdersSheetMenu);
             CardView myCards = sheetView.findViewById(R.id.BtnMyCardsSheetMenu);
             CardView historic = sheetView.findViewById(R.id.BtnHistoricSheetMenu);
-            CardView consultation = sheetView.findViewById(R.id.BtnConsultationSheetMenu);
+            CardView services = sheetView.findViewById(R.id.BtnServicesSheetMenu);
 
             //  Show Main Fragment
             home.setOnClickListener(v1 -> {
@@ -171,13 +172,9 @@ public class MainActivity extends AppCompatActivity {
 
             //  Show My Orders Fragment
             myOrders.setOnClickListener(v1 -> {
-                DetailsProductsFragment detailsProductsFragment = new DetailsProductsFragment();
-                args = new Bundle();
-                args.putString("email_user", _Email);
-                detailsProductsFragment.setArguments(args);
-                transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayoutMain, detailsProductsFragment);
-                transaction.commit();
+                Intent goTo_ProductDetails = new Intent(this, ProductDetailsActivity.class);
+                goTo_ProductDetails.putExtra("email_user", _Email);
+                startActivity(goTo_ProductDetails);
                 bottomSheetDialog.dismiss();
             });
 
@@ -189,6 +186,17 @@ public class MainActivity extends AppCompatActivity {
                 myCardsFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, myCardsFragment);
+                transaction.commit();
+                bottomSheetDialog.dismiss();
+            });
+
+            services.setOnClickListener(v1 -> {
+                ServicesFragment servicesFragment = new ServicesFragment();
+                args = new Bundle();
+                args.putString("email_user", _Email);
+                servicesFragment.setArguments(args);
+                transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayoutMain, servicesFragment);
                 transaction.commit();
                 bottomSheetDialog.dismiss();
             });

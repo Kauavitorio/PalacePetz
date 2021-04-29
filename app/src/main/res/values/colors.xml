@@ -15,6 +15,7 @@
     <color name="background_bottom_devicePresentation">#141517</color>
     <color name="background_top_devicePresentation">#32373E</color>
     <color name="background_address_alert">#C9ECFF</color>
+    <color name="bg_product_details">#383D42</color>
 
 
     <!-- Cards Colors -->

@@ -308,9 +308,9 @@
 
     </androidx.cardview.widget.CardView>
 
-    <!-- Btn Consultation -->
+    <!-- Btn Services -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/BtnConsultationSheetMenu"
+        android:id="@+id/BtnServicesSheetMenu"
         android:layout_width="150dp"
         android:layout_height="88dp"
         android:layout_marginStart="20dp"
@@ -349,7 +349,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/segoe_ui"
-                android:text="@string/consultations"
+                android:text="@string/services"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"

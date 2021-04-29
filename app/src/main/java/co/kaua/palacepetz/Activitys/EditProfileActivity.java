@@ -27,7 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.Objects;
 
 import co.kaua.palacepetz.Adapters.LoadingDialog;
-import co.kaua.palacepetz.Adapters.Userpermissions;
+import co.kaua.palacepetz.Methods.Userpermissions;
 import co.kaua.palacepetz.Firebase.ConfFirebase;
 import co.kaua.palacepetz.Methods.MaskEditUtil;
 import co.kaua.palacepetz.R;
@@ -73,7 +73,7 @@ public class EditProfileActivity extends AppCompatActivity {
         msg = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.change_profile_photo))
                 .setNegativeButton(getString(R.string.cancel), null)
-                .setMessage(getString(R.string.select_payment_method));
+                .setMessage(getString(R.string.select_upload_method));
 
         //  Set Mask
         editProfile__CPFUser.addTextChangedListener(MaskEditUtil.mask(editProfile__CPFUser, MaskEditUtil.FORMAT_CPF));

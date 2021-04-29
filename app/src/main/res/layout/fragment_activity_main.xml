@@ -29,7 +29,7 @@
 
                 <!-- ShortCut Consultation -->
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/btn_consultation_shortCut"
+                    android:id="@+id/btn_services_shortCut"
                     android:layout_width="208dp"
                     android:layout_height="105dp"
                     android:layout_marginTop="10dp"
@@ -79,8 +79,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:textColor="@color/white"
-                            android:textSize="15sp"
-                            android:text="@string/consultations"
+                            android:textSize="16sp"
+                            android:text="@string/services"
                             android:textAlignment="center" />
 
                     </androidx.cardview.widget.CardView>
@@ -96,7 +96,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btn_consultation_shortCut"
+                    app:layout_constraintStart_toEndOf="@+id/btn_services_shortCut"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <!-- Container Main -->

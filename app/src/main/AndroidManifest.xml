@@ -22,13 +22,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PalacePetz">
-
         <!-- Palace Fountain Activitys -->
-        <activity android:name=".Activitys.DeviceTipsActivity"
-            android:theme="@style/DevicePresentation"/>
-        <activity android:name=".Activitys.DeviceControlling"
+        <activity
+            android:name=".Activitys.DeviceTipsActivity"
             android:theme="@style/DevicePresentation" />
-        <activity android:name=".Activitys.DevicePairActivity"
+        <activity
+            android:name=".Activitys.DeviceControlling"
+            android:theme="@style/DevicePresentation" />
+        <activity
+            android:name=".Activitys.DevicePairActivity"
             android:theme="@style/DevicePresentation" />
         <activity
             android:name=".Activitys.DevicePresentationActivity"
@@ -47,6 +49,10 @@
         <activity android:name=".Activitys.ForgotPasswordActivity" />
         <activity android:name=".Activitys.CreateAccountActivity" />
         <activity android:name=".Activitys.LoginActivity" />
+        <activity android:name=".Activitys.Services.ScheduleAppointmentActivity" />
+        <activity android:name=".Activitys.Services.ScheduleBathAndTosaActivity" />
+        <activity android:name=".Activitys.ProductDetailsActivity"
+            android:theme="@style/ProductDetails"/>
         <activity android:name=".Activitys.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -24,7 +24,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.Objects;
 
 import co.kaua.palacepetz.Adapters.LoadingDialog;
-import co.kaua.palacepetz.Adapters.Userpermissions;
+import co.kaua.palacepetz.Methods.Userpermissions;
 
 import co.kaua.palacepetz.Firebase.ConfFirebase;
 import co.kaua.palacepetz.R;
@@ -34,12 +34,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
     //  Activity Items
-    TextView txt_userName_profile, txt_email_profile;
-    EditText Profile_FirstNameUser, Profile__LastNameUser, Profile__CFCUser,
-            Profile__CepUser, Profile__AddressUser, Profile__ComplementUser;
-    CircleImageView icon_ProfileUser_profile;
-    LottieAnimationView arrowGoBackProfile;
-    CardView cardBtn_EditProfile;
+    private TextView txt_userName_profile, txt_email_profile, txt_EditProfile_profile;
+    private EditText Profile_FirstNameUser, Profile_LastNameUser, Profile_CFCUser,
+            Profile_CepUser, Profile_AddressUser, Profile_ComplementUser;
+    private CircleImageView icon_ProfileUser_profile;
+    private LottieAnimationView arrowGoBackProfile;
+    private CardView cardBtn_EditProfile, btnSeeMyAnimals;
     Handler timer = new Handler();
     private final String[] permissions = { Manifest.permission.READ_EXTERNAL_STORAGE };
     AlertDialog.Builder msg;
@@ -58,6 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Ids();
+        cardBtn_EditProfile.setElevation(20);
         loadingDialog = new LoadingDialog(ProfileActivity.this);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -65,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         msg = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.change_profile_photo))
                 .setNegativeButton(getString(R.string.cancel), null)
-                .setMessage(getString(R.string.select_payment_method));
+                .setMessage(getString(R.string.select_upload_method));
 
         DoProfileImgAlert();
 
@@ -79,17 +80,23 @@ public class ProfileActivity extends AppCompatActivity {
                 msg.show();
         });
 
-        cardBtn_EditProfile.setElevation(20);
+        cardBtn_EditProfile.setOnClickListener(v -> GoTo_EditProfile());
 
-        cardBtn_EditProfile.setOnClickListener(v -> {
-            cardBtn_EditProfile.setElevation(0);
-            Intent goTo_EditProfile = new Intent(ProfileActivity.this, EditProfileActivity.class);
-            goTo_EditProfile.putExtra("email_user", _Email);
-            startActivity(goTo_EditProfile);
-            finish();
-        });
+        txt_EditProfile_profile.setOnClickListener(v -> GoTo_EditProfile());
 
         arrowGoBackProfile.setOnClickListener(v -> finish());
+
+        btnSeeMyAnimals.setOnClickListener(v -> {
+
+        });
+    }
+
+    private void GoTo_EditProfile() {
+        cardBtn_EditProfile.setElevation(0);
+        Intent goTo_EditProfile = new Intent(ProfileActivity.this, EditProfileActivity.class);
+        goTo_EditProfile.putExtra("email_user", _Email);
+        startActivity(goTo_EditProfile);
+        finish();
     }
 
     private void OpenGallery() {
@@ -111,13 +118,15 @@ public class ProfileActivity extends AppCompatActivity {
         txt_userName_profile = findViewById(R.id.txt_userName_profile);
         txt_email_profile = findViewById(R.id.txt_email_profile);
         Profile_FirstNameUser = findViewById(R.id.Profile_FirstNameUser);
-        Profile__AddressUser = findViewById(R.id.Profile__AddressUser);
+        Profile_AddressUser = findViewById(R.id.Profile_AddressUser);
         cardBtn_EditProfile = findViewById(R.id.cardBtn_EditProfile);
         icon_ProfileUser_profile = findViewById(R.id.icon_ProfileUser_profile);
-        Profile__LastNameUser = findViewById(R.id.Profile__LastNameUser);
-        Profile__CFCUser = findViewById(R.id.Profile__CFCUser);
-        Profile__CepUser = findViewById(R.id.Profile__CepUser);
-        Profile__ComplementUser = findViewById(R.id.Profile__ComplementUser);
+        Profile_LastNameUser = findViewById(R.id.Profile_LastNameUser);
+        Profile_CFCUser = findViewById(R.id.Profile_CFCUser);
+        Profile_CepUser = findViewById(R.id.Profile_CepUser);
+        Profile_ComplementUser = findViewById(R.id.Profile_ComplementUser);
+        btnSeeMyAnimals = findViewById(R.id.btnSeeMyAnimals);
+        txt_EditProfile_profile = findViewById(R.id.txt_EditProfile_profile);
     }
 
     @Override

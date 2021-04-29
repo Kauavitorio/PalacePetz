@@ -30,13 +30,17 @@
     </style>
     <!-- End BottomSheet Theme -->
 
-
-
     <style name="DevicePresentation" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/background_bottom_devicePresentation</item>
         <item name="android:navigationBarColor" tools:targetApi="l">@color/background_top_devicePresentation</item>
+    </style>
+
+    <style name="ProductDetails" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/background_Details_Products</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@color/bg_product_details</item>
     </style>
 
 </resources>

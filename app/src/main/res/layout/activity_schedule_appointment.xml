@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".Activitys.Services.ScheduleAppointmentActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Arrow Back -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/arrowGoBack_ScheduleConsultation"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_rawRes="@raw/arrow_back" />
+
+        <!-- Text Title VETERINARY CONSULTATION -->
+        <TextView
+            android:id="@+id/txt_title_scheduleAppointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/veterinary_consultation"
+            android:textColor="#3D444D"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/arrowGoBack_ScheduleConsultation" />
+
+        <!-- Container Spinner Animal -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/baseSpinnerAnimal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_scheduleAppointment">
+
+            <!-- Spinner Pet -->
+            <Spinner
+                android:id="@+id/spinner_animal"
+                android:layout_width="334dp"
+                android:layout_height="50dp"
+                android:background="@drawable/edittext_schedule"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Btn Arrow Down -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginEnd="38dp"
+                app:cardBackgroundColor="#27B5FF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <!-- Img Arrow -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrowdown"
+                    tools:ignore="ContentDescription" />
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Container Spinner Veterinary -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/baseSpinnerVeterinary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/baseSpinnerAnimal" >
+
+            <!-- Spinner Veterinary -->
+            <Spinner
+                android:id="@+id/spinner_veterinary"
+                android:layout_width="334dp"
+                android:layout_height="50dp"
+                android:background="@drawable/edittext_schedule"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <!-- Btn Arrow Down -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginEnd="38dp"
+                app:cardBackgroundColor="#27B5FF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <!-- Img Arrow -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrowdown"
+                    tools:ignore="ContentDescription" />
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Container Select Time -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ScheduleAppoint_time"
+            android:layout_width="333dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_profile"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/baseSpinnerVeterinary">
+
+            <!-- Container Text -->
+            <TextView
+                android:id="@+id/txt_scheduleAppoint_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_a_time"
+                android:textSize="20sp"
+                android:textColor="@color/hint"
+                android:layout_marginStart="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Calendar Watch -->
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_watch"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Container Select Date -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ScheduleAppoint_date"
+            android:layout_width="333dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_profile"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ScheduleAppoint_time">
+
+            <!-- Container Text -->
+            <TextView
+                android:id="@+id/txt_scheduleAppoint_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_a_date"
+                android:textColor="@color/hint"
+                android:textSize="20sp"
+                android:layout_marginStart="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Calendar Img -->
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_calendar"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Container Spinner PaymentForm -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/baseSpinnerPaymentForm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ScheduleAppoint_date">
+
+            <!-- Spinner Payment Form -->
+            <Spinner
+                android:id="@+id/spinner_paymentForm"
+                android:layout_width="334dp"
+                android:layout_height="50dp"
+                android:background="@drawable/edittext_schedule"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Btn Arrow Down -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginEnd="38dp"
+                app:cardBackgroundColor="#27B5FF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <!-- Img Arrow -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrowdown"
+                    tools:ignore="ContentDescription" />
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Edit Description -->
+        <EditText
+            android:id="@+id/edit_Description_consultation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="334dp"
+            android:minWidth="334dp"
+            android:minHeight="148dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edittext_schedule"
+            android:ellipsize="start"
+            android:maxLength="2000"
+            android:gravity="center_horizontal"
+            android:hint="@string/description"
+            android:inputType="textCapSentences|textMultiLine"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/baseSpinnerPaymentForm"
+            tools:ignore="Autofill,RtlCompat" />
+
+        <!-- Btn Schedule -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnScheduleAppointment"
+            android:layout_width="282dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="#44BFFF"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_Description_consultation">
+
+            <!-- TExt To Schedule -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/to_schedule"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

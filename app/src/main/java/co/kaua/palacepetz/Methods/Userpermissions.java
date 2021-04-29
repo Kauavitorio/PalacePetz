@@ -1,4 +1,4 @@
-package co.kaua.palacepetz.Adapters;
+package co.kaua.palacepetz.Methods;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;

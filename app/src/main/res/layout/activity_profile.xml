@@ -14,6 +14,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Text Edit Profile -->
+        <TextView
+            android:id="@+id/txt_EditProfile_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="@string/editProfile"
+            android:textColor="@color/hint"
+            android:textSize="17sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <!-- Arrow Back -->
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/arrowGoBackProfile"
@@ -29,8 +42,8 @@
         <!-- User Icon -->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/icon_ProfileUser_profile"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:src="@drawable/default_profile_image"
             android:visibility="visible"
             app:civ_border_color="@color/black"
@@ -96,7 +109,7 @@
 
         <!-- EditText Last Name -->
         <EditText
-            android:id="@+id/Profile__LastNameUser"
+            android:id="@+id/Profile_LastNameUser"
             android:layout_width="333dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -120,7 +133,7 @@
 
         <!-- EditText CPF -->
         <EditText
-            android:id="@+id/Profile__CFCUser"
+            android:id="@+id/Profile_CFCUser"
             android:layout_width="333dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -139,12 +152,12 @@
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Profile__LastNameUser"
+            app:layout_constraintTop_toBottomOf="@+id/Profile_LastNameUser"
             tools:ignore="Autofill,TextFields" />
 
         <!-- EditText Cep -->
         <EditText
-            android:id="@+id/Profile__CepUser"
+            android:id="@+id/Profile_CepUser"
             android:layout_width="333dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -163,12 +176,12 @@
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Profile__CFCUser"
+            app:layout_constraintTop_toBottomOf="@+id/Profile_CFCUser"
             tools:ignore="Autofill,TextFields" />
 
         <!-- EditText Address -->
         <EditText
-            android:id="@+id/Profile__AddressUser"
+            android:id="@+id/Profile_AddressUser"
             android:layout_width="333dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -178,7 +191,7 @@
             android:ems="10"
             android:fontFamily="@font/segoe_ui"
             android:hint="@string/address"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName|textMultiLine"
             android:minHeight="50sp"
             android:textColor="#000"
             android:textColorHint="@color/hint"
@@ -187,12 +200,12 @@
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Profile__CepUser"
+            app:layout_constraintTop_toBottomOf="@+id/Profile_CepUser"
             tools:ignore="Autofill,TextFields" />
 
         <!-- EditText Complement -->
         <EditText
-            android:id="@+id/Profile__ComplementUser"
+            android:id="@+id/Profile_ComplementUser"
             android:layout_width="333dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -202,7 +215,7 @@
             android:ems="10"
             android:fontFamily="@font/segoe_ui"
             android:hint="@string/complement"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName|textMultiLine"
             android:minHeight="50sp"
             android:textColor="#000"
             android:textColorHint="@color/hint"
@@ -211,10 +224,33 @@
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Profile__AddressUser"
+            app:layout_constraintTop_toBottomOf="@+id/Profile_AddressUser"
             tools:ignore="Autofill,TextFields" />
 
-        <!-- Card Sing Up -->
+        <!-- Card btn See My Animals -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnSeeMyAnimals"
+            android:layout_width="334dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="#27B5FF"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Profile_ComplementUser">
+
+            <!-- Text See My Pets -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/see_my_pets"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Card Edit Profile -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardBtn_EditProfile"
             android:layout_width="324dp"
@@ -226,7 +262,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Profile__ComplementUser">
+            app:layout_constraintTop_toBottomOf="@+id/btnSeeMyAnimals">
 
             <!-- Container  -->
             <androidx.constraintlayout.widget.ConstraintLayout

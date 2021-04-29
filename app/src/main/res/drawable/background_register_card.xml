@@ -4,9 +4,7 @@
 
     <solid android:color="@color/background_Details_Products"/>
 
-    <corners android:topLeftRadius="0dp"
-        android:topRightRadius="0dp"
-        android:bottomRightRadius="180dp"
-        android:bottomLeftRadius="180dp"/>
+    <corners android:topLeftRadius="40dp"
+        android:topRightRadius="40dp"/>
 
 </shape>

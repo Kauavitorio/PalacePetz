@@ -144,10 +144,10 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putBoolean("pref_check", boollsChecked);
                     editor.putBoolean("isDevicePre", isDevicePre);
                     editor.apply();
-                    timer.postDelayed(() -> GoToMain(email),1200);
+                    GoToMain(email);
                 }else{
                     mPrefs.edit().clear().apply();
-                    timer.postDelayed(() -> GoToMain(email),1200);
+                    GoToMain(email);
                 }
             }else{
                 loadingDialog.dimissDialog();
