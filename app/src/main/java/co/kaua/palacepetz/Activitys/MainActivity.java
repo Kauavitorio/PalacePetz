@@ -1,5 +1,6 @@
 package co.kaua.palacepetz.Activitys;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -23,6 +24,8 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
+import co.kaua.palacepetz.Data.User.DtoUser;
+import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Fragments.AllProductsFragment;
 import co.kaua.palacepetz.Fragments.MainFragment;
 import co.kaua.palacepetz.Fragments.MyCardsFragment;
@@ -31,6 +34,11 @@ import co.kaua.palacepetz.Fragments.ShoppingCartFragment;
 import co.kaua.palacepetz.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório
@@ -39,6 +47,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  *  @author Kaua Vitorio
  **/
 
+@SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity {
     //  Screen items
     private CardView base_QuantityItemsCart_main;
@@ -54,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
     private Bundle bundle;
 
     //  User information
-    String _Email;
+    private int id_user;
+    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, img_user;
 
     //  Set preferences
     private SharedPreferences mPrefs;
@@ -62,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
 
     //  Shopping Cart Items
     private static int cartSize = 0;
+
+    //  Firebase / Retrofit
+    final Retrofit retrofitUser = new Retrofit.Builder()
+            .baseUrl("https://palacepetzapi.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
 
     @Override
@@ -71,14 +87,23 @@ public class MainActivity extends AppCompatActivity {
         Ids();
         Intent intent = getIntent();
         bundle = intent.getExtras();
+        id_user = bundle.getInt("id_user");
+        name_user = bundle.getString("name_user");
         _Email = bundle.getString("email_user");
+        cpf_user = bundle.getString("cpf_user");
+        address_user = bundle.getString("address_user");
+        complement = bundle.getString("complement");
+        zipcode = bundle.getString("zipcode");
+        phone_user = bundle.getString("phone_user");
+        img_user = bundle.getString("img_user");
+        if (address_user == null || address_user.equals(""))
+            ShowAddressAlert();
 
         //  Set items gone
         base_QuantityItemsCart_main.setVisibility(View.GONE);
 
         //  Get all SharedPreferences
         mPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        ShowAddressAlert();
 
         MainFragment mainFragment = new MainFragment();
         args = new Bundle();
@@ -246,6 +271,38 @@ public class MainActivity extends AppCompatActivity {
 
             dialog.show();
         }
+    }
+
+    @Override protected void onResume() {
+        super.onResume();
+        GetUserInformation();
+    }
+
+    private void GetUserInformation() {
+        UserServices usersService = retrofitUser.create(UserServices.class);
+        DtoUser dtoUser = new DtoUser(_Email);
+        Call<DtoUser> resultLogin = usersService.loginUser(dtoUser);
+        resultLogin.enqueue(new Callback<DtoUser>() {
+            @Override
+            public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    id_user = response.body().getId_user();
+                    name_user = response.body().getName_user();
+                    _Email = response.body().getEmail();
+                    cpf_user = response.body().getCpf_user();
+                    address_user = response.body().getAddress_user();
+                    complement = response.body().getComplement();
+                    zipcode = response.body().getZipcode();
+                    phone_user = response.body().getPhone_user();
+                    img_user = response.body().getImg_user();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
+                Log.d("UserStatus", "Error to get user information on main\n" + t.getMessage());
+            }
+        });
     }
 
     @Override public void onBackPressed() {

@@ -130,4 +130,9 @@
     <string name="one_is_the_minumum_quantity">1 é a quantidade mínima</string>
     <string name="maximum_amount_reached">Quantidade máxima atingida</string>
     <string name="see_my_pets">Ver meus animais</string>
+    <string name="authFailed_thisEmail">Falha na autenticação!\nEste e-mail já está registrado.</string>
+    <string name="hello_emailSend">Olá, seu usuário foi cadastrado com sucesso :)\nMandamos um email de verificação para o email cadastrado, por favor confirmar no email antes de se logar</string>
+    <string name="ok_i_will_confirm">Ok, vou confirmar</string>
+    <string name="txt_weVerify_email_not_verified">Verificamos que seu email não foi confirmada, por favor confirmar sua conta com o email que lhe enviamos.</string>
+    <string name="invalidEmailOrPassword">Email ou senha Inválido.</string>
 </resources>
