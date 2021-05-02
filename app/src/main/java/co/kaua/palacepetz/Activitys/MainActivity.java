@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.squareup.picasso.Picasso;
 
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
 import co.kaua.palacepetz.Data.User.DtoUser;
@@ -98,6 +99,10 @@ public class MainActivity extends AppCompatActivity {
         img_user = bundle.getString("img_user");
         if (address_user == null || address_user.equals(""))
             ShowAddressAlert();
+        if (img_user == null || img_user.equals(""))
+            Log.d("UserStatus", "Not User image");
+        else
+            Picasso.get().load(img_user).into(icon_ProfileUser_main);
 
         //  Set items gone
         base_QuantityItemsCart_main.setVisibility(View.GONE);
@@ -115,7 +120,15 @@ public class MainActivity extends AppCompatActivity {
 
         icon_ProfileUser_main.setOnClickListener(v -> {
             Intent goTo_profile = new Intent(MainActivity.this, ProfileActivity.class);
+            goTo_profile.putExtra("id_user", id_user);
+            goTo_profile.putExtra("name_user", name_user);
             goTo_profile.putExtra("email_user", _Email);
+            goTo_profile.putExtra("cpf_user", cpf_user);
+            goTo_profile.putExtra("address_user", address_user);
+            goTo_profile.putExtra("complement", complement);
+            goTo_profile.putExtra("zipcode", zipcode);
+            goTo_profile.putExtra("phone_user", phone_user);
+            goTo_profile.putExtra("img_user", img_user);
             startActivity(goTo_profile);
         });
 
@@ -296,6 +309,10 @@ public class MainActivity extends AppCompatActivity {
                     zipcode = response.body().getZipcode();
                     phone_user = response.body().getPhone_user();
                     img_user = response.body().getImg_user();
+                    if (img_user == null || img_user.equals(""))
+                        Log.d("UserStatus", "Not User image");
+                    else
+                        Picasso.get().load(img_user).into(icon_ProfileUser_main);
                 }
             }
             @Override

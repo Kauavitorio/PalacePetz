@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -45,7 +46,8 @@ public class ProfileActivity extends AppCompatActivity {
     AlertDialog.Builder msg;
 
     //  User information
-    private String _Email;
+    private int id_user;
+    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, img_user;
 
     //  Firebase
     StorageReference storageReference;
@@ -62,13 +64,22 @@ public class ProfileActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(ProfileActivity.this);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        id_user = bundle.getInt("id_user");
+        name_user = bundle.getString("name_user");
         _Email = bundle.getString("email_user");
+        cpf_user = bundle.getString("cpf_user");
+        address_user = bundle.getString("address_user");
+        complement = bundle.getString("complement");
+        zipcode = bundle.getString("zipcode");
+        phone_user = bundle.getString("phone_user");
+        img_user = bundle.getString("img_user");
         msg = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.change_profile_photo))
                 .setNegativeButton(getString(R.string.cancel), null)
                 .setMessage(getString(R.string.select_upload_method));
 
         DoProfileImgAlert();
+        loadUserInfo();
 
         icon_ProfileUser_profile.setOnClickListener(v -> {
             Userpermissions.validatePermissions(permissions, ProfileActivity.this, 1);
@@ -91,10 +102,34 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    private void loadUserInfo() {
+        if (img_user == null || img_user.equals(""))
+            Log.d("UserStatus", "Not User image");
+        else
+            Picasso.get().load(img_user).into(icon_ProfileUser_profile);
+        String[] FullUserName = name_user.split(" ");
+        txt_userName_profile.setText(name_user);
+        txt_email_profile.setText(_Email);
+        Profile_FirstNameUser.setText(FullUserName[0]);
+        Profile_LastNameUser.setText(FullUserName[1]);
+        Profile_CFCUser.setText(cpf_user);
+        Profile_CepUser.setText(zipcode);
+        Profile_AddressUser.setText(address_user);
+        Profile_ComplementUser.setText(complement);
+    }
+
     private void GoTo_EditProfile() {
         cardBtn_EditProfile.setElevation(0);
         Intent goTo_EditProfile = new Intent(ProfileActivity.this, EditProfileActivity.class);
+        goTo_EditProfile.putExtra("id_user", id_user);
+        goTo_EditProfile.putExtra("name_user", name_user);
         goTo_EditProfile.putExtra("email_user", _Email);
+        goTo_EditProfile.putExtra("cpf_user", cpf_user);
+        goTo_EditProfile.putExtra("address_user", address_user);
+        goTo_EditProfile.putExtra("complement", complement);
+        goTo_EditProfile.putExtra("zipcode", zipcode);
+        goTo_EditProfile.putExtra("phone_user", phone_user);
+        goTo_EditProfile.putExtra("img_user", img_user);
         startActivity(goTo_EditProfile);
         finish();
     }
@@ -132,7 +167,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        storageReference = ConfFirebase.getFirebaseStorage().child("user").child("profile").child("User_" + _Email);
+        storageReference = ConfFirebase.getFirebaseStorage().child("user").child("profile").child("User_" + id_user);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri filePath = data.getData();
             try {
@@ -152,7 +187,9 @@ public class ProfileActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             loadingDialog.dimissDialog();
                             Uri downloadUri = task.getResult();
-                            Toast.makeText(this, ""+ downloadUri, Toast.LENGTH_SHORT).show();
+                            img_user = downloadUri+"";
+                            Picasso.get().load(img_user).into(icon_ProfileUser_profile);
+                            UpdateUserImage(id_user, img_user);
                         } else {
                             Toast.makeText(this, getString(R.string.uploadFailed), Toast.LENGTH_SHORT).show();
                             Log.d("ProfileUpload", Objects.requireNonNull(task.getException()).getMessage());
@@ -168,6 +205,10 @@ public class ProfileActivity extends AppCompatActivity {
                 Log.d("ProfileUpload", ex.toString());
             }
         }
+    }
+
+    private void UpdateUserImage(int id_user, String img_user) {
+
     }
 
     @Override

@@ -135,4 +135,6 @@
     <string name="ok_i_will_confirm">Ok, vou confirmar</string>
     <string name="txt_weVerify_email_not_verified">Verificamos que seu email não foi confirmada, por favor confirmar sua conta com o email que lhe enviamos.</string>
     <string name="invalidEmailOrPassword">Email ou senha Inválido.</string>
+    <string name="cep">CEP</string>
+    <string name="inappropriateUserName">Verificamos que o nome inserido para seu usuário é impróprio, por favor alteralo.</string>
 </resources>

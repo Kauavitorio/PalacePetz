@@ -46,7 +46,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private String password_base = "", password_confirm = "";
     private InputMethodManager imm;
     private final LoadingDialog loadingDialog = new LoadingDialog(this);
-    private Dialog warning_emailSend, WarningError;
+    private Dialog warning_emailSend, WarningError, warning_badUsername;
 
     //  User Information to Sign Up
     private String firstName, lastName, email, cpf_user, password;
@@ -66,6 +66,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         Ids();
         warning_emailSend = new Dialog(this);
         WarningError = new Dialog(this);
+        warning_badUsername = new Dialog(this);
         cardBtn_SingUp.setElevation(20);
         checking_password_have_minimum_characters();
         checking_if_all_password_is_equal();
@@ -144,6 +145,11 @@ public class CreateAccountActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                 }
                             });
+                        }else if(response.code() == 406){
+                            loadingDialog.dimissDialog();
+                            cardBtn_SingUp.setElevation(20);
+                            cardBtn_SingUp.setEnabled(true);
+                            Show_BadUsername_Warning();
                         }else if (response.code() == 409){
                             loadingDialog.dimissDialog();
                             cardBtn_SingUp.setElevation(20);
@@ -195,6 +201,18 @@ public class CreateAccountActivity extends AppCompatActivity {
             finish();
         });
         warning_emailSend.show();
+    }
+
+    //  Create Method for show alert of bad username
+    private void Show_BadUsername_Warning(){
+        CardView btnOk_InappropriateUsername;
+        warning_badUsername.setContentView(R.layout.adapter_warning_badusername);
+        warning_badUsername.setCancelable(false);
+        btnOk_InappropriateUsername = warning_badUsername.findViewById(R.id.btnOk_InappropriateUsername);
+        warning_badUsername.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        btnOk_InappropriateUsername.setOnClickListener(v -> warning_badUsername.dismiss());
+        warning_badUsername.show();
     }
 
     private void showError(EditText editText, String error){

@@ -124,8 +124,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         txt_forgot_your_password.setOnClickListener(v -> {
-            Intent goTo_ForgotPassowrd = new Intent(this, ForgotPasswordActivity.class);
-            startActivity(goTo_ForgotPassowrd);
+            Intent goTo_ForgotPassword = new Intent(this, ForgotPasswordActivity.class);
+            startActivity(goTo_ForgotPassword);
         });
     }
 
@@ -219,10 +219,13 @@ public class LoginActivity extends AppCompatActivity {
                         ShowEmailIsNotVerified();
                     }
                 }else{
+                    mPrefs.edit().clear().apply();
+                    loadingDialog.dimissDialog();
                     ShowWarning_Email_Password();
                 }
             });
         }catch (Exception ex){
+            mPrefs.edit().clear().apply();
             Log.d("Login", ex.toString());
         }
     }
