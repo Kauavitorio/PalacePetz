@@ -4,11 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,6 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 import co.kaua.palacepetz.Adapters.LoadingDialog;
+import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Firebase.ConfFirebase;
@@ -46,7 +44,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     private String password_base = "", password_confirm = "";
     private InputMethodManager imm;
     private final LoadingDialog loadingDialog = new LoadingDialog(this);
-    private Dialog warning_emailSend, WarningError, warning_badUsername;
 
     //  User Information to Sign Up
     private String firstName, lastName, email, cpf_user, password;
@@ -64,9 +61,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         Ids();
-        warning_emailSend = new Dialog(this);
-        WarningError = new Dialog(this);
-        warning_badUsername = new Dialog(this);
         cardBtn_SingUp.setElevation(20);
         checking_password_have_minimum_characters();
         checking_if_all_password_is_equal();
@@ -132,7 +126,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                     Objects.requireNonNull(mAuth.getCurrentUser()).sendEmailVerification().addOnCompleteListener(task1 -> {
                                         if (task1.isSuccessful()){
                                             Log.d("UserStatus", "Email sent.");
-                                            Show_WeSendEmail_Warning(email, password);
+                                            Warnings.show_WeSendEmail_Warning(CreateAccountActivity.this, email, password);
                                             cardBtn_SingUp.setElevation(20);
                                         }
                                     });
@@ -149,7 +143,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                             loadingDialog.dimissDialog();
                             cardBtn_SingUp.setElevation(20);
                             cardBtn_SingUp.setEnabled(true);
-                            Show_BadUsername_Warning();
+                            Warnings.show_BadUsername_Warning(CreateAccountActivity.this);
                         }else if (response.code() == 409){
                             loadingDialog.dimissDialog();
                             cardBtn_SingUp.setElevation(20);
@@ -158,13 +152,13 @@ public class CreateAccountActivity extends AppCompatActivity {
                         }else{
                             cardBtn_SingUp.setEnabled(true);
                             loadingDialog.dimissDialog();
-                            showRegisterError();
                             cardBtn_SingUp.setElevation(20);
+                            Warnings.showWeHaveAProblem(CreateAccountActivity.this);
                         }
                     }
                     @Override
                     public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
-                        showRegisterError();
+                        Warnings.showWeHaveAProblem(CreateAccountActivity.this);
                         loadingDialog.dimissDialog();
                         cardBtn_SingUp.setElevation(20);
                         cardBtn_SingUp.setEnabled(true);
@@ -185,55 +179,11 @@ public class CreateAccountActivity extends AppCompatActivity {
         txt_haveAccount = findViewById(R.id.txt_haveAccount);
     }
 
-    //  Create Method for show alert of email send
-    private void Show_WeSendEmail_Warning(String email, String password){
-        CardView btnIWillConfirm;
-        warning_emailSend.setContentView(R.layout.adapter_wesendemail);
-        warning_emailSend.setCancelable(false);
-        btnIWillConfirm = warning_emailSend.findViewById(R.id.btnIWillConfirm);
-        warning_emailSend.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        btnIWillConfirm.setOnClickListener(v -> {
-            Intent goTo_SingIn = new Intent(CreateAccountActivity.this, LoginActivity.class);
-            goTo_SingIn.putExtra("email_user", email);
-            goTo_SingIn.putExtra("password_user", password);
-            startActivity(goTo_SingIn);
-            finish();
-        });
-        warning_emailSend.show();
-    }
-
-    //  Create Method for show alert of bad username
-    private void Show_BadUsername_Warning(){
-        CardView btnOk_InappropriateUsername;
-        warning_badUsername.setContentView(R.layout.adapter_warning_badusername);
-        warning_badUsername.setCancelable(false);
-        btnOk_InappropriateUsername = warning_badUsername.findViewById(R.id.btnOk_InappropriateUsername);
-        warning_badUsername.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        btnOk_InappropriateUsername.setOnClickListener(v -> warning_badUsername.dismiss());
-        warning_badUsername.show();
-    }
-
     private void showError(EditText editText, String error){
         editText.setError(error);
         editText.requestFocus();
         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
         cardBtn_SingUp.setElevation(20);
-    }
-
-    //  Create method to user see email error
-    private void showRegisterError(){
-        CardView btnOk_WeHaveAProblem;
-        WarningError.setContentView(R.layout.adapter_warning_error_crateaccount);
-        WarningError.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        btnOk_WeHaveAProblem = WarningError.findViewById(R.id.btnOk_WeHaveAProblem);
-        btnOk_WeHaveAProblem.setElevation(10);
-        WarningError.setCancelable(false);
-
-        btnOk_WeHaveAProblem.setOnClickListener(v -> WarningError.dismiss());
-
-        WarningError.show();
     }
 
     private void checking_password_have_minimum_characters() {

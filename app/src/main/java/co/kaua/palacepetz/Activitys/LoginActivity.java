@@ -6,12 +6,9 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -29,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Objects;
 
 import co.kaua.palacepetz.Adapters.LoadingDialog;
+import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Firebase.ConfFirebase;
@@ -63,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
     //  Set preferences
     SharedPreferences mPrefs;
     private static final String PREFS_NAME = "myPrefs";
-    private Dialog warning_emailNotVerified, Warning_Email_Password, WarningError;
 
     //  Fountain info
     boolean isDevicePre;
@@ -81,9 +78,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Ids();
-        warning_emailNotVerified = new Dialog(this);
-        Warning_Email_Password = new Dialog(this);
-        WarningError = new Dialog(this);
         cardBtn_SingIn.setElevation(20);
         verifyIfUsersLogged();
         Intent intent = getIntent();
@@ -212,16 +206,25 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             @Override
                             public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
-                                showWarning();
+                                Warnings.showWeHaveAProblem(LoginActivity.this);
                             }
                         });
                     }else{
-                        ShowEmailIsNotVerified();
+                        cardBtn_SingIn.setEnabled(true);
+                        cardBtn_SingIn.setElevation(20);
+                        progressDogLogin.setVisibility(View.GONE);
+                        txt_SingInLogin.setVisibility(View.VISIBLE);
+                        Warnings.showEmailIsNotVerified(LoginActivity.this);
                     }
                 }else{
                     mPrefs.edit().clear().apply();
                     loadingDialog.dimissDialog();
-                    ShowWarning_Email_Password();
+                    cardBtn_SingIn.setElevation(20);
+                    editLogin_passwordUser.setText(null);
+                    cardBtn_SingIn.setEnabled(true);
+                    progressDogLogin.setVisibility(View.GONE);
+                    txt_SingInLogin.setVisibility(View.VISIBLE);
+                    Warnings.showWarning_Email_Password(LoginActivity.this);
                 }
             });
         }catch (Exception ex){
@@ -244,55 +247,5 @@ public class LoginActivity extends AppCompatActivity {
         goTo_Main.putExtra("AddressAlert", true);
         startActivity(goTo_Main);
         finish();
-    }
-
-    //  Create Method for show alert of email not verified
-    private void ShowEmailIsNotVerified() {
-        cardBtn_SingIn.setEnabled(true);
-        cardBtn_SingIn.setElevation(20);
-
-        CardView btnIWillConfirmLogin;
-        warning_emailNotVerified.setContentView(R.layout.adapter_emailnotverified);
-        warning_emailNotVerified.setCancelable(false);
-        warning_emailNotVerified.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        btnIWillConfirmLogin = warning_emailNotVerified.findViewById(R.id.btnIwillConfirmLogin);
-
-        progressDogLogin.setVisibility(View.GONE);
-        txt_SingInLogin.setVisibility(View.VISIBLE);
-
-        btnIWillConfirmLogin.setOnClickListener(v -> warning_emailNotVerified.dismiss());
-        warning_emailNotVerified.show();
-    }
-
-    //  Method to show Alert for email and password is wrong
-    private void ShowWarning_Email_Password(){
-        CardView btnOk_InvalidEmailOrPassword;
-        Warning_Email_Password.setContentView(R.layout.adapter_warning_emailorpassoword);
-        Warning_Email_Password.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        btnOk_InvalidEmailOrPassword = Warning_Email_Password.findViewById(R.id.btnOk_InvalidEmailOrPassword);
-        cardBtn_SingIn.setElevation(20);
-        editLogin_passwordUser.setText(null);
-        cardBtn_SingIn.setEnabled(true);
-
-        progressDogLogin.setVisibility(View.GONE);
-        txt_SingInLogin.setVisibility(View.VISIBLE);
-
-        btnOk_InvalidEmailOrPassword.setOnClickListener(v -> Warning_Email_Password.dismiss());
-
-        Warning_Email_Password.show();
-    }
-
-    //  Create method to user see email error
-    private void showWarning(){
-        CardView btnOk_WeHaveAProblem;
-        WarningError.setContentView(R.layout.adapter_warning_error_crateaccount);
-        WarningError.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        btnOk_WeHaveAProblem = WarningError.findViewById(R.id.btnOk_WeHaveAProblem);
-        btnOk_WeHaveAProblem.setElevation(10);
-        WarningError.setCancelable(false);
-
-        btnOk_WeHaveAProblem.setOnClickListener(v -> WarningError.dismiss());
-
-        WarningError.show();
     }
 }
