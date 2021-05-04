@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     //  User information
     private int id_user;
-    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, img_user;
+    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user;
 
     //  Set preferences
     private SharedPreferences mPrefs;
@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         complement = bundle.getString("complement");
         zipcode = bundle.getString("zipcode");
         phone_user = bundle.getString("phone_user");
+        birth_date = bundle.getString("birth_date");
         img_user = bundle.getString("img_user");
         if (address_user == null || address_user.equals(""))
             ShowAddressAlert();
@@ -128,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
             goTo_profile.putExtra("complement", complement);
             goTo_profile.putExtra("zipcode", zipcode);
             goTo_profile.putExtra("phone_user", phone_user);
+            goTo_profile.putExtra("birth_date", birth_date);
             goTo_profile.putExtra("img_user", img_user);
             startActivity(goTo_profile);
         });
@@ -275,6 +277,16 @@ public class MainActivity extends AppCompatActivity {
             btn_registerNow_addressAlert.setOnClickListener(v -> {
                 btn_registerNow_addressAlert.setElevation(0);
                 Intent goTo_AddressRegister = new Intent(MainActivity.this, RegisterAddressActivity.class);
+                goTo_AddressRegister.putExtra("id_user", id_user);
+                goTo_AddressRegister.putExtra("name_user", name_user);
+                goTo_AddressRegister.putExtra("email_user", _Email);
+                goTo_AddressRegister.putExtra("cpf_user", cpf_user);
+                goTo_AddressRegister.putExtra("address_user", address_user);
+                goTo_AddressRegister.putExtra("complement", complement);
+                goTo_AddressRegister.putExtra("zipcode", zipcode);
+                goTo_AddressRegister.putExtra("phone_user", phone_user);
+                goTo_AddressRegister.putExtra("birth_date", birth_date);
+                goTo_AddressRegister.putExtra("img_user", img_user);
                 startActivity(goTo_AddressRegister);
                 dialog.dismiss();
             });
@@ -308,6 +320,7 @@ public class MainActivity extends AppCompatActivity {
                     complement = response.body().getComplement();
                     zipcode = response.body().getZipcode();
                     phone_user = response.body().getPhone_user();
+                    birth_date = response.body().getBirth_date();
                     img_user = response.body().getImg_user();
                     if (img_user == null || img_user.equals(""))
                         Log.d("UserStatus", "Not User image");

@@ -137,4 +137,11 @@
     <string name="invalidEmailOrPassword">Email ou senha Inválido.</string>
     <string name="cep">CEP</string>
     <string name="inappropriateUserName">Verificamos que o nome inserido para seu usuário é impróprio, por favor alteralo.</string>
+    <string name="birth_date">Data de nascimento</string>
+    <string name="zipCode_is_invalid">O código postal é inválido</string>
+    <string name="error_in_get_your_address">Erro ao obter o seu endereço</string>
+    <string name="your_address_updated_successfully">Seu endereço foi atualizado com sucesso</string>
+    <string name="zipcode_field_incorretly">O campo CEP está preenchido incorretamente</string>
+    <string name="street_field_incorretly">O campo da rua está preenchido incorretamente</string>
+    <string name="number_field_incorretly">O campo do número está preenchido incorretamente</string>
 </resources>

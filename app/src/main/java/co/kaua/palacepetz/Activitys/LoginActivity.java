@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //  User information
     private int id_user;
-    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, img_user, password;
+    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, password;
 
     //  Next Activity
     private TextView txt_forgot_your_password, txt_SingUp;
@@ -184,6 +184,7 @@ public class LoginActivity extends AppCompatActivity {
                                     address_user = response.body().getAddress_user();
                                     complement = response.body().getComplement();
                                     zipcode = response.body().getZipcode();
+                                    birth_date = response.body().getBirth_date();
                                     phone_user = response.body().getPhone_user();
                                     img_user = response.body().getImg_user();
                                     if (checkbox_rememberMe.isChecked()){
@@ -196,11 +197,11 @@ public class LoginActivity extends AppCompatActivity {
                                         editor.putBoolean("isDevicePre", isDevicePre);
                                         editor.apply();
                                         GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
-                                                zipcode, phone_user, img_user);
+                                                zipcode, phone_user, birth_date, img_user);
                                     }else{
                                         mPrefs.edit().clear().apply();
                                         GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
-                                                zipcode, phone_user, img_user);
+                                                zipcode, phone_user, birth_date, img_user);
                                     }
                                 }
                             }
@@ -233,7 +234,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void GoToMain(int id_user, String name_user, String emailUser, String cpf_user, String address_user, String complement, String zipcode, String phone_user, String img_user) {
+    private void GoToMain(int id_user, String name_user, String emailUser, String cpf_user, String address_user, String complement,
+                          String zipcode, String phone_user, String birth_date, String img_user) {
         Intent goTo_Main = new Intent(this, MainActivity.class);
         goTo_Main.putExtra("id_user", id_user);
         goTo_Main.putExtra("name_user", name_user);
@@ -243,6 +245,7 @@ public class LoginActivity extends AppCompatActivity {
         goTo_Main.putExtra("complement", complement);
         goTo_Main.putExtra("zipcode", zipcode);
         goTo_Main.putExtra("phone_user", phone_user);
+        goTo_Main.putExtra("birth_date", birth_date);
         goTo_Main.putExtra("img_user", img_user);
         goTo_Main.putExtra("AddressAlert", true);
         startActivity(goTo_Main);

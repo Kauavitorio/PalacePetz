@@ -2,7 +2,7 @@ package co.kaua.palacepetz.Data.User;
 
 public class DtoUser {
     private int id_user, user_type;
-    private String name_user, email, cpf_user, address_user, complement, zipcode, phone_user, img_user, password;
+    private String name_user, email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, password;
 
     public DtoUser(String name_user, String email, String cpf_user, String password) {
         this.name_user = name_user;
@@ -11,8 +11,28 @@ public class DtoUser {
         this.password = password;
     }
 
+    public DtoUser(String address_user, String complement, String zipcode, int id_user){
+        this.address_user = address_user;
+        this.complement = complement;
+        this.zipcode = zipcode;
+        this.id_user = id_user;
+    }
+
     public DtoUser(String email) {
         this.email = email;
+    }
+
+    public DtoUser(int id_user, String img_user) {
+        this.id_user = id_user;
+        this.img_user = img_user;
+    }
+
+    public String getBirth_date() {
+        return birth_date;
+    }
+
+    public void setBirth_date(String birth_date) {
+        this.birth_date = birth_date;
     }
 
     public int getId_user() {

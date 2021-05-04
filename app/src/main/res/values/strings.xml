@@ -178,5 +178,13 @@
     <string name="maximum_amount_reached">Maximum amount reached</string>
     <string name="see_my_pets">See my pets</string>
     <string name="inappropriateUserName">We found that the name entered for your user is inappropriate, please change it.</string>
+    <string name="birth_date">Birth Date</string>
+    <string name="zipCode_is_invalid">ZipCode is invalid</string>
+    <string name="error_in_get_your_address">Error in get your address</string>
+    <string name="title_activity_maps" translatable="false">Map</string>
+    <string name="your_address_updated_successfully">Your address has been updated successfully</string>
+    <string name="zipcode_field_incorretly">Zip code field is incorrectly filled</string>
+    <string name="street_field_incorretly">Street field is incorrectly filled</string>
+    <string name="number_field_incorretly">Number field is incorrectly filled</string>
 
 </resources>
