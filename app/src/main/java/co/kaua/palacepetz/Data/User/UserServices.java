@@ -14,8 +14,11 @@ public interface UserServices {
     @POST("user/login")
     Call<DtoUser> loginUser(@Body DtoUser users);
 
-    @POST("user/update/profile/image")
+    @PATCH("user/update/profile/image/")
     Call<DtoUser> updateProfileImage(@Body DtoUser users);
+
+    @PATCH("user/update/profile/")
+    Call<DtoUser> updateProfile(@Body DtoUser users);
 
     @PATCH("user/update/address/")
     Call<DtoUser> updateAddress(@Body DtoUser users);

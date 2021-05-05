@@ -29,6 +29,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
@@ -78,6 +80,7 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,8 +99,21 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
         complement = bundle.getString("complement");
         if (bundle.getString("zipcode") == null)
             zipcode = "01310-100";
-        else
+        else {
             zipcode = bundle.getString("zipcode");
+            editRegisterAddress_CepUser.setText(zipcode);
+            String addressGet = address_user;
+            editRegisterAddress_StreetUser.setText(addressGet.replaceAll("[0-9]", "").replaceAll("\\s+"," "));
+            editRegisterAddress_ComplementUser.setText(complement);
+            Matcher matcher = Pattern.compile("\\d+").matcher(address_user);
+            if (matcher.find())
+                editRegisterAddress_NumberUser.setText(matcher.group() + "");
+            //  Set Edits Enables
+            editRegisterAddress_StreetUser.setEnabled(true);
+            editRegisterAddress_NumberUser.setEnabled(true);
+            editRegisterAddress_ComplementUser.setEnabled(true);
+            goToZipCode();
+        }
         phone_user = bundle.getString("phone_user");
         birth_date = bundle.getString("birth_date");
         img_user = bundle.getString("img_user");
@@ -176,32 +192,37 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
                 String newStreet = editRegisterAddress_StreetUser.getText().toString();
                 String newComplement = editRegisterAddress_ComplementUser.getText().toString();
                 String newAddress = newStreet + " " + newNumber;
-                UserServices userServices = userRetrofit.create(UserServices.class);
-                DtoUser userInfo = new DtoUser(newAddress, newComplement, newZipCode, id_user);
-                Call<DtoUser> userCall = userServices.updateAddress(userInfo);
-                userCall.enqueue(new Callback<DtoUser>() {
-                    @Override
-                    public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
-                        if (response.code() == 202 || response.isSuccessful()){
-                            Toast.makeText(RegisterAddressActivity.this, getString(R.string.your_address_updated_successfully ), Toast.LENGTH_SHORT).show();
-                            GoBack_toMain();
-                        }else if(response.code() == 404){
-                            loadingDialog.dimissDialog();
-                            Warnings.showWeHaveAProblem(RegisterAddressActivity.this);
-                        }else{
-                            loadingDialog.dimissDialog();
-                            Warnings.showWeHaveAProblem(RegisterAddressActivity.this);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
-                        loadingDialog.dimissDialog();
-                        Warnings.showWeHaveAProblem(RegisterAddressActivity.this);
-                    }
-                });
+                EditUserAddres(newAddress, newComplement, newZipCode);
             }
         });
+    }
+
+    private void EditUserAddres(String newAddress, String newComplement, String newZipCode) {
+        UserServices userServices = userRetrofit.create(UserServices.class);
+        DtoUser userInfo = new DtoUser(newAddress, newComplement, newZipCode, id_user);
+        Call<DtoUser> userCall = userServices.updateAddress(userInfo);
+        userCall.enqueue(new Callback<DtoUser>() {
+            @Override
+            public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
+                if (response.code() == 202 || response.isSuccessful()){
+                    Toast.makeText(RegisterAddressActivity.this, getString(R.string.your_address_updated_successfully ), Toast.LENGTH_SHORT).show();
+                    GoBack_toMain();
+                }else if(response.code() == 404){
+                    loadingDialog.dimissDialog();
+                    Warnings.showWeHaveAProblem(RegisterAddressActivity.this);
+                }else{
+                    loadingDialog.dimissDialog();
+                    Warnings.showWeHaveAProblem(RegisterAddressActivity.this);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
+                loadingDialog.dimissDialog();
+                Warnings.showWeHaveAProblem(RegisterAddressActivity.this);
+            }
+        });
+
     }
 
     private void showError(EditText editText, String error){

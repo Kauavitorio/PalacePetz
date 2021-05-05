@@ -139,19 +139,20 @@
             app:layout_constraintTop_toBottomOf="@+id/editProfile__LastNameUser"
             tools:ignore="Autofill,TextFields" />
 
-        <!-- EditText Cep -->
+        <!-- EditText phone -->
         <EditText
-            android:id="@+id/editProfile__CepUser"
+            android:id="@+id/editProfile__PHONEUser"
             android:layout_width="333dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
+            android:enabled="true"
             android:background="@drawable/edittext_profile"
             android:ems="10"
             android:fontFamily="@font/segoe_ui"
-            android:hint="@string/cep"
-            android:inputType="number"
+            android:hint="@string/phone"
+            android:inputType="phone"
             android:minHeight="50sp"
             android:textColor="#000"
             android:textColorHint="@color/hint"
@@ -170,6 +171,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
+            android:focusable="false"
             android:background="@drawable/edittext_profile"
             android:ems="10"
             android:fontFamily="@font/segoe_ui"
@@ -182,54 +184,31 @@
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editProfile__CepUser"
+            app:layout_constraintTop_toBottomOf="@+id/editProfile__PHONEUser"
             tools:ignore="Autofill,TextFields" />
 
-        <!-- EditText Address -->
-        <EditText
-            android:id="@+id/editProfile__AddressUser"
-            android:layout_width="333dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:background="@drawable/edittext_profile"
-            android:ems="10"
-            android:fontFamily="@font/segoe_ui"
-            android:hint="@string/address"
-            android:inputType="textPostalAddress|textMultiLine"
-            android:minHeight="50sp"
-            android:textColor="#000"
-            android:textColorHint="@color/hint"
-            android:textSize="18sp"
+        <!-- Card btn Edit Address -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnEditAddress"
+            android:layout_width="334dp"
+            android:layout_height="50dp"
             android:layout_marginTop="20dp"
+            app:cardBackgroundColor="#27B5FF"
+            app:cardCornerRadius="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editProfile__birth_dateUser"
-            tools:ignore="Autofill,TextFields" />
+            app:layout_constraintTop_toBottomOf="@+id/editProfile__birth_dateUser">
 
-        <!-- EditText Complement -->
-        <EditText
-            android:id="@+id/editProfile__ComplementUser"
-            android:layout_width="333dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:background="@drawable/edittext_profile"
-            android:ems="10"
-            android:fontFamily="@font/segoe_ui"
-            android:hint="@string/complement"
-            android:inputType="textPersonName|textMultiLine"
-            android:minHeight="50sp"
-            android:textColor="#000"
-            android:textColorHint="@color/hint"
-            android:textSize="21sp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editProfile__AddressUser"
-            tools:ignore="Autofill,TextFields" />
+            <!-- Text Edit my address -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/edit_address"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+        </androidx.cardview.widget.CardView>
 
         <!-- Card Sing Up -->
         <androidx.cardview.widget.CardView
@@ -243,7 +222,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editProfile__ComplementUser">
+            app:layout_constraintTop_toBottomOf="@+id/btnEditAddress">
 
             <!-- Container  -->
             <androidx.constraintlayout.widget.ConstraintLayout

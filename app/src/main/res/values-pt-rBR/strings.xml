@@ -144,4 +144,6 @@
     <string name="zipcode_field_incorretly">O campo CEP está preenchido incorretamente</string>
     <string name="street_field_incorretly">O campo da rua está preenchido incorretamente</string>
     <string name="number_field_incorretly">O campo do número está preenchido incorretamente</string>
+    <string name="phone">Celular</string>
+    <string name="edit_address">Editar meu endereço</string>
 </resources>

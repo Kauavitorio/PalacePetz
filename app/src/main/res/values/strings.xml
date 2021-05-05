@@ -186,5 +186,7 @@
     <string name="zipcode_field_incorretly">Zip code field is incorrectly filled</string>
     <string name="street_field_incorretly">Street field is incorrectly filled</string>
     <string name="number_field_incorretly">Number field is incorrectly filled</string>
+    <string name="phone">Phone</string>
+    <string name="edit_address">Edit my Address</string>
 
 </resources>
