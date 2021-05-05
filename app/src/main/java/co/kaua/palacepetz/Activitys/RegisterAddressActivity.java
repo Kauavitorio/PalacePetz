@@ -141,6 +141,7 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
             @Override
             public void afterTextChanged(Editable s) {
                 if (editRegisterAddress_CepUser.getText().length() == 9) {
+                    Toast.makeText(RegisterAddressActivity.this, R.string.loading, Toast.LENGTH_SHORT).show();
                     zipcode = editRegisterAddress_CepUser.getText().toString();
                     ZipCodeService zipCodeService = retrofitZipCode.create(ZipCodeService.class);
                     Call<DtoZipCode> zipcodeCall = zipCodeService.getAddress(zipcode);
