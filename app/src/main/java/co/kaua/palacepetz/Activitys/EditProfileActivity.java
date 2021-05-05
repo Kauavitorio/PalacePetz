@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -48,7 +49,8 @@ public class EditProfileActivity extends AppCompatActivity {
     AlertDialog.Builder msg;
 
     //  User information
-    String FirstName, LastName, FullName, _Email, CpfUser, CepUser, AddressUser, ComplementUser;
+    private int id_user;
+    private String FirstName, LastName, FullName, _Email, cpf_user, address_user, complement, zipcode, phone_user, img_user;
 
 
     //  Firebase
@@ -65,8 +67,17 @@ public class EditProfileActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(EditProfileActivity.this);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        id_user = bundle.getInt("id_user");
+        FullName = bundle.getString("name_user");
         _Email = bundle.getString("email_user");
+        cpf_user = bundle.getString("cpf_user");
+        address_user = bundle.getString("address_user");
+        complement = bundle.getString("complement");
+        zipcode = bundle.getString("zipcode");
+        phone_user = bundle.getString("phone_user");
+        img_user = bundle.getString("img_user");
         SetEditNamesChange();
+        loadUserInfo();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         //  Create AlertDialog
@@ -108,7 +119,7 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        storageReference = ConfFirebase.getFirebaseStorage().child("user").child("profile").child("User_" + _Email);
+        storageReference = ConfFirebase.getFirebaseStorage().child("user").child("profile").child("User_" + id_user);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri filePath = data.getData();
             try {
@@ -128,7 +139,9 @@ public class EditProfileActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             loadingDialog.dimissDialog();
                             Uri downloadUri = task.getResult();
-                            Toast.makeText(this, ""+ downloadUri, Toast.LENGTH_SHORT).show();
+                            img_user = downloadUri+"";
+                            Picasso.get().load(img_user).into(icon_ProfileUser_EditProfile);
+                            UpdateUserImage(id_user, img_user);
                         } else {
                             Toast.makeText(this, getString(R.string.uploadFailed), Toast.LENGTH_SHORT).show();
                             Log.d("ProfileUpload", Objects.requireNonNull(task.getException()).getMessage());
@@ -158,11 +171,39 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
 
+    private void loadUserInfo() {
+        if (img_user == null || img_user.equals(""))
+            Log.d("UserStatus", "Not User image");
+        else
+            Picasso.get().load(img_user).into(icon_ProfileUser_EditProfile);
+        String[] FullUserName = FullName.split(" ");
+        txt_userName_EditProfile.setText(FullName);
+        txt_email_EditProfile.setText(_Email);
+        editProfile_FirstNameUser.setText(FullUserName[0]);
+        editProfile__LastNameUser.setText(FullUserName[1]);
+        editProfile__CPFUser.setText(cpf_user);
+        editProfile__CepUser.setText(zipcode);
+        editProfile__AddressUser.setText(address_user);
+        editProfile__ComplementUser.setText(complement);
+    }
+
     private void GoBackToProfile() {
         Intent goTo_Profile = new Intent(EditProfileActivity.this, ProfileActivity.class);
+        goTo_Profile.putExtra("id_user", id_user);
+        goTo_Profile.putExtra("name_user", FullName);
         goTo_Profile.putExtra("email_user", _Email);
+        goTo_Profile.putExtra("cpf_user", cpf_user);
+        goTo_Profile.putExtra("address_user", address_user);
+        goTo_Profile.putExtra("complement", complement);
+        goTo_Profile.putExtra("zipcode", zipcode);
+        goTo_Profile.putExtra("phone_user", phone_user);
+        goTo_Profile.putExtra("img_user", img_user);
         startActivity(goTo_Profile);
         finish();
+    }
+
+    private void UpdateUserImage(int id_user, String img_user) {
+
     }
 
     private void EditUserProfile() {
@@ -170,10 +211,10 @@ public class EditProfileActivity extends AppCompatActivity {
         LastName = editProfile__LastNameUser.getText().toString().replaceAll(" ", "");
         FullName = FirstName + " " + LastName;
         _Email = txt_email_EditProfile.getText().toString();
-        CpfUser = editProfile__CPFUser.getText().toString();
-        CepUser = editProfile__CepUser.getText().toString();
-        AddressUser = editProfile__AddressUser.getText().toString();
-        ComplementUser = editProfile__ComplementUser.getText().toString();
+        cpf_user = editProfile__CPFUser.getText().toString();
+        zipcode = editProfile__CepUser.getText().toString();
+        address_user = editProfile__AddressUser.getText().toString();
+        complement = editProfile__ComplementUser.getText().toString();
     }
 
     private void showError(EditText editText, String errorText) {

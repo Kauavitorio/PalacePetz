@@ -12,6 +12,7 @@
     <string name="consultations">Consultation</string>
     <string name="weHaveAProblem">We have a problem with our server.\nTry again later</string>
     <string name="select_payment_method">Select a payment method.</string>
+    <string name="ok" translatable="false">OK</string>
 
     <!-- Sing In / Sing Up Screen -->
     <string name="login">Login</string>
@@ -36,6 +37,11 @@
     <string name="password_cannot_contain_spaces">Password cannot contain spaces</string>
     <string name="password_needs">Your password needs at least 8 characters, 1 letter, 1 number and a special character</string>
     <string name="forgot_the_password">FORGOT PASSWORD?</string>
+    <string name="authFailed_thisEmail">Authentication failed!\nThis email is already registered.</string>
+    <string name="hello_emailSend">Hello, your user has been successfully registered :)\nWe sent a verification email to the registered email, please confirm in the email before logging in.</string>
+    <string name="ok_i_will_confirm">OK, I will confirm</string>
+    <string name="txt_weVerify_email_not_verified">We verify that your email has not been confirmed, please confirm your account with the email we sent you.</string>
+    <string name="invalidEmailOrPassword">Invalid email or password.</string>
 
     <!-- Device Presentation -->
     <string name="next">Next </string>
@@ -88,7 +94,7 @@
     <string name="change_profile_photo">Change profile photo</string>
     <string name="camera">Camera</string>
     <string name="cpf">CPF</string>
-    <string name="cep" translatable="false">CEP</string>
+    <string name="cep">ZIPCODE</string>
     <string name="couldnt_insert">Couldn\'t insert your profile image</string>
     <string name="select_an_image">Select an image</string>
     <string name="uploadFailed">Upload failed please try again later</string>
@@ -171,5 +177,14 @@
     <string name="one_is_the_minumum_quantity">1 is the minimum quantity</string>
     <string name="maximum_amount_reached">Maximum amount reached</string>
     <string name="see_my_pets">See my pets</string>
+    <string name="inappropriateUserName">We found that the name entered for your user is inappropriate, please change it.</string>
+    <string name="birth_date">Birth Date</string>
+    <string name="zipCode_is_invalid">ZipCode is invalid</string>
+    <string name="error_in_get_your_address">Error in get your address</string>
+    <string name="title_activity_maps" translatable="false">Map</string>
+    <string name="your_address_updated_successfully">Your address has been updated successfully</string>
+    <string name="zipcode_field_incorretly">Zip code field is incorrectly filled</string>
+    <string name="street_field_incorretly">Street field is incorrectly filled</string>
+    <string name="number_field_incorretly">Number field is incorrectly filled</string>
 
 </resources>

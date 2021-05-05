@@ -1,5 +1,6 @@
 package co.kaua.palacepetz.Activitys;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -21,8 +22,11 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.squareup.picasso.Picasso;
 
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
+import co.kaua.palacepetz.Data.User.DtoUser;
+import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Fragments.AllProductsFragment;
 import co.kaua.palacepetz.Fragments.MainFragment;
 import co.kaua.palacepetz.Fragments.MyCardsFragment;
@@ -31,6 +35,11 @@ import co.kaua.palacepetz.Fragments.ShoppingCartFragment;
 import co.kaua.palacepetz.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório
@@ -39,6 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  *  @author Kaua Vitorio
  **/
 
+@SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity {
     //  Screen items
     private CardView base_QuantityItemsCart_main;
@@ -54,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private Bundle bundle;
 
     //  User information
-    String _Email;
+    private int id_user;
+    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user;
 
     //  Set preferences
     private SharedPreferences mPrefs;
@@ -62,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
 
     //  Shopping Cart Items
     private static int cartSize = 0;
+
+    //  Firebase / Retrofit
+    final Retrofit retrofitUser = new Retrofit.Builder()
+            .baseUrl("https://palacepetzapi.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
 
     @Override
@@ -71,14 +88,28 @@ public class MainActivity extends AppCompatActivity {
         Ids();
         Intent intent = getIntent();
         bundle = intent.getExtras();
+        id_user = bundle.getInt("id_user");
+        name_user = bundle.getString("name_user");
         _Email = bundle.getString("email_user");
+        cpf_user = bundle.getString("cpf_user");
+        address_user = bundle.getString("address_user");
+        complement = bundle.getString("complement");
+        zipcode = bundle.getString("zipcode");
+        phone_user = bundle.getString("phone_user");
+        birth_date = bundle.getString("birth_date");
+        img_user = bundle.getString("img_user");
+        if (address_user == null || address_user.equals(""))
+            ShowAddressAlert();
+        if (img_user == null || img_user.equals(""))
+            Log.d("UserStatus", "Not User image");
+        else
+            Picasso.get().load(img_user).into(icon_ProfileUser_main);
 
         //  Set items gone
         base_QuantityItemsCart_main.setVisibility(View.GONE);
 
         //  Get all SharedPreferences
         mPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        ShowAddressAlert();
 
         MainFragment mainFragment = new MainFragment();
         args = new Bundle();
@@ -90,7 +121,16 @@ public class MainActivity extends AppCompatActivity {
 
         icon_ProfileUser_main.setOnClickListener(v -> {
             Intent goTo_profile = new Intent(MainActivity.this, ProfileActivity.class);
+            goTo_profile.putExtra("id_user", id_user);
+            goTo_profile.putExtra("name_user", name_user);
             goTo_profile.putExtra("email_user", _Email);
+            goTo_profile.putExtra("cpf_user", cpf_user);
+            goTo_profile.putExtra("address_user", address_user);
+            goTo_profile.putExtra("complement", complement);
+            goTo_profile.putExtra("zipcode", zipcode);
+            goTo_profile.putExtra("phone_user", phone_user);
+            goTo_profile.putExtra("birth_date", birth_date);
+            goTo_profile.putExtra("img_user", img_user);
             startActivity(goTo_profile);
         });
 
@@ -237,6 +277,16 @@ public class MainActivity extends AppCompatActivity {
             btn_registerNow_addressAlert.setOnClickListener(v -> {
                 btn_registerNow_addressAlert.setElevation(0);
                 Intent goTo_AddressRegister = new Intent(MainActivity.this, RegisterAddressActivity.class);
+                goTo_AddressRegister.putExtra("id_user", id_user);
+                goTo_AddressRegister.putExtra("name_user", name_user);
+                goTo_AddressRegister.putExtra("email_user", _Email);
+                goTo_AddressRegister.putExtra("cpf_user", cpf_user);
+                goTo_AddressRegister.putExtra("address_user", address_user);
+                goTo_AddressRegister.putExtra("complement", complement);
+                goTo_AddressRegister.putExtra("zipcode", zipcode);
+                goTo_AddressRegister.putExtra("phone_user", phone_user);
+                goTo_AddressRegister.putExtra("birth_date", birth_date);
+                goTo_AddressRegister.putExtra("img_user", img_user);
                 startActivity(goTo_AddressRegister);
                 dialog.dismiss();
             });
@@ -246,6 +296,43 @@ public class MainActivity extends AppCompatActivity {
 
             dialog.show();
         }
+    }
+
+    @Override protected void onResume() {
+        super.onResume();
+        GetUserInformation();
+    }
+
+    private void GetUserInformation() {
+        UserServices usersService = retrofitUser.create(UserServices.class);
+        DtoUser dtoUser = new DtoUser(_Email);
+        Call<DtoUser> resultLogin = usersService.loginUser(dtoUser);
+        resultLogin.enqueue(new Callback<DtoUser>() {
+            @Override
+            public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    id_user = response.body().getId_user();
+                    name_user = response.body().getName_user();
+                    _Email = response.body().getEmail();
+                    cpf_user = response.body().getCpf_user();
+                    address_user = response.body().getAddress_user();
+                    complement = response.body().getComplement();
+                    zipcode = response.body().getZipcode();
+                    phone_user = response.body().getPhone_user();
+                    birth_date = response.body().getBirth_date();
+                    img_user = response.body().getImg_user();
+                    if (img_user == null || img_user.equals(""))
+                        Log.d("UserStatus", "Not User image");
+                    else
+                        Picasso.get().load(img_user).into(icon_ProfileUser_main);
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
+                Log.d("UserStatus", "Error to get user information on main\n" + t.getMessage());
+            }
+        });
     }
 
     @Override public void onBackPressed() {
