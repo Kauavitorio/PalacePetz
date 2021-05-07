@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     private CardView cardBtn_SingIn;
 
     //  Tools
-    private final LoadingDialog loadingDialog = new LoadingDialog(LoginActivity.this);
+    private LoadingDialog loadingDialog;
     private InputMethodManager imm;
 
     //  Set preferences
@@ -139,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
         editLogin_passwordUser = findViewById(R.id.editLogin_passwordUser);
         progressDogLogin = findViewById(R.id.progressDogLogin);
         txt_SingInLogin = findViewById(R.id.txt_SingInLogin);
+        loadingDialog = new LoadingDialog(LoginActivity.this);
     }
 
     public void verifyIfUsersLogged() {
@@ -150,13 +151,13 @@ public class LoginActivity extends AppCompatActivity {
             String PassPref = sp.getString("pref_password", "not found");
             isDevicePre = sp.getBoolean("isDevicePre", false);
             checkbox_rememberMe.setChecked(sp.getBoolean("pref_check", true));
-            loadingDialog.startLoading();
             DoLogin(emailPref, PassPref);
         }
     }
 
     private void DoLogin(String email, String password) {
         try {
+            loadingDialog.startLoading();
             firebaseAuth = ConfFirebase.getFirebaseAuth();
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()){
@@ -213,14 +214,15 @@ public class LoginActivity extends AppCompatActivity {
                     }else{
                         cardBtn_SingIn.setEnabled(true);
                         cardBtn_SingIn.setElevation(20);
+                        loadingDialog.dimissDialog();
                         progressDogLogin.setVisibility(View.GONE);
                         txt_SingInLogin.setVisibility(View.VISIBLE);
                         Warnings.showEmailIsNotVerified(LoginActivity.this);
                     }
                 }else{
                     mPrefs.edit().clear().apply();
-                    loadingDialog.dimissDialog();
                     cardBtn_SingIn.setElevation(20);
+                    loadingDialog.dimissDialog();
                     editLogin_passwordUser.setText(null);
                     cardBtn_SingIn.setEnabled(true);
                     progressDogLogin.setVisibility(View.GONE);

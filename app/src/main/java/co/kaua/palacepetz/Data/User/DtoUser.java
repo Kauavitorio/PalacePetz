@@ -27,6 +27,17 @@ public class DtoUser {
         this.img_user = img_user;
     }
 
+    public DtoUser(String name_user, String cpf_user, String address_user, String complement, String zipcode, String phone_user, String birth_date, int id_user) {
+        this.name_user = name_user;
+        this.cpf_user = cpf_user;
+        this.address_user = address_user;
+        this.complement = complement;
+        this.zipcode = zipcode;
+        this.phone_user = phone_user;
+        this.birth_date = birth_date;
+        this.id_user = id_user;
+    }
+
     public String getBirth_date() {
         return birth_date;
     }

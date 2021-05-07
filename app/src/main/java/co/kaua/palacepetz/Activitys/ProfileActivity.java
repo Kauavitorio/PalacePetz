@@ -25,19 +25,27 @@ import com.squareup.picasso.Picasso;
 import java.util.Objects;
 
 import co.kaua.palacepetz.Adapters.LoadingDialog;
+import co.kaua.palacepetz.Adapters.Warnings;
+import co.kaua.palacepetz.Data.User.DtoUser;
+import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Methods.Userpermissions;
 
 import co.kaua.palacepetz.Firebase.ConfFirebase;
 import co.kaua.palacepetz.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ProfileActivity extends AppCompatActivity {
     //  Activity Items
     private TextView txt_userName_profile, txt_email_profile, txt_EditProfile_profile;
     private EditText Profile_FirstNameUser, Profile_LastNameUser, Profile_CFCUser,
-            Profile_CepUser, Profile_AddressUser, Profile_ComplementUser;
+            Profile_CepUser, Profile_AddressUser, Profile_ComplementUser, Profile_PhoneUser, Profile_birthdateUser;
     private CircleImageView icon_ProfileUser_profile;
     private LottieAnimationView arrowGoBackProfile;
     private CardView cardBtn_EditProfile, btnSeeMyAnimals;
@@ -47,13 +55,17 @@ public class ProfileActivity extends AppCompatActivity {
 
     //  User information
     private int id_user;
-    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, img_user;
+    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user;
 
-    //  Firebase
+    //  Firebase | Retrofit
     StorageReference storageReference;
     //  Loading and IMAGE REQUEST
     private LoadingDialog loadingDialog;
     int PICK_IMAGE_REQUEST = 111;
+    final Retrofit userRetrofit = new Retrofit.Builder()
+            .baseUrl("https://palacepetzapi.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
         complement = bundle.getString("complement");
         zipcode = bundle.getString("zipcode");
         phone_user = bundle.getString("phone_user");
+        birth_date = bundle.getString("birth_date");
         img_user = bundle.getString("img_user");
         msg = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.change_profile_photo))
@@ -116,6 +129,8 @@ public class ProfileActivity extends AppCompatActivity {
         Profile_CepUser.setText(zipcode);
         Profile_AddressUser.setText(address_user);
         Profile_ComplementUser.setText(complement);
+        Profile_PhoneUser.setText(phone_user);
+        Profile_birthdateUser.setText(birth_date);
     }
 
     private void GoTo_EditProfile() {
@@ -129,6 +144,7 @@ public class ProfileActivity extends AppCompatActivity {
         goTo_EditProfile.putExtra("complement", complement);
         goTo_EditProfile.putExtra("zipcode", zipcode);
         goTo_EditProfile.putExtra("phone_user", phone_user);
+        goTo_EditProfile.putExtra("birth_date", birth_date);
         goTo_EditProfile.putExtra("img_user", img_user);
         startActivity(goTo_EditProfile);
         finish();
@@ -152,6 +168,7 @@ public class ProfileActivity extends AppCompatActivity {
         arrowGoBackProfile = findViewById(R.id.arrowGoBackProfile);
         txt_userName_profile = findViewById(R.id.txt_userName_profile);
         txt_email_profile = findViewById(R.id.txt_email_profile);
+        Profile_birthdateUser = findViewById(R.id.Profile_birthdateUser);
         Profile_FirstNameUser = findViewById(R.id.Profile_FirstNameUser);
         Profile_AddressUser = findViewById(R.id.Profile_AddressUser);
         cardBtn_EditProfile = findViewById(R.id.cardBtn_EditProfile);
@@ -162,6 +179,7 @@ public class ProfileActivity extends AppCompatActivity {
         Profile_ComplementUser = findViewById(R.id.Profile_ComplementUser);
         btnSeeMyAnimals = findViewById(R.id.btnSeeMyAnimals);
         txt_EditProfile_profile = findViewById(R.id.txt_EditProfile_profile);
+        Profile_PhoneUser = findViewById(R.id.Profile_PhoneUser);
     }
 
     @Override
@@ -185,7 +203,6 @@ public class ProfileActivity extends AppCompatActivity {
                         return storageReference .getDownloadUrl();
                     }).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            loadingDialog.dimissDialog();
                             Uri downloadUri = task.getResult();
                             img_user = downloadUri+"";
                             Picasso.get().load(img_user).into(icon_ProfileUser_profile);
@@ -208,7 +225,26 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void UpdateUserImage(int id_user, String img_user) {
-
+        UserServices userServices = userRetrofit.create(UserServices.class);
+        DtoUser userInfo = new DtoUser(id_user, img_user);
+        Call<DtoUser> userCall = userServices.updateProfileImage(userInfo);
+        userCall.enqueue(new Callback<DtoUser>() {
+            @Override
+            public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
+                if (response.code() == 200){
+                    loadingDialog.dimissDialog();
+                    Picasso.get().load(img_user).into(icon_ProfileUser_profile);
+                }else{
+                    loadingDialog.dimissDialog();
+                    Warnings.showWeHaveAProblem(ProfileActivity.this);
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
+                loadingDialog.dimissDialog();
+                Warnings.showWeHaveAProblem(ProfileActivity.this);
+            }
+        });
     }
 
     @Override
