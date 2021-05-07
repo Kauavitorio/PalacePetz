@@ -146,4 +146,5 @@
     <string name="number_field_incorretly">O campo do número está preenchido incorretamente</string>
     <string name="phone">Celular</string>
     <string name="edit_address">Editar meu endereço</string>
+    <string name="weve_sent_youanEmail_password">Enviamos um email para que você possa alterar sua senha.</string>
 </resources>
