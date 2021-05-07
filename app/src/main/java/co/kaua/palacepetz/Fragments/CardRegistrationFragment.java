@@ -211,29 +211,19 @@ public class CardRegistrationFragment extends Fragment {
     }
 
     private void setCardsFlagsClick(Drawable cardFlagSelected, int colorMasterColor, int colorVisaColor, int colorMaestroColor) {
-        cardBtn_MasterCard.setOnClickListener(v -> {
-            removeAllFlagSelected();
-            card_flag = "MasterCard";
-            cardBtn_MasterCard.setBackground(cardFlagSelected);
-            cardPreView_register.setCardBackgroundColor(colorMasterColor);
-            Picasso.get().load(flag_mastercard).into(imgFlag_Pre_view_Card);
-        });
+        cardBtn_MasterCard.setOnClickListener(v -> SetFlags(cardFlagSelected, colorMasterColor, "MasterCard", cardBtn_MasterCard, flag_mastercard));
 
-        cardBtnVisa.setOnClickListener(v -> {
-            removeAllFlagSelected();
-            card_flag = "Visa";
-            cardBtnVisa.setBackground(cardFlagSelected);
-            cardPreView_register.setCardBackgroundColor(colorVisaColor);
-            Picasso.get().load(flag_visa).into(imgFlag_Pre_view_Card);
-        });
+        cardBtnVisa.setOnClickListener(v -> SetFlags(cardFlagSelected, colorVisaColor, "Visa", cardBtnVisa, flag_visa));
 
-        cardBtn_Maestro.setOnClickListener(v -> {
-            removeAllFlagSelected();
-            card_flag = "Maestro";
-            cardBtn_Maestro.setBackground(cardFlagSelected);
-            cardPreView_register.setCardBackgroundColor(colorMaestroColor);
-            Picasso.get().load(flag_maestro).into(imgFlag_Pre_view_Card);
-        });
+        cardBtn_Maestro.setOnClickListener(v -> SetFlags(cardFlagSelected, colorMaestroColor, "Maestro", cardBtn_Maestro, flag_maestro));
+    }
+
+    private void SetFlags(Drawable cardFlagSelected, int colorVisaColor, String flag, ConstraintLayout cardBtnVisa, String flag_visa) {
+        removeAllFlagSelected();
+        card_flag = flag;
+        cardBtnVisa.setBackground(cardFlagSelected);
+        cardPreView_register.setCardBackgroundColor(colorVisaColor);
+        Picasso.get().load(flag_visa).into(imgFlag_Pre_view_Card);
     }
 
     @SuppressWarnings("deprecation")
