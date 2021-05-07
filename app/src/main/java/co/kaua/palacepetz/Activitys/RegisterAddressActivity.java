@@ -164,13 +164,13 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
                                 editRegisterAddress_NumberUser.setEnabled(true);
                                 editRegisterAddress_ComplementUser.setEnabled(true);
                             } else {
-                                Toast.makeText(RegisterAddressActivity.this, getString(R.string.error_in_get_your_address) + "Error in get your address\nTry later\nErro em receber seu endereço\nTente mais tarde", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterAddressActivity.this, getString(R.string.error_in_get_your_address), Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onFailure(@NonNull Call<DtoZipCode> call, @NonNull Throwable t) {
-                            Toast.makeText(RegisterAddressActivity.this, "Error in get your address\nErro em receber seu endereço", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterAddressActivity.this, getString(R.string.error_in_get_your_address), Toast.LENGTH_SHORT).show();
                             Log.d("NetWorkError", t.getMessage());
                         }
                     });
