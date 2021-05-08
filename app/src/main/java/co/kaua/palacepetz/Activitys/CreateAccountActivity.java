@@ -121,15 +121,11 @@ public class CreateAccountActivity extends AppCompatActivity {
                             Log.d("UserStatus", "User successfully registered with the API");
                             mAuth = ConfFirebase.getFirebaseAuth();
                             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                                if (task.isSuccessful()){
+                                if (task.isSuccessful()) {
                                     Log.d("UserStatus", "Create User With Email: success");
-                                    Objects.requireNonNull(mAuth.getCurrentUser()).sendEmailVerification().addOnCompleteListener(task1 -> {
-                                        if (task1.isSuccessful()){
-                                            Log.d("UserStatus", "Email sent.");
-                                            Warnings.show_WeSendEmail_Warning(CreateAccountActivity.this, email, password);
-                                            cardBtn_SingUp.setElevation(20);
-                                        }
-                                    });
+                                    Log.d("UserStatus", "Email sent.");
+                                    Warnings.show_WeSendEmail_Warning(CreateAccountActivity.this, email, password);
+                                    cardBtn_SingUp.setElevation(20);
                                 }else{
                                     // If sign in fails, display a message to the user.
                                     Log.w("UserStatus", "Create User With Email: failure\n", task.getException());
