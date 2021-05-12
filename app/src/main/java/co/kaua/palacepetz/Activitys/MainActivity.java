@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     //  User information
     private int id_user;
-    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user;
+    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, _Password;
 
     //  Set preferences
     private SharedPreferences mPrefs;
@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         phone_user = bundle.getString("phone_user");
         birth_date = bundle.getString("birth_date");
         img_user = bundle.getString("img_user");
+        _Password = bundle.getString("password");
         if (address_user == null || address_user.equals(""))
             ShowAddressAlert();
         if (img_user == null || img_user.equals(""))
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
             goTo_profile.putExtra("phone_user", phone_user);
             goTo_profile.putExtra("birth_date", birth_date);
             goTo_profile.putExtra("img_user", img_user);
+            goTo_profile.putExtra("password", _Password);
             startActivity(goTo_profile);
         });
 
@@ -305,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void GetUserInformation() {
         UserServices usersService = retrofitUser.create(UserServices.class);
-        DtoUser dtoUser = new DtoUser(_Email);
+        DtoUser dtoUser = new DtoUser(_Email, _Password);
         Call<DtoUser> resultLogin = usersService.loginUser(dtoUser);
         resultLogin.enqueue(new Callback<DtoUser>() {
             @Override

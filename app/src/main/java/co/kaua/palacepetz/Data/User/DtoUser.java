@@ -18,8 +18,9 @@ public class DtoUser {
         this.id_user = id_user;
     }
 
-    public DtoUser(String email) {
+    public DtoUser(String email, String password) {
         this.email = email;
+        this.password = password;
     }
 
     public DtoUser(int id_user, String img_user) {
@@ -36,6 +37,10 @@ public class DtoUser {
         this.phone_user = phone_user;
         this.birth_date = birth_date;
         this.id_user = id_user;
+    }
+
+    public DtoUser(String email) {
+        this.email = email;
     }
 
     public String getBirth_date() {

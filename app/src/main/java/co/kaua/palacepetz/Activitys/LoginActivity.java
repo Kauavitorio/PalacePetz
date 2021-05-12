@@ -20,10 +20,8 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.FirebaseAuth;
 
 
-import java.util.Objects;
 
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
@@ -36,6 +34,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
 
 public class LoginActivity extends AppCompatActivity {
     //  Login items
@@ -67,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //  Retrofit / Firebase
     FirebaseAnalytics mFirebaseAnalytics;
-    private static FirebaseAuth firebaseAuth;
+    @SuppressWarnings("FieldCanBeLocal")
     final Retrofit retrofitUser = new Retrofit.Builder()
             .baseUrl("https://palacepetzapi.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -158,76 +163,73 @@ public class LoginActivity extends AppCompatActivity {
     private void DoLogin(String email, String password) {
         try {
             loadingDialog.startLoading();
-            firebaseAuth = ConfFirebase.getFirebaseAuth();
-            firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                if (task.isSuccessful()){
-                    if (Objects.requireNonNull(firebaseAuth.getCurrentUser()).isEmailVerified()){
-                        UserServices usersService = retrofitUser.create(UserServices.class);
-                        DtoUser dtoUser = new DtoUser(email);
-                        Call<DtoUser> resultLogin = usersService.loginUser(dtoUser);
-                        resultLogin.enqueue(new Callback<DtoUser>() {
-                            @Override
-                            public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
-                                if (response.code() == 200){
-                                    // Obtain the FirebaseAnalytics instance.
-                                    mFirebaseAnalytics = ConfFirebase.getFirebaseAnalytics(LoginActivity.this);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id_user + "");
-                                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name_user);
-                                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "user");
-                                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
-                                    String emailUser;
-                                    assert response.body() != null;
-                                    id_user = response.body().getId_user();
-                                    name_user = response.body().getName_user();
-                                    emailUser = response.body().getEmail();
-                                    cpf_user = response.body().getCpf_user();
-                                    address_user = response.body().getAddress_user();
-                                    complement = response.body().getComplement();
-                                    zipcode = response.body().getZipcode();
-                                    birth_date = response.body().getBirth_date();
-                                    phone_user = response.body().getPhone_user();
-                                    img_user = response.body().getImg_user();
-                                    if (checkbox_rememberMe.isChecked()){
-                                        mPrefs.edit().clear().apply();
-                                        boolean boollsChecked = checkbox_rememberMe.isChecked();
-                                        SharedPreferences.Editor editor = mPrefs.edit();
-                                        editor.putString("pref_email", email);
-                                        editor.putString("pref_password", password);
-                                        editor.putBoolean("pref_check", boollsChecked);
-                                        editor.putBoolean("isDevicePre", isDevicePre);
-                                        editor.apply();
-                                        GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
-                                                zipcode, phone_user, birth_date, img_user);
-                                    }else{
-                                        mPrefs.edit().clear().apply();
-                                        GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
-                                                zipcode, phone_user, birth_date, img_user);
-                                    }
-                                }
-                            }
-                            @Override
-                            public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
-                                Warnings.showWeHaveAProblem(LoginActivity.this);
-                            }
-                        });
-                    }else{
+            UserServices usersService = retrofitUser.create(UserServices.class);
+            DtoUser dtoUser = new DtoUser(email, password);
+            Call<DtoUser> resultLogin = usersService.loginUser(dtoUser);
+            resultLogin.enqueue(new Callback<DtoUser>() {
+                @Override
+                public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
+                    if (response.code() == 200){
+                        // Obtain the FirebaseAnalytics instance.
+                        mFirebaseAnalytics = ConfFirebase.getFirebaseAnalytics(LoginActivity.this);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id_user + "");
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name_user);
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "user");
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
+                        String emailUser;
+                        assert response.body() != null;
+                        id_user = response.body().getId_user();
+                        name_user = response.body().getName_user();
+                        emailUser = response.body().getEmail();
+                        cpf_user = response.body().getCpf_user();
+                        address_user = response.body().getAddress_user();
+                        complement = response.body().getComplement();
+                        zipcode = response.body().getZipcode();
+                        birth_date = response.body().getBirth_date();
+                        phone_user = response.body().getPhone_user();
+                        img_user = response.body().getImg_user();
+                        if (checkbox_rememberMe.isChecked()){
+                            mPrefs.edit().clear().apply();
+                            boolean boollsChecked = checkbox_rememberMe.isChecked();
+                            SharedPreferences.Editor editor = mPrefs.edit();
+                            editor.putString("pref_email", email);
+                            editor.putString("pref_password", password);
+                            editor.putBoolean("pref_check", boollsChecked);
+                            editor.putBoolean("isDevicePre", isDevicePre);
+                            editor.apply();
+                            GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
+                                    zipcode, phone_user, birth_date, img_user, password);
+                        }else{
+                            mPrefs.edit().clear().apply();
+                            GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
+                                    zipcode, phone_user, birth_date, img_user, password);
+                        }
+                    }else if(response.code() == 405){
                         cardBtn_SingIn.setEnabled(true);
                         cardBtn_SingIn.setElevation(20);
                         loadingDialog.dimissDialog();
                         progressDogLogin.setVisibility(View.GONE);
                         txt_SingInLogin.setVisibility(View.VISIBLE);
                         Warnings.showEmailIsNotVerified(LoginActivity.this);
+                    }else if(response.code() == 401){
+                        mPrefs.edit().clear().apply();
+                        cardBtn_SingIn.setElevation(20);
+                        loadingDialog.dimissDialog();
+                        editLogin_passwordUser.setText(null);
+                        cardBtn_SingIn.setEnabled(true);
+                        progressDogLogin.setVisibility(View.GONE);
+                        txt_SingInLogin.setVisibility(View.VISIBLE);
+                        Warnings.showWarning_Email_Password(LoginActivity.this);
+                    }else{
+                        loadingDialog.dimissDialog();
+                        Warnings.showWeHaveAProblem(LoginActivity.this);
                     }
-                }else{
-                    mPrefs.edit().clear().apply();
-                    cardBtn_SingIn.setElevation(20);
+                }
+                @Override
+                public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
                     loadingDialog.dimissDialog();
-                    editLogin_passwordUser.setText(null);
-                    cardBtn_SingIn.setEnabled(true);
-                    progressDogLogin.setVisibility(View.GONE);
-                    txt_SingInLogin.setVisibility(View.VISIBLE);
-                    Warnings.showWarning_Email_Password(LoginActivity.this);
+                    Warnings.showWeHaveAProblem(LoginActivity.this);
                 }
             });
         }catch (Exception ex){
@@ -237,7 +239,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void GoToMain(int id_user, String name_user, String emailUser, String cpf_user, String address_user, String complement,
-                          String zipcode, String phone_user, String birth_date, String img_user) {
+                          String zipcode, String phone_user, String birth_date, String img_user, String password) {
         Intent goTo_Main = new Intent(this, MainActivity.class);
         goTo_Main.putExtra("id_user", id_user);
         goTo_Main.putExtra("name_user", name_user);
@@ -249,6 +251,7 @@ public class LoginActivity extends AppCompatActivity {
         goTo_Main.putExtra("phone_user", phone_user);
         goTo_Main.putExtra("birth_date", birth_date);
         goTo_Main.putExtra("img_user", img_user);
+        goTo_Main.putExtra("password", password);
         goTo_Main.putExtra("AddressAlert", true);
         startActivity(goTo_Main);
         finish();
