@@ -1,11 +1,11 @@
 package co.kaua.palacepetz.Activitys;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -13,12 +13,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
-import co.kaua.palacepetz.Firebase.ConfFirebase;
+import co.kaua.palacepetz.Data.User.DtoUser;
+import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
 
 public class ForgotPasswordActivity extends AppCompatActivity {
     EditText editForgotPassword_emailUser;
@@ -31,7 +43,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     LoadingDialog loadingDialog;
 
     //  Retrofit / Firebase
-    private static FirebaseAuth firebaseAuth;
+    final Retrofit retrofitUser = new Retrofit.Builder()
+            .baseUrl("https://palacepetzapi.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +68,23 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 showError(editForgotPassword_emailUser, getString(R.string.informed_email_is_invalid));
             else{
                 loadingDialog.startLoading();
-                firebaseAuth = ConfFirebase.getFirebaseAuth();
-                firebaseAuth.sendPasswordResetEmail(editForgotPassword_emailUser.getText().toString()).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
-                        loadingDialog.dimissDialog();
-                        Toast.makeText(ForgotPasswordActivity.this, getString(R.string.weve_sent_youanEmail_password), Toast.LENGTH_LONG).show();
-                        finish();
-                    }else{
+                UserServices userServices = retrofitUser.create(UserServices.class);
+                DtoUser userInfo = new DtoUser(editForgotPassword_emailUser.getText().toString());
+                Call<DtoUser> resultRequest = userServices.requestPasswordReset(userInfo);
+                resultRequest.enqueue(new Callback<DtoUser>() {
+                    @Override
+                    public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
+                        if (response.code() == 200 || response.code() == 404){
+                            loadingDialog.dimissDialog();
+                            Toast.makeText(ForgotPasswordActivity.this, getString(R.string.weve_sent_youanEmail_password), Toast.LENGTH_LONG).show();
+                            finish();
+                        }else{
+                            loadingDialog.dimissDialog();
+                            Warnings.showWeHaveAProblem(ForgotPasswordActivity.this);
+                        }
+                    }
+                    @Override
+                    public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
                         loadingDialog.dimissDialog();
                         Warnings.showWeHaveAProblem(ForgotPasswordActivity.this);
                     }
