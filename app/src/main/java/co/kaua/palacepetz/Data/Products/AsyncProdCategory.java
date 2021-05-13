@@ -9,50 +9,54 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
-
-import co.kaua.palacepetz.Activitys.ProductDetailsActivity;
-import co.kaua.palacepetz.Adapters.Products_Adapter;
-import co.kaua.palacepetz.Methods.JsonHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-@SuppressWarnings({"rawtypes", "deprecation", "unchecked"})
+import co.kaua.palacepetz.Activitys.ProductDetailsActivity;
+import co.kaua.palacepetz.Adapters.Products_Adapter;
+import co.kaua.palacepetz.Methods.JsonHandler;
+
+@SuppressWarnings({"unchecked", "rawtypes", "deprecation"})
 @SuppressLint("StaticFieldLeak")
-public class AsyncProducts extends AsyncTask {
+public class AsyncProdCategory extends AsyncTask {
     ArrayList<DtoProducts> arrayListDto;
     Activity context;
     RecyclerView recyclerProducts;
     SwipeRefreshLayout SwipeRefreshProducts;
-    String email_user, img_prod_ad;
-    Products_Adapter products_adapter;
-    LottieAnimationView anim_loading_allProducts;
+    LottieAnimationView AnimationProductsLoading;
+    int cd_cat;
+    String email_user, img_prod_st;
 
-    public AsyncProducts(RecyclerView recyclerProducts, SwipeRefreshLayout SwipeRefreshProducts, LottieAnimationView anim_loading_allProducts, ArrayList<DtoProducts> arrayListDto, String email_user, Activity context) {
+    public AsyncProdCategory(RecyclerView recyclerProducts, LottieAnimationView AnimationProductsLoading, ArrayList<DtoProducts> arrayListDto, String email_user, SwipeRefreshLayout SwipeRefreshProducts,
+                             int cd_cat, Activity contexto) {
         this.recyclerProducts = recyclerProducts;
-        this.context = context;
+        this.context = contexto;
+        this.AnimationProductsLoading = AnimationProductsLoading;
         this.SwipeRefreshProducts = SwipeRefreshProducts;
+        this.cd_cat = cd_cat;
         this.email_user = email_user;
         this.arrayListDto = arrayListDto;
-        this.anim_loading_allProducts = anim_loading_allProducts;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        anim_loading_allProducts.setVisibility(View.VISIBLE);
+        AnimationProductsLoading.playAnimation();
         recyclerProducts.setVisibility(View.GONE);
+        AnimationProductsLoading.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected Object doInBackground(Object[] objects) {
-        String json =  JsonHandler.getJson("https://palacepetzapi.herokuapp.com/products/list/");
-        products_adapter = null;
+        String json =  JsonHandler.getJson("https://palacepetzapi.herokuapp.com/products/list/filter/category/" + cd_cat);
+        Products_Adapter products_adapter = null;
         try {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray jsonArray = jsonObject.getJSONArray("Search");
@@ -84,13 +88,15 @@ public class AsyncProducts extends AsyncTask {
     @Override
     protected void onPostExecute(Object products_adapter) {
         super.onPostExecute(products_adapter);
-        //((RecyclerView.Adapter) products_adapter).notifyDataSetChanged();
-        recyclerProducts.setAdapter((RecyclerView.Adapter) products_adapter);
-        SwipeRefreshProducts.setRefreshing(false);
-        anim_loading_allProducts.setVisibility(View.GONE);
         recyclerProducts.setVisibility(View.VISIBLE);
+        AnimationProductsLoading.setVisibility(View.GONE);
+        AnimationProductsLoading.pauseAnimation();
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2,StaggeredGridLayoutManager.VERTICAL);
+        recyclerProducts.setLayoutManager(layoutManager);
+        recyclerProducts.setAdapter((RecyclerView.Adapter) products_adapter);
+        //((RecyclerView.Adapter) products_adapter).notifyDataSetChanged();
+        SwipeRefreshProducts.setRefreshing(false);
 
-        //  Need to create Recycler Clicker
         recyclerProducts.addOnItemTouchListener(new RecyclerItemClickListener(context, recyclerProducts,
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
@@ -115,5 +121,7 @@ public class AsyncProducts extends AsyncTask {
 
                     }
                 }));
+
+
     }
 }

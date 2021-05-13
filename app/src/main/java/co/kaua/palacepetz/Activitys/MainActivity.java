@@ -86,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Ids();
-        Intent intent = getIntent();
-        bundle = intent.getExtras();
+        bundle = getIntent().getExtras();
         id_user = bundle.getInt("id_user");
         name_user = bundle.getString("name_user");
         _Email = bundle.getString("email_user");

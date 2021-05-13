@@ -190,4 +190,7 @@
     <string name="see_my_pets">See my pets</string>
     <string name="inappropriateUserName">We found that the name entered for your user is inappropriate, please change it.</string>
     <string name="birth_date">Birth Date</string>
+    <string name="warning_no_stock">We apologize for the inconvenience, we are out of stock of this product at the moment !!</string>
+    <string name="no_stock">NO STOCK</string>
+    <string name="qrcode">QrCode</string>
 </resources>

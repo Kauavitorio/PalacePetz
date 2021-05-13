@@ -18,6 +18,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import co.kaua.palacepetz.Data.Products.AsyncProdCategory;
+import co.kaua.palacepetz.Data.Products.DtoProducts;
 import co.kaua.palacepetz.Data.Products.RecyclerItemClickListener;
 import co.kaua.palacepetz.Methods.JsonHandler;
 
@@ -31,11 +33,12 @@ public class AsyncCategory extends AsyncTask {
     String email_user;
 
     //  Products
+    ArrayList<DtoProducts> arrayListDtomenu;
     RecyclerView recyclerProducts;
     LottieAnimationView AnimationproductsLoading;
     SwipeRefreshLayout SwipeRefreshProducts;
 
-    public AsyncCategory(RecyclerView recyclerCategorys, LottieAnimationView AnimationcategoryLoading, Activity contexto, RecyclerView recyclerProducts,
+    public AsyncCategory(RecyclerView recyclerCategorys, LottieAnimationView AnimationcategoryLoading, Activity contexto, ArrayList<DtoProducts> arrayListDto, RecyclerView recyclerProducts,
                          LottieAnimationView AnimationproductsLoading, SwipeRefreshLayout SwipeRefreshProducts, String email_user) {
         this.recyclerCategorys = recyclerCategorys;
         this.contexto = contexto;
@@ -45,6 +48,7 @@ public class AsyncCategory extends AsyncTask {
         this.AnimationproductsLoading = AnimationproductsLoading;
         this.SwipeRefreshProducts = SwipeRefreshProducts;
         this.email_user = email_user;
+        this.arrayListDtomenu = arrayListDto;
     }
 
     @Override
@@ -92,8 +96,9 @@ public class AsyncCategory extends AsyncTask {
                         int cd_cat = arrayListDto.get(position).getCd_category();
                         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2,StaggeredGridLayoutManager.VERTICAL);
                         recyclerProducts.setLayoutManager(layoutManager);
-                       /* AsyncProdCategory asyncProdCategory = new AsyncProdCategory(recyclerProducts, AnimationproductsLoading, email_user, SwipeRefreshProducts, cd_cat, contexto);
-                        asyncProdCategory.execute();*/
+                        arrayListDtomenu.clear();
+                        AsyncProdCategory asyncProdCategory = new AsyncProdCategory(recyclerProducts, AnimationproductsLoading, arrayListDtomenu, email_user, SwipeRefreshProducts, cd_cat, contexto);
+                        asyncProdCategory.execute();
                     }
 
                     @Override

@@ -147,4 +147,7 @@
     <string name="phone">Celular</string>
     <string name="edit_address">Editar meu endereço</string>
     <string name="weve_sent_youanEmail_password">Enviamos um email para que você possa alterar sua senha.</string>
+    <string name="warning_no_stock">Pedimos desculpas pelo inconveniente, estamos sem estoque deste produto no momento!!</string>
+    <string name="no_stock">SEM ESTOQUE</string>
+    <string name="qrcode">QrCode</string>
 </resources>
