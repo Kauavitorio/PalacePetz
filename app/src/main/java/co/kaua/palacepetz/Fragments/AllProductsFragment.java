@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -21,7 +22,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.airbnb.lottie.LottieAnimationView;
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
 import co.kaua.palacepetz.Data.Products.AsyncProducts;
-import co.kaua.palacepetz.Data.Products.DtoMenu;
+import co.kaua.palacepetz.Data.Products.DtoProducts;
+import co.kaua.palacepetz.Data.category.AsyncCategory;
 import co.kaua.palacepetz.R;
 
 import java.util.ArrayList;
@@ -30,9 +32,9 @@ import java.util.Objects;
 public class AllProductsFragment extends Fragment implements IOnBackPressed {
     //  Fragment Tools
     View view;
-    private RecyclerView recyclerView_Products;
+    private RecyclerView recyclerView_Products, recyclerCategorys;
     private SwipeRefreshLayout SwipeRefreshProducts;
-    private LottieAnimationView anim_loading_allProducts;
+    private LottieAnimationView anim_loading_allProducts, anim_loading_Categorys;
     private Spinner spinner_petFilter;
 
     private static String[] petFilter;
@@ -42,7 +44,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
 
     //  Filter Tools
     private CardView card_filter_lowestPrice, card_filter_biggestPrice, card_filter_popular;
-    ArrayList<DtoMenu> arrayListDto = new ArrayList<>();
+    ArrayList<DtoProducts> arrayListDto = new ArrayList<>();
 
     @Nullable
     @Override
@@ -53,12 +55,12 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         assert args != null;
         email_user = args.getString("email_user");
         loadAllProducts();
+        loadCategorys();
 
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
         //There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, petFilter);
         spinner_petFilter.setAdapter(adapter);
-
 
         // Spinner click listener
         spinner_petFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -104,6 +106,16 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         return view;
     }
 
+    private void loadCategorys() {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
+        recyclerCategorys.setLayoutManager(layoutManager);
+
+        AsyncCategory asyncCategory = new AsyncCategory(recyclerCategorys, anim_loading_Categorys, getActivity(), recyclerView_Products,
+                anim_loading_allProducts, SwipeRefreshProducts, email_user);
+        //noinspection unchecked
+        asyncCategory.execute();
+    }
+
     private void loadAllProducts() {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView_Products.setLayoutManager(layoutManager);
@@ -129,6 +141,8 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         SwipeRefreshProducts = view.findViewById(R.id.SwipeRefreshProducts);
         anim_loading_allProducts = view.findViewById(R.id.anim_loading_allProducts);
         spinner_petFilter = view.findViewById(R.id.spinner_petFilter);
+        recyclerCategorys = view.findViewById(R.id.recyclerCategorys);
+        anim_loading_Categorys = view.findViewById(R.id.anim_loading_Categorys);
         setFilterElevation();
     }
 

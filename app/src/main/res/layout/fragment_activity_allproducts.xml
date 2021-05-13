@@ -15,34 +15,32 @@
         tools:ignore="UselessParent">
 
         <!-- Category Container -->
-        <HorizontalScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:scrollbarSize="1dp"
-            android:scrollbarThumbHorizontal="@drawable/custom_scroll_style_horizontal" >
+            android:layout_height="110dp"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!-- Animation for Category loading  -->
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/anim_loading_Categorys"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/dog_walking" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerCategorys"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="117dp"
-                    android:layout_height="93dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginStart="20dp"
-                    app:cardCornerRadius="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-
-                </androidx.cardview.widget.CardView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </HorizontalScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Banner Container -->
         <HorizontalScrollView
