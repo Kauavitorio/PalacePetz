@@ -193,4 +193,6 @@
     <string name="warning_no_stock">We apologize for the inconvenience, we are out of stock of this product at the moment !!</string>
     <string name="no_stock">NO STOCK</string>
     <string name="qrcode">QrCode</string>
+    <string name="you_have_moreOf_theree_cards">You have more than 3 cards registered</string>
+    <string name="card_already_inserted">Card already inserted</string>
 </resources>

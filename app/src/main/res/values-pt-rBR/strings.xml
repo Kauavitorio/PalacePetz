@@ -150,4 +150,6 @@
     <string name="warning_no_stock">Pedimos desculpas pelo inconveniente, estamos sem estoque deste produto no momento!!</string>
     <string name="no_stock">SEM ESTOQUE</string>
     <string name="qrcode">QrCode</string>
+    <string name="you_have_moreOf_theree_cards">Você tem mais de 3 cartões registrados</string>
+    <string name="card_already_inserted">O cartão informado já foi registrado</string>
 </resources>

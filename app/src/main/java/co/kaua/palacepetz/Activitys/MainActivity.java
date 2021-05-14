@@ -197,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
                 AllProductsFragment allProductsFragment = new AllProductsFragment();
                 args = new Bundle();
                 args.putString("email_user", _Email);
+                args.putInt("id_user", id_user);
                 allProductsFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, allProductsFragment);
@@ -215,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
             myOrders.setOnClickListener(v1 -> {
                 Intent goTo_ProductDetails = new Intent(this, ProductDetailsActivity.class);
                 goTo_ProductDetails.putExtra("email_user", _Email);
+                goTo_ProductDetails.putExtra("id_user", id_user);
                 startActivity(goTo_ProductDetails);
                 bottomSheetDialog.dismiss();
             });
@@ -224,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
                 MyCardsFragment myCardsFragment = new MyCardsFragment();
                 args = new Bundle();
                 args.putString("email_user", _Email);
+                args.putInt("id_user", id_user);
                 myCardsFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, myCardsFragment);
