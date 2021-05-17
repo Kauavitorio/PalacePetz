@@ -69,7 +69,7 @@ public class DeviceControlling extends AppCompatActivity {
         setContentView(R.layout.activity_device_controlling);
         setTheme(R.style.DevicePresentation);
 
-        ActivityHelper.initialize(this);
+        //ActivityHelper.initialize(this);
         loadingDialog = new LoadingDialog(this);
         btn_PutWater = findViewById(R.id.btn_PutWater);
         btn_PutRacao = findViewById(R.id.btn_PutRacao);
@@ -78,7 +78,7 @@ public class DeviceControlling extends AppCompatActivity {
         btnVoice_Controlling = findViewById(R.id.btnVoice_Controlling);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String orientation = prefs.getString("prefOrientation", "Null");
+        /*String orientation = prefs.getString("prefOrientation", "Null");
                 Log.d(TAG, "Orientation: " + orientation);
                 switch (orientation) {
                     case "Landscape":
@@ -86,7 +86,7 @@ public class DeviceControlling extends AppCompatActivity {
                     case "Auto":
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                         break;
-                }
+                }*/
 
 
         Intent intent = getIntent();
@@ -131,7 +131,7 @@ public class DeviceControlling extends AppCompatActivity {
             int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String orientation = prefs.getString("prefOrientation", "Null");
+        /*String orientation = prefs.getString("prefOrientation", "Null");
         Log.d(TAG, "Orientation: " + orientation);
         switch (orientation) {
             case "Landscape":
@@ -139,7 +139,7 @@ public class DeviceControlling extends AppCompatActivity {
             case "Auto":
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;
-        }
+        }*/
 
         if (requestCode == MEU_REQUEST_CODE
                 && resultCode == RESULT_OK) {

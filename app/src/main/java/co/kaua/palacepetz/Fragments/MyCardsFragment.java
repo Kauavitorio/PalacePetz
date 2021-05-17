@@ -47,12 +47,13 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
     Bundle args;
 
     //  User information
-    String _Email;
+    private int id_user;
+    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user;
 
     //  Retrofit
-    String baseurl = "https://coffeeforcode.herokuapp.com/";
+    String baseurl = "https://palacepetzapi.herokuapp.com/";
     final Retrofit retrofitCard = new Retrofit.Builder()
-            .baseUrl( baseurl + "card/")
+            .baseUrl( baseurl + "user/cards/")
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build();
@@ -69,6 +70,7 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
         args = getArguments();
         assert args != null;
         _Email = args.getString("email_user");
+        id_user = args.getInt("id_user");
         getCardsInformation();
 
         MainActivity activity = (MainActivity) getActivity();
@@ -93,7 +95,7 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
     private void getCardsInformation() {
         loadingDialog.startLoading();
         CardService cardService = retrofitCard.create(CardService.class);
-        Call<DtoCard> cardCall = cardService.getCardsOfUser(_Email);
+        Call<DtoCard> cardCall = cardService.getCardsOfUser(id_user);
         cardCall.enqueue(new Callback<DtoCard>() {
             @Override
             public void onResponse(@NotNull Call<DtoCard> call, @NotNull Response<DtoCard> response) {
@@ -105,7 +107,7 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
                     assert response.body() != null;
                     LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
                     recyclerView_Cards.setLayoutManager(linearLayout);
-                    AsyncCards asyncCards = new AsyncCards(recyclerView_Cards, container_noCard, getActivity(), _Email);
+                    AsyncCards asyncCards = new AsyncCards(recyclerView_Cards, container_noCard, getActivity(), id_user);
                     asyncCards.execute();
                     if (response.body().getLength() < 3){
                         BtnMyCard_AddNewCard.setVisibility(View.VISIBLE);
@@ -126,6 +128,7 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
         CardRegistrationFragment cardregistrationFragment = new CardRegistrationFragment();
         args = new Bundle();
         args.putString("email_user", _Email);
+        args.putInt("id_user", id_user);
         cardregistrationFragment.setArguments(args);
         transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameLayoutMain, cardregistrationFragment);

@@ -198,7 +198,7 @@
 
                     <!-- Text Buy Now -->
                     <TextView
-                        android:id="@+id/txt_SingInRegister"
+                        android:id="@+id/txt_AddToCart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/segoe_ui_bold"

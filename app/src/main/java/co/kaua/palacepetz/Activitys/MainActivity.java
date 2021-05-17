@@ -14,19 +14,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
+import co.kaua.palacepetz.BuildConfig;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
+import co.kaua.palacepetz.Data.mobile.DtoVersion;
+import co.kaua.palacepetz.Data.mobile.MobileServices;
 import co.kaua.palacepetz.Fragments.AllProductsFragment;
 import co.kaua.palacepetz.Fragments.MainFragment;
 import co.kaua.palacepetz.Fragments.MyCardsFragment;
@@ -40,6 +45,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static co.kaua.palacepetz.Data.mobile.ActionMobile.StartApi;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório
@@ -58,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout Btn_container_ShoppingCart;
     private static FragmentTransaction transaction;
     private TextView txt_QuantityCart_main;
+    Dialog warning_update;
+    int Count = 0;
 
     //  Fragments Arguments
     private static Bundle args;
@@ -80,14 +89,18 @@ public class MainActivity extends AppCompatActivity {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
+    final Retrofit retrofitMobile = new Retrofit.Builder()
+            .baseUrl("https://palacepetzapi.herokuapp.com/mobile/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Ids();
-        Intent intent = getIntent();
-        bundle = intent.getExtras();
+        bundle = getIntent().getExtras();
         id_user = bundle.getInt("id_user");
         name_user = bundle.getString("name_user");
         _Email = bundle.getString("email_user");
@@ -198,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
                 AllProductsFragment allProductsFragment = new AllProductsFragment();
                 args = new Bundle();
                 args.putString("email_user", _Email);
+                args.putInt("id_user", id_user);
                 allProductsFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, allProductsFragment);
@@ -216,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
             myOrders.setOnClickListener(v1 -> {
                 Intent goTo_ProductDetails = new Intent(this, ProductDetailsActivity.class);
                 goTo_ProductDetails.putExtra("email_user", _Email);
+                goTo_ProductDetails.putExtra("id_user", id_user);
                 startActivity(goTo_ProductDetails);
                 bottomSheetDialog.dismiss();
             });
@@ -225,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
                 MyCardsFragment myCardsFragment = new MyCardsFragment();
                 args = new Bundle();
                 args.putString("email_user", _Email);
+                args.putInt("id_user", id_user);
                 myCardsFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, myCardsFragment);
@@ -303,6 +319,59 @@ public class MainActivity extends AppCompatActivity {
     @Override protected void onResume() {
         super.onResume();
         GetUserInformation();
+
+        //  Mobile Information
+        int versionCode = BuildConfig.VERSION_CODE;
+        warning_update = new Dialog(this);
+        MobileServices services = retrofitMobile.create(MobileServices.class);
+        Call<DtoVersion> call = services.getMobileVersion();
+        call.enqueue(new Callback<DtoVersion>() {
+            @Override
+            public void onResponse(@NonNull Call<DtoVersion> call, @NonNull Response<DtoVersion> response) {
+                switch (response.code()){
+                    case 200:
+                        assert response.body() != null;
+                        if ( versionCode < response.body().getVersionCode()){
+                            if (Count != 1){
+                                CardView btnUpdateNow, btnUpdateLater;
+                                warning_update.setContentView(R.layout.adapter_appneedupdate);
+                                warning_update.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                warning_update.setCancelable(false);
+                                btnUpdateNow = warning_update.findViewById(R.id.btnUpdateNow);
+                                btnUpdateLater = warning_update.findViewById(R.id.btnUpdateLater);
+
+                                btnUpdateNow.setOnClickListener(v -> {
+                                    String url = "https://play.google.com/store/apps/details?id=co.kaua.palacepetz";
+                                    Intent i = new Intent(Intent.ACTION_VIEW);
+                                    i.setData(Uri.parse(url));
+                                    startActivity(i);
+                                    warning_update.dismiss();
+                                    Count = 1;
+                                });
+
+                                btnUpdateLater.setOnClickListener(v -> {
+                                    warning_update.dismiss();
+                                    Count = 1;
+                                });
+                                warning_update.show();
+                                Log.d("MobileVersion", "Need update: " + versionCode);
+                            }
+                        }
+                        break;
+                    case 204:
+                        Log.d("GetMobileVersion", "No version on database");
+                        break;
+                    case 500:
+                        Log.d("GetMobileVersion", "Fail to start");
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DtoVersion> call, @NonNull Throwable t) {
+                Log.d("GetMobileVersion", "Fail to start");
+            }
+        });
     }
 
     private void GetUserInformation() {

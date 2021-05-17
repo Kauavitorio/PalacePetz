@@ -1,10 +1,28 @@
 package co.kaua.palacepetz.Data.Cards;
 
 public class DtoCard {
-    int cd_card;
+    int cd_card, id_user;
     int length;
-    String email_user, flag_card, number_card, shelfLife_card, cvv_card, nmUser_card;
+    String flag_card, number_card, shelflife_card, cvv_card, nmUser_card;
 
+    public DtoCard(int id_user, String flag_card, String number_card, String shelflife_card, String cvv_card, String nmUser_card) {
+        this.id_user = id_user;
+        this.flag_card = flag_card;
+        this.number_card = number_card;
+        this.shelflife_card = shelflife_card;
+        this.cvv_card = cvv_card;
+        this.nmUser_card = nmUser_card;
+    }
+
+    public DtoCard(){}
+
+    public int getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
+    }
 
     public int getLength() {
         return length;
@@ -22,12 +40,12 @@ public class DtoCard {
         this.cd_card = cd_card;
     }
 
-    public String getEmail_user() {
-        return email_user;
+    public String getShelflife_card() {
+        return shelflife_card;
     }
 
-    public void setEmail_user(String email_user) {
-        this.email_user = email_user;
+    public void setShelflife_card(String shelflife_card) {
+        this.shelflife_card = shelflife_card;
     }
 
     public String getFlag_card() {
@@ -44,14 +62,6 @@ public class DtoCard {
 
     public void setNumber_card(String number_card) {
         this.number_card = number_card;
-    }
-
-    public String getShelfLife_card() {
-        return shelfLife_card;
-    }
-
-    public void setShelfLife_card(String shelfLife_card) {
-        this.shelfLife_card = shelfLife_card;
     }
 
     public String getCvv_card() {

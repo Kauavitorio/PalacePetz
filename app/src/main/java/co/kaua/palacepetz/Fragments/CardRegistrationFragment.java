@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,24 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import co.kaua.palacepetz.Adapters.LoadingDialog;
+import co.kaua.palacepetz.Adapters.Warnings;
+import co.kaua.palacepetz.Data.Cards.CardService;
+import co.kaua.palacepetz.Data.Cards.DtoCard;
 import co.kaua.palacepetz.Methods.MaskEditUtil;
 import co.kaua.palacepetz.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
+
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -46,10 +61,16 @@ public class CardRegistrationFragment extends Fragment {
     private TextView txt_shelfLife_cardRegister, txt_numberCard_cardRegister, txt_nmCard_cardRegister;
 
     //  User information
-    String email_user;
+    private int id_user;
+    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user;
 
     //  Card Information
     private static String card_flag, card_number, card_namePrinted, card_shelfLife, card_cvv;
+
+    //  Fragments Arguments
+    Bundle args;
+    @SuppressWarnings("FieldCanBeLocal")
+    private static FragmentTransaction transaction;
 
 
     //  Flags Images
@@ -57,15 +78,24 @@ public class CardRegistrationFragment extends Fragment {
     private final String flag_mastercard = "https://firebasestorage.googleapis.com/v0/b/coffeeforcode.appspot.com/o/cards_flag%2Fmastercard.png?alt=media&token=79df43fd-494c-4160-93f1-7194266f76b9";
     private final String flag_maestro = "https://firebasestorage.googleapis.com/v0/b/coffeeforcode.appspot.com/o/cards_flag%2Fmaestro.png?alt=media&token=28fd5789-f277-4027-8b0f-9ff1f38b2d5d";
 
+    //  Retrofit
+    String baseurl = "https://palacepetzapi.herokuapp.com/";
+    final Retrofit retrofitCard = new Retrofit.Builder()
+            .baseUrl( baseurl + "user/register/")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+    private LoadingDialog loadingDialog;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_activty_card_registration, container, false);
         Ids(view);
-        Bundle args = getArguments();
+        args = getArguments();
         assert args != null;
-        email_user = args.getString("email_user");
+        _Email = args.getString("email_user");
+        id_user = args.getInt("id_user");
 
         imm = (InputMethodManager) Objects.requireNonNull(getContext()).getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -91,11 +121,55 @@ public class CardRegistrationFragment extends Fragment {
             }else if(card_namePrinted == null || card_namePrinted.length() < 5){
                 showError(edit_nameCard_cardRegister, getString(R.string.name_incorrectly_inserted));
             }else{
-                Toast.makeText(getActivity(), "Ok", Toast.LENGTH_SHORT).show();
+                loadingDialog = new LoadingDialog(getActivity());
+                loadingDialog.startLoading();
+                CardService cardService = retrofitCard.create(CardService.class);
+                DtoCard cardInfo = new DtoCard(id_user, card_flag, card_number, card_shelfLife, card_cvv, card_namePrinted);
+                Call<DtoCard> cardCall = cardService.insertNewCard(cardInfo);
+                cardCall.enqueue(new Callback<DtoCard>() {
+                    @Override
+                    public void onResponse(@NotNull Call<DtoCard> call, @NotNull Response<DtoCard> response) {
+                        if (response.code() == 201){
+                            loadingDialog.dimissDialog();
+                            goTo_allCard();
+                        }else if(response.code() == 207){
+                            loadingDialog.dimissDialog();
+                            Toast.makeText(getContext(), R.string.you_have_moreOf_theree_cards, Toast.LENGTH_SHORT).show();
+                            goTo_allCard();
+                        }else if(response.code() == 409){
+                            loadingDialog.dimissDialog();
+                            Toast.makeText(getContext(), R.string.card_already_inserted, Toast.LENGTH_SHORT).show();
+                        }else{
+                            loadingDialog.dimissDialog();
+                            Warnings.showWeHaveAProblem(getContext());
+                            goTo_allCard();
+                        }
+                    }
+                    @Override
+                    public void onFailure(@NotNull Call<DtoCard> call, @NotNull Throwable t) {
+                        loadingDialog.dimissDialog();
+                        cardBtn_addCard_registration.setEnabled(true);
+                        cardBtn_addCard_registration.setElevation(20);
+                        Warnings.showWeHaveAProblem(getContext());
+                        Log.d("ErroNetWork", t.getMessage());
+                        goTo_allCard();
+                    }
+                });
             }
         });
 
         return view;
+    }
+
+    private void goTo_allCard() {
+        CardRegistrationFragment cardregistrationFragment = new CardRegistrationFragment();
+        args = new Bundle();
+        args.putString("email_user", _Email);
+        args.putInt("id_user", id_user);
+        cardregistrationFragment.setArguments(args);
+        transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayoutMain, cardregistrationFragment);
+        transaction.commit();
     }
 
     private void showError(EditText editText, String error){

@@ -38,22 +38,22 @@ public class AsyncCards extends AsyncTask {
     Activity contexto;
     ConstraintLayout container_noCard;
     RecyclerView recyclerCards;
-    String _Email;
+    int id_user;
     LoadingDialog loadingDialog;
 
     //  Retrofit
-    String baseurl = "https://coffeeforcode.herokuapp.com/";
+    String baseurl = "https://palacepetzapi.herokuapp.com/user/";
     final Retrofit retrofitCard = new Retrofit.Builder()
             .baseUrl( baseurl + "card/remove/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    public AsyncCards(RecyclerView recyclerCards, ConstraintLayout container_noCard, Activity contexto, String _Email) {
+    public AsyncCards(RecyclerView recyclerCards, ConstraintLayout container_noCard, Activity contexto, int id_user) {
         this.recyclerCards = recyclerCards;
         this.contexto = contexto;
         this.container_noCard = container_noCard;
         this.loadingDialog = new LoadingDialog(contexto);
-        this._Email = _Email;
+        this.id_user = id_user;
     }
 
     @Override
@@ -65,18 +65,20 @@ public class AsyncCards extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object[] objects) {
-        String json =  JsonHandler.getJson("https://coffeeforcode.herokuapp.com/card/" + _Email);
+        String json =  JsonHandler.getJson("https://palacepetzapi.herokuapp.com/user/cards/list/" + id_user);
         Cards_Adapter cards_adapter = null;
         try {
             JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonArray = jsonObject.getJSONArray("Cards");
+            JSONArray jsonArray = jsonObject.getJSONArray("Search");
             arrayListDto = new ArrayList<>();
             for (int i = 0; i < jsonArray.length() ; i++) {
                 DtoCard dtoCard = new DtoCard();
                 dtoCard.setCd_card(jsonArray.getJSONObject(i).getInt("cd_card"));
-                dtoCard.setNmUser_card(jsonArray.getJSONObject(i).getString("nmUser_card"));
                 dtoCard.setFlag_card(jsonArray.getJSONObject(i).getString("flag_card"));
                 dtoCard.setNumber_card(jsonArray.getJSONObject(i).getString("number_card"));
+                dtoCard.setShelflife_card(jsonArray.getJSONObject(i).getString("shelflife_card"));
+                dtoCard.setCvv_card(jsonArray.getJSONObject(i).getString("cvv_card"));
+                dtoCard.setNmUser_card(jsonArray.getJSONObject(i).getString("nmUser_card"));
 
                 arrayListDto.add(dtoCard);
             }
@@ -108,14 +110,14 @@ public class AsyncCards extends AsyncTask {
                                     loadingDialog.startLoading();
                                     int cd_card = arrayListDto.get(position).getCd_card();
                                     CardService cardService = retrofitCard.create(CardService.class);
-                                    Call<DtoCard> menuCall = cardService.removeCard(_Email, cd_card);
+                                    Call<DtoCard> menuCall = cardService.removeCard(id_user, cd_card);
                                     menuCall.enqueue(new Callback<DtoCard>() {
                                         @Override
                                         public void onResponse(Call<DtoCard> call, Response<DtoCard> response) {
                                             if (response.code() == 202){
-                                                arrayListDto.remove(position);
-                                                AsyncCards asyncCards = new AsyncCards(recyclerCards, container_noCard, contexto, _Email);
+                                                AsyncCards asyncCards = new AsyncCards(recyclerCards, container_noCard, contexto, id_user);
                                                 asyncCards.execute();
+                                                arrayListDto.remove(position);
                                                 loadingDialog.dimissDialog();
                                             }else if (response.code() == 417){
                                                 loadingDialog.dimissDialog();

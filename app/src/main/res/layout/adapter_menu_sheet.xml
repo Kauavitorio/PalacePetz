@@ -14,7 +14,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/BtnHomeSheetMenu"
         android:layout_width="150dp"
-        android:layout_height="88dp"
+        android:layout_height="85dp"
         android:layout_marginStart="20dp"
         app:cardBackgroundColor="@color/selected_menu_sheet"
         app:cardCornerRadius="20dp"
@@ -63,7 +63,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/BtnProductsSheetMenu"
         android:layout_width="150dp"
-        android:layout_height="88dp"
+        android:layout_height="85dp"
         app:cardBackgroundColor="@color/selected_menu_sheet"
         app:cardCornerRadius="20dp"
         android:layout_marginEnd="20dp"
@@ -112,7 +112,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/BtnFountainsSheetMenu"
         android:layout_width="150dp"
-        android:layout_height="88dp"
+        android:layout_height="85dp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         app:cardBackgroundColor="@color/selected_menu_sheet"
@@ -162,7 +162,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/BtnMyOrdersSheetMenu"
         android:layout_width="150dp"
-        android:layout_height="88dp"
+        android:layout_height="85dp"
         app:cardBackgroundColor="@color/selected_menu_sheet"
         app:cardCornerRadius="20dp"
         android:layout_marginTop="20dp"
@@ -212,7 +212,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/BtnMyCardsSheetMenu"
         android:layout_width="150dp"
-        android:layout_height="88dp"
+        android:layout_height="85dp"
         app:cardBackgroundColor="@color/selected_menu_sheet"
         app:cardCornerRadius="20dp"
         android:layout_marginTop="20dp"
@@ -262,7 +262,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/BtnHistoricSheetMenu"
         android:layout_width="150dp"
-        android:layout_height="88dp"
+        android:layout_height="85dp"
         android:layout_marginTop="20dp"
         app:cardBackgroundColor="@color/selected_menu_sheet"
         app:cardCornerRadius="20dp"
@@ -312,13 +312,11 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/BtnServicesSheetMenu"
         android:layout_width="150dp"
-        android:layout_height="88dp"
+        android:layout_height="85dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
         app:cardBackgroundColor="@color/selected_menu_sheet"
         app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BtnMyCardsSheetMenu">
 
@@ -364,13 +362,11 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/BtnLogOutSheetMenu"
         android:layout_width="150dp"
-        android:layout_height="88dp"
+        android:layout_height="85dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
         app:cardBackgroundColor="@color/selected_menu_sheet"
         app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BtnHistoricSheetMenu">
 
@@ -407,6 +403,59 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Btn QrCode -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/BtnQrCode"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="@color/selected_menu_sheet"
+        app:cardCornerRadius="20dp"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BtnServicesSheetMenu">
+
+        <!-- Container QrCode -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Img QrCode -->
+            <ImageView
+                android:id="@+id/Img_BtnQrCode"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_qrcode"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txt_sheet_QrCode"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <!-- Text QrCode -->
+            <TextView
+                android:id="@+id/txt_sheet_QrCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:fontFamily="@font/segoe_ui"
+                android:text="@string/qrcode"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

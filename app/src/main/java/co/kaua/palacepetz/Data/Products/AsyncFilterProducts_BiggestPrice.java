@@ -13,18 +13,18 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-import co.kaua.palacepetz.Activitys.ProductDetailsActivity;
-import co.kaua.palacepetz.Adapters.Products_Adapter;
-import co.kaua.palacepetz.Methods.JsonHandler;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import co.kaua.palacepetz.Activitys.ProductDetailsActivity;
+import co.kaua.palacepetz.Adapters.Products_Adapter;
+import co.kaua.palacepetz.Methods.JsonHandler;
+
 @SuppressWarnings({"rawtypes", "deprecation", "unchecked"})
 @SuppressLint("StaticFieldLeak")
-public class AsyncProducts extends AsyncTask {
+public class AsyncFilterProducts_BiggestPrice extends AsyncTask {
     ArrayList<DtoProducts> arrayListDto;
     Activity context;
     RecyclerView recyclerProducts;
@@ -33,7 +33,7 @@ public class AsyncProducts extends AsyncTask {
     Products_Adapter products_adapter;
     LottieAnimationView anim_loading_allProducts;
 
-    public AsyncProducts(RecyclerView recyclerProducts, SwipeRefreshLayout SwipeRefreshProducts, LottieAnimationView anim_loading_allProducts, ArrayList<DtoProducts> arrayListDto, String email_user, Activity context) {
+    public AsyncFilterProducts_BiggestPrice(RecyclerView recyclerProducts, SwipeRefreshLayout SwipeRefreshProducts, LottieAnimationView anim_loading_allProducts, ArrayList<DtoProducts> arrayListDto, String email_user, Activity context) {
         this.recyclerProducts = recyclerProducts;
         this.context = context;
         this.SwipeRefreshProducts = SwipeRefreshProducts;
@@ -51,7 +51,7 @@ public class AsyncProducts extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object[] objects) {
-        String json =  JsonHandler.getJson("https://palacepetzapi.herokuapp.com/products/list/");
+        String json =  JsonHandler.getJson("https://palacepetzapi.herokuapp.com/products/list/filter/biggestprice/");
         products_adapter = null;
         try {
             JSONObject jsonObject = new JSONObject(json);
