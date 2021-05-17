@@ -195,4 +195,7 @@
     <string name="qrcode">QrCode</string>
     <string name="you_have_moreOf_theree_cards">You have more than 3 cards registered</string>
     <string name="card_already_inserted">Card already inserted</string>
+    <string name="have_new_version">We have a new application update available, to ensure better experience in our application we recommend that you update.</string>
+    <string name="updatenow">Update Now</string>
+    <string name="updatelater">Update Later</string>
 </resources>

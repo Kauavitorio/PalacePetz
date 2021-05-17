@@ -268,7 +268,7 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
 
     @SuppressWarnings({"RedundantIfStatement"})
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
         // Add a marker in location and move the camera
         String nm_Marker = editRegisterAddress_StreetUser.getText().toString();

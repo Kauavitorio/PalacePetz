@@ -14,6 +14,7 @@ public class DtoCard {
         this.nmUser_card = nmUser_card;
     }
 
+    public DtoCard(){}
 
     public int getId_user() {
         return id_user;
