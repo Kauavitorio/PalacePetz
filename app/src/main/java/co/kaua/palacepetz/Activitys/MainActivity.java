@@ -397,6 +397,11 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("UserStatus", "Not User image");
                     else
                         Picasso.get().load(img_user).into(icon_ProfileUser_main);
+                }else if (response.code() == 401){
+                    Toast.makeText(MainActivity.this, getString(R.string.we_verify_yourEmailOrPassword), Toast.LENGTH_LONG).show();
+                    Intent goTo_login = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(goTo_login);
+                    finish();
                 }
             }
             @Override

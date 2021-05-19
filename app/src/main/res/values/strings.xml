@@ -198,4 +198,15 @@
     <string name="have_new_version">We have a new application update available, to ensure better experience in our application we recommend that you update.</string>
     <string name="updatenow">Update Now</string>
     <string name="updatelater">Update Later</string>
+    <string name="register_pet">Register Pet</string>
+    <string name="pet_name">Pet Name</string>
+    <string name="age">Age</string>
+    <string name="weight">Weight</string>
+    <string name="breed">Breed</string>
+    <string name="species">Species</string>
+    <string name="upload_animal_photo">Upload animal photo</string>
+    <string name="first_insert_petName">First insert pet name</string>
+    <string name="register">Register</string>
+    <string name="edit">Edit</string>
+    <string name="we_verify_yourEmailOrPassword">We verify that your email or password has been changed!!\nPlease login again.</string>
 </resources>
