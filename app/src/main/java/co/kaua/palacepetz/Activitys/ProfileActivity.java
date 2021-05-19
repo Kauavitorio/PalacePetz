@@ -7,7 +7,6 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -24,6 +23,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
+import co.kaua.palacepetz.Activitys.Pets.AllPetsActivity;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.User.DtoUser;
@@ -51,7 +51,6 @@ public class ProfileActivity extends AppCompatActivity {
     private CardView cardBtn_EditProfile, btnSeeMyAnimals;
     Handler timer = new Handler();
     private final String[] permissions = { Manifest.permission.READ_EXTERNAL_STORAGE };
-    AlertDialog.Builder msg;
 
     //  User information
     private int id_user;
@@ -74,8 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
         Ids();
         cardBtn_EditProfile.setElevation(20);
         loadingDialog = new LoadingDialog(ProfileActivity.this);
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        Bundle bundle = getIntent().getExtras();
         id_user = bundle.getInt("id_user");
         name_user = bundle.getString("name_user");
         _Email = bundle.getString("email_user");
@@ -86,10 +84,6 @@ public class ProfileActivity extends AppCompatActivity {
         phone_user = bundle.getString("phone_user");
         birth_date = bundle.getString("birth_date");
         img_user = bundle.getString("img_user");
-        msg = new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.change_profile_photo))
-                .setNegativeButton(getString(R.string.cancel), null)
-                .setMessage(getString(R.string.select_upload_method));
 
         DoProfileImgAlert();
         loadUserInfo();
@@ -97,11 +91,8 @@ public class ProfileActivity extends AppCompatActivity {
         icon_ProfileUser_profile.setOnClickListener(v -> {
             Userpermissions.validatePermissions(permissions, ProfileActivity.this, 1);
             int GalleryPermission = ContextCompat.checkSelfPermission(ProfileActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-            if (GalleryPermission == PackageManager.PERMISSION_GRANTED){
-                msg.setNeutralButton(getString(R.string.gallery), (dialog, which) -> OpenGallery());
-            }
             if (GalleryPermission == PackageManager.PERMISSION_GRANTED)
-                msg.show();
+                OpenGallery();
         });
 
         cardBtn_EditProfile.setOnClickListener(v -> GoTo_EditProfile());
@@ -111,7 +102,9 @@ public class ProfileActivity extends AppCompatActivity {
         arrowGoBackProfile.setOnClickListener(v -> finish());
 
         btnSeeMyAnimals.setOnClickListener(v -> {
-
+            Intent goTo_AllPets = new Intent(this, AllPetsActivity.class);
+            goTo_AllPets.putExtra("id_user", id_user);
+            startActivity(goTo_AllPets);
         });
     }
 

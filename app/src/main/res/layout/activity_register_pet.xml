@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    android:scrollbarSize="4dp"
-    android:scrollbarThumbVertical="@drawable/custom_scroll_style_vertical"
-    tools:context=".Activitys.EditProfileActivity">
+    tools:context=".Activitys.Pets.RegisterPetActivity">
 
     <!-- Container -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +14,7 @@
 
         <!-- Arrow Back -->
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/arrowGoBackEditProfile"
+            android:id="@+id/arrowGoBackRegisterPet"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="30dp"
@@ -28,51 +26,38 @@
 
         <!-- User Icon -->
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/icon_ProfileUser_EditProfile"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:id="@+id/icon_RegisterPet_PetImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
             android:src="@drawable/default_profile_image"
             android:visibility="visible"
             app:civ_border_color="@color/black"
             app:civ_border_width="1dp"
-            android:layout_marginTop="50dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RedundantNamespace" />
 
-        <!-- User name -->
+        <!-- Text Title -->
         <TextView
-            android:id="@+id/txt_userName_EditProfile"
+            android:id="@+id/txt_title_register_pet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/segoe_ui"
-            android:text="@string/personalname"
+            android:text="@string/register_pet"
+            android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/icon_ProfileUser_EditProfile" />
+            app:layout_constraintTop_toBottomOf="@+id/arrowGoBackRegisterPet" />
 
-        <!-- User Email -->
-        <TextView
-            android:id="@+id/txt_email_EditProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/segoe_ui"
-            android:text="@string/emailexample"
-            android:textColor="@color/hint"
-            android:textSize="20sp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_userName_EditProfile" />
-
-        <!-- EditText First Name -->
+        <!-- EditText Pet Name -->
         <EditText
-            android:id="@+id/editProfile_FirstNameUser"
+            android:id="@+id/Register_PetName"
             android:layout_width="333dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -81,21 +66,46 @@
             android:background="@drawable/edittext_profile"
             android:ems="10"
             android:fontFamily="@font/segoe_ui"
-            android:hint="@string/first_name"
+            android:hint="@string/pet_name"
+            android:inputType="textPersonName"
+            android:minHeight="50sp"
+            android:textColor="#000"
+            android:enabled="false"
+            android:textColorHint="@color/hint"
+            android:textSize="21sp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_register_pet"
+            tools:ignore="Autofill,TextFields" />
+
+        <!-- EditText Pet Age -->
+        <EditText
+            android:id="@+id/Register_PetAge"
+            android:layout_width="333dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:background="@drawable/edittext_profile"
+            android:ems="10"
+            android:fontFamily="@font/segoe_ui"
+            android:hint="@string/age"
             android:inputType="textPersonName"
             android:minHeight="50sp"
             android:textColor="#000"
             android:textColorHint="@color/hint"
             android:textSize="21sp"
+            android:enabled="false"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_email_EditProfile"
+            app:layout_constraintTop_toBottomOf="@+id/Register_PetName"
             tools:ignore="Autofill,TextFields" />
 
-        <!-- EditText Last Name -->
+        <!-- EditText Pet Weight -->
         <EditText
-            android:id="@+id/editProfile__LastNameUser"
+            android:id="@+id/Register_PetWeight"
             android:layout_width="333dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -104,21 +114,22 @@
             android:background="@drawable/edittext_profile"
             android:ems="10"
             android:fontFamily="@font/segoe_ui"
-            android:hint="@string/last_name"
+            android:hint="@string/weight"
             android:inputType="textPersonName"
             android:minHeight="50sp"
             android:textColor="#000"
             android:textColorHint="@color/hint"
             android:textSize="21sp"
+            android:enabled="false"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editProfile_FirstNameUser"
+            app:layout_constraintTop_toBottomOf="@+id/Register_PetAge"
             tools:ignore="Autofill,TextFields" />
 
-        <!-- EditText CPF -->
+        <!-- EditText Pet Species -->
         <EditText
-            android:id="@+id/editProfile__CPFUser"
+            android:id="@+id/Register_PetSpecies"
             android:layout_width="333dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -127,31 +138,32 @@
             android:background="@drawable/edittext_profile"
             android:ems="10"
             android:fontFamily="@font/segoe_ui"
-            android:hint="@string/cpf"
-            android:inputType="number"
+            android:hint="@string/species"
+            android:inputType="textPersonName"
             android:minHeight="50sp"
             android:textColor="#000"
             android:textColorHint="@color/hint"
             android:textSize="21sp"
+            android:enabled="false"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editProfile__LastNameUser"
+            app:layout_constraintTop_toBottomOf="@+id/Register_PetWeight"
             tools:ignore="Autofill,TextFields" />
 
-        <!-- EditText phone -->
+        <!-- EditText Pet Breed -->
         <EditText
-            android:id="@+id/editProfile__PHONEUser"
+            android:id="@+id/Register_PetBreed"
             android:layout_width="333dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:enabled="true"
+            android:enabled="false"
             android:background="@drawable/edittext_profile"
             android:ems="10"
             android:fontFamily="@font/segoe_ui"
-            android:hint="@string/phone"
+            android:hint="@string/breed"
             android:inputType="phone"
             android:minHeight="50sp"
             android:textColor="#000"
@@ -160,59 +172,36 @@
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editProfile__CPFUser"
+            app:layout_constraintTop_toBottomOf="@+id/Register_PetSpecies"
             tools:ignore="Autofill,TextFields" />
 
-        <!-- EditText birth date -->
-        <EditText
-            android:id="@+id/editProfile__birth_dateUser"
-            android:layout_width="333dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:focusable="false"
-            android:background="@drawable/edittext_profile"
-            android:ems="10"
-            android:fontFamily="@font/segoe_ui"
-            android:hint="@string/birth_date"
-            android:inputType="date"
-            android:minHeight="50sp"
-            android:textColor="#000"
-            android:textColorHint="@color/hint"
-            android:textSize="21sp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editProfile__PHONEUser"
-            tools:ignore="Autofill,TextFields" />
-
-        <!-- Card btn Edit Address -->
+        <!-- Card btn Upload animal photo -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/btnEditAddress"
-            android:layout_width="334dp"
+            android:id="@+id/btnUploadPetImage"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             app:cardBackgroundColor="#27B5FF"
             app:cardCornerRadius="25dp"
+            android:minWidth="334dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editProfile__birth_dateUser">
+            app:layout_constraintTop_toBottomOf="@+id/Register_PetBreed">
 
-            <!-- Text Edit my address -->
+            <!-- Text Upload animal photo -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/edit_address"
+                android:text="@string/upload_animal_photo"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
 
         </androidx.cardview.widget.CardView>
 
-        <!-- Card Sing Up -->
+        <!-- Card Edit Profile -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardBtn_ConfirmEditProfile"
+            android:id="@+id/cardBtn_RegisterPet"
             android:layout_width="324dp"
             android:layout_height="75dp"
             android:layout_marginTop="20sp"
@@ -222,7 +211,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnEditAddress">
+            app:layout_constraintTop_toBottomOf="@+id/btnUploadPetImage">
 
             <!-- Container  -->
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -234,7 +223,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/segoe_ui_bold"
-                    android:text="@string/ok"
+                    android:text="@string/editProfile"
                     android:textColor="#F5FBFF"
                     android:textSize="30sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -247,5 +236,6 @@
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </ScrollView>

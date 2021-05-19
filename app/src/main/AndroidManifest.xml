@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="co.kaua.palacepetz">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the "MyLocation" functionality.
     -->
-
     <!--
     *  Copyright (c) 2021 Kauã Vitório
     *  Official repository https://github.com/Kauavitorio/PalacePetz
@@ -30,14 +28,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PalacePetz">
+        <activity android:name=".Activitys.Pets.RegisterPetActivity"></activity>
+        <activity android:name=".Activitys.Pets.AllPetsActivity" />
+
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
-        <!-- Palace Fountain Activitys -->
+            android:value="@string/google_maps_key" /> <!-- Palace Fountain Activitys -->
         <activity
             android:name=".Activitys.DeviceTipsActivity"
             android:theme="@style/DevicePresentation" />

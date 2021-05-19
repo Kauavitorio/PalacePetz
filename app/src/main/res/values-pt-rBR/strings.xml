@@ -155,4 +155,15 @@
     <string name="have_new_version">Tem uma nova atualização disponível, para garantir melhor experiência em nosso aplicativo recomendamos que atualize.</string>
     <string name="updatenow">Atualizar Agora</string>
     <string name="updatelater">Atualizar Depois</string>
+    <string name="register_pet">Registrar Pet</string>
+    <string name="pet_name">Nome do animal</string>
+    <string name="age">Idade</string>
+    <string name="weight">Peso</string>
+    <string name="breed">Raça</string>
+    <string name="species">Espécie</string>
+    <string name="upload_animal_photo">Fazer upload da foto do animal</string>
+    <string name="first_insert_petName">Primeiro insira o nome do animal de estimação</string>
+    <string name="register">Registrar</string>
+    <string name="edit">Editar</string>
+    <string name="we_verify_yourEmailOrPassword">Verificamos que seu email ou senha foi alterado!!\nRealize o login novamente.</string>
 </resources>

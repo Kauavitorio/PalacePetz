@@ -18,6 +18,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -52,6 +53,7 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
     private EditText editRegisterAddress_CepUser, editRegisterAddress_StreetUser, editRegisterAddress_ComplementUser,
             editRegisterAddress_NumberUser;
     private CardView cardBtn_RegisterAddress;
+    private TextView txt_title_register_address, txt_BtnRegisterAddress;
     private InputMethodManager imm;
 
     private GoogleMap mMap;
@@ -101,6 +103,8 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
             zipcode = "01310-100";
         else {
             zipcode = bundle.getString("zipcode");
+            txt_title_register_address.setText(getString(R.string.edit_address));
+            txt_BtnRegisterAddress.setText(getString(R.string.edit));
             editRegisterAddress_CepUser.setText(zipcode);
             String addressGet = address_user;
             editRegisterAddress_StreetUser.setText(addressGet.replaceAll("[0-9]", "").replaceAll("\\s+"," "));
@@ -240,6 +244,8 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
         editRegisterAddress_ComplementUser = findViewById(R.id.editRegisterAddress_ComplementUser);
         editRegisterAddress_NumberUser = findViewById(R.id.editRegisterAddress_NumberUser);
         cardBtn_RegisterAddress = findViewById(R.id.cardBtn_RegisterAddress);
+        txt_title_register_address = findViewById(R.id.txt_title_register_address);
+        txt_BtnRegisterAddress = findViewById(R.id.txt_BtnRegisterAddress);
         cardBtn_RegisterAddress.setElevation(20);
     }
 
