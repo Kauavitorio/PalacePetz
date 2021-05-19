@@ -96,7 +96,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private void loadProdsTexts() {
         txt_product_name.setText(nm_product);
         txt_desc_prod.setText(description);
-        txt_price_product.setText(unit_prod_price + "");
+        txt_price_product.setText("R$ " + unit_prod_price);
         txtQt_prod.setText(qt_prod + "");
         Picasso.get().load(image_prod).into(imgProductDetails);
     }

@@ -166,4 +166,7 @@
     <string name="register">Registrar</string>
     <string name="edit">Editar</string>
     <string name="we_verify_yourEmailOrPassword">Verificamos que seu email ou senha foi alterado!!\nRealize o login novamente.</string>
+    <string name="fish">Peixe</string>
+    <string name="rabbit">Coelho</string>
+    <string name="clear_filters">Limpar filtro</string>
 </resources>

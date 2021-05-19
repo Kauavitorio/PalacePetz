@@ -48,7 +48,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
     String specie;
 
     //  Filter Tools
-    private CardView card_filter_lowestPrice, card_filter_biggestPrice, card_filter_popular;
+    private CardView card_filter_lowestPrice, card_filter_biggestPrice, card_filter_popular, card_filter_clearFilters;
     ArrayList<DtoProducts> arrayListDto = new ArrayList<>();
 
     @Nullable
@@ -81,9 +81,17 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
                 }else if (ItemSelect.equals(getString(R.string.birds))){
                     specie = "Birds";
                     FilterBySpecies(specie);
+                }else if (ItemSelect.equals(getString(R.string.rabbit))){
+                    specie = "Rabbit";
+                    FilterBySpecies(specie);
+                }else if (ItemSelect.equals(getString(R.string.fish))){
+                    specie = "Fish";
+                    FilterBySpecies(specie);
+                }else if (ItemSelect.equals(getString(R.string.hamster))){
+                    specie = "Hamster";
+                    FilterBySpecies(specie);
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -94,6 +102,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
 
         //  When click here will filter all products by lowest price
         card_filter_lowestPrice.setOnClickListener(v -> {
+            card_filter_clearFilters.setVisibility(View.VISIBLE);
             setFilterElevation();
             card_filter_lowestPrice.setElevation(0);
 
@@ -107,6 +116,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
 
         //  When click here will filter all products by bigger price
         card_filter_biggestPrice.setOnClickListener(v -> {
+            card_filter_clearFilters.setVisibility(View.VISIBLE);
             setFilterElevation();
             card_filter_biggestPrice.setElevation(0);
 
@@ -120,6 +130,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
 
         //  When click here will filter all products by popular
         card_filter_popular.setOnClickListener(v -> {
+            card_filter_clearFilters.setVisibility(View.VISIBLE);
             setFilterElevation();
             card_filter_popular.setElevation(0);
 
@@ -131,11 +142,14 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
             asyncPopularProducts.execute();
         });
 
+        //  When click here will clear all filters
+        card_filter_clearFilters.setOnClickListener(v -> loadAllProducts());
 
         return view;
     }
 
     private void FilterBySpecies(String specie) {
+        card_filter_clearFilters.setVisibility(View.VISIBLE);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView_Products.setLayoutManager(layoutManager);
         arrayListDto.clear();
@@ -155,6 +169,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
     }
 
     private void loadAllProducts() {
+        card_filter_clearFilters.setVisibility(View.GONE);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView_Products.setLayoutManager(layoutManager);
         arrayListDto.clear();
@@ -171,7 +186,8 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
     }
 
     private void Ids() {
-        petFilter = new String[]{ getString(R.string.filter_animals), getString(R.string.dogs), getString(R.string.cats), getString(R.string.birds) };
+        petFilter = new String[]{ getString(R.string.filter_animals), getString(R.string.dogs), getString(R.string.cats),
+                getString(R.string.birds), getString(R.string.rabbit), getString(R.string.fish), getString(R.string.hamster) };
         card_filter_lowestPrice = view.findViewById(R.id.card_filter_lowestPrice);
         card_filter_biggestPrice = view.findViewById(R.id.card_filter_biggestPrice);
         card_filter_popular = view.findViewById(R.id.card_filter_popular);
@@ -181,6 +197,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         spinner_petFilter = view.findViewById(R.id.spinner_petFilter);
         recyclerCategorys = view.findViewById(R.id.recyclerCategorys);
         anim_loading_Categorys = view.findViewById(R.id.anim_loading_Categorys);
+        card_filter_clearFilters = view.findViewById(R.id.card_filter_clearfilters);
         setFilterElevation();
     }
 

@@ -209,4 +209,7 @@
     <string name="register">Register</string>
     <string name="edit">Edit</string>
     <string name="we_verify_yourEmailOrPassword">We verify that your email or password has been changed!!\nPlease login again.</string>
+    <string name="fish">Fish</string>
+    <string name="rabbit">Rabbit</string>
+    <string name="clear_filters">Clear filters</string>
 </resources>

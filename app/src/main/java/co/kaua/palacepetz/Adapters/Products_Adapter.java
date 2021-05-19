@@ -55,6 +55,9 @@ public class Products_Adapter extends RecyclerView.Adapter<Products_Adapter.MyHo
             case  "Medicamentos":
                 holder.container_allProduct.setBackground( context.getDrawable(R.drawable.background_medicines) );
                 break;
+            case  "Estética":
+                holder.container_allProduct.setBackground( context.getDrawable(R.drawable.background_aesthetics) );
+                break;
         }
         if (dtoProductsArrayList.get(position).getAmount() <= 10)
             holder.container_allProduct.setBackground( context.getDrawable(R.drawable.background_low_stock) );
