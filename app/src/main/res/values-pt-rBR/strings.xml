@@ -171,4 +171,8 @@
     <string name="clear_filters">Limpar filtro</string>
     <string name="product_successfully_inserted">Produto inserido com sucesso !!</string>
     <string name="product_into_your_cart">Este produto já está em seu carrinho.</string>
+    <string name="total">Total</string>
+    <string name="order_now">Peça agora</string>
+    <string name="what_would_you_this_product">O\'Que gostaria de fazer com esse produto?</string>
+    <string name="the_select_product_isnt_on_yourCart">O produto selecionado para ser retirado não esta em seu carrinho!!</string>
 </resources>

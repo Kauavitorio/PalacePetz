@@ -185,6 +185,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    
+    public void ReOpenCart(){
+        ShoppingCartFragment shoppingCartFragment = new ShoppingCartFragment();
+        args = new Bundle();
+        args.putString("email_user", _Email);
+        args.putInt("id_user", _IdUser);
+        shoppingCartFragment.setArguments(args);
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayoutMain, shoppingCartFragment);
+        transaction.commit();
+    }
 
     private void Ids() {
         btnMenu_Main = findViewById(R.id.btnMenu_Main);

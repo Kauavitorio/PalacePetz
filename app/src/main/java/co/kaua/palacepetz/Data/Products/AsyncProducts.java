@@ -13,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Activitys.ProductDetailsActivity;
 import co.kaua.palacepetz.Adapters.Products_Adapter;
 import co.kaua.palacepetz.Methods.JsonHandler;

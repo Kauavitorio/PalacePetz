@@ -77,6 +77,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             unit_prod_price = bundle.getFloat("product_price");
             qt_prodGet = bundle.getInt("amount");
             loadProdsTexts();
+            setNewPrice(numberFormat);
             if(qt_prodGet <= 0){
                 txt_desc_prod.setText(getString(R.string.warning_no_stock));
                 txtQt_prod.setText(0 + "");
@@ -113,7 +114,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cardBtn_AddToCart.setOnClickListener(v -> {
             loadingDialog = new LoadingDialog(ProductDetailsActivity.this);
             loadingDialog.startLoading();
-            DtoShoppingCart cartItems = new DtoShoppingCart(cd_prod, _IdUser, qt_prod, unit_prod_price, full_prod_price, full_prod_price);
+            DtoShoppingCart cartItems = new DtoShoppingCart(cd_prod, _IdUser, qt_prod, String.valueOf(unit_prod_price), String.valueOf(full_prod_price), String.valueOf(full_prod_price));
             CartServices cartServices = CartRetrofit.create(CartServices.class);
             Call<DtoShoppingCart> cartCall = cartServices.insertItemOnCart(cartItems);
             cartCall.enqueue(new Callback<DtoShoppingCart>() {
