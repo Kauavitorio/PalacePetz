@@ -169,4 +169,6 @@
     <string name="fish">Peixe</string>
     <string name="rabbit">Coelho</string>
     <string name="clear_filters">Limpar filtro</string>
+    <string name="product_successfully_inserted">Produto inserido com sucesso !!</string>
+    <string name="product_into_your_cart">Este produto já está em seu carrinho.</string>
 </resources>

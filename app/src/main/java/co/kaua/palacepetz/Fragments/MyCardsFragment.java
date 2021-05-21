@@ -75,7 +75,7 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
 
         MainActivity activity = (MainActivity) getActivity();
         assert activity != null;
-        activity.updateCart();
+        activity.CheckShoppingCart();
 
         BtnMyCard_AddCard.setOnClickListener(v -> {
             cardContainer_AddCard.setElevation(0);

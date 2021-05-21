@@ -212,4 +212,6 @@
     <string name="fish">Fish</string>
     <string name="rabbit">Rabbit</string>
     <string name="clear_filters">Clear filters</string>
+    <string name="product_successfully_inserted">Product successfully inserted!!</string>
+    <string name="product_into_your_cart">This product is already into your cart.</string>
 </resources>

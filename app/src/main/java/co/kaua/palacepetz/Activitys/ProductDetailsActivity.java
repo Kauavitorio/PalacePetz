@@ -1,5 +1,6 @@
 package co.kaua.palacepetz.Activitys;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -16,7 +17,16 @@ import com.squareup.picasso.Picasso;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import co.kaua.palacepetz.Adapters.LoadingDialog;
+import co.kaua.palacepetz.Adapters.Warnings;
+import co.kaua.palacepetz.Data.ShoppingCart.CartServices;
+import co.kaua.palacepetz.Data.ShoppingCart.DtoShoppingCart;
 import co.kaua.palacepetz.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProductDetailsActivity extends AppCompatActivity {
     private LottieAnimationView arrowGoBack_ProductDetails;
@@ -30,11 +40,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private float unit_prod_price;
     @SuppressWarnings("FieldCanBeLocal")
     private float full_prod_price = unit_prod_price;
+    private LoadingDialog loadingDialog;
     int cd_prod;
     String image_prod, nm_product, description;
 
     //  User information
     String _Email;
+    int _IdUser;
+
+    //  Retrofit
+    final Retrofit CartRetrofit = new Retrofit.Builder()
+            .baseUrl("https://palacepetzapi.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -48,6 +66,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         _Email = bundle.getString("email_user");
+        _IdUser = bundle.getInt("id_user");
         if(bundle.getString("image_prod") == null || bundle.getString("image_prod").length() <= 8){
             Log.d("LoadUrl", "LoadfromQrCode");
         }else{
@@ -90,6 +109,37 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
 
         arrowGoBack_ProductDetails.setOnClickListener(v -> finish());
+
+        cardBtn_AddToCart.setOnClickListener(v -> {
+            loadingDialog = new LoadingDialog(ProductDetailsActivity.this);
+            loadingDialog.startLoading();
+            DtoShoppingCart cartItems = new DtoShoppingCart(cd_prod, _IdUser, qt_prod, unit_prod_price, full_prod_price, full_prod_price);
+            CartServices cartServices = CartRetrofit.create(CartServices.class);
+            Call<DtoShoppingCart> cartCall = cartServices.insertItemOnCart(cartItems);
+            cartCall.enqueue(new Callback<DtoShoppingCart>() {
+                @Override
+                public void onResponse(@NonNull Call<DtoShoppingCart> call, @NonNull Response<DtoShoppingCart> response) {
+                    if(response.code() == 201){
+                        loadingDialog.dimissDialog();
+                        Toast.makeText(ProductDetailsActivity.this, getString(R.string.product_successfully_inserted), Toast.LENGTH_LONG).show();
+                        finish();
+                    }else if(response.code() == 409){
+                        loadingDialog.dimissDialog();
+                        Toast.makeText(ProductDetailsActivity.this, getString(R.string.product_into_your_cart), Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        loadingDialog.dimissDialog();
+                        Warnings.showWeHaveAProblem(ProductDetailsActivity.this);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<DtoShoppingCart> call, @NonNull Throwable t) {
+                    loadingDialog.dimissDialog();
+                    Warnings.showWeHaveAProblem(ProductDetailsActivity.this);
+                }
+            });
+        });
     }
 
     @SuppressLint("SetTextI18n")

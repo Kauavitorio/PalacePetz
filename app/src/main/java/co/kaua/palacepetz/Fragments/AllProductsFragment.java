@@ -44,7 +44,8 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
     private static String[] petFilter;
 
     //  User information
-    String email_user;
+    String _Email;
+    int _IdUser;
     String specie;
 
     //  Filter Tools
@@ -58,7 +59,8 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         Ids();
         Bundle args = getArguments();
         assert args != null;
-        email_user = args.getString("email_user");
+        _Email = args.getString("email_user");
+        _IdUser = args.getInt("id_user");
         loadCategorys();
         loadAllProducts();
 
@@ -109,7 +111,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
             StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
             recyclerView_Products.setLayoutManager(layoutManager);
             arrayListDto.clear();
-            AsyncFilterProducts_LowestPrice async = new AsyncFilterProducts_LowestPrice(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, email_user, getActivity());
+            AsyncFilterProducts_LowestPrice async = new AsyncFilterProducts_LowestPrice(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, _Email, getActivity());
             //noinspection unchecked
             async.execute();
         });
@@ -123,7 +125,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
             StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
             recyclerView_Products.setLayoutManager(layoutManager);
             arrayListDto.clear();
-            AsyncFilterProducts_BiggestPrice async = new AsyncFilterProducts_BiggestPrice(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, email_user, getActivity());
+            AsyncFilterProducts_BiggestPrice async = new AsyncFilterProducts_BiggestPrice(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, _Email, getActivity());
             //noinspection unchecked
             async.execute();
         });
@@ -137,7 +139,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
             StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
             recyclerView_Products.setLayoutManager(layoutManager);
             arrayListDto.clear();
-            AsyncPopularProducts asyncPopularProducts = new AsyncPopularProducts(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, email_user, getActivity());
+            AsyncPopularProducts asyncPopularProducts = new AsyncPopularProducts(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, _Email, getActivity());
             //noinspection unchecked
             asyncPopularProducts.execute();
         });
@@ -153,7 +155,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView_Products.setLayoutManager(layoutManager);
         arrayListDto.clear();
-        AsyncFilterProducts_Species async = new AsyncFilterProducts_Species(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, email_user, getActivity(), specie);
+        AsyncFilterProducts_Species async = new AsyncFilterProducts_Species(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, _Email, getActivity(), specie);
         //noinspection unchecked
         async.execute();
     }
@@ -163,7 +165,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         recyclerCategorys.setLayoutManager(layoutManager);
 
         AsyncCategory asyncCategory = new AsyncCategory(recyclerCategorys, anim_loading_Categorys, getActivity(), arrayListDto, recyclerView_Products,
-                anim_loading_allProducts, SwipeRefreshProducts, email_user);
+                anim_loading_allProducts, SwipeRefreshProducts, _Email);
         //noinspection unchecked
         asyncCategory.execute();
     }
@@ -173,7 +175,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView_Products.setLayoutManager(layoutManager);
         arrayListDto.clear();
-        AsyncProducts asyncProducts = new AsyncProducts(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, email_user, getActivity());
+        AsyncProducts asyncProducts = new AsyncProducts(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, _IdUser, _Email, getActivity());
         //noinspection unchecked
         asyncProducts.execute();
     }
@@ -203,12 +205,12 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
 
     @Override
     public boolean onBackPressed() {
-        if (email_user != null) {
+        if (_Email != null) {
             //action not popBackStack
             MainFragment mainFragment = new MainFragment();
             FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
             Bundle args = new Bundle();
-            args.putString("email_user", email_user);
+            args.putString("email_user", _Email);
             mainFragment.setArguments(args);
             transaction.replace(R.id.frameLayoutMain, mainFragment);
             transaction.commit();

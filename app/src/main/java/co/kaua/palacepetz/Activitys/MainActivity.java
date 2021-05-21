@@ -28,6 +28,8 @@ import com.squareup.picasso.Picasso;
 
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
 import co.kaua.palacepetz.BuildConfig;
+import co.kaua.palacepetz.Data.ShoppingCart.CartServices;
+import co.kaua.palacepetz.Data.ShoppingCart.DtoShoppingCart;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Data.mobile.DtoVersion;
@@ -45,8 +47,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static co.kaua.palacepetz.Data.mobile.ActionMobile.StartApi;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório
@@ -73,15 +73,12 @@ public class MainActivity extends AppCompatActivity {
     private Bundle bundle;
 
     //  User information
-    private int id_user;
+    private int _IdUser;
     private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, _Password;
 
     //  Set preferences
     private SharedPreferences mPrefs;
     private static final String PREFS_NAME = "myPrefs";
-
-    //  Shopping Cart Items
-    private static int cartSize = 0;
 
     //  Firebase / Retrofit
     final Retrofit retrofitUser = new Retrofit.Builder()
@@ -101,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Ids();
         bundle = getIntent().getExtras();
-        id_user = bundle.getInt("id_user");
+        _IdUser = bundle.getInt("id_user");
         name_user = bundle.getString("name_user");
         _Email = bundle.getString("email_user");
         cpf_user = bundle.getString("cpf_user");
@@ -128,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         MainFragment mainFragment = new MainFragment();
         args = new Bundle();
         args.putString("email_user", _Email);
+        args.putInt("id_user", _IdUser);
         mainFragment.setArguments(args);
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameLayoutMain, mainFragment);
@@ -135,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
         icon_ProfileUser_main.setOnClickListener(v -> {
             Intent goTo_profile = new Intent(MainActivity.this, ProfileActivity.class);
-            goTo_profile.putExtra("id_user", id_user);
+            goTo_profile.putExtra("id_user", _IdUser);
             goTo_profile.putExtra("name_user", name_user);
             goTo_profile.putExtra("email_user", _Email);
             goTo_profile.putExtra("cpf_user", cpf_user);
@@ -154,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             ShoppingCartFragment shoppingCartFragment = new ShoppingCartFragment();
             args = new Bundle();
             args.putString("email_user", _Email);
+            args.putInt("id_user", _IdUser);
             shoppingCartFragment.setArguments(args);
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frameLayoutMain, shoppingCartFragment);
@@ -164,10 +163,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    public void updateCart(){
-        cartSize++;
-        txt_QuantityCart_main.setText(cartSize + "");
-        base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
+    public void CheckShoppingCart(){
+        CartServices services = retrofitUser.create(CartServices.class);
+        Call<DtoShoppingCart> cartCall = services.getCarSizetUser(_IdUser);
+        cartCall.enqueue(new Callback<DtoShoppingCart>() {
+            @Override
+            public void onResponse(@NonNull Call<DtoShoppingCart> call, @NonNull Response<DtoShoppingCart> response) {
+                if (response.code() == 200){
+                    assert response.body() != null;
+                    txt_QuantityCart_main.setText(response.body().getLength() + "");
+                    if (response.body().getLength() > 0)
+                        base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
+                    else
+                        base_QuantityItemsCart_main.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DtoShoppingCart> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 
     private void Ids() {
@@ -199,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 MainFragment mainFragment = new MainFragment();
                 args = new Bundle();
                 args.putString("email_user", _Email);
+                args.putInt("id_user", _IdUser);
                 mainFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, mainFragment);
@@ -211,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                 AllProductsFragment allProductsFragment = new AllProductsFragment();
                 args = new Bundle();
                 args.putString("email_user", _Email);
-                args.putInt("id_user", id_user);
+                args.putInt("id_user", _IdUser);
                 allProductsFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, allProductsFragment);
@@ -230,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
             myOrders.setOnClickListener(v1 -> {
                 Intent goTo_ProductDetails = new Intent(this, ProductDetailsActivity.class);
                 goTo_ProductDetails.putExtra("email_user", _Email);
-                goTo_ProductDetails.putExtra("id_user", id_user);
+                goTo_ProductDetails.putExtra("id_user", _IdUser);
                 startActivity(goTo_ProductDetails);
                 bottomSheetDialog.dismiss();
             });
@@ -240,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
                 MyCardsFragment myCardsFragment = new MyCardsFragment();
                 args = new Bundle();
                 args.putString("email_user", _Email);
-                args.putInt("id_user", id_user);
+                args.putInt("id_user", _IdUser);
                 myCardsFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, myCardsFragment);
@@ -252,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
                 ServicesFragment servicesFragment = new ServicesFragment();
                 args = new Bundle();
                 args.putString("email_user", _Email);
+                args.putInt("id_user", _IdUser);
                 servicesFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, servicesFragment);
@@ -295,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
             btn_registerNow_addressAlert.setOnClickListener(v -> {
                 btn_registerNow_addressAlert.setElevation(0);
                 Intent goTo_AddressRegister = new Intent(MainActivity.this, RegisterAddressActivity.class);
-                goTo_AddressRegister.putExtra("id_user", id_user);
+                goTo_AddressRegister.putExtra("id_user", _IdUser);
                 goTo_AddressRegister.putExtra("name_user", name_user);
                 goTo_AddressRegister.putExtra("email_user", _Email);
                 goTo_AddressRegister.putExtra("cpf_user", cpf_user);
@@ -319,6 +337,7 @@ public class MainActivity extends AppCompatActivity {
     @Override protected void onResume() {
         super.onResume();
         GetUserInformation();
+        CheckShoppingCart();
 
         //  Mobile Information
         int versionCode = BuildConfig.VERSION_CODE;
@@ -383,7 +402,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
                 if (response.code() == 200) {
                     assert response.body() != null;
-                    id_user = response.body().getId_user();
+                    _IdUser = response.body().getId_user();
                     name_user = response.body().getName_user();
                     _Email = response.body().getEmail();
                     cpf_user = response.body().getCpf_user();
