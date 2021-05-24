@@ -2,6 +2,7 @@ package co.kaua.palacepetz.Fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
@@ -31,7 +33,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
@@ -42,6 +46,7 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
     private SwipeRefreshLayout swipe_recycler_shoppingCart;
     private CardView btnBuy_shoppingCart;
     private static ArrayList<DtoShoppingCart> arrayList;
+    private int CountToReload = 0;
 
     //  Fragments Arguments
     Bundle args;
@@ -63,6 +68,7 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_activity_shoppingcart, container, false);
+        requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_menu_sheet));
         Ids(view);
         container_noItemsOnCart.setVisibility(View.GONE);
 
@@ -88,7 +94,23 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
 
         btnBuy_shoppingCart.setOnClickListener(v -> {
             btnBuy_shoppingCart.setElevation(0);
-            Toast.makeText(getActivity(), "Em Desenvolvimento", Toast.LENGTH_SHORT).show();
+            FinishPurchaseFragment finishPurchaseFragment = new FinishPurchaseFragment();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            Bundle args = new Bundle();
+            args.putString("email_user", _Email);
+            args.putInt("id_user", _IdUser);
+            String startValue = txt_total_shoppingCart.getText().toString().replace("Total: R$ ", "").replace(" ", "");
+            while (startValue.contains(".")) {
+                startValue = startValue.substring(0,
+                        startValue.indexOf(".")) +
+                        startValue.substring(startValue.indexOf(".") + 1);
+            }
+            startValue = startValue.replaceAll(",", ".");
+            double aFloat = Double.parseDouble(startValue);
+            args.putDouble("total_Cart", aFloat);
+            finishPurchaseFragment.setArguments(args);
+            transaction.replace(R.id.frameLayoutMain, finishPurchaseFragment);
+            transaction.commit();
         });
 
         return view;
@@ -110,7 +132,7 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
                     RecyclerViewCart.setVisibility(View.VISIBLE);
                     containerTotalShoppingCart.setVisibility(View.VISIBLE);
                     LoadCart();
-                }else if(response.code() == 204){
+                }else if(response.code() == 206){
                     loadingDialog.dimissDialog();
                     container_noItemsOnCart.setVisibility(View.VISIBLE);
                     RecyclerViewCart.setVisibility(View.GONE);
@@ -149,12 +171,38 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (CountToReload != 0){
+            CountToReload = 0;
+            MainActivity mainActivity = (MainActivity) getContext();
+            assert mainActivity != null;
+            mainActivity.CheckShoppingCart();
+            mainActivity.ReOpenCart();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        CountToReload = 1;
+    }
+
+    @Override
     public boolean onBackPressed() {
         if (_Email != null) {
             //action not popBackStack
+            requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_top));
+            //action not popBackStack
+            MainFragment mainFragment = new MainFragment();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            Bundle args = new Bundle();
+            args.putString("email_user", _Email);
+            mainFragment.setArguments(args);
+            transaction.replace(R.id.frameLayoutMain, mainFragment);
+            transaction.commit();
             return true;
         } else {
-            Toast.makeText(getContext(), "False em", Toast.LENGTH_SHORT).show();
             return false;
         }
     }

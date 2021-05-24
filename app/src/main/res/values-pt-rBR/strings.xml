@@ -175,4 +175,8 @@
     <string name="order_now">Peça agora</string>
     <string name="what_would_you_this_product">O\'Que gostaria de fazer com esse produto?</string>
     <string name="the_select_product_isnt_on_yourCart">O produto selecionado para ser retirado não esta em seu carrinho!!</string>
+    <string name="payment">Pagamento</string>
+    <string name="approve_and_pay">Aprovar e pagar</string>
+    <string name="coupons">Cupons</string>
+    <string name="discounts">Descontos</string>
 </resources>

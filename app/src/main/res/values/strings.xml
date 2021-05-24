@@ -218,4 +218,9 @@
     <string name="order_now">Order now</string>
     <string name="what_would_you_this_product">What would you like to do with this product?</string>
     <string name="the_select_product_isnt_on_yourCart">The product selected to be removed is not in your cart</string>
+    <string name="payment">Payment</string>
+    <string name="approve_and_pay">Approve and pay</string>
+    <string name="subTotal" translatable="false">Subtotal</string>
+    <string name="coupons">Coupons</string>
+    <string name="discounts">Discounts</string>
 </resources>

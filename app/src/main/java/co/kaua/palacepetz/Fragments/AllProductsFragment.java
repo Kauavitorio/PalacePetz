@@ -40,7 +40,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
     private SwipeRefreshLayout SwipeRefreshProducts;
     private LottieAnimationView anim_loading_allProducts, anim_loading_Categorys;
     private Spinner spinner_petFilter;
-
+    Bundle args;
     private static String[] petFilter;
 
     //  User information
@@ -57,7 +57,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_activity_allproducts, container, false);
         Ids();
-        Bundle args = getArguments();
+        args = getArguments();
         assert args != null;
         _Email = args.getString("email_user");
         _IdUser = args.getInt("id_user");
@@ -208,7 +208,7 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         if (_Email != null) {
             //action not popBackStack
             MainFragment mainFragment = new MainFragment();
-            FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             Bundle args = new Bundle();
             args.putString("email_user", _Email);
             mainFragment.setArguments(args);
@@ -216,7 +216,6 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
             transaction.commit();
             return true;
         } else {
-            Toast.makeText(getContext(), "False em", Toast.LENGTH_SHORT).show();
             return false;
         }
     }

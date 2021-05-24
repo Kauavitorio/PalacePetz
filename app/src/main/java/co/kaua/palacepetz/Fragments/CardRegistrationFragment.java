@@ -97,7 +97,7 @@ public class CardRegistrationFragment extends Fragment {
         _Email = args.getString("email_user");
         id_user = args.getInt("id_user");
 
-        imm = (InputMethodManager) Objects.requireNonNull(getContext()).getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         //  Set Mask
         edit_cardNumber_cardRegister.addTextChangedListener(MaskEditUtil.mask(edit_cardNumber_cardRegister, MaskEditUtil.FORMAT_NUMCARD));
@@ -162,13 +162,13 @@ public class CardRegistrationFragment extends Fragment {
     }
 
     private void goTo_allCard() {
-        CardRegistrationFragment cardregistrationFragment = new CardRegistrationFragment();
+        MyCardsFragment MyCardsFragment = new MyCardsFragment();
         args = new Bundle();
         args.putString("email_user", _Email);
         args.putInt("id_user", id_user);
-        cardregistrationFragment.setArguments(args);
-        transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameLayoutMain, cardregistrationFragment);
+        MyCardsFragment.setArguments(args);
+        transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayoutMain, MyCardsFragment);
         transaction.commit();
     }
 
@@ -321,10 +321,10 @@ public class CardRegistrationFragment extends Fragment {
         cardBtn_addCard_registration = view.findViewById(R.id.cardBtn_addCard_registration);
         cardBtn_addCard_registration.setElevation(20);
 
-        cardFlagSelected = Objects.requireNonNull(getContext()).getResources().getDrawable(R.drawable.card_flag_selected);
-        colorMasterColor = getContext().getResources().getColor(R.color.mastercard);
-        colorVisaColor = getContext().getResources().getColor(R.color.visacard);
-        colorMaestroColor = getContext().getResources().getColor(R.color.maestrocard);
+        cardFlagSelected = requireContext().getResources().getDrawable(R.drawable.card_flag_selected);
+        colorMasterColor = requireContext().getResources().getColor(R.color.mastercard);
+        colorVisaColor = requireContext().getResources().getColor(R.color.visacard);
+        colorMaestroColor = requireContext().getResources().getColor(R.color.maestrocard);
     }
 
     private void removeAllFlagSelected() {

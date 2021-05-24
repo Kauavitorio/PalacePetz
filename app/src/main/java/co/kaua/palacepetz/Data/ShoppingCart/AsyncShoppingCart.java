@@ -83,6 +83,7 @@ public class AsyncShoppingCart extends AsyncTask {
                 dtoShoppingCart.setCd_prod(jsonArray.getJSONObject(i).getInt("cd_prod"));
                 dtoShoppingCart.setNm_product(jsonArray.getJSONObject(i).getString("nm_product"));
                 dtoShoppingCart.setImage_prod(jsonArray.getJSONObject(i).getString("image_prod"));
+                dtoShoppingCart.setAmount(jsonArray.getJSONObject(i).getInt("amount"));
                 dtoShoppingCart.setId_user(jsonArray.getJSONObject(i).getInt("id_user"));
                 dtoShoppingCart.setProduct_price( jsonArray.getJSONObject(i).getString("product_price"));
                 priceTotal += Float.parseFloat(jsonArray.getJSONObject(i).getString("totalPrice"));

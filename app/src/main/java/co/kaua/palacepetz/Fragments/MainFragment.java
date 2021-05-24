@@ -64,8 +64,9 @@ public class MainFragment extends Fragment {
             ServicesFragment servicesFragment = new ServicesFragment();
             args = new Bundle();
             args.putString("email_user", _Email);
+            args.putInt("id_user", _IdUser);
             servicesFragment.setArguments(args);
-            transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+            transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frameLayoutMain, servicesFragment);
             transaction.commit();
         });
@@ -75,8 +76,9 @@ public class MainFragment extends Fragment {
             MyCardsFragment myCardsFragment = new MyCardsFragment();
             args = new Bundle();
             args.putString("email_user", _Email);
+            args.putInt("id_user", _IdUser);
             myCardsFragment.setArguments(args);
-            transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+            transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frameLayoutMain, myCardsFragment);
             transaction.commit();
         });

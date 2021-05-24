@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
     <!-- Header -->
@@ -35,8 +36,9 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_recycler_shoppingCart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/containerTotalShoppingCart"
         app:layout_constraintTop_toBottomOf="@+id/constraint_title_shoppingcart">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,8 +50,8 @@
                 android:id="@+id/RecyclerViewCart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
                 android:layout_marginTop="10dp"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +59,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 
     <!-- Base Total -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -103,18 +104,17 @@
                 android:id="@+id/txt_OrderNow_ShoppingCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/order_now"
-                android:textColor="@color/white"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:textSize="20sp"
                 android:layout_gravity="center"
-                android:textAlignment="center"/>
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="@string/txt_continue"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
     <!-- Container No items on cart -->
     <androidx.constraintlayout.widget.ConstraintLayout

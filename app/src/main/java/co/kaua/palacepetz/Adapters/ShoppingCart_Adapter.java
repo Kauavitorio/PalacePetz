@@ -3,8 +3,6 @@ package co.kaua.palacepetz.Adapters;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +12,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -25,14 +20,10 @@ import com.squareup.picasso.Picasso;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Objects;
 
 import co.kaua.palacepetz.Activitys.MainActivity;
-import co.kaua.palacepetz.Data.ShoppingCart.AsyncShoppingCart;
 import co.kaua.palacepetz.Data.ShoppingCart.CartServices;
 import co.kaua.palacepetz.Data.ShoppingCart.DtoShoppingCart;
-import co.kaua.palacepetz.Fragments.AllProductsFragment;
-import co.kaua.palacepetz.Fragments.ShoppingCartFragment;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +31,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@SuppressWarnings("unchecked")
 @SuppressLint("SetTextI18n")
 public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adapter.MyHolderProducts> {
     ArrayList<DtoShoppingCart> dtoProductsArrayList;
@@ -117,11 +107,13 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
                                         loadingDialog.dimissDialog();
                                         MainActivity mainActivity = (MainActivity) context;
                                         assert mainActivity != null;
+                                        mainActivity.CheckShoppingCart();
                                         mainActivity.ReOpenCart();
                                     }else if(response.code() == 417){
                                         loadingDialog.dimissDialog();
                                         MainActivity mainActivity = (MainActivity) context;
                                         assert mainActivity != null;
+                                        mainActivity.CheckShoppingCart();
                                         mainActivity.ReOpenCart();
                                     }else{
                                         loadingDialog.dimissDialog();
@@ -145,7 +137,7 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
     @SuppressLint("SetTextI18n")
     private void PlusAmount(@NonNull MyHolderProducts holder) {
         subOrPlus = 10000;
-        if (productAmount == 20)
+        if (productAmount == 20 || productAmount == dtoProductsArrayList.get(holder.getAdapterPosition()).getAmount())
             Toast.makeText(context, context.getString(R.string.maximum_amount_reached), Toast.LENGTH_SHORT).show();
         else{
             productAmount = dtoProductsArrayList.get(holder.getAdapterPosition()).getProduct_amount();
@@ -206,7 +198,7 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
             valueGet += Float.parseFloat(dtoProductsArrayList.get(i).getTotalPrice());
         }
         txtTotal.setText(context.getString(R.string.total) + ": R$ " + numberFormat.format(valueGet));
-        txtOrderNow.setText(context.getString(R.string.order_now) + " (" + numberFormat.format(valueGet) + ")");
+        txtOrderNow.setText(context.getString(R.string.txt_continue) + " (" + numberFormat.format(valueGet) + ")");
     }
 
     @Override

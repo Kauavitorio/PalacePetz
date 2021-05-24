@@ -1,7 +1,7 @@
 package co.kaua.palacepetz.Data.ShoppingCart;
 
 public class DtoShoppingCart {
-    int cd_cart, cd_prod, id_user, product_amount, length;
+    int cd_cart, cd_prod, id_user, product_amount, length, amount;
     String product_price, totalPrice, sub_total;
     String nm_product, image_prod;
 
@@ -15,6 +15,14 @@ public class DtoShoppingCart {
     }
 
     public DtoShoppingCart(){}
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 
     public String getNm_product() {
         return nm_product;

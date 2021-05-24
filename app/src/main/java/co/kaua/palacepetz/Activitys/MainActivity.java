@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
 
         icon_ProfileUser_main.setOnClickListener(v -> {
+            getWindow().setNavigationBarColor(getColor(R.color.background_top));
             Intent goTo_profile = new Intent(MainActivity.this, ProfileActivity.class);
             goTo_profile.putExtra("id_user", _IdUser);
             goTo_profile.putExtra("name_user", name_user);
@@ -207,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void CreatingMenuSheet() {
         btnMenu_Main.setOnClickListener(v -> {
+            getWindow().setNavigationBarColor(getColor(R.color.background_top));
             btnMenu_Main.playAnimation();
             bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetTheme);
             //  Creating View for SheetMenu
@@ -343,6 +345,21 @@ public class MainActivity extends AppCompatActivity {
 
             dialog.show();
         }
+    }
+
+    public DtoUser GetUserBaseInformation(){
+        DtoUser dtoUser = new DtoUser();
+        dtoUser.setEmail(_Email);
+        dtoUser.setPassword(_Password);
+        dtoUser.setCpf_user(cpf_user);
+        dtoUser.setAddress_user(address_user);
+        dtoUser.setComplement(complement);
+        dtoUser.setZipcode(zipcode);
+        dtoUser.setPhone_user(phone_user);
+        dtoUser.setBirth_date(birth_date);
+        dtoUser.setImg_user(img_user);
+        dtoUser.setId_user(_IdUser);
+        return dtoUser;
     }
 
     @Override protected void onResume() {

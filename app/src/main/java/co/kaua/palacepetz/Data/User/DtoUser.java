@@ -43,6 +43,8 @@ public class DtoUser {
         this.email = email;
     }
 
+    public DtoUser(){}
+
     public String getBirth_date() {
         return birth_date;
     }
