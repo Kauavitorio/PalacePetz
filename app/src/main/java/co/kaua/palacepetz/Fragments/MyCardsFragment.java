@@ -75,7 +75,7 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
 
         MainActivity activity = (MainActivity) getActivity();
         assert activity != null;
-        activity.updateCart();
+        activity.CheckShoppingCart();
 
         BtnMyCard_AddCard.setOnClickListener(v -> {
             cardContainer_AddCard.setElevation(0);
@@ -130,7 +130,7 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
         args.putString("email_user", _Email);
         args.putInt("id_user", id_user);
         cardregistrationFragment.setArguments(args);
-        transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameLayoutMain, cardregistrationFragment);
         transaction.commit();
     }

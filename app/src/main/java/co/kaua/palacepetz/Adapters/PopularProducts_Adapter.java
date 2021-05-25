@@ -57,6 +57,9 @@ public class PopularProducts_Adapter extends RecyclerView.Adapter<PopularProduct
             case  "Medicamentos":
                 holder.container_popularProducts.setBackground( context.getDrawable(R.drawable.background_medicines) );
                 break;
+            case  "Estética":
+                holder.container_popularProducts.setBackground( context.getDrawable(R.drawable.background_aesthetics) );
+                break;
         }
         if (dtoProductsArrayList.get(position).getAmount() <= 2)
             holder.container_popularProducts.setBackground( context.getDrawable(R.drawable.background_low_stock) );

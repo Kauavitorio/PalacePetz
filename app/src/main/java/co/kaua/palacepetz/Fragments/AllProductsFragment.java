@@ -40,15 +40,16 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
     private SwipeRefreshLayout SwipeRefreshProducts;
     private LottieAnimationView anim_loading_allProducts, anim_loading_Categorys;
     private Spinner spinner_petFilter;
-
+    Bundle args;
     private static String[] petFilter;
 
     //  User information
-    String email_user;
+    String _Email;
+    int _IdUser;
     String specie;
 
     //  Filter Tools
-    private CardView card_filter_lowestPrice, card_filter_biggestPrice, card_filter_popular;
+    private CardView card_filter_lowestPrice, card_filter_biggestPrice, card_filter_popular, card_filter_clearFilters;
     ArrayList<DtoProducts> arrayListDto = new ArrayList<>();
 
     @Nullable
@@ -56,9 +57,10 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_activity_allproducts, container, false);
         Ids();
-        Bundle args = getArguments();
+        args = getArguments();
         assert args != null;
-        email_user = args.getString("email_user");
+        _Email = args.getString("email_user");
+        _IdUser = args.getInt("id_user");
         loadCategorys();
         loadAllProducts();
 
@@ -81,9 +83,17 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
                 }else if (ItemSelect.equals(getString(R.string.birds))){
                     specie = "Birds";
                     FilterBySpecies(specie);
+                }else if (ItemSelect.equals(getString(R.string.rabbit))){
+                    specie = "Rabbit";
+                    FilterBySpecies(specie);
+                }else if (ItemSelect.equals(getString(R.string.fish))){
+                    specie = "Fish";
+                    FilterBySpecies(specie);
+                }else if (ItemSelect.equals(getString(R.string.hamster))){
+                    specie = "Hamster";
+                    FilterBySpecies(specie);
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -94,52 +104,58 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
 
         //  When click here will filter all products by lowest price
         card_filter_lowestPrice.setOnClickListener(v -> {
+            card_filter_clearFilters.setVisibility(View.VISIBLE);
             setFilterElevation();
             card_filter_lowestPrice.setElevation(0);
 
             StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
             recyclerView_Products.setLayoutManager(layoutManager);
             arrayListDto.clear();
-            AsyncFilterProducts_LowestPrice async = new AsyncFilterProducts_LowestPrice(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, email_user, getActivity());
+            AsyncFilterProducts_LowestPrice async = new AsyncFilterProducts_LowestPrice(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, _Email, getActivity());
             //noinspection unchecked
             async.execute();
         });
 
         //  When click here will filter all products by bigger price
         card_filter_biggestPrice.setOnClickListener(v -> {
+            card_filter_clearFilters.setVisibility(View.VISIBLE);
             setFilterElevation();
             card_filter_biggestPrice.setElevation(0);
 
             StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
             recyclerView_Products.setLayoutManager(layoutManager);
             arrayListDto.clear();
-            AsyncFilterProducts_BiggestPrice async = new AsyncFilterProducts_BiggestPrice(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, email_user, getActivity());
+            AsyncFilterProducts_BiggestPrice async = new AsyncFilterProducts_BiggestPrice(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, _Email, getActivity());
             //noinspection unchecked
             async.execute();
         });
 
         //  When click here will filter all products by popular
         card_filter_popular.setOnClickListener(v -> {
+            card_filter_clearFilters.setVisibility(View.VISIBLE);
             setFilterElevation();
             card_filter_popular.setElevation(0);
 
             StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
             recyclerView_Products.setLayoutManager(layoutManager);
             arrayListDto.clear();
-            AsyncPopularProducts asyncPopularProducts = new AsyncPopularProducts(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, email_user, getActivity());
+            AsyncPopularProducts asyncPopularProducts = new AsyncPopularProducts(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, _Email, getActivity());
             //noinspection unchecked
             asyncPopularProducts.execute();
         });
 
+        //  When click here will clear all filters
+        card_filter_clearFilters.setOnClickListener(v -> loadAllProducts());
 
         return view;
     }
 
     private void FilterBySpecies(String specie) {
+        card_filter_clearFilters.setVisibility(View.VISIBLE);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView_Products.setLayoutManager(layoutManager);
         arrayListDto.clear();
-        AsyncFilterProducts_Species async = new AsyncFilterProducts_Species(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, email_user, getActivity(), specie);
+        AsyncFilterProducts_Species async = new AsyncFilterProducts_Species(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, _Email, getActivity(), specie);
         //noinspection unchecked
         async.execute();
     }
@@ -149,16 +165,17 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         recyclerCategorys.setLayoutManager(layoutManager);
 
         AsyncCategory asyncCategory = new AsyncCategory(recyclerCategorys, anim_loading_Categorys, getActivity(), arrayListDto, recyclerView_Products,
-                anim_loading_allProducts, SwipeRefreshProducts, email_user);
+                anim_loading_allProducts, SwipeRefreshProducts, _Email);
         //noinspection unchecked
         asyncCategory.execute();
     }
 
     private void loadAllProducts() {
+        card_filter_clearFilters.setVisibility(View.GONE);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView_Products.setLayoutManager(layoutManager);
         arrayListDto.clear();
-        AsyncProducts asyncProducts = new AsyncProducts(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, email_user, getActivity());
+        AsyncProducts asyncProducts = new AsyncProducts(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, _IdUser, _Email, getActivity());
         //noinspection unchecked
         asyncProducts.execute();
     }
@@ -171,7 +188,8 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
     }
 
     private void Ids() {
-        petFilter = new String[]{ getString(R.string.filter_animals), getString(R.string.dogs), getString(R.string.cats), getString(R.string.birds) };
+        petFilter = new String[]{ getString(R.string.filter_animals), getString(R.string.dogs), getString(R.string.cats),
+                getString(R.string.birds), getString(R.string.rabbit), getString(R.string.fish), getString(R.string.hamster) };
         card_filter_lowestPrice = view.findViewById(R.id.card_filter_lowestPrice);
         card_filter_biggestPrice = view.findViewById(R.id.card_filter_biggestPrice);
         card_filter_popular = view.findViewById(R.id.card_filter_popular);
@@ -181,23 +199,23 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         spinner_petFilter = view.findViewById(R.id.spinner_petFilter);
         recyclerCategorys = view.findViewById(R.id.recyclerCategorys);
         anim_loading_Categorys = view.findViewById(R.id.anim_loading_Categorys);
+        card_filter_clearFilters = view.findViewById(R.id.card_filter_clearfilters);
         setFilterElevation();
     }
 
     @Override
     public boolean onBackPressed() {
-        if (email_user != null) {
+        if (_Email != null) {
             //action not popBackStack
             MainFragment mainFragment = new MainFragment();
-            FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             Bundle args = new Bundle();
-            args.putString("email_user", email_user);
+            args.putString("email_user", _Email);
             mainFragment.setArguments(args);
             transaction.replace(R.id.frameLayoutMain, mainFragment);
             transaction.commit();
             return true;
         } else {
-            Toast.makeText(getContext(), "False em", Toast.LENGTH_SHORT).show();
             return false;
         }
     }

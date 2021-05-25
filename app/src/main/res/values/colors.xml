@@ -9,7 +9,9 @@
     <color name="titles">#444B54</color>
     <color name="background_menu_sheet">#444B54</color>
     <color name="selected_menu_sheet">#3D444D</color>
+    <color name="background_adapter_shoppingCart">#C9ECFF</color>
     <color name="edittext_base">#27B5FF</color>
+    <color name="border_address_finishPurchase">#44BFFF</color>
     <color name="sheetNoSelected">#6E7680</color>
     <color name="background_Details_Products">#444B54</color>
     <color name="background_bottom_devicePresentation">#141517</color>

@@ -34,6 +34,7 @@ public class MainFragment extends Fragment {
 
     //  User information
     private static String _Email;
+    private static int _IdUser;
 
     @Nullable
     @Override
@@ -43,12 +44,13 @@ public class MainFragment extends Fragment {
         args = getArguments();
         assert args != null;
         _Email = args.getString("email_user");
+        _IdUser = args.getInt("id_user");
         createShortCutsClick();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         RecyclerPopularProducts.setLayoutManager(layoutManager);
         arrayListDto.clear();
-        AsyncPopularProductsMain async = new AsyncPopularProductsMain(RecyclerPopularProducts, loadingPopularProducts, arrayListDto, _Email, getActivity());
+        AsyncPopularProductsMain async = new AsyncPopularProductsMain(RecyclerPopularProducts, loadingPopularProducts, arrayListDto, _IdUser, _Email, getActivity());
         //noinspection unchecked
         async.execute();
 
@@ -62,8 +64,9 @@ public class MainFragment extends Fragment {
             ServicesFragment servicesFragment = new ServicesFragment();
             args = new Bundle();
             args.putString("email_user", _Email);
+            args.putInt("id_user", _IdUser);
             servicesFragment.setArguments(args);
-            transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+            transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frameLayoutMain, servicesFragment);
             transaction.commit();
         });
@@ -73,8 +76,9 @@ public class MainFragment extends Fragment {
             MyCardsFragment myCardsFragment = new MyCardsFragment();
             args = new Bundle();
             args.putString("email_user", _Email);
+            args.putInt("id_user", _IdUser);
             myCardsFragment.setArguments(args);
-            transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+            transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frameLayoutMain, myCardsFragment);
             transaction.commit();
         });

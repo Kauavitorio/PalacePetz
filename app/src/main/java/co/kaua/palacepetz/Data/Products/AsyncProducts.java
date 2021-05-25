@@ -13,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Activitys.ProductDetailsActivity;
 import co.kaua.palacepetz.Adapters.Products_Adapter;
 import co.kaua.palacepetz.Methods.JsonHandler;
@@ -30,14 +31,16 @@ public class AsyncProducts extends AsyncTask {
     RecyclerView recyclerProducts;
     SwipeRefreshLayout SwipeRefreshProducts;
     String email_user, img_prod_ad;
+    int _IdUser;
     Products_Adapter products_adapter;
     LottieAnimationView anim_loading_allProducts;
 
-    public AsyncProducts(RecyclerView recyclerProducts, SwipeRefreshLayout SwipeRefreshProducts, LottieAnimationView anim_loading_allProducts, ArrayList<DtoProducts> arrayListDto, String email_user, Activity context) {
+    public AsyncProducts(RecyclerView recyclerProducts, SwipeRefreshLayout SwipeRefreshProducts, LottieAnimationView anim_loading_allProducts, ArrayList<DtoProducts> arrayListDto, int _IdUser, String email_user, Activity context) {
         this.recyclerProducts = recyclerProducts;
         this.context = context;
         this.SwipeRefreshProducts = SwipeRefreshProducts;
         this.email_user = email_user;
+        this._IdUser = _IdUser;
         this.arrayListDto = arrayListDto;
         this.anim_loading_allProducts = anim_loading_allProducts;
     }
@@ -102,6 +105,8 @@ public class AsyncProducts extends AsyncTask {
                         goToDetails.putExtra("description", arrayListDto.get(position).getDescription());
                         goToDetails.putExtra("product_price", arrayListDto.get(position).getProduct_price());
                         goToDetails.putExtra("amount", arrayListDto.get(position).getAmount());
+                        goToDetails.putExtra("id_user", _IdUser);
+                        goToDetails.putExtra("email_user", email_user);
                         context.startActivity(goToDetails);
                     }
 

@@ -209,4 +209,18 @@
     <string name="register">Register</string>
     <string name="edit">Edit</string>
     <string name="we_verify_yourEmailOrPassword">We verify that your email or password has been changed!!\nPlease login again.</string>
+    <string name="fish">Fish</string>
+    <string name="rabbit">Rabbit</string>
+    <string name="clear_filters">Clear filters</string>
+    <string name="product_successfully_inserted">Product successfully inserted!!</string>
+    <string name="product_into_your_cart">This product is already into your cart.</string>
+    <string name="total">Total</string>
+    <string name="order_now">Order now</string>
+    <string name="what_would_you_this_product">What would you like to do with this product?</string>
+    <string name="the_select_product_isnt_on_yourCart">The product selected to be removed is not in your cart</string>
+    <string name="payment">Payment</string>
+    <string name="approve_and_pay">Approve and pay</string>
+    <string name="subTotal" translatable="false">Subtotal</string>
+    <string name="coupons">Coupons</string>
+    <string name="discounts">Discounts</string>
 </resources>
