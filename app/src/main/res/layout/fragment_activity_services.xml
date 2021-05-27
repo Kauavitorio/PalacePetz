@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Container -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Text Title -->
+        <TextView
+            android:id="@+id/txt_title_chooseAService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/choose_a_service"
+            android:textColor="#444B54"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- ShortCut Consultation -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_consultation_services"
+            android:layout_width="340dp"
+            android:layout_height="197dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_chooseAService">
+
+            <!-- Container Main -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="329dp"
+                android:layout_height="170dp"
+                android:background="@drawable/bg_shortcuts_main"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- Img ShortCut -->
+                <ImageView
+                    android:id="@+id/imageViewconsultation"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_veterinary_consultation"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <!-- Text VETERINARY CONSULTATION -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/veterinary_consultation"
+                    android:textSize="18sp"
+                    android:textColor="#3D444D"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewconsultation" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Card Btn CONSULTATION -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="282dp"
+                android:layout_height="56dp"
+                app:cardBackgroundColor="#44BFFF"
+                app:cardCornerRadius="20dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <!-- Btn Text -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/schedule_consultation"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- ShortCut Bath -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_bath_services"
+            android:layout_width="340dp"
+            android:layout_height="197dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_consultation_services">
+
+            <!-- Container Main -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="329dp"
+                android:layout_height="170dp"
+                android:background="@drawable/bg_shortcuts_main"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- Img ShortCut -->
+                <ImageView
+                    android:id="@+id/imageViewbath"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/icon_bath_and_grooming"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <!-- Text VETERINARY CONSULTATION -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/bath_and_tosa"
+                    android:textColor="#3D444D"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewbath" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Card Btn Bath -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="282dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="#44BFFF"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <!-- Btn Text -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/schedule_bath_and_tosa"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

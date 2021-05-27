@@ -1,5 +1,6 @@
 package co.kaua.palacepetz.Activitys;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -13,23 +14,39 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.squareup.picasso.Picasso;
+
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
+import co.kaua.palacepetz.BuildConfig;
+import co.kaua.palacepetz.Data.ShoppingCart.CartServices;
+import co.kaua.palacepetz.Data.ShoppingCart.DtoShoppingCart;
+import co.kaua.palacepetz.Data.User.DtoUser;
+import co.kaua.palacepetz.Data.User.UserServices;
+import co.kaua.palacepetz.Data.mobile.DtoVersion;
+import co.kaua.palacepetz.Data.mobile.MobileServices;
 import co.kaua.palacepetz.Fragments.AllProductsFragment;
-import co.kaua.palacepetz.Fragments.DetailsProductsFragment;
 import co.kaua.palacepetz.Fragments.MainFragment;
 import co.kaua.palacepetz.Fragments.MyCardsFragment;
+import co.kaua.palacepetz.Fragments.ServicesFragment;
 import co.kaua.palacepetz.Fragments.ShoppingCartFragment;
 import co.kaua.palacepetz.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório
@@ -38,6 +55,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  *  @author Kaua Vitorio
  **/
 
+@SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity {
     //  Screen items
     private CardView base_QuantityItemsCart_main;
@@ -47,20 +65,31 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout Btn_container_ShoppingCart;
     private static FragmentTransaction transaction;
     private TextView txt_QuantityCart_main;
+    Dialog warning_update;
+    int Count = 0;
 
     //  Fragments Arguments
     private static Bundle args;
     private Bundle bundle;
 
     //  User information
-    String _Email;
+    private int _IdUser;
+    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, _Password;
 
     //  Set preferences
     private SharedPreferences mPrefs;
     private static final String PREFS_NAME = "myPrefs";
 
-    //  Shopping Cart Items
-    private static int cartSize = 0;
+    //  Firebase / Retrofit
+    final Retrofit retrofitUser = new Retrofit.Builder()
+            .baseUrl("https://palacepetzapi.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+    final Retrofit retrofitMobile = new Retrofit.Builder()
+            .baseUrl("https://palacepetzapi.herokuapp.com/mobile/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
 
     @Override
@@ -68,28 +97,54 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Ids();
-        Intent intent = getIntent();
-        bundle = intent.getExtras();
+        bundle = getIntent().getExtras();
+        _IdUser = bundle.getInt("id_user");
+        name_user = bundle.getString("name_user");
         _Email = bundle.getString("email_user");
+        cpf_user = bundle.getString("cpf_user");
+        address_user = bundle.getString("address_user");
+        complement = bundle.getString("complement");
+        zipcode = bundle.getString("zipcode");
+        phone_user = bundle.getString("phone_user");
+        birth_date = bundle.getString("birth_date");
+        img_user = bundle.getString("img_user");
+        _Password = bundle.getString("password");
+        if (address_user == null || address_user.equals(""))
+            ShowAddressAlert();
+        if (img_user == null || img_user.equals(""))
+            Log.d("UserStatus", "Not User image");
+        else
+            Picasso.get().load(img_user).into(icon_ProfileUser_main);
 
         //  Set items gone
         base_QuantityItemsCart_main.setVisibility(View.GONE);
 
         //  Get all SharedPreferences
         mPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        ShowAddressAlert();
 
         MainFragment mainFragment = new MainFragment();
         args = new Bundle();
         args.putString("email_user", _Email);
+        args.putInt("id_user", _IdUser);
         mainFragment.setArguments(args);
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameLayoutMain, mainFragment);
         transaction.commit();
 
         icon_ProfileUser_main.setOnClickListener(v -> {
+            getWindow().setNavigationBarColor(getColor(R.color.background_top));
             Intent goTo_profile = new Intent(MainActivity.this, ProfileActivity.class);
+            goTo_profile.putExtra("id_user", _IdUser);
+            goTo_profile.putExtra("name_user", name_user);
             goTo_profile.putExtra("email_user", _Email);
+            goTo_profile.putExtra("cpf_user", cpf_user);
+            goTo_profile.putExtra("address_user", address_user);
+            goTo_profile.putExtra("complement", complement);
+            goTo_profile.putExtra("zipcode", zipcode);
+            goTo_profile.putExtra("phone_user", phone_user);
+            goTo_profile.putExtra("birth_date", birth_date);
+            goTo_profile.putExtra("img_user", img_user);
+            goTo_profile.putExtra("password", _Password);
             startActivity(goTo_profile);
         });
 
@@ -98,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
             ShoppingCartFragment shoppingCartFragment = new ShoppingCartFragment();
             args = new Bundle();
             args.putString("email_user", _Email);
+            args.putInt("id_user", _IdUser);
             shoppingCartFragment.setArguments(args);
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frameLayoutMain, shoppingCartFragment);
@@ -108,10 +164,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    public void updateCart(){
-        cartSize++;
-        txt_QuantityCart_main.setText(cartSize + "");
-        base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
+    public void CheckShoppingCart(){
+        CartServices services = retrofitUser.create(CartServices.class);
+        Call<DtoShoppingCart> cartCall = services.getCarSizetUser(_IdUser);
+        cartCall.enqueue(new Callback<DtoShoppingCart>() {
+            @Override
+            public void onResponse(@NonNull Call<DtoShoppingCart> call, @NonNull Response<DtoShoppingCart> response) {
+                if (response.code() == 200){
+                    assert response.body() != null;
+                    txt_QuantityCart_main.setText(response.body().getLength() + "");
+                    if (response.body().getLength() > 0)
+                        base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
+                    else
+                        base_QuantityItemsCart_main.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DtoShoppingCart> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+    
+    public void ReOpenCart(){
+        ShoppingCartFragment shoppingCartFragment = new ShoppingCartFragment();
+        args = new Bundle();
+        args.putString("email_user", _Email);
+        args.putInt("id_user", _IdUser);
+        shoppingCartFragment.setArguments(args);
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayoutMain, shoppingCartFragment);
+        transaction.commit();
     }
 
     private void Ids() {
@@ -124,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void CreatingMenuSheet() {
         btnMenu_Main.setOnClickListener(v -> {
+            getWindow().setNavigationBarColor(getColor(R.color.background_top));
             btnMenu_Main.playAnimation();
             bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetTheme);
             //  Creating View for SheetMenu
@@ -136,13 +221,14 @@ public class MainActivity extends AppCompatActivity {
             CardView myOrders = sheetView.findViewById(R.id.BtnMyOrdersSheetMenu);
             CardView myCards = sheetView.findViewById(R.id.BtnMyCardsSheetMenu);
             CardView historic = sheetView.findViewById(R.id.BtnHistoricSheetMenu);
-            CardView consultation = sheetView.findViewById(R.id.BtnConsultationSheetMenu);
+            CardView services = sheetView.findViewById(R.id.BtnServicesSheetMenu);
 
             //  Show Main Fragment
             home.setOnClickListener(v1 -> {
                 MainFragment mainFragment = new MainFragment();
                 args = new Bundle();
                 args.putString("email_user", _Email);
+                args.putInt("id_user", _IdUser);
                 mainFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, mainFragment);
@@ -155,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
                 AllProductsFragment allProductsFragment = new AllProductsFragment();
                 args = new Bundle();
                 args.putString("email_user", _Email);
+                args.putInt("id_user", _IdUser);
                 allProductsFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, allProductsFragment);
@@ -171,13 +258,10 @@ public class MainActivity extends AppCompatActivity {
 
             //  Show My Orders Fragment
             myOrders.setOnClickListener(v1 -> {
-                DetailsProductsFragment detailsProductsFragment = new DetailsProductsFragment();
-                args = new Bundle();
-                args.putString("email_user", _Email);
-                detailsProductsFragment.setArguments(args);
-                transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayoutMain, detailsProductsFragment);
-                transaction.commit();
+                Intent goTo_ProductDetails = new Intent(this, ProductDetailsActivity.class);
+                goTo_ProductDetails.putExtra("email_user", _Email);
+                goTo_ProductDetails.putExtra("id_user", _IdUser);
+                startActivity(goTo_ProductDetails);
                 bottomSheetDialog.dismiss();
             });
 
@@ -186,9 +270,22 @@ public class MainActivity extends AppCompatActivity {
                 MyCardsFragment myCardsFragment = new MyCardsFragment();
                 args = new Bundle();
                 args.putString("email_user", _Email);
+                args.putInt("id_user", _IdUser);
                 myCardsFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, myCardsFragment);
+                transaction.commit();
+                bottomSheetDialog.dismiss();
+            });
+
+            services.setOnClickListener(v1 -> {
+                ServicesFragment servicesFragment = new ServicesFragment();
+                args = new Bundle();
+                args.putString("email_user", _Email);
+                args.putInt("id_user", _IdUser);
+                servicesFragment.setArguments(args);
+                transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayoutMain, servicesFragment);
                 transaction.commit();
                 bottomSheetDialog.dismiss();
             });
@@ -229,6 +326,16 @@ public class MainActivity extends AppCompatActivity {
             btn_registerNow_addressAlert.setOnClickListener(v -> {
                 btn_registerNow_addressAlert.setElevation(0);
                 Intent goTo_AddressRegister = new Intent(MainActivity.this, RegisterAddressActivity.class);
+                goTo_AddressRegister.putExtra("id_user", _IdUser);
+                goTo_AddressRegister.putExtra("name_user", name_user);
+                goTo_AddressRegister.putExtra("email_user", _Email);
+                goTo_AddressRegister.putExtra("cpf_user", cpf_user);
+                goTo_AddressRegister.putExtra("address_user", address_user);
+                goTo_AddressRegister.putExtra("complement", complement);
+                goTo_AddressRegister.putExtra("zipcode", zipcode);
+                goTo_AddressRegister.putExtra("phone_user", phone_user);
+                goTo_AddressRegister.putExtra("birth_date", birth_date);
+                goTo_AddressRegister.putExtra("img_user", img_user);
                 startActivity(goTo_AddressRegister);
                 dialog.dismiss();
             });
@@ -238,6 +345,117 @@ public class MainActivity extends AppCompatActivity {
 
             dialog.show();
         }
+    }
+
+    public DtoUser GetUserBaseInformation(){
+        DtoUser dtoUser = new DtoUser();
+        dtoUser.setEmail(_Email);
+        dtoUser.setPassword(_Password);
+        dtoUser.setCpf_user(cpf_user);
+        dtoUser.setAddress_user(address_user);
+        dtoUser.setComplement(complement);
+        dtoUser.setZipcode(zipcode);
+        dtoUser.setPhone_user(phone_user);
+        dtoUser.setBirth_date(birth_date);
+        dtoUser.setImg_user(img_user);
+        dtoUser.setId_user(_IdUser);
+        return dtoUser;
+    }
+
+    @Override protected void onResume() {
+        super.onResume();
+        GetUserInformation();
+        CheckShoppingCart();
+
+        //  Mobile Information
+        int versionCode = BuildConfig.VERSION_CODE;
+        warning_update = new Dialog(this);
+        MobileServices services = retrofitMobile.create(MobileServices.class);
+        Call<DtoVersion> call = services.getMobileVersion();
+        call.enqueue(new Callback<DtoVersion>() {
+            @Override
+            public void onResponse(@NonNull Call<DtoVersion> call, @NonNull Response<DtoVersion> response) {
+                switch (response.code()){
+                    case 200:
+                        assert response.body() != null;
+                        if ( versionCode < response.body().getVersionCode()){
+                            if (Count != 1){
+                                CardView btnUpdateNow, btnUpdateLater;
+                                warning_update.setContentView(R.layout.adapter_appneedupdate);
+                                warning_update.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                warning_update.setCancelable(false);
+                                btnUpdateNow = warning_update.findViewById(R.id.btnUpdateNow);
+                                btnUpdateLater = warning_update.findViewById(R.id.btnUpdateLater);
+
+                                btnUpdateNow.setOnClickListener(v -> {
+                                    String url = "https://play.google.com/store/apps/details?id=co.kaua.palacepetz";
+                                    Intent i = new Intent(Intent.ACTION_VIEW);
+                                    i.setData(Uri.parse(url));
+                                    startActivity(i);
+                                    warning_update.dismiss();
+                                    Count = 1;
+                                });
+
+                                btnUpdateLater.setOnClickListener(v -> {
+                                    warning_update.dismiss();
+                                    Count = 1;
+                                });
+                                warning_update.show();
+                                Log.d("MobileVersion", "Need update: " + versionCode);
+                            }
+                        }
+                        break;
+                    case 204:
+                        Log.d("GetMobileVersion", "No version on database");
+                        break;
+                    case 500:
+                        Log.d("GetMobileVersion", "Fail to start");
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DtoVersion> call, @NonNull Throwable t) {
+                Log.d("GetMobileVersion", "Fail to start");
+            }
+        });
+    }
+
+    private void GetUserInformation() {
+        UserServices usersService = retrofitUser.create(UserServices.class);
+        DtoUser dtoUser = new DtoUser(_Email, _Password);
+        Call<DtoUser> resultLogin = usersService.loginUser(dtoUser);
+        resultLogin.enqueue(new Callback<DtoUser>() {
+            @Override
+            public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    _IdUser = response.body().getId_user();
+                    name_user = response.body().getName_user();
+                    _Email = response.body().getEmail();
+                    cpf_user = response.body().getCpf_user();
+                    address_user = response.body().getAddress_user();
+                    complement = response.body().getComplement();
+                    zipcode = response.body().getZipcode();
+                    phone_user = response.body().getPhone_user();
+                    birth_date = response.body().getBirth_date();
+                    img_user = response.body().getImg_user();
+                    if (img_user == null || img_user.equals(""))
+                        Log.d("UserStatus", "Not User image");
+                    else
+                        Picasso.get().load(img_user).into(icon_ProfileUser_main);
+                }else if (response.code() == 401){
+                    Toast.makeText(MainActivity.this, getString(R.string.we_verify_yourEmailOrPassword), Toast.LENGTH_LONG).show();
+                    Intent goTo_login = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(goTo_login);
+                    finish();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
+                Log.d("UserStatus", "Error to get user information on main\n" + t.getMessage());
+            }
+        });
     }
 
     @Override public void onBackPressed() {

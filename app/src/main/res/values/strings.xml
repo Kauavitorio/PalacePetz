@@ -9,6 +9,11 @@
     <string name="cats">Cats</string>
     <string name="hamster" translatable="false">hamster</string>
     <string name="birds">Birds</string>
+    <string name="consultations">Consultation</string>
+    <string name="weHaveAProblem">We have a problem with our server.\nTry again later</string>
+    <string name="select_payment_method">Select a payment method.</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="weve_sent_youanEmail_password">We\'ve sent you an email so you can change your password.</string>
 
     <!-- Sing In / Sing Up Screen -->
     <string name="login">Login</string>
@@ -33,6 +38,11 @@
     <string name="password_cannot_contain_spaces">Password cannot contain spaces</string>
     <string name="password_needs">Your password needs at least 8 characters, 1 letter, 1 number and a special character</string>
     <string name="forgot_the_password">FORGOT PASSWORD?</string>
+    <string name="authFailed_thisEmail">Authentication failed!\nThis email is already registered.</string>
+    <string name="hello_emailSend">Hello, your user has been successfully registered :)\nWe sent a verification email to the registered email, please confirm in the email before logging in.</string>
+    <string name="ok_i_will_confirm">OK, I will confirm</string>
+    <string name="txt_weVerify_email_not_verified">We verify that your email has not been confirmed, please confirm your account with the email we sent you.</string>
+    <string name="invalidEmailOrPassword">Invalid email or password.</string>
 
     <!-- Device Presentation -->
     <string name="next">Next </string>
@@ -68,6 +78,8 @@
     <string name="yes">Yes</string>
     <string name="really_want_logOut">Do you really want to log out?</string>
     <string name="logout">LogOut</string>
+    <string name="historic">Historic</string>
+    <string name="leave">Leave</string>
 
     <!-- Profile / EditProfile Screen -->
     <string name="personalname">Personal Name</string>
@@ -79,13 +91,16 @@
     <string name="editProfile">Edit Profile</string>
     <string name="gallery">Gallery</string>
     <string name="cancel">Cancel</string>
-    <string name="select_payment_method">Select the upload method</string>
+    <string name="select_upload_method">Select the upload method</string>
     <string name="change_profile_photo">Change profile photo</string>
     <string name="camera">Camera</string>
     <string name="cpf">CPF</string>
-    <string name="cep" translatable="false">CEP</string>
+    <string name="cep">ZIPCODE</string>
+    <string name="couldnt_insert">Couldn\'t insert your profile image</string>
+    <string name="select_an_image">Select an image</string>
+    <string name="uploadFailed">Upload failed please try again later</string>
 
-    <!-- Register Address -->
+    <!-- Register / Update Address -->
     <string name="title_activity_register_address" translatable="false">Map</string>
     <string name="register_address">REGISTER ADDRESS</string>
     <string name="street">Street</string>
@@ -93,6 +108,16 @@
     <string name="home" translatable="false">Home</string>
     <string name="palaceFountain">Palace Fountain</string>
     <string name="myOrders">My Orders</string>
+    <string name="zipCode_is_invalid">ZipCode is invalid</string>
+    <string name="error_in_get_your_address">Error in get your address</string>
+    <string name="title_activity_maps" translatable="false">Map</string>
+    <string name="your_address_updated_successfully">Your address has been updated successfully</string>
+    <string name="zipcode_field_incorretly">Zip code field is incorrectly filled</string>
+    <string name="street_field_incorretly">Street field is incorrectly filled</string>
+    <string name="number_field_incorretly">Number field is incorrectly filled</string>
+    <string name="phone">Phone</string>
+    <string name="edit_address">Edit my Address</string>
+
 
     <!-- Products -->
     <string name="products">Products</string>
@@ -136,12 +161,66 @@
     <string name="what_would_you_this_card">What would you this card</string>
     <string name="remove">Remove</string>
     <string name="card_not_found">Card not found</string>
-    <string name="weHaveAProblem">We have a problem with our server.\nTry again later</string>
-    <string name="leave">Leave</string>
-    <string name="consultations">Consultation</string>
-    <string name="historic">Historic</string>
-    <string name="couldnt_insert">Couldn\'t insert your profile image</string>
-    <string name="select_an_image">Select an image</string>
-    <string name="uploadFailed">Upload failed please try again later</string>
 
+    <!-- Services -->
+    <string name="services">Services</string>
+    <string name="choose_a_service">CHOOSE A SERVICE</string>
+    <string name="veterinary_consultation">VETERINARY CONSULTATION</string>
+    <string name="bath_and_tosa">BATH AND TOSA</string>
+    <string name="schedule_consultation">SCHEDULE CONSULTATION</string>
+    <string name="schedule_bath_and_tosa">SCHEDULE BATH AND TOSA</string>
+    <string name="select_a_time">Select a time</string>
+    <string name="select_a_date">Select a date</string>
+    <string name="its_not_possible_scheduleYear">It is not possible to schedule an appointment in the given year.</string>
+    <string name="its_not_possible_scheduleMonth">It is not possible to schedule an appointment in the given month.</string>
+    <string name="its_not_possible_scheduleDay">It is not possible to schedule an appointment on the day informed.</string>
+    <string name="sorryButPalaceWillBeCosed">Sorry, but at the selected time PalacePetz will be closed</string>
+    <string name="description">Description…</string>
+    <string name="to_schedule">TO SCHEDULE</string>
+    <string name="select_your_pet">Select your pet.</string>
+    <string name="select_a_veterinarian">Select a veterinarian.</string>
+    <string name="WITHDRAWAL_DELIVERY">WITHDRAWAL / DELIVERY</string>
+    <string name="optionOneDeliveryMethod">1 - I will take the Pet | Receive at the residence</string>
+    <string name="optionTwoDeliveryMethod">2 - I will take the Pet | Withdraw in PetShop</string>
+    <string name="optionThreeDeliveryMethod">3 - PetShop will fetch the animal | I will withdraw in the PetShop</string>
+    <string name="optionFourDeliveryMethod">4 - PetShop will fetch the animal | Receive at the residence</string>
+    <string name="add_to_cart">ADD TO CART</string>
+    <string name="one_is_the_minumum_quantity">1 is the minimum quantity</string>
+    <string name="maximum_amount_reached">Maximum amount reached</string>
+    <string name="see_my_pets">See my pets</string>
+    <string name="inappropriateUserName">We found that the name entered for your user is inappropriate, please change it.</string>
+    <string name="birth_date">Birth Date</string>
+    <string name="warning_no_stock">We apologize for the inconvenience, we are out of stock of this product at the moment !!</string>
+    <string name="no_stock">NO STOCK</string>
+    <string name="qrcode">QrCode</string>
+    <string name="you_have_moreOf_theree_cards">You have more than 3 cards registered</string>
+    <string name="card_already_inserted">Card already inserted</string>
+    <string name="have_new_version">We have a new application update available, to ensure better experience in our application we recommend that you update.</string>
+    <string name="updatenow">Update Now</string>
+    <string name="updatelater">Update Later</string>
+    <string name="register_pet">Register Pet</string>
+    <string name="pet_name">Pet Name</string>
+    <string name="age">Age</string>
+    <string name="weight">Weight</string>
+    <string name="breed">Breed</string>
+    <string name="species">Species</string>
+    <string name="upload_animal_photo">Upload animal photo</string>
+    <string name="first_insert_petName">First insert pet name</string>
+    <string name="register">Register</string>
+    <string name="edit">Edit</string>
+    <string name="we_verify_yourEmailOrPassword">We verify that your email or password has been changed!!\nPlease login again.</string>
+    <string name="fish">Fish</string>
+    <string name="rabbit">Rabbit</string>
+    <string name="clear_filters">Clear filters</string>
+    <string name="product_successfully_inserted">Product successfully inserted!!</string>
+    <string name="product_into_your_cart">This product is already into your cart.</string>
+    <string name="total">Total</string>
+    <string name="order_now">Order now</string>
+    <string name="what_would_you_this_product">What would you like to do with this product?</string>
+    <string name="the_select_product_isnt_on_yourCart">The product selected to be removed is not in your cart</string>
+    <string name="payment">Payment</string>
+    <string name="approve_and_pay">Approve and pay</string>
+    <string name="subTotal" translatable="false">Subtotal</string>
+    <string name="coupons">Coupons</string>
+    <string name="discounts">Discounts</string>
 </resources>

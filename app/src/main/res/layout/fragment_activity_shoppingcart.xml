@@ -4,26 +4,125 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <!-- Text Title My Shopping Cart -->
-    <TextView
-        android:id="@+id/txt_title_myShoppingCart"
-        android:layout_width="wrap_content"
+    <!-- Header -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_title_shoppingcart"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/my_shopping_cart"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Text Title My Shopping Cart -->
+        <TextView
+            android:id="@+id/txt_title_myShoppingCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_shopping_cart"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Base Recycler -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_recycler_shoppingCart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/containerTotalShoppingCart"
+        app:layout_constraintTop_toBottomOf="@+id/constraint_title_shoppingcart">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RecyclerViewCart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <!-- Base Total -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerTotalShoppingCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/containertotalshoppingcart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Text Total -->
+        <TextView
+            android:id="@+id/txt_total_shoppingCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="40dp"
+            android:text="@string/total"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/btnBuy_shoppingCart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnBuy_shoppingCart"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:minWidth="300dp"
+            android:minHeight="64dp"
+            app:cardBackgroundColor="#F89B28"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.94">
+
+            <TextView
+                android:id="@+id/txt_OrderNow_ShoppingCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="@string/txt_continue"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Container No items on cart -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_noItemsOnCart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
         android:background="@drawable/background_noitemsoncart"
         app:layout_constraintBottom_toBottomOf="parent">
 

@@ -26,7 +26,7 @@
         <ImageView
             android:id="@+id/img_product"
             android:layout_width="0dp"
-            android:layout_height="75dp"
+            android:layout_height="80dp"
             android:maxWidth="172dp"
             android:src="@drawable/img_banner_med_main"
             android:layout_marginTop="15dp"
@@ -40,13 +40,14 @@
             android:id="@+id/txt_product_name_allProducts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/segoe_ui"
             android:maxWidth="150dp"
             android:text="@string/app_name"
+            android:textAlignment="center"
             android:textColor="#444B54"
             android:textSize="18sp"
-            android:textAlignment="center"
-            android:fontFamily="@font/segoe_ui"
-            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/txt_product_price_allProducts"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_product" />
@@ -56,17 +57,16 @@
             android:id="@+id/txt_product_price_allProducts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:fontFamily="@font/segoe_ui"
             android:maxWidth="150dp"
             android:text="@string/price"
+            android:layout_marginBottom="10dp"
             android:textColor="#444B54"
             android:textSize="23sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_product_name_allProducts" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

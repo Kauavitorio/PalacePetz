@@ -7,7 +7,6 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -20,76 +19,128 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
+import co.kaua.palacepetz.Activitys.Pets.AllPetsActivity;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
-import co.kaua.palacepetz.Adapters.Userpermissions;
+import co.kaua.palacepetz.Adapters.Warnings;
+import co.kaua.palacepetz.Data.User.DtoUser;
+import co.kaua.palacepetz.Data.User.UserServices;
+import co.kaua.palacepetz.Methods.Userpermissions;
 
 import co.kaua.palacepetz.Firebase.ConfFirebase;
 import co.kaua.palacepetz.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ProfileActivity extends AppCompatActivity {
     //  Activity Items
-    TextView txt_userName_profile, txt_email_profile;
-    EditText Profile_FirstNameUser, Profile__LastNameUser, Profile__CFCUser,
-            Profile__CepUser, Profile__AddressUser, Profile__ComplementUser;
-    CircleImageView icon_ProfileUser_profile;
-    LottieAnimationView arrowGoBackProfile;
-    CardView cardBtn_EditProfile;
+    private TextView txt_userName_profile, txt_email_profile, txt_EditProfile_profile;
+    private EditText Profile_FirstNameUser, Profile_LastNameUser, Profile_CFCUser,
+            Profile_CepUser, Profile_AddressUser, Profile_ComplementUser, Profile_PhoneUser, Profile_birthdateUser;
+    private CircleImageView icon_ProfileUser_profile;
+    private LottieAnimationView arrowGoBackProfile;
+    private CardView cardBtn_EditProfile, btnSeeMyAnimals;
     Handler timer = new Handler();
     private final String[] permissions = { Manifest.permission.READ_EXTERNAL_STORAGE };
-    AlertDialog.Builder msg;
 
     //  User information
-    private String _Email;
+    private int id_user;
+    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user;
 
-    //  Firebase
+    //  Firebase | Retrofit
     StorageReference storageReference;
     //  Loading and IMAGE REQUEST
     private LoadingDialog loadingDialog;
     int PICK_IMAGE_REQUEST = 111;
+    final Retrofit userRetrofit = new Retrofit.Builder()
+            .baseUrl("https://palacepetzapi.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Ids();
+        cardBtn_EditProfile.setElevation(20);
         loadingDialog = new LoadingDialog(ProfileActivity.this);
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        Bundle bundle = getIntent().getExtras();
+        id_user = bundle.getInt("id_user");
+        name_user = bundle.getString("name_user");
         _Email = bundle.getString("email_user");
-        msg = new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.change_profile_photo))
-                .setNegativeButton(getString(R.string.cancel), null)
-                .setMessage(getString(R.string.select_payment_method));
+        cpf_user = bundle.getString("cpf_user");
+        address_user = bundle.getString("address_user");
+        complement = bundle.getString("complement");
+        zipcode = bundle.getString("zipcode");
+        phone_user = bundle.getString("phone_user");
+        birth_date = bundle.getString("birth_date");
+        img_user = bundle.getString("img_user");
 
         DoProfileImgAlert();
+        loadUserInfo();
 
         icon_ProfileUser_profile.setOnClickListener(v -> {
             Userpermissions.validatePermissions(permissions, ProfileActivity.this, 1);
             int GalleryPermission = ContextCompat.checkSelfPermission(ProfileActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-            if (GalleryPermission == PackageManager.PERMISSION_GRANTED){
-                msg.setNeutralButton(getString(R.string.gallery), (dialog, which) -> OpenGallery());
-            }
             if (GalleryPermission == PackageManager.PERMISSION_GRANTED)
-                msg.show();
+                OpenGallery();
         });
 
-        cardBtn_EditProfile.setElevation(20);
+        cardBtn_EditProfile.setOnClickListener(v -> GoTo_EditProfile());
 
-        cardBtn_EditProfile.setOnClickListener(v -> {
-            cardBtn_EditProfile.setElevation(0);
-            Intent goTo_EditProfile = new Intent(ProfileActivity.this, EditProfileActivity.class);
-            goTo_EditProfile.putExtra("email_user", _Email);
-            startActivity(goTo_EditProfile);
-            finish();
-        });
+        txt_EditProfile_profile.setOnClickListener(v -> GoTo_EditProfile());
 
         arrowGoBackProfile.setOnClickListener(v -> finish());
+
+        btnSeeMyAnimals.setOnClickListener(v -> {
+            Intent goTo_AllPets = new Intent(this, AllPetsActivity.class);
+            goTo_AllPets.putExtra("id_user", id_user);
+            startActivity(goTo_AllPets);
+        });
+    }
+
+    private void loadUserInfo() {
+        if (img_user == null || img_user.equals(""))
+            Log.d("UserStatus", "Not User image");
+        else
+            Picasso.get().load(img_user).into(icon_ProfileUser_profile);
+        String[] FullUserName = name_user.split(" ");
+        txt_userName_profile.setText(name_user);
+        txt_email_profile.setText(_Email);
+        Profile_FirstNameUser.setText(FullUserName[0]);
+        Profile_LastNameUser.setText(FullUserName[1]);
+        Profile_CFCUser.setText(cpf_user);
+        Profile_CepUser.setText(zipcode);
+        Profile_AddressUser.setText(address_user);
+        Profile_ComplementUser.setText(complement);
+        Profile_PhoneUser.setText(phone_user);
+        Profile_birthdateUser.setText(birth_date);
+    }
+
+    private void GoTo_EditProfile() {
+        cardBtn_EditProfile.setElevation(0);
+        Intent goTo_EditProfile = new Intent(ProfileActivity.this, EditProfileActivity.class);
+        goTo_EditProfile.putExtra("id_user", id_user);
+        goTo_EditProfile.putExtra("name_user", name_user);
+        goTo_EditProfile.putExtra("email_user", _Email);
+        goTo_EditProfile.putExtra("cpf_user", cpf_user);
+        goTo_EditProfile.putExtra("address_user", address_user);
+        goTo_EditProfile.putExtra("complement", complement);
+        goTo_EditProfile.putExtra("zipcode", zipcode);
+        goTo_EditProfile.putExtra("phone_user", phone_user);
+        goTo_EditProfile.putExtra("birth_date", birth_date);
+        goTo_EditProfile.putExtra("img_user", img_user);
+        startActivity(goTo_EditProfile);
+        finish();
     }
 
     private void OpenGallery() {
@@ -110,20 +161,24 @@ public class ProfileActivity extends AppCompatActivity {
         arrowGoBackProfile = findViewById(R.id.arrowGoBackProfile);
         txt_userName_profile = findViewById(R.id.txt_userName_profile);
         txt_email_profile = findViewById(R.id.txt_email_profile);
+        Profile_birthdateUser = findViewById(R.id.Profile_birthdateUser);
         Profile_FirstNameUser = findViewById(R.id.Profile_FirstNameUser);
-        Profile__AddressUser = findViewById(R.id.Profile__AddressUser);
+        Profile_AddressUser = findViewById(R.id.Profile_AddressUser);
         cardBtn_EditProfile = findViewById(R.id.cardBtn_EditProfile);
         icon_ProfileUser_profile = findViewById(R.id.icon_ProfileUser_profile);
-        Profile__LastNameUser = findViewById(R.id.Profile__LastNameUser);
-        Profile__CFCUser = findViewById(R.id.Profile__CFCUser);
-        Profile__CepUser = findViewById(R.id.Profile__CepUser);
-        Profile__ComplementUser = findViewById(R.id.Profile__ComplementUser);
+        Profile_LastNameUser = findViewById(R.id.Profile_LastNameUser);
+        Profile_CFCUser = findViewById(R.id.Profile_CFCUser);
+        Profile_CepUser = findViewById(R.id.Profile_CepUser);
+        Profile_ComplementUser = findViewById(R.id.Profile_ComplementUser);
+        btnSeeMyAnimals = findViewById(R.id.btnSeeMyAnimals);
+        txt_EditProfile_profile = findViewById(R.id.txt_EditProfile_profile);
+        Profile_PhoneUser = findViewById(R.id.Profile_PhoneUser);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        storageReference = ConfFirebase.getFirebaseStorage().child("user").child("profile").child("User_" + _Email);
+        storageReference = ConfFirebase.getFirebaseStorage().child("user").child("profile").child("User_" + id_user);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri filePath = data.getData();
             try {
@@ -141,9 +196,10 @@ public class ProfileActivity extends AppCompatActivity {
                         return storageReference .getDownloadUrl();
                     }).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            loadingDialog.dimissDialog();
                             Uri downloadUri = task.getResult();
-                            Toast.makeText(this, ""+ downloadUri, Toast.LENGTH_SHORT).show();
+                            img_user = downloadUri+"";
+                            Picasso.get().load(img_user).into(icon_ProfileUser_profile);
+                            UpdateUserImage(id_user, img_user);
                         } else {
                             Toast.makeText(this, getString(R.string.uploadFailed), Toast.LENGTH_SHORT).show();
                             Log.d("ProfileUpload", Objects.requireNonNull(task.getException()).getMessage());
@@ -159,6 +215,29 @@ public class ProfileActivity extends AppCompatActivity {
                 Log.d("ProfileUpload", ex.toString());
             }
         }
+    }
+
+    private void UpdateUserImage(int id_user, String img_user) {
+        UserServices userServices = userRetrofit.create(UserServices.class);
+        DtoUser userInfo = new DtoUser(id_user, img_user);
+        Call<DtoUser> userCall = userServices.updateProfileImage(userInfo);
+        userCall.enqueue(new Callback<DtoUser>() {
+            @Override
+            public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
+                if (response.code() == 200){
+                    loadingDialog.dimissDialog();
+                    Picasso.get().load(img_user).into(icon_ProfileUser_profile);
+                }else{
+                    loadingDialog.dimissDialog();
+                    Warnings.showWeHaveAProblem(ProfileActivity.this);
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
+                loadingDialog.dimissDialog();
+                Warnings.showWeHaveAProblem(ProfileActivity.this);
+            }
+        });
     }
 
     @Override
