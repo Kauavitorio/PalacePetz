@@ -23,6 +23,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import co.kaua.palacepetz.Adapters.IOnBackPressed;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.Cards.CardService;
@@ -42,7 +43,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class CardRegistrationFragment extends Fragment {
+public class CardRegistrationFragment extends Fragment implements IOnBackPressed {
     private EditText edit_cardNumber_cardRegister, edit_shelf_life_cardRegister, edit_cvv_cardRegister, edit_nameCard_cardRegister;
     private CardView cardBtn_addCard_registration;
     private  InputMethodManager imm;
@@ -338,5 +339,23 @@ public class CardRegistrationFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (_Email != null) {
+            //action not popBackStack
+            MainFragment mainFragment = new MainFragment();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            Bundle args = new Bundle();
+            args.putString("email_user", _Email);
+            args.putInt("id_user", id_user);
+            mainFragment.setArguments(args);
+            transaction.replace(R.id.frameLayoutMain, mainFragment);
+            transaction.commit();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

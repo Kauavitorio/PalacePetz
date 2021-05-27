@@ -25,7 +25,7 @@ public class CardsPurchase_Adapter extends RecyclerView.Adapter<CardsPurchase_Ad
     Context context;
     TextView flagText, numberCard;
     static int selectedItem = 0;
-    static  String CardFlagSelected = "" ,CardNumberSelected = "";
+    static  int CardId = 0;
     //  Flags Images
     String flag_visa = "https://firebasestorage.googleapis.com/v0/b/coffeeforcode.appspot.com/o/cards_flag%2Fvisa.png?alt=media&token=e9dd2e2b-dd30-444e-b745-2a1dd2273db9";
     String flag_mastercard = "https://firebasestorage.googleapis.com/v0/b/coffeeforcode.appspot.com/o/cards_flag%2Fmastercard.png?alt=media&token=79df43fd-494c-4160-93f1-7194266f76b9";
@@ -68,17 +68,12 @@ public class CardsPurchase_Adapter extends RecyclerView.Adapter<CardsPurchase_Ad
             holder.cardCards_FinishPurchase.setBackgroundResource(R.drawable.card_selected_container_cards_purchase);
         }else{
             holder.cardCards_FinishPurchase.setBackgroundResource(R.drawable.card_no_selected_container_cards_purchase);
-            CardNumberSelected = null;
-            CardFlagSelected = null;
+            CardId = 0;
         }
     }
 
     private static void SetCardInfo(int holder) {
-        CardFlagSelected = dtoCardArrayList.get(holder).getFlag_card();
-        String fullNumber = dtoCardArrayList.get(holder).getNumber_card();
-        String[]  SelectNumber = fullNumber.split(" ");
-        String LastNumbers = SelectNumber[3];
-        CardNumberSelected = "•••• •••• •••• " + LastNumbers;
+        CardId = dtoCardArrayList.get(holder).getCd_card();
     }
 
     @Override
@@ -107,12 +102,8 @@ public class CardsPurchase_Adapter extends RecyclerView.Adapter<CardsPurchase_Ad
         }
     }
 
-    public static String getFlag(){
+    public static int getCardId(){
         SetCardInfo(selectedItem);
-        return CardFlagSelected;
-    }
-    public static String getNumber(){
-        SetCardInfo(selectedItem);
-        return CardNumberSelected;
+        return CardId;
     }
 }

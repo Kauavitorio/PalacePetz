@@ -179,4 +179,26 @@
     <string name="approve_and_pay">Aprovar e pagar</string>
     <string name="coupons">Cupons</string>
     <string name="discounts">Descontos</string>
+    <string name="redeem_coupon">Resgatar Cupom</string>
+    <string name="txt_redeem_coupon">Insira abaixo o código do seu cupom e, em seguida, pressione o botão de resgate para ativar o seu cupom.</string>
+    <string name="coupon">Cupom</string>
+    <string name="coupon_successfully_apply">Cupom aplicado com sucesso !!</string>
+    <string name="coupon_used_before">Você já usou este cupom antes.</string>
+    <string name="coupon_not_exist">Desculpe pelo transtorno, mas este cupom não existe.</string>
+    <string name="expired_coupon">Desculpe pelo transtorno, mas este cupom expirou.</string>
+    <string name="txt_note_coupon">Obs. Ao ativar um cupom, ele será ativado para sua conta mas caso ative outro cupom, o cupom anterior não estará mas disponível para uso.</string>
+    <string name="you_already_have_apply_coupon">Voce já tem um cupom aplicado.</string>
+    <string name="msg_coupon_alredyApply">Deseja dispensar o cupom anterior e <b>tentar</b> aplicar esse novo?</string>
+    <string name="dismiss_coupon">Dispensar cupom.</string>
+    <string name="warning">AVISO</string>
+    <string name="are_you_sure_doYouWantDeleteCoupon">Deseja realmente descartar o cupom anterior?</string>
+    <string name="coupon_can_not_be_null">O campo cupom não pode ser nulo.</string>
+    <string name="need_register_address_purchase">Para poder finalizar sua compra é necessário ter um endereço cadastrado.</string>
+    <string name="necessary_select_a_creditCard">Necessario selecionar um cartão de credito.</string>
+    <string name="order_completed_message">Olá, seu pedido foi realizado com sucesso, lhe enviamos um e-mail com os detalhes de seu pedido.\nMuito obrigado pela confiança.</string>
+    <string name="order">Pedido</string>
+    <string name="created_in">CRIADO EM</string>
+    <string name="status">Status</string>
+    <string name="track_order">Acompanhar Pedido</string>
+    <string name="txt_no_orders">Você ainda não tem nenhum pedido registado, aproveite as nossas promoções imperdíveis para fazer o seu primeiro pedido :)</string>
 </resources>
