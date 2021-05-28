@@ -35,6 +35,7 @@ import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Data.mobile.DtoVersion;
 import co.kaua.palacepetz.Data.mobile.MobileServices;
 import co.kaua.palacepetz.Fragments.AllProductsFragment;
+import co.kaua.palacepetz.Fragments.HistoricFragment;
 import co.kaua.palacepetz.Fragments.MainFragment;
 import co.kaua.palacepetz.Fragments.MyCardsFragment;
 import co.kaua.palacepetz.Fragments.MyOrdersFragment;
@@ -233,6 +234,18 @@ public class MainActivity extends AppCompatActivity {
                 mainFragment.setArguments(args);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameLayoutMain, mainFragment);
+                transaction.commit();
+                bottomSheetDialog.dismiss();
+            });
+
+            historic.setOnClickListener(v1 -> {
+                HistoricFragment historicFragment = new HistoricFragment();
+                args = new Bundle();
+                args.putString("email_user", _Email);
+                args.putInt("id_user", _IdUser);
+                historicFragment.setArguments(args);
+                transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayoutMain, historicFragment);
                 transaction.commit();
                 bottomSheetDialog.dismiss();
             });
