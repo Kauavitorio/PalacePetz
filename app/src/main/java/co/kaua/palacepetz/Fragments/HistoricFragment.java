@@ -1,9 +1,11 @@
 package co.kaua.palacepetz.Fragments;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +36,7 @@ public class HistoricFragment extends Fragment implements IOnBackPressed {
     private ConstraintLayout no_product_onHistoric;
     private RecyclerView recyclerView_Historic;
     private LoadingDialog loadingDialog;
+    private ImageView ic_clear_historic;
 
     //  User information
     private int _IdUser;
@@ -54,8 +57,41 @@ public class HistoricFragment extends Fragment implements IOnBackPressed {
         assert args != null;
         _Email = args.getString("email_user");
         _IdUser = args.getInt("id_user");
-
         loadHistoric(_IdUser);
+
+        ic_clear_historic.setOnClickListener(v -> {
+            AlertDialog.Builder alert  = new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.clear_historic)
+                    .setMessage(R.string.really_clear_historic)
+                    .setPositiveButton(R.string.yes, (dialog, which) -> {
+                        loadingDialog = new LoadingDialog(getActivity());
+                        loadingDialog.startLoading();
+                        ProductsServices services = retrofitUser.create(ProductsServices.class);
+                        Call<DtoHistoric> call = services.clearHistoric(_IdUser);
+                        call.enqueue(new Callback<DtoHistoric>() {
+                            @Override
+                            public void onResponse(@NonNull Call<DtoHistoric> call, @NonNull Response<DtoHistoric> response) {
+                                if (response.code() == 200){
+                                    loadingDialog.dimissDialog();
+                                    recyclerView_Historic.setVisibility(View.GONE);
+                                    no_product_onHistoric.setVisibility(View.VISIBLE);
+                                }else{
+                                    loadingDialog.dimissDialog();
+                                    Warnings.showWeHaveAProblem(getContext());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<DtoHistoric> call, @NonNull Throwable t) {
+                                loadingDialog.dimissDialog();
+                                Warnings.showWeHaveAProblem(getContext());
+                            }
+                        });
+                    })
+                    .setNegativeButton(R.string.no, null);
+            alert.show();
+        });
+
         return view;
     }
 
@@ -95,6 +131,7 @@ public class HistoricFragment extends Fragment implements IOnBackPressed {
     private void Ids() {
         no_product_onHistoric = view.findViewById(R.id.no_product_onHistoric);
         recyclerView_Historic = view.findViewById(R.id.recyclerView_Historic);
+        ic_clear_historic = view.findViewById(R.id.ic_clear_historic);
     }
 
     @Override

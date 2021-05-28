@@ -248,4 +248,6 @@
     <string name="txt_no_historic">You still don\'t have any products in your history, take advantage of our unmissable promotions and get to know our products :)</string>
     <string name="see_more">See More</string>
     <string name="product_accessed_at">Product accessed at</string>
+    <string name="clear_historic">Clear historic</string>
+    <string name="really_clear_historic">Do you really want to clear your historic?</string>
 </resources>
