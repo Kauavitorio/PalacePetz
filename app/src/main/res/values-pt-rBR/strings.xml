@@ -201,4 +201,7 @@
     <string name="status">Status</string>
     <string name="track_order">Acompanhar Pedido</string>
     <string name="txt_no_orders">Você ainda não tem nenhum pedido registado, aproveite as nossas promoções imperdíveis para fazer o seu primeiro pedido :)</string>
+    <string name="txt_no_historic">Você ainda não tem nenhum produto em seu histórico, aproveite as nossas promoções imperdíveis e conheça nossos produtos :)</string>
+    <string name="see_more">Ver Mais</string>
+    <string name="product_accessed_at">Produto acessado em</string>
 </resources>

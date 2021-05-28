@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,22 +9,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Text Title My Orders -->
+        <!-- Text Title Historic -->
         <TextView
-            android:id="@+id/txt_title_myOrders"
+            android:id="@+id/txt_title_historic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/segoe_ui"
-            android:text="@string/myOrders"
+            android:text="@string/historic"
             android:textColor="@color/hint"
-            android:textSize="22sp"
+            android:textSize="25sp"
             android:layout_marginTop="5dp"
             android:layout_marginStart="40dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/ic_clear_historic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_trash"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container_noOrder"
+            android:id="@+id/no_product_onHistoric"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -33,12 +45,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_title_myOrders"
+            app:layout_constraintTop_toBottomOf="@+id/ic_clear_historic"
             android:padding="15dp">
 
             <!-- Animation -->
             <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/anim_doggyErrorOrder"
+                android:id="@+id/anim_doggyErrorHistoric"
                 android:layout_width="250dp"
                 android:layout_height="200dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -48,13 +60,13 @@
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/error_doggy" />
 
-            <!-- Text No Orders -->
+            <!-- Text No Historic -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="300dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/txt_no_orders"
+                android:text="@string/txt_no_historic"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -62,20 +74,20 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/anim_doggyErrorOrder" />
+                app:layout_constraintTop_toBottomOf="@+id/anim_doggyErrorHistoric" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- RecyclerView Orders -->
+        <!-- RecyclerView Historic -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_MyOrders"
+            android:id="@+id/recyclerView_Historic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_title_myOrders" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_historic" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

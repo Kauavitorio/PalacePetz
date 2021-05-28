@@ -245,4 +245,7 @@
     <string name="status">Status</string>
     <string name="track_order">Track Order</string>
     <string name="txt_no_orders">You still don\'t have any orders registered, take advantage of our unmissable promotions to place your first order :)</string>
+    <string name="txt_no_historic">You still don\'t have any products in your history, take advantage of our unmissable promotions and get to know our products :)</string>
+    <string name="see_more">See More</string>
+    <string name="product_accessed_at">Product accessed at</string>
 </resources>
