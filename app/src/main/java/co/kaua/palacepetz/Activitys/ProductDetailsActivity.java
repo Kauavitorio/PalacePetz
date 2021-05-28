@@ -19,6 +19,8 @@ import java.util.Locale;
 
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
+import co.kaua.palacepetz.Data.Products.DtoProducts;
+import co.kaua.palacepetz.Data.Products.ProductsServices;
 import co.kaua.palacepetz.Data.ShoppingCart.CartServices;
 import co.kaua.palacepetz.Data.ShoppingCart.DtoShoppingCart;
 import co.kaua.palacepetz.R;
@@ -77,6 +79,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             unit_prod_price = bundle.getFloat("product_price");
             qt_prodGet = bundle.getInt("amount");
             loadProdsTexts();
+            SaveOnHistoric();
             setNewPrice(numberFormat);
             if(qt_prodGet <= 0){
                 txt_desc_prod.setText(getString(R.string.warning_no_stock));
@@ -141,6 +144,24 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 }
             });
         });
+    }
+
+    private void SaveOnHistoric() {
+        ProductsServices services = CartRetrofit.create(ProductsServices.class);
+        Call<DtoProducts> call = services.saveOnHistoric(_IdUser, cd_prod);
+        call.enqueue(new Callback<DtoProducts>() {
+            @Override
+            public void onResponse(@NonNull Call<DtoProducts> call, @NonNull Response<DtoProducts> response) {
+                if (response.isSuccessful())
+                    Log.d("Historic", "Successfully saved");
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DtoProducts> call, @NonNull Throwable t) {
+                Log.d("Historic", "Error on save");
+            }
+        });
+
     }
 
     @SuppressLint("SetTextI18n")

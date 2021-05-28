@@ -35,8 +35,10 @@ import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Data.mobile.DtoVersion;
 import co.kaua.palacepetz.Data.mobile.MobileServices;
 import co.kaua.palacepetz.Fragments.AllProductsFragment;
+import co.kaua.palacepetz.Fragments.HistoricFragment;
 import co.kaua.palacepetz.Fragments.MainFragment;
 import co.kaua.palacepetz.Fragments.MyCardsFragment;
+import co.kaua.palacepetz.Fragments.MyOrdersFragment;
 import co.kaua.palacepetz.Fragments.ServicesFragment;
 import co.kaua.palacepetz.Fragments.ShoppingCartFragment;
 import co.kaua.palacepetz.R;
@@ -236,6 +238,18 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetDialog.dismiss();
             });
 
+            historic.setOnClickListener(v1 -> {
+                HistoricFragment historicFragment = new HistoricFragment();
+                args = new Bundle();
+                args.putString("email_user", _Email);
+                args.putInt("id_user", _IdUser);
+                historicFragment.setArguments(args);
+                transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayoutMain, historicFragment);
+                transaction.commit();
+                bottomSheetDialog.dismiss();
+            });
+
             //  Show All Products fragment
             products.setOnClickListener(v1 -> {
                 AllProductsFragment allProductsFragment = new AllProductsFragment();
@@ -258,10 +272,14 @@ public class MainActivity extends AppCompatActivity {
 
             //  Show My Orders Fragment
             myOrders.setOnClickListener(v1 -> {
-                Intent goTo_ProductDetails = new Intent(this, ProductDetailsActivity.class);
-                goTo_ProductDetails.putExtra("email_user", _Email);
-                goTo_ProductDetails.putExtra("id_user", _IdUser);
-                startActivity(goTo_ProductDetails);
+                MyOrdersFragment myOrdersFragment = new MyOrdersFragment();
+                args = new Bundle();
+                args.putString("email_user", _Email);
+                args.putInt("id_user", _IdUser);
+                myOrdersFragment.setArguments(args);
+                transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayoutMain, myOrdersFragment);
+                transaction.commit();
                 bottomSheetDialog.dismiss();
             });
 

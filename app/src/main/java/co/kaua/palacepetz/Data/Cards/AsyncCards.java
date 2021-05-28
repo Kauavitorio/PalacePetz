@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import co.kaua.palacepetz.Adapters.Cards_Adapter;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
+import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.Products.RecyclerItemClickListener;
 import co.kaua.palacepetz.Methods.JsonHandler;
 import co.kaua.palacepetz.R;
@@ -114,23 +115,24 @@ public class AsyncCards extends AsyncTask {
                                     menuCall.enqueue(new Callback<DtoCard>() {
                                         @Override
                                         public void onResponse(Call<DtoCard> call, Response<DtoCard> response) {
-                                            if (response.code() == 202){
+                                            if (response.code() == 200){
+                                                arrayListDto.remove(position);
                                                 AsyncCards asyncCards = new AsyncCards(recyclerCards, container_noCard, contexto, id_user);
                                                 asyncCards.execute();
-                                                arrayListDto.remove(position);
                                                 loadingDialog.dimissDialog();
                                             }else if (response.code() == 417){
                                                 loadingDialog.dimissDialog();
                                                 Toast.makeText(contexto, R.string.card_not_found, Toast.LENGTH_SHORT).show();
                                             }else{
                                                 loadingDialog.dimissDialog();
-                                                Toast.makeText(contexto, R.string.weHaveAProblem, Toast.LENGTH_SHORT).show();
+                                                Warnings.showWeHaveAProblem(contexto);
                                             }
                                         }
 
                                         @Override
                                         public void onFailure(@NotNull Call<DtoCard> call, @NotNull Throwable t) {
-                                            Toast.makeText(contexto, R.string.weHaveAProblem, Toast.LENGTH_SHORT).show();
+                                            loadingDialog.dimissDialog();
+                                            Warnings.showWeHaveAProblem(contexto);
                                         }
                                     });
                                 })
