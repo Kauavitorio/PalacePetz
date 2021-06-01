@@ -206,4 +206,5 @@
     <string name="product_accessed_at">Produto acessado em</string>
     <string name="clear_historic">Limpar histórico</string>
     <string name="really_clear_historic">Você deseja realmente limpar seu histórico?</string>
+    <string name="delivery_time">Tempo de Delivery</string>
 </resources>

@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView txt_QuantityCart_main;
     Dialog warning_update;
     int Count = 0;
+    private static MainActivity instance;
 
     //  Fragments Arguments
     private static Bundle args;
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Ids();
+        instance = this;
         bundle = getIntent().getExtras();
         _IdUser = bundle.getInt("id_user");
         name_user = bundle.getString("name_user");
@@ -314,6 +316,10 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetDialog.setContentView(sheetView);
             bottomSheetDialog.show();
         });
+    }
+
+    public static MainActivity getInstance() {
+        return instance;
     }
 
     private void ShowAddressAlert(){
