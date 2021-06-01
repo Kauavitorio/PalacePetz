@@ -20,7 +20,13 @@ import co.kaua.palacepetz.Data.Products.DtoProducts;
 import co.kaua.palacepetz.R;
 
 import java.util.ArrayList;
-import java.util.Objects;
+
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
 
 public class MainFragment extends Fragment {
     private ConstraintLayout btn_services_shortCut, btn_cards_shortCut, btn_myOrders_shortCut;
@@ -85,7 +91,14 @@ public class MainFragment extends Fragment {
 
         //  My Orders click
         btn_myOrders_shortCut.setOnClickListener(v -> {
-
+            MyOrdersFragment myOrdersFragment = new MyOrdersFragment();
+            args = new Bundle();
+            args.putString("email_user", _Email);
+            args.putInt("id_user", _IdUser);
+            myOrdersFragment.setArguments(args);
+            transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameLayoutMain, myOrdersFragment);
+            transaction.commit();
         });
     }
 

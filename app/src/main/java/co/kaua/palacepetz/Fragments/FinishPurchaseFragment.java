@@ -158,9 +158,12 @@ public class FinishPurchaseFragment extends Fragment implements IOnBackPressed {
                                 ordersFragment.setArguments(args);
                                 transaction.replace(R.id.frameLayoutMain, ordersFragment);
                                 transaction.commit();
+
+                                //  Reloading user cart
                                 MainActivity mainActivity = (MainActivity) getActivity();
                                 assert mainActivity != null;
                                 mainActivity.CheckShoppingCart();
+
                                 Warnings.showOrderConfirmation(getContext());
                             }else{
                                 loadingDialog.dimissDialog();

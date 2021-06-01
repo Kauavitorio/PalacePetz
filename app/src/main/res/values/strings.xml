@@ -158,7 +158,7 @@
     <string name="cvv_inserted_incorrectly">CVV inserted incorrectly</string>
     <string name="name_incorrectly_inserted">Name entered incorrectly</string>
     <string name="yours_cards">Your cards</string>
-    <string name="what_would_you_this_card">What would you this card</string>
+    <string name="remove_registred_card">Would you like to remove the registered card?</string>
     <string name="remove">Remove</string>
     <string name="card_not_found">Card not found</string>
 

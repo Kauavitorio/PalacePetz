@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +26,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
+import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.BuildConfig;
 import co.kaua.palacepetz.Data.ShoppingCart.CartServices;
 import co.kaua.palacepetz.Data.ShoppingCart.DtoShoppingCart;
@@ -309,19 +309,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             //  When click in this linear will to LoginActivity
-            sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> {
-                AlertDialog.Builder warning_alert = new AlertDialog.Builder(MainActivity.this);
-                warning_alert.setTitle(getString(R.string.logout));
-                warning_alert.setMessage(getString(R.string.really_want_logOut));
-                warning_alert.setPositiveButton(getString(R.string.yes), (dialog, which) -> {
-                    mPrefs.edit().clear().apply();
-                    Intent goBack_toLogin = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(goBack_toLogin);
-                    finish();
-                });
-                warning_alert.setNegativeButton(getString(R.string.no), null);
-                warning_alert.show();
-            });
+            sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> Warnings.LogoutDialog(MainActivity.this));
 
             bottomSheetDialog.setContentView(sheetView);
             bottomSheetDialog.show();
