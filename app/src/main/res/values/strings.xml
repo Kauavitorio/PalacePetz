@@ -250,6 +250,7 @@
     <string name="product_accessed_at">Product accessed at</string>
     <string name="clear_historic">Clear historic</string>
     <string name="really_clear_historic">Do you really want to clear your historic?</string>
-    <string name="title_activity_folow_order">Map</string>
+    <string name="title_activity_folow_order" translatable="false">Map</string>
     <string name="delivery_time">Delivery Time</string>
+    <string name="employee_warning">PalacePetz App is an application for customers, if do you want login with a employee account you need to access Palacepetz website.</string>
 </resources>

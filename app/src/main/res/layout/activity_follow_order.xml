@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:paddingStart="30dp"
+        android:paddingStart="50dp"
         android:paddingBottom="30dp"
         tools:ignore="RtlSymmetry">
 
@@ -144,8 +144,9 @@
 
         </LinearLayout>
 
+        <!-- Container Delivery Time -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout_address_followorder"
             app:layout_constraintEnd_toEndOf="parent"
@@ -228,7 +229,6 @@
                 android:textSize="15sp" />
 
         </LinearLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

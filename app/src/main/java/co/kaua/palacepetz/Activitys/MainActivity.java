@@ -183,11 +183,8 @@ public class MainActivity extends AppCompatActivity {
                         base_QuantityItemsCart_main.setVisibility(View.GONE);
                 }
             }
-
             @Override
-            public void onFailure(@NonNull Call<DtoShoppingCart> call, @NonNull Throwable t) {
-
-            }
+            public void onFailure(@NonNull Call<DtoShoppingCart> call, @NonNull Throwable t) {}
         });
     }
     
@@ -311,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             //  When click in this linear will to LoginActivity
-            sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> Warnings.LogoutDialog(MainActivity.this));
+            sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> Warnings.LogoutDialog(MainActivity.this, bottomSheetDialog));
 
             bottomSheetDialog.setContentView(sheetView);
             bottomSheetDialog.show();
@@ -361,6 +358,7 @@ public class MainActivity extends AppCompatActivity {
 
     public DtoUser GetUserBaseInformation(){
         DtoUser dtoUser = new DtoUser();
+        dtoUser.setName_user(name_user);
         dtoUser.setEmail(_Email);
         dtoUser.setPassword(_Password);
         dtoUser.setCpf_user(cpf_user);
