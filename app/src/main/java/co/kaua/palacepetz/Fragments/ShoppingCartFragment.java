@@ -2,12 +2,10 @@ package co.kaua.palacepetz.Fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,10 +31,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Objects;
 
 public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
     //  Screen Items
@@ -90,7 +85,10 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
             transaction.commit();
         });
 
-        swipe_recycler_shoppingCart.setOnRefreshListener(this::LoadCart);
+        swipe_recycler_shoppingCart.setOnRefreshListener(() -> {
+            CheckShoppingCart();
+            swipe_recycler_shoppingCart.setRefreshing(false);
+        });
 
         btnBuy_shoppingCart.setOnClickListener(v -> {
             btnBuy_shoppingCart.setElevation(0);
@@ -120,6 +118,9 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
     public void CheckShoppingCart(){
         loadingDialog = new LoadingDialog(getActivity());
         loadingDialog.startLoading();
+        MainActivity main = (MainActivity) getContext();
+        assert main != null;
+        main.CheckShoppingCart();
         CartServices services = retrofitCart.create(CartServices.class);
         Call<DtoShoppingCart> cartCall = services.getCartUser(_IdUser);
         cartCall.enqueue(new Callback<DtoShoppingCart>() {
