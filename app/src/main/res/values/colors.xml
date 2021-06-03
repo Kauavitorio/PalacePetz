@@ -24,6 +24,8 @@
     <color name="mastercard" >#000</color>
     <color name="visacard">#A3831C</color>
     <color name="maestrocard">#0a3a44</color>
+    <color name="hipercard">#7E2522</color>
+    <color name="elo">#22647E</color>
 
     <!-- Device Presentation -->
     <color name="gradient_start_color">#4c84ff</color>

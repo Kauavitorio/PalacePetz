@@ -15,6 +15,9 @@ public interface ProductsServices {
     @GET("historic-product/{id_user}")
     Call<DtoHistoric> getHistoric(@Path("id_user") int id_user);
 
+    @GET("products/details/{cd_prod}")
+    Call<DtoProducts> getDetails(@Path("cd_prod") int cd_prod);
+
     @DELETE("historic-product/{id_user}")
     Call<DtoHistoric> clearHistoric(@Path("id_user") int id_user);
 }

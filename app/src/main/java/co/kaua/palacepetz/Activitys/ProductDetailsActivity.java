@@ -23,6 +23,7 @@ import co.kaua.palacepetz.Data.Products.DtoProducts;
 import co.kaua.palacepetz.Data.Products.ProductsServices;
 import co.kaua.palacepetz.Data.ShoppingCart.CartServices;
 import co.kaua.palacepetz.Data.ShoppingCart.DtoShoppingCart;
+import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,10 +70,49 @@ public class ProductDetailsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         _Email = bundle.getString("email_user");
         _IdUser = bundle.getInt("id_user");
-        if(bundle.getString("image_prod") == null || bundle.getString("image_prod").length() <= 8){
-            Log.d("LoadUrl", "LoadfromQrCode");
+        cd_prod = bundle.getInt("cd_prod");
+        if (bundle.getString("nm_product") == null){
+            DtoUser user = MainActivity.getInstance().GetUserBaseInformation();
+            _IdUser = user.getId_user();
+            _Email = user.getEmail();
+            loadingDialog = new LoadingDialog(ProductDetailsActivity.this);
+            loadingDialog.startLoading();
+            ProductsServices productsServices = CartRetrofit.create(ProductsServices.class);
+            Call<DtoProducts> call = productsServices.getDetails(cd_prod);
+            call.enqueue(new Callback<DtoProducts>() {
+                @Override
+                public void onResponse(@NonNull Call<DtoProducts> call, @NonNull Response<DtoProducts> response) {
+                    if(response.code() == 200){
+                        loadingDialog.dimissDialog();
+                        assert response.body() != null;
+                        image_prod = response.body().getImage_prod();
+                        nm_product = response.body().getNm_product();
+                        description = response.body().getDescription();
+                        unit_prod_price = response.body().getProduct_price();
+                        qt_prodGet = response.body().getAmount();
+                        loadProdsTexts();
+                        SaveOnHistoric();
+                        setNewPrice(numberFormat);
+                        if(qt_prodGet <= 0){
+                            txt_desc_prod.setText(getString(R.string.warning_no_stock));
+                            txtQt_prod.setText(0 + "");
+                            txt_AddToCart.setText(getString(R.string.no_stock));
+                            btnLessQT_Prod.setEnabled(false);
+                            btnPlusQT_Prod.setEnabled(false);
+                            cardBtn_AddToCart.setEnabled(false);
+                        }
+                    }else{
+                        loadingDialog.dimissDialog();
+                        Warnings.showWeHaveAProblem(ProductDetailsActivity.this);
+                    }
+                }
+                @Override
+                public void onFailure(@NonNull Call<DtoProducts> call, @NonNull Throwable t) {
+                    loadingDialog.dimissDialog();
+                    Warnings.showWeHaveAProblem(ProductDetailsActivity.this);
+                }
+            });
         }else{
-            cd_prod = bundle.getInt("cd_prod");
             image_prod = bundle.getString("image_prod");
             nm_product = bundle.getString("nm_product");
             description = bundle.getString("description");

@@ -33,7 +33,7 @@ public class RegisterPetActivity extends AppCompatActivity {
     private LottieAnimationView arrowGoBackRegisterPet;
     private CircleImageView icon_RegisterPet_PetImage;
     private CardView btnUploadPetImage, cardBtn_RegisterPet;
-    private EditText Register_PetName;
+    private EditText Register_PetName, Register_PetAge, Register_PetWeight, Register_PetSpecies, Register_PetBreed;
     private final String[] permissions = { Manifest.permission.READ_EXTERNAL_STORAGE };
 
 
@@ -129,7 +129,7 @@ public class RegisterPetActivity extends AppCompatActivity {
 
     private void OpenGallery() {
         //noinspection ConstantConditions
-        if (petName.equals(" ") || petName.length() <= 0 || petName == null)
+        if (petName.equals(" ") || petName.length() <= 0 || petName == null || petName.trim().equals(" ") || petName.replace(" ", "").length() <= 0)
             Toast.makeText(this, getString(R.string.first_insert_petName), Toast.LENGTH_SHORT).show();
         else{
             Userpermissions.validatePermissions(permissions, RegisterPetActivity.this, 1);
