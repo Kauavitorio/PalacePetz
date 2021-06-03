@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -23,13 +22,15 @@ import co.kaua.palacepetz.R;
 public class CardsPurchase_Adapter extends RecyclerView.Adapter<CardsPurchase_Adapter.MyHolderCards> {
     static ArrayList<DtoCard> dtoCardArrayList;
     Context context;
-    TextView flagText, numberCard;
     static int selectedItem = 0;
     static  int CardId = 0;
     //  Flags Images
     String flag_visa = "https://firebasestorage.googleapis.com/v0/b/coffeeforcode.appspot.com/o/cards_flag%2Fvisa.png?alt=media&token=e9dd2e2b-dd30-444e-b745-2a1dd2273db9";
     String flag_mastercard = "https://firebasestorage.googleapis.com/v0/b/coffeeforcode.appspot.com/o/cards_flag%2Fmastercard.png?alt=media&token=79df43fd-494c-4160-93f1-7194266f76b9";
     String flag_maestro = "https://firebasestorage.googleapis.com/v0/b/coffeeforcode.appspot.com/o/cards_flag%2Fmaestro.png?alt=media&token=28fd5789-f277-4027-8b0f-9ff1f38b2d5d";
+    String flag_elo = "https://www.kauavitorio.com/palacepetz/Cadastrar_Cartao/elo.png";
+    String flag_hiperCard = "https://www.kauavitorio.com/palacepetz/Cadastrar_Cartao/hipercard.png";
+
 
     public CardsPurchase_Adapter(ArrayList<DtoCard> dtoCardArrayList, Context context) {
         CardsPurchase_Adapter.dtoCardArrayList = dtoCardArrayList;
@@ -55,6 +56,12 @@ public class CardsPurchase_Adapter extends RecyclerView.Adapter<CardsPurchase_Ad
                 break;
             case "Maestro":
                 Picasso.get().load(flag_maestro).into(holder.img_flag_card_purchase);
+                break;
+            case "Elo":
+                Picasso.get().load(flag_elo).into(holder.img_flag_card_purchase);
+                break;
+            case "Hipercard":
+                Picasso.get().load(flag_hiperCard).into(holder.img_flag_card_purchase);
                 break;
         }
         String fullNumber = dtoCardArrayList.get(position).getNumber_card();
