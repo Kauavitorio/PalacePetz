@@ -1,9 +1,16 @@
 package co.kaua.palacepetz.Data.MyOrders;
 
 public class DtoOrder {
-    private int cd_order, id_user, product_amount, cd_card;
+    private int cd_order, id_user, product_amount, cd_card, deliveryTime;
     private String cpf_user, discount, coupom, sub_total, totalPrice, order_products, date_order, status, payment;
 
+    public int getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public void setDeliveryTime(int deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
 
     public String getPayment() {
         return payment;

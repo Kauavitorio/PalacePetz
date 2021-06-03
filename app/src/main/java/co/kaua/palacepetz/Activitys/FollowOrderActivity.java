@@ -21,10 +21,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.List;
-import java.util.Objects;
-
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.R;
 import co.kaua.palacepetz.databinding.ActivityFollowOrderBinding;
@@ -46,7 +45,7 @@ public class FollowOrderActivity extends FragmentActivity implements OnMapReadyC
 
     //  Order Information
     private String status;
-    private int cd_order;
+    private int cd_order, deliveryTime;
 
     private TextView txt_OrderCode, txt_deliveryForecast, txt_address_followOrder;
     ProgressBar _progress_state01, _progress_state02, _progress_state03, _progress_state04, _progress_state05, _progress_state06;
@@ -80,7 +79,9 @@ public class FollowOrderActivity extends FragmentActivity implements OnMapReadyC
         Bundle bundle = getIntent().getExtras();
         cd_order = bundle.getInt("cd_order");
         status = bundle.getString("status");
+        deliveryTime = bundle.getInt("deliveryTime");
         txt_OrderCode.setText(getString(R.string.order) + ": #" + cd_order);
+        txt_deliveryForecast.setText(deliveryTime + "min");
         DtoUser user = MainActivity.getInstance().GetUserBaseInformation();
         zipcode = user.getZipcode();
         name_user = user.getName_user();
@@ -159,15 +160,20 @@ public class FollowOrderActivity extends FragmentActivity implements OnMapReadyC
         }
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        locationMap = new LatLng(latitude, longitude);
         mMap.clear();
+        locationMap = new LatLng(-23.569230, -46.686980);
+        mMap.addMarker(new MarkerOptions().position(locationMap).title(getString(R.string.app_name)));
+        locationMap = new LatLng(latitude, longitude);
         mMap.addMarker(new MarkerOptions().position(locationMap).title(name_user));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationMap, 15f));
+        Polyline line = mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(latitude, longitude), new LatLng(-23.569230, -46.686980))
+                .width(6)
+                .color(getColor(R.color.edittext_base)));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationMap, 11f));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(false);
         }else

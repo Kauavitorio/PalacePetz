@@ -70,6 +70,7 @@ public class AsyncOrders extends AsyncTask {
                 dtoOrder.setCd_card(jsonArray.getJSONObject(i).getInt("cd_card"));
                 dtoOrder.setStatus(jsonArray.getJSONObject(i).getString("status"));
                 dtoOrder.setPayment(jsonArray.getJSONObject(i).getString("payment"));
+                dtoOrder.setDeliveryTime(jsonArray.getJSONObject(i).getInt("deliveryTime"));
 
                 arrayListDto.add(dtoOrder);
             }
@@ -98,17 +99,14 @@ public class AsyncOrders extends AsyncTask {
                 Intent goTo_followOrder = new Intent(contexto, FollowOrderActivity.class);
                 goTo_followOrder.putExtra("cd_order", arrayListDto.get(position).getCd_order());
                 goTo_followOrder.putExtra("status", arrayListDto.get(position).getStatus());
+                goTo_followOrder.putExtra("deliveryTime", arrayListDto.get(position).getDeliveryTime());
                 contexto.startActivity(goTo_followOrder);
             }
-
             @Override
             public void onLongItemClick(View view, int position) {
-
             }
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
             }
         }));
     }
