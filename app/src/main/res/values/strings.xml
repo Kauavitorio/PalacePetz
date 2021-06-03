@@ -223,4 +223,31 @@
     <string name="subTotal" translatable="false">Subtotal</string>
     <string name="coupons">Coupons</string>
     <string name="discounts">Discounts</string>
+    <string name="redeem_coupon">Redeem Coupon</string>
+    <string name="txt_redeem_coupon">Insert down below your coupon code and next press redeem button to activate your coupon.</string>
+    <string name="coupon">Coupon</string>
+    <string name="coupon_successfully_apply">Coupon successfully apply!!</string>
+    <string name="coupon_used_before">You already used this coupon before.</string>
+    <string name="coupon_not_exist">Sorry for the inconvenience but this coupon not exist.</string>
+    <string name="expired_coupon">Sorry for the inconvenience but this coupon has expired.</string>
+    <string name="txt_note_coupon">Note. When activating a coupon, it will be activated for your account, but if you activate another coupon, the previous coupon will not be available for use.</string>
+    <string name="you_already_have_apply_coupon">You already have a coupon applied</string>
+    <string name="msg_coupon_alredyApply">Do you want to dispense with the previous coupon and <b>try</b> to apply this new one?</string>
+    <string name="dismiss_coupon">Dismiss coupon.</string>
+    <string name="warning">WARNING</string>
+    <string name="are_you_sure_doYouWantDeleteCoupon">Do you really want to discard the previous coupon?</string>
+    <string name="coupon_can_not_be_null">The coupon field cannot be null.</string>
+    <string name="need_register_address_purchase">In order to complete your purchase you need to have a registered address.</string>
+    <string name="necessary_select_a_creditCard">It is necessary to select a credit card.</string>
+    <string name="order_completed_message">Hello, your order was successfully placed, we sent you an email with your order details.\nThank you very much for your trust.</string>
+    <string name="order">Order</string>
+    <string name="created_in">CREATED IN</string>
+    <string name="status">Status</string>
+    <string name="track_order">Track Order</string>
+    <string name="txt_no_orders">You still don\'t have any orders registered, take advantage of our unmissable promotions to place your first order :)</string>
+    <string name="txt_no_historic">You still don\'t have any products in your history, take advantage of our unmissable promotions and get to know our products :)</string>
+    <string name="see_more">See More</string>
+    <string name="product_accessed_at">Product accessed at</string>
+    <string name="clear_historic">Clear historic</string>
+    <string name="really_clear_historic">Do you really want to clear your historic?</string>
 </resources>
