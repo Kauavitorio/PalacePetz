@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout Btn_container_ShoppingCart;
     private static FragmentTransaction transaction;
     private TextView txt_QuantityCart_main;
+    private Animation CartAnim;
     Dialog warning_update;
     int Count = 0;
     private static MainActivity instance;
@@ -169,6 +172,11 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void CheckShoppingCart(){
+        if (!txt_QuantityCart_main.getText().toString().equals("0")){
+            base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
+            CartAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.cart_size_animation_gone);
+            base_QuantityItemsCart_main.setAnimation(CartAnim);
+        }
         CartServices services = retrofitUser.create(CartServices.class);
         Call<DtoShoppingCart> cartCall = services.getCarSizetUser(_IdUser);
         cartCall.enqueue(new Callback<DtoShoppingCart>() {
@@ -177,8 +185,11 @@ public class MainActivity extends AppCompatActivity {
                 if (response.code() == 200){
                     assert response.body() != null;
                     txt_QuantityCart_main.setText(response.body().getLength() + "");
-                    if (response.body().getLength() > 0)
+                    if (response.body().getLength() > 0){
                         base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
+                        CartAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.cart_size_animation);
+                        base_QuantityItemsCart_main.setAnimation(CartAnim);
+                    }
                     else
                         base_QuantityItemsCart_main.setVisibility(View.GONE);
                 }
