@@ -56,7 +56,7 @@ public class SplashScreen extends AppCompatActivity {
         mPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences sp = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         if (sp.contains("pref_email") && sp.contains("pref_password"))
-            GoToLogin();
+            timer.postDelayed(this::GoToMain,1200);
         else
             timer.postDelayed(this::GoToLogin,2800);
     }
@@ -65,6 +65,13 @@ public class SplashScreen extends AppCompatActivity {
         Intent goto_login = new Intent(SplashScreen.this, LoginActivity.class);
         ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),R.anim.move_to_left, R.anim.move_to_right);
         ActivityCompat.startActivity(SplashScreen.this, goto_login, activityOptionsCompat.toBundle());
+        finish();
+    }
+
+    private void GoToMain(){
+        Intent goto_main = new Intent(SplashScreen.this, MainActivity.class);
+        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),R.anim.move_to_left, R.anim.move_to_right);
+        ActivityCompat.startActivity(SplashScreen.this, goto_main, activityOptionsCompat.toBundle());
         finish();
     }
 

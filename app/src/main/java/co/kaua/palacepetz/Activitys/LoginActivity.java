@@ -197,6 +197,15 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = mPrefs.edit();
                                 editor.putString("pref_email", email);
                                 editor.putString("pref_password", password);
+                                editor.putString("pref_name_user", name_user);
+                                editor.putInt("pref_id_user", id_user);
+                                editor.putString("pref_cpf_user", cpf_user);
+                                editor.putString("pref_address_user", address_user);
+                                editor.putString("pref_complement", complement);
+                                editor.putString("pref_zipcode", zipcode);
+                                editor.putString("pref_birth_date", birth_date);
+                                editor.putString("pref_phone_user", phone_user);
+                                editor.putString("pref_img_user", img_user);
                                 editor.putBoolean("pref_check", boollsChecked);
                                 editor.putBoolean("isDevicePre", isDevicePre);
                                 editor.apply();

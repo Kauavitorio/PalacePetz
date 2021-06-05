@@ -104,18 +104,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Ids();
         instance = this;
-        bundle = getIntent().getExtras();
-        _IdUser = bundle.getInt("id_user");
-        name_user = bundle.getString("name_user");
-        _Email = bundle.getString("email_user");
-        cpf_user = bundle.getString("cpf_user");
-        address_user = bundle.getString("address_user");
-        complement = bundle.getString("complement");
-        zipcode = bundle.getString("zipcode");
-        phone_user = bundle.getString("phone_user");
-        birth_date = bundle.getString("birth_date");
-        img_user = bundle.getString("img_user");
-        _Password = bundle.getString("password");
+
+        //  Verification of user preference information
+        mPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        if (sp.contains("pref_email") && sp.contains("pref_password")){
+            _IdUser = sp.getInt("pref_id_user", 0);
+            name_user = sp.getString("pref_name_user", "not found");
+            _Email = sp.getString("pref_email", "not found");
+            cpf_user = sp.getString("pref_cpf_user", "not found");
+            address_user = sp.getString("pref_address_user", null);
+            complement = sp.getString("pref_complement", "not found");
+            zipcode = sp.getString("pref_zipcode", "not found");
+            phone_user = sp.getString("pref_phone_user", "not found");
+            birth_date = sp.getString("pref_birth_date", "not found");
+            img_user = sp.getString("pref_img_user", null);
+            _Password = sp.getString("pref_password", "not found");
+        }else{
+            bundle = getIntent().getExtras();
+            _IdUser = bundle.getInt("id_user");
+            name_user = bundle.getString("name_user");
+            _Email = bundle.getString("email_user");
+            cpf_user = bundle.getString("cpf_user");
+            address_user = bundle.getString("address_user");
+            complement = bundle.getString("complement");
+            zipcode = bundle.getString("zipcode");
+            phone_user = bundle.getString("phone_user");
+            birth_date = bundle.getString("birth_date");
+            img_user = bundle.getString("img_user");
+            _Password = bundle.getString("password");
+        }
         if (address_user == null || address_user.equals(""))
             ShowAddressAlert();
         if (img_user == null || img_user.equals(""))
@@ -170,12 +188,15 @@ public class MainActivity extends AppCompatActivity {
         CreatingMenuSheet();
     }
 
+    int cardSize = 9999;
     @SuppressLint("SetTextI18n")
     public void CheckShoppingCart(){
         if (!txt_QuantityCart_main.getText().toString().equals("0")){
-            base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
-            CartAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.cart_size_animation_gone);
-            base_QuantityItemsCart_main.setAnimation(CartAnim);
+            if(!txt_QuantityCart_main.getText().toString().equals(String.valueOf(cardSize))){
+                base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
+                CartAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.cart_size_animation_gone);
+                base_QuantityItemsCart_main.setAnimation(CartAnim);
+            }
         }
         CartServices services = retrofitUser.create(CartServices.class);
         Call<DtoShoppingCart> cartCall = services.getCarSizetUser(_IdUser);
@@ -184,14 +205,19 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<DtoShoppingCart> call, @NonNull Response<DtoShoppingCart> response) {
                 if (response.code() == 200){
                     assert response.body() != null;
-                    txt_QuantityCart_main.setText(response.body().getLength() + "");
-                    if (response.body().getLength() > 0){
-                        base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
-                        CartAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.cart_size_animation);
-                        base_QuantityItemsCart_main.setAnimation(CartAnim);
+                    cardSize = response.body().getLength();
+                    if(!String.valueOf(cardSize).equals(txt_QuantityCart_main.getText().toString())){
+                        if (response.body().getLength() > 0){
+                            base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
+                            CartAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.cart_size_animation_gone);
+                            base_QuantityItemsCart_main.setAnimation(CartAnim);
+                            CartAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.cart_size_animation);
+                            base_QuantityItemsCart_main.setAnimation(CartAnim);
+                        }
+                        else
+                            base_QuantityItemsCart_main.setVisibility(View.GONE);
                     }
-                    else
-                        base_QuantityItemsCart_main.setVisibility(View.GONE);
+                    txt_QuantityCart_main.setText(response.body().getLength() + "");
                 }
             }
             @Override
@@ -461,6 +487,7 @@ public class MainActivity extends AppCompatActivity {
                     phone_user = response.body().getPhone_user();
                     birth_date = response.body().getBirth_date();
                     img_user = response.body().getImg_user();
+                    TryUpdatePreferences();
                     if (img_user == null || img_user.equals(""))
                         Log.d("UserStatus", "Not User image");
                     else
@@ -477,6 +504,24 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("UserStatus", "Error to get user information on main\n" + t.getMessage());
             }
         });
+    }
+
+    private void TryUpdatePreferences() {
+        SharedPreferences sp = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        if (sp.contains("pref_email") && sp.contains("pref_password")){
+            mPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.putString("pref_name_user", name_user);
+            editor.putInt("pref_id_user", _IdUser);
+            editor.putString("pref_cpf_user", cpf_user);
+            editor.putString("pref_address_user", address_user);
+            editor.putString("pref_complement", complement);
+            editor.putString("pref_zipcode", zipcode);
+            editor.putString("pref_birth_date", birth_date);
+            editor.putString("pref_phone_user", phone_user);
+            editor.putString("pref_img_user", img_user);
+            editor.apply();
+        }
     }
 
     @Override public void onBackPressed() {
