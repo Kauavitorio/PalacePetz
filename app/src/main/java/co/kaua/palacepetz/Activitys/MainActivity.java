@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +26,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
+import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.BuildConfig;
 import co.kaua.palacepetz.Data.ShoppingCart.CartServices;
 import co.kaua.palacepetz.Data.ShoppingCart.DtoShoppingCart;
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView txt_QuantityCart_main;
     Dialog warning_update;
     int Count = 0;
+    private static MainActivity instance;
 
     //  Fragments Arguments
     private static Bundle args;
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Ids();
+        instance = this;
         bundle = getIntent().getExtras();
         _IdUser = bundle.getInt("id_user");
         name_user = bundle.getString("name_user");
@@ -181,11 +183,8 @@ public class MainActivity extends AppCompatActivity {
                         base_QuantityItemsCart_main.setVisibility(View.GONE);
                 }
             }
-
             @Override
-            public void onFailure(@NonNull Call<DtoShoppingCart> call, @NonNull Throwable t) {
-
-            }
+            public void onFailure(@NonNull Call<DtoShoppingCart> call, @NonNull Throwable t) {}
         });
     }
     
@@ -309,23 +308,15 @@ public class MainActivity extends AppCompatActivity {
             });
 
             //  When click in this linear will to LoginActivity
-            sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> {
-                AlertDialog.Builder warning_alert = new AlertDialog.Builder(MainActivity.this);
-                warning_alert.setTitle(getString(R.string.logout));
-                warning_alert.setMessage(getString(R.string.really_want_logOut));
-                warning_alert.setPositiveButton(getString(R.string.yes), (dialog, which) -> {
-                    mPrefs.edit().clear().apply();
-                    Intent goBack_toLogin = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(goBack_toLogin);
-                    finish();
-                });
-                warning_alert.setNegativeButton(getString(R.string.no), null);
-                warning_alert.show();
-            });
+            sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> Warnings.LogoutDialog(MainActivity.this, bottomSheetDialog));
 
             bottomSheetDialog.setContentView(sheetView);
             bottomSheetDialog.show();
         });
+    }
+
+    public static MainActivity getInstance() {
+        return instance;
     }
 
     private void ShowAddressAlert(){
@@ -367,6 +358,7 @@ public class MainActivity extends AppCompatActivity {
 
     public DtoUser GetUserBaseInformation(){
         DtoUser dtoUser = new DtoUser();
+        dtoUser.setName_user(name_user);
         dtoUser.setEmail(_Email);
         dtoUser.setPassword(_Password);
         dtoUser.setCpf_user(cpf_user);

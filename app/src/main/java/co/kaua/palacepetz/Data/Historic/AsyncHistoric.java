@@ -2,9 +2,11 @@ package co.kaua.palacepetz.Data.Historic;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,8 +16,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import co.kaua.palacepetz.Activitys.ProductDetailsActivity;
 import co.kaua.palacepetz.Adapters.Historic_Adapter;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
+import co.kaua.palacepetz.Data.Products.RecyclerItemClickListener;
 import co.kaua.palacepetz.Methods.JsonHandler;
 
 
@@ -81,5 +85,19 @@ public class AsyncHistoric extends AsyncTask {
         //noinspection rawtypes
         recyclerHistoric.setAdapter((RecyclerView.Adapter) category_adapter);
         recyclerHistoric.getRecycledViewPool().clear();
+
+        recyclerHistoric.addOnItemTouchListener(new RecyclerItemClickListener(contexto,
+                recyclerHistoric, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent i = new Intent(contexto, ProductDetailsActivity.class);
+                i.putExtra("cd_prod", arrayListDto.get(position).getCd_prod());
+                contexto.startActivity(i);
+            }
+            @Override
+            public void onLongItemClick(View view, int position) {}
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {}
+        }));
     }
 }

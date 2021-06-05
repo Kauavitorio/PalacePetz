@@ -107,7 +107,8 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
             txt_BtnRegisterAddress.setText(getString(R.string.edit));
             editRegisterAddress_CepUser.setText(zipcode);
             String addressGet = address_user;
-            editRegisterAddress_StreetUser.setText(addressGet.replaceAll("[0-9]", "").replaceAll("\\s+"," "));
+            editRegisterAddress_StreetUser.setText(addressGet.replaceAll("[0-9]", "").replaceAll("\\s+"," ")
+                    .replace(",", "").trim());
             editRegisterAddress_ComplementUser.setText(complement);
             Matcher matcher = Pattern.compile("\\d+").matcher(address_user);
             if (matcher.find())
@@ -192,10 +193,10 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
                 showError(editRegisterAddress_NumberUser, getString(R.string.number_field_incorretly));
             }else{
                 loadingDialog.startLoading();
-                String newZipCode = editRegisterAddress_CepUser.getText().toString();
-                String newNumber = editRegisterAddress_NumberUser.getText().toString();
-                String newStreet = editRegisterAddress_StreetUser.getText().toString();
-                String newComplement = editRegisterAddress_ComplementUser.getText().toString();
+                String newZipCode = editRegisterAddress_CepUser.getText().toString().trim().replace(" ", "");
+                String newNumber = editRegisterAddress_NumberUser.getText().toString().trim();
+                String newStreet = editRegisterAddress_StreetUser.getText().toString().trim();
+                String newComplement = editRegisterAddress_ComplementUser.getText().toString().trim();
                 String newAddress = newStreet + " " + newNumber;
                 EditUserAddres(newAddress, newComplement, newZipCode);
             }

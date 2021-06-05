@@ -28,7 +28,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings("ALL")
 public class HistoricFragment extends Fragment implements IOnBackPressed {
     //  Fragment Tools
     private View view;

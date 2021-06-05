@@ -4,20 +4,26 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
-import co.kaua.palacepetz.Activitys.CreateAccountActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import co.kaua.palacepetz.Activitys.LoginActivity;
-import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Activitys.RegisterAddressActivity;
 import co.kaua.palacepetz.R;
 
+import static android.content.Context.MODE_PRIVATE;
+
+@SuppressWarnings("FieldCanBeLocal")
 public class Warnings {
     private static Dialog WarningError, Warning_Email_Password, warning_emailNotVerified, warning_emailSend,
-            warning_badUsername, OrderConfirmation;
+            warning_badUsername, OrderConfirmation, LogOutDialog, EmployeeWarning;
 
     public static void showWeHaveAProblem(Context context){
         WarningError = new Dialog(context);
@@ -144,5 +150,58 @@ public class Warnings {
         btnOk_OrderConfirmation.setOnClickListener(v -> OrderConfirmation.dismiss());
 
         OrderConfirmation.show();
+    }
+
+    //  Create Show Logout Message
+    public static void LogoutDialog(Activity context, BottomSheetDialog bottomSheetDialog) {
+        LogOutDialog = new Dialog(context);
+
+        //  Set preferences
+        SharedPreferences mPrefs;
+        mPrefs = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        LogOutDialog.setContentView(R.layout.adapter_comum_alert);
+        LogOutDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = LogOutDialog.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = LogOutDialog.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = LogOutDialog.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = LogOutDialog.findViewById(R.id.txtPositiveBtn_alert);
+        txtMsg_alert.setText(context.getString(R.string.really_want_logOut));
+        txtPositiveBtn_alert.setText(context.getString(R.string.yes));
+
+        PositiveBtn_alert.setOnClickListener(v -> {
+            mPrefs.edit().clear().apply();
+            Intent goBack_toLogin = new Intent(context, LoginActivity.class);
+            context.startActivity(goBack_toLogin);
+            context.finish();
+        });
+
+        txtCancel_alert.setOnClickListener(v -> LogOutDialog.dismiss());
+
+        bottomSheetDialog.dismiss();
+        LogOutDialog.show();
+    }
+
+    //  Create Show Logout Message
+    public static void EmployeeAlert(Activity context) {
+        EmployeeWarning = new Dialog(context);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        EmployeeWarning.setContentView(R.layout.adapter_comum_alert);
+        EmployeeWarning.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = EmployeeWarning.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = EmployeeWarning.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = EmployeeWarning.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = EmployeeWarning.findViewById(R.id.txtPositiveBtn_alert);
+        txtMsg_alert.setText(context.getString(R.string.employee_warning));
+        txtPositiveBtn_alert.setText(context.getString(R.string.ok));
+        txtCancel_alert.setVisibility(View.GONE);
+
+        PositiveBtn_alert.setOnClickListener(v -> EmployeeWarning.dismiss());
+
+        EmployeeWarning.show();
     }
 }

@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="co.kaua.palacepetz">
-    <!--
-    *  Copyright (c) 2021 Kauã Vitório
-    *  Official repository https://github.com/Kauavitorio/PalacePetz
-    *  Responsible developer: https://github.com/Kauavitorio
-    -->
-    <!-- Set user permission -->
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -23,15 +18,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PalacePetz">
-        <activity android:name=".Activitys.Pets.RegisterPetActivity"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".Activitys.FollowOrderActivity"
+            android:label="@string/title_activity_folow_order"/>
+        <activity android:name=".Activitys.Pets.RegisterPetActivity" />
         <activity android:name=".Activitys.Pets.AllPetsActivity" />
 
         <meta-data
             android:name="firebase_performance_logcat_enabled"
-            android:value="true" />
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" /> <!-- Palace Fountain Activitys -->
+            android:value="true" /> <!-- Palace Fountain Activitys -->
         <activity
             android:name=".Activitys.DeviceTipsActivity"
             android:theme="@style/DevicePresentation" />

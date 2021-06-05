@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -106,8 +107,8 @@ public class AsyncCards extends AsyncTask {
                     public void onItemClick(View view, int position) {
                         AlertDialog.Builder alert = new AlertDialog.Builder(contexto)
                                 .setTitle(R.string.yours_cards)
-                                .setMessage(R.string.what_would_you_this_card)
-                                .setPositiveButton(R.string.remove, (dialog, which) -> {
+                                .setMessage(R.string.remove_registred_card)
+                                .setPositiveButton(R.string.yes, (dialog, which) -> {
                                     loadingDialog.startLoading();
                                     int cd_card = arrayListDto.get(position).getCd_card();
                                     CardService cardService = retrofitCard.create(CardService.class);
@@ -136,7 +137,7 @@ public class AsyncCards extends AsyncTask {
                                         }
                                     });
                                 })
-                                .setNeutralButton(R.string.leave, null);
+                                .setNeutralButton(R.string.no, null);
                         alert.show();
                     }
 

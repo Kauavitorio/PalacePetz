@@ -90,7 +90,7 @@
     <string name="cvv_inserted_incorrectly">CVV inserido incorretamente</string>
     <string name="name_incorrectly_inserted">Nome inserido incorretamente</string>
     <string name="yours_cards">Seus cartões</string>
-    <string name="what_would_you_this_card">O que você gostaria este cartãod</string>
+    <string name="remove_registred_card">Gostaria de remover o cartão cadastrado?</string>
     <string name="remove">Remover</string>
     <string name="card_not_found">Cartão não encontrado</string>
     <string name="weHaveAProblem">Estamos com problema em nosso servidor.\nTente mais tarde</string>
@@ -206,4 +206,6 @@
     <string name="product_accessed_at">Produto acessado em</string>
     <string name="clear_historic">Limpar histórico</string>
     <string name="really_clear_historic">Você deseja realmente limpar seu histórico?</string>
+    <string name="delivery_time">Tempo de Delivery</string>
+    <string name="employee_warning">PalacePetz App é um aplicativo para clientes, se você deseja fazer o login com uma conta de funcionário, você precisa acessar o site Palacepetz.</string>
 </resources>

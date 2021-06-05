@@ -41,6 +41,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
+@SuppressWarnings("deprecation")
 public class ProfileActivity extends AppCompatActivity {
     //  Activity Items
     private TextView txt_userName_profile, txt_email_profile, txt_EditProfile_profile;
@@ -109,6 +110,16 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void loadUserInfo() {
+        DtoUser user = MainActivity.getInstance().GetUserBaseInformation();
+        name_user = user.getName_user();
+        _Email = user.getEmail();
+        cpf_user = user.getCpf_user();
+        address_user = user.getAddress_user();
+        complement = user.getComplement();
+        zipcode = user.getZipcode();
+        phone_user = user.getPhone_user();
+        birth_date = user.getBirth_date();
+        img_user = user.getImg_user();
         if (img_user == null || img_user.equals(""))
             Log.d("UserStatus", "Not User image");
         else

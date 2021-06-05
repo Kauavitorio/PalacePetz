@@ -70,7 +70,7 @@ public class FinishPurchaseFragment extends Fragment implements IOnBackPressed {
     private LoadingDialog loadingDialog;
     private ImageView btnDiscounts;
     private Dialog couponDialog;
-    private String Used_Coupon = null;
+    private String Used_Coupon = "";
 
     //  Set preferences
     private SharedPreferences mPrefs;
@@ -140,7 +140,7 @@ public class FinishPurchaseFragment extends Fragment implements IOnBackPressed {
                     loadingDialog.startLoading();
                     DtoPurchase purchaseInfo = new DtoPurchase(_IdUser, card_id,
                             txt_Discounts_FinishPurchase.getText().toString().replace(getString(R.string.discounts) + ": -R$", ""),
-                            Used_Coupon,SubTotal + "", txt_total_FinishPurchase.getText().toString().replace(getString(R.string.total) + ": R$", ""));
+                            Used_Coupon,"R$" + SubTotal, "R$" +  txt_total_FinishPurchase.getText().toString().replace(getString(R.string.total) + ": R$", ""));
                     PurchaseServices services = retrofitOrder.create(PurchaseServices.class);
                     Call<DtoPurchase> call = services.finish_order(purchaseInfo);
                     call.enqueue(new Callback<DtoPurchase>() {
@@ -158,9 +158,12 @@ public class FinishPurchaseFragment extends Fragment implements IOnBackPressed {
                                 ordersFragment.setArguments(args);
                                 transaction.replace(R.id.frameLayoutMain, ordersFragment);
                                 transaction.commit();
+
+                                //  Reloading user cart
                                 MainActivity mainActivity = (MainActivity) getActivity();
                                 assert mainActivity != null;
                                 mainActivity.CheckShoppingCart();
+
                                 Warnings.showOrderConfirmation(getContext());
                             }else{
                                 loadingDialog.dimissDialog();

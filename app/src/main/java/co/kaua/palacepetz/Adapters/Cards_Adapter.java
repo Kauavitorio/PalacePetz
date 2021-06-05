@@ -26,6 +26,8 @@ public class Cards_Adapter extends RecyclerView.Adapter<Cards_Adapter.MyHolderCa
     String flag_visa = "https://firebasestorage.googleapis.com/v0/b/coffeeforcode.appspot.com/o/cards_flag%2Fvisa.png?alt=media&token=e9dd2e2b-dd30-444e-b745-2a1dd2273db9";
     String flag_mastercard = "https://firebasestorage.googleapis.com/v0/b/coffeeforcode.appspot.com/o/cards_flag%2Fmastercard.png?alt=media&token=79df43fd-494c-4160-93f1-7194266f76b9";
     String flag_maestro = "https://firebasestorage.googleapis.com/v0/b/coffeeforcode.appspot.com/o/cards_flag%2Fmaestro.png?alt=media&token=28fd5789-f277-4027-8b0f-9ff1f38b2d5d";
+    String flag_elo = "https://www.kauavitorio.com/palacepetz/Cadastrar_Cartao/elo.png";
+    String flag_hiperCard = "https://www.kauavitorio.com/palacepetz/Cadastrar_Cartao/hipercard.png";
 
     public Cards_Adapter(ArrayList<DtoCard> dtoCardArrayList, Context context) {
         this.dtoCardArrayList = dtoCardArrayList;
@@ -54,6 +56,14 @@ public class Cards_Adapter extends RecyclerView.Adapter<Cards_Adapter.MyHolderCa
             case "Maestro":
                 Picasso.get().load(flag_maestro).into(holder.imgFlag_CardAdapter);
                 holder.cardCardList.setCardBackgroundColor(context.getColor(R.color.maestrocard));
+                break;
+            case "Elo":
+                Picasso.get().load(flag_elo).into(holder.imgFlag_CardAdapter);
+                holder.cardCardList.setCardBackgroundColor(context.getColor(R.color.elo));
+                break;
+            case "Hipercard":
+                Picasso.get().load(flag_hiperCard).into(holder.imgFlag_CardAdapter);
+                holder.cardCardList.setCardBackgroundColor(context.getColor(R.color.hipercard));
                 break;
         }
 

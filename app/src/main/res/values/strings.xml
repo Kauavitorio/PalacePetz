@@ -158,7 +158,7 @@
     <string name="cvv_inserted_incorrectly">CVV inserted incorrectly</string>
     <string name="name_incorrectly_inserted">Name entered incorrectly</string>
     <string name="yours_cards">Your cards</string>
-    <string name="what_would_you_this_card">What would you this card</string>
+    <string name="remove_registred_card">Would you like to remove the registered card?</string>
     <string name="remove">Remove</string>
     <string name="card_not_found">Card not found</string>
 
@@ -250,4 +250,7 @@
     <string name="product_accessed_at">Product accessed at</string>
     <string name="clear_historic">Clear historic</string>
     <string name="really_clear_historic">Do you really want to clear your historic?</string>
+    <string name="title_activity_folow_order" translatable="false">Map</string>
+    <string name="delivery_time">Delivery Time</string>
+    <string name="employee_warning">PalacePetz App is an application for customers, if do you want login with a employee account you need to access Palacepetz website.</string>
 </resources>

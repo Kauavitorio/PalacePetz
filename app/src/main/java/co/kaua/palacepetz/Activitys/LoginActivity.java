@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView txt_SingInLogin;
 
     //  User information
-    private int id_user;
+    private int id_user, user_type;
     private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, password;
 
     //  Next Activity
@@ -105,8 +105,8 @@ public class LoginActivity extends AppCompatActivity {
             else if(editLogin_passwordUser.getText().length() == 0)
                 showError(editLogin_passwordUser, getString(R.string.password_required));
             else {
-                _Email = editLogin_emailUser.getText().toString();
-                password = editLogin_passwordUser.getText().toString();
+                _Email = editLogin_emailUser.getText().toString().trim();
+                password = editLogin_passwordUser.getText().toString().trim();
                 cardBtn_SingIn.setElevation(0);
                 cardBtn_SingIn.setEnabled(false);
                 progressDogLogin.setVisibility(View.VISIBLE);
@@ -179,31 +179,43 @@ public class LoginActivity extends AppCompatActivity {
                         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
                         String emailUser;
                         assert response.body() != null;
-                        id_user = response.body().getId_user();
-                        name_user = response.body().getName_user();
-                        emailUser = response.body().getEmail();
-                        cpf_user = response.body().getCpf_user();
-                        address_user = response.body().getAddress_user();
-                        complement = response.body().getComplement();
-                        zipcode = response.body().getZipcode();
-                        birth_date = response.body().getBirth_date();
-                        phone_user = response.body().getPhone_user();
-                        img_user = response.body().getImg_user();
-                        if (checkbox_rememberMe.isChecked()){
-                            mPrefs.edit().clear().apply();
-                            boolean boollsChecked = checkbox_rememberMe.isChecked();
-                            SharedPreferences.Editor editor = mPrefs.edit();
-                            editor.putString("pref_email", email);
-                            editor.putString("pref_password", password);
-                            editor.putBoolean("pref_check", boollsChecked);
-                            editor.putBoolean("isDevicePre", isDevicePre);
-                            editor.apply();
-                            GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
-                                    zipcode, phone_user, birth_date, img_user, password);
+                        user_type = response.body().getUser_type();
+                        if(user_type == 0){
+                            id_user = response.body().getId_user();
+                            name_user = response.body().getName_user();
+                            emailUser = response.body().getEmail();
+                            cpf_user = response.body().getCpf_user();
+                            address_user = response.body().getAddress_user();
+                            complement = response.body().getComplement();
+                            zipcode = response.body().getZipcode();
+                            birth_date = response.body().getBirth_date();
+                            phone_user = response.body().getPhone_user();
+                            img_user = response.body().getImg_user();
+                            if (checkbox_rememberMe.isChecked()){
+                                mPrefs.edit().clear().apply();
+                                boolean boollsChecked = checkbox_rememberMe.isChecked();
+                                SharedPreferences.Editor editor = mPrefs.edit();
+                                editor.putString("pref_email", email);
+                                editor.putString("pref_password", password);
+                                editor.putBoolean("pref_check", boollsChecked);
+                                editor.putBoolean("isDevicePre", isDevicePre);
+                                editor.apply();
+                                GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
+                                        zipcode, phone_user, birth_date, img_user, password);
+                            }else{
+                                mPrefs.edit().clear().apply();
+                                GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
+                                        zipcode, phone_user, birth_date, img_user, password);
+                            }
                         }else{
-                            mPrefs.edit().clear().apply();
-                            GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
-                                    zipcode, phone_user, birth_date, img_user, password);
+                            Warnings.EmployeeAlert(LoginActivity.this);
+                            editLogin_emailUser.setText(null);
+                            editLogin_passwordUser.setText(null);
+                            cardBtn_SingIn.setElevation(20);
+                            cardBtn_SingIn.setEnabled(true);
+                            progressDogLogin.setVisibility(View.GONE);
+                            txt_SingInLogin.setVisibility(View.VISIBLE);
+                            loadingDialog.dimissDialog();
                         }
                     }else if(response.code() == 405){
                         cardBtn_SingIn.setEnabled(true);

@@ -25,8 +25,6 @@ import co.kaua.palacepetz.R;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +32,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings("ALL")
 public class MyCardsFragment extends Fragment implements IOnBackPressed {
     //  Screen Items
     private RecyclerView recyclerView_Cards;
