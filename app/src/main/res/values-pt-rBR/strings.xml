@@ -208,4 +208,10 @@
     <string name="really_clear_historic">Você deseja realmente limpar seu histórico?</string>
     <string name="delivery_time">Tempo de Delivery</string>
     <string name="employee_warning">PalacePetz App é um aplicativo para clientes, se você deseja fazer o login com uma conta de funcionário, você precisa acessar o site Palacepetz.</string>
+    <string name="editAnimal">Editar Animal</string>
+    <string name="need_to_insert_petName">É necessário inserir o nome do animal de estimação.</string>
+    <string name="need_to_insert_petBreed">É necessário inserir a raça do animal de estimação.</string>
+    <string name="need_to_insert_petAge">É necessário inserir a idade do animal de estimação.</string>
+    <string name="need_to_insert_petWeigth">É necessário inserir o peso do animal de estimação.</string>
+    <string name="need_to_insert_petSpecies">É necessário inserir o especie do animal de estimação.</string>
 </resources>

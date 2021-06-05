@@ -59,7 +59,7 @@ public class Products_Adapter extends RecyclerView.Adapter<Products_Adapter.MyHo
                 holder.container_allProduct.setBackground( context.getDrawable(R.drawable.background_aesthetics) );
                 break;
         }
-        if (dtoProductsArrayList.get(position).getAmount() <= 10)
+        if (dtoProductsArrayList.get(position).getAmount() <= 0)
             holder.container_allProduct.setBackground( context.getDrawable(R.drawable.background_low_stock) );
     }
 

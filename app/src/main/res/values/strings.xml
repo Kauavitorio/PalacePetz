@@ -7,7 +7,7 @@
     <string name="filter_animals">Filter animals</string>
     <string name="dogs">Dogs</string>
     <string name="cats">Cats</string>
-    <string name="hamster" translatable="false">hamster</string>
+    <string name="hamster" translatable="false">Hamster</string>
     <string name="birds">Birds</string>
     <string name="consultations">Consultation</string>
     <string name="weHaveAProblem">We have a problem with our server.\nTry again later</string>
@@ -253,4 +253,12 @@
     <string name="title_activity_folow_order" translatable="false">Map</string>
     <string name="delivery_time">Delivery Time</string>
     <string name="employee_warning">PalacePetz App is an application for customers, if do you want login with a employee account you need to access Palacepetz website.</string>
+    <string name="editAnimal">Edit Animal</string>
+    <string name="zero" translatable="false">0</string>
+    <string name="need_to_insert_petName">Need to enter pet name.</string>
+    <string name="need_to_insert_petBreed">Need to enter pet breed!</string>
+    <string name="need_to_insert_petAge">You must enter the pet\'s age.</string>
+    <string name="need_to_insert_petWeigth">It is necessary to enter the pet\'s weight.</string>
+    <string name="need_to_insert_petSpecies">It is necessary to enter the species of the pet.</string>
+    <string name="kg" translatable="false">Kg</string>
 </resources>

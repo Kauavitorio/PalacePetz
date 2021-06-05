@@ -60,7 +60,6 @@ public class AsyncOrders extends AsyncTask {
                 DtoOrder dtoOrder = new DtoOrder();
                 dtoOrder.setCd_order(jsonArray.getJSONObject(i).getInt("cd_order"));
                 dtoOrder.setId_user(jsonArray.getJSONObject(i).getInt("id_user"));
-                dtoOrder.setCpf_user(jsonArray.getJSONObject(i).getString("cpf_user"));
                 dtoOrder.setDiscount(jsonArray.getJSONObject(i).getString("discount"));
                 dtoOrder.setCoupom(jsonArray.getJSONObject(i).getString("coupom"));
                 dtoOrder.setSub_total(jsonArray.getJSONObject(i).getString("sub_total"));
