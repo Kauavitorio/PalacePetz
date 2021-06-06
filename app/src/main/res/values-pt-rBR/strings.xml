@@ -214,4 +214,7 @@
     <string name="need_to_insert_petAge">É necessário inserir a idade do animal de estimação.</string>
     <string name="need_to_insert_petWeigth">É necessário inserir o peso do animal de estimação.</string>
     <string name="need_to_insert_petSpecies">É necessário inserir o especie do animal de estimação.</string>
+    <string name="inappropriatePetName">Verificamos que o nome do animal informado não é apropriado, altere-o</string>
+    <string name="this_pet_is_already_registred">Este animal de estimação já está cadastrado.</string>
+    <string name="edit_pet">Editar Pet</string>
 </resources>

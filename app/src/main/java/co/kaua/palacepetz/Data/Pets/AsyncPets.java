@@ -1,9 +1,11 @@
 package co.kaua.palacepetz.Data.Pets;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,8 +14,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import co.kaua.palacepetz.Activitys.Pets.RegisterPetActivity;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Pets_Adapter;
+import co.kaua.palacepetz.Data.Products.RecyclerItemClickListener;
 import co.kaua.palacepetz.Methods.JsonHandler;
 
 @SuppressWarnings({"rawtypes", "StaticFieldLeak", "FieldCanBeLocal", "deprecation"})
@@ -76,5 +80,27 @@ public class    AsyncPets extends AsyncTask {
         recyclerAllPets.setVisibility(View.VISIBLE);
         recyclerAllPets.setAdapter((RecyclerView.Adapter) pets_adapter);
         recyclerAllPets.getRecycledViewPool().clear();
+
+        recyclerAllPets.addOnItemTouchListener(new RecyclerItemClickListener(context,
+                recyclerAllPets, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                int cd_pet = arrayListDto.get(position).getCd_animal();
+                Intent i = new Intent(context, RegisterPetActivity.class);
+                i.putExtra("cd_animal", cd_pet);
+                i.putExtra("id_user", id_user);
+                i.putExtra("petName", arrayListDto.get(position).getNm_animal());
+                i.putExtra("img_pet", arrayListDto.get(position).getImage_animal());
+                i.putExtra("breed_animal", arrayListDto.get(position).getBreed_animal());
+                i.putExtra("age_animal", arrayListDto.get(position).getAge_animal());
+                i.putExtra("weight_animal", arrayListDto.get(position).getWeight_animal());
+                i.putExtra("species_animal", arrayListDto.get(position).getSpecies_animal());
+                context.startActivity(i);
+            }
+            @Override
+            public void onLongItemClick(View view, int position) {}
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {}
+        }));
     }
 }

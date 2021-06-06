@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -23,7 +24,7 @@ import static android.content.Context.MODE_PRIVATE;
 @SuppressWarnings("FieldCanBeLocal")
 public class Warnings {
     private static Dialog WarningError, Warning_Email_Password, warning_emailNotVerified, warning_emailSend,
-            warning_badUsername, OrderConfirmation, LogOutDialog, EmployeeWarning;
+            warning_badUsername, OrderConfirmation, LogOutDialog, EmployeeWarning, warning_badPetName;
 
     public static void showWeHaveAProblem(Context context){
         WarningError = new Dialog(context);
@@ -153,7 +154,7 @@ public class Warnings {
     }
 
     //  Create Show Logout Message
-    public static void LogoutDialog(Activity context, BottomSheetDialog bottomSheetDialog) {
+    public static void LogoutDialog(Activity context, @NonNull BottomSheetDialog bottomSheetDialog) {
         LogOutDialog = new Dialog(context);
 
         //  Set preferences
@@ -203,5 +204,22 @@ public class Warnings {
         PositiveBtn_alert.setOnClickListener(v -> EmployeeWarning.dismiss());
 
         EmployeeWarning.show();
+    }
+
+    //  Create Method for show alert of bad pet Name
+    public static void show_BadPetName_Warning(Context context){
+        warning_badPetName = new Dialog(context);
+        CardView btnOk_InappropriateUsername;
+        TextView txt_wehaveAProblemAlert;
+        warning_badPetName.setContentView(R.layout.adapter_warning_badusername);
+        warning_badPetName.setCancelable(false);
+        btnOk_InappropriateUsername = warning_badPetName.findViewById(R.id.btnOk_InappropriateUsername);
+        txt_wehaveAProblemAlert = warning_badPetName.findViewById(R.id.txt_wehaveAProblemAlert);
+        txt_wehaveAProblemAlert.setText(R.string.inappropriatePetName);
+
+        warning_badPetName.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        btnOk_InappropriateUsername.setOnClickListener(v -> warning_badPetName.dismiss());
+        warning_badPetName.show();
     }
 }

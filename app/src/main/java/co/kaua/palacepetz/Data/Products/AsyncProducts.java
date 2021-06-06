@@ -2,19 +2,15 @@ package co.kaua.palacepetz.Data.Products;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-import co.kaua.palacepetz.Activitys.MainActivity;
-import co.kaua.palacepetz.Activitys.ProductDetailsActivity;
 import co.kaua.palacepetz.Adapters.Products_Adapter;
 import co.kaua.palacepetz.Methods.JsonHandler;
 
@@ -30,7 +26,7 @@ public class AsyncProducts extends AsyncTask {
     Activity context;
     RecyclerView recyclerProducts;
     SwipeRefreshLayout SwipeRefreshProducts;
-    String email_user, img_prod_ad;
+    String email_user;
     int _IdUser;
     Products_Adapter products_adapter;
     LottieAnimationView anim_loading_allProducts;
@@ -92,33 +88,5 @@ public class AsyncProducts extends AsyncTask {
         SwipeRefreshProducts.setRefreshing(false);
         anim_loading_allProducts.setVisibility(View.GONE);
         recyclerProducts.setVisibility(View.VISIBLE);
-
-        //  Need to create Recycler Clicker
-        recyclerProducts.addOnItemTouchListener(new RecyclerItemClickListener(context, recyclerProducts,
-                new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Intent goToDetails = new Intent(context, ProductDetailsActivity.class);
-                        goToDetails.putExtra("cd_prod", arrayListDto.get(position).getCd_prod());
-                        goToDetails.putExtra("image_prod", arrayListDto.get(position).getImage_prod());
-                        goToDetails.putExtra("nm_product", arrayListDto.get(position).getNm_product());
-                        goToDetails.putExtra("description", arrayListDto.get(position).getDescription());
-                        goToDetails.putExtra("product_price", arrayListDto.get(position).getProduct_price());
-                        goToDetails.putExtra("amount", arrayListDto.get(position).getAmount());
-                        goToDetails.putExtra("id_user", _IdUser);
-                        goToDetails.putExtra("email_user", email_user);
-                        context.startActivity(goToDetails);
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-
-                    }
-
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    }
-                }));
     }
 }

@@ -3,6 +3,7 @@ package co.kaua.palacepetz.Data.Pets;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -13,4 +14,7 @@ public interface PetsServices {
 
     @POST("user/pet/insert")
     Call<DtoPets> insertNewPet(@Body DtoPets dtoPets);
+
+    @PATCH("user/pet/update")
+    Call<DtoPets> updatePet(@Body DtoPets dtoPets);
 }
