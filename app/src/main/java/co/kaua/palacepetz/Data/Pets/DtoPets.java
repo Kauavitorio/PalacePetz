@@ -16,6 +16,22 @@ public class DtoPets {
         this.id_user = id_user;
     }
 
+    public DtoPets(int cd_animal, String nm_animal, String breed_animal, String age_animal, String weight_animal, String species_animal, String image_animal, int id_user) {
+        this.cd_animal = cd_animal;
+        this.nm_animal = nm_animal;
+        this.breed_animal = breed_animal;
+        this.age_animal = age_animal;
+        this.species_animal = species_animal;
+        this.image_animal = image_animal;
+        this.weight_animal = weight_animal;
+        this.id_user = id_user;
+    }
+
+    public DtoPets(int cd_animal, int id_user) {
+        this.cd_animal = cd_animal;
+        this.id_user = id_user;
+    }
+
     public String getWeight_animal() {
         return weight_animal;
     }

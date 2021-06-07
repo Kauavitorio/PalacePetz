@@ -25,7 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "FieldCanBeLocal"})
 public class AllPetsActivity extends AppCompatActivity {
     CardView btnRegisterPet;
     private LoadingDialog loadingDialog;
@@ -34,7 +34,6 @@ public class AllPetsActivity extends AppCompatActivity {
 
     //  User information
     private int id_user;
-    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user;
 
     //  Retrofit
     final Retrofit retrofitUser = new Retrofit.Builder()
@@ -81,7 +80,6 @@ public class AllPetsActivity extends AppCompatActivity {
                 }else
                     Warnings.showWeHaveAProblem(AllPetsActivity.this);
             }
-
             @Override
             public void onFailure(@NonNull Call<DtoPets> call, @NonNull Throwable t) {
                 loadingDialog.dimissDialog();
@@ -107,15 +105,6 @@ public class AllPetsActivity extends AppCompatActivity {
     private void Ids() {
         DtoUser user = MainActivity.getInstance().GetUserBaseInformation();
         id_user = user.getId_user();
-        name_user = user.getName_user();
-        _Email = user.getEmail();
-        cpf_user = user.getCpf_user();
-        address_user = user.getAddress_user();
-        complement = user.getComplement();
-        zipcode = user.getZipcode();
-        phone_user = user.getPhone_user();
-        birth_date = user.getBirth_date();
-        img_user = user.getImg_user();
         btnRegisterPet = findViewById(R.id.btnRegisterPet);
         RecyclerAllPets = findViewById(R.id.RecyclerAllPets);
         container_noPets = findViewById(R.id.container_noPets);

@@ -212,9 +212,11 @@
     <string name="need_to_insert_petName">É necessário inserir o nome do animal de estimação.</string>
     <string name="need_to_insert_petBreed">É necessário inserir a raça do animal de estimação.</string>
     <string name="need_to_insert_petAge">É necessário inserir a idade do animal de estimação.</string>
-    <string name="need_to_insert_petWeigth">É necessário inserir o peso do animal de estimação.</string>
+    <string name="need_to_insert_petWeight">É necessário inserir o peso do animal de estimação.</string>
     <string name="need_to_insert_petSpecies">É necessário inserir o especie do animal de estimação.</string>
     <string name="inappropriatePetName">Verificamos que o nome do animal informado não é apropriado, altere-o</string>
-    <string name="this_pet_is_already_registred">Este animal de estimação já está cadastrado.</string>
+    <string name="this_pet_is_already_registered">Este animal de estimação já está cadastrado.</string>
     <string name="edit_pet">Editar Pet</string>
+    <string name="want_delete_this_pet">Deseja realmente deletar esse pet?</string>
+    <string name="no_pet_registered">Você ainda nem tem animais de estimação registrados.</string>
 </resources>

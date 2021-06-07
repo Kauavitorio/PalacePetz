@@ -56,7 +56,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:maxWidth="300dp"
-                android:text="@string/txt_no_orders"
+                android:text="@string/no_pet_registered"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18sp"

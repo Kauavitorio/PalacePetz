@@ -25,7 +25,7 @@
 
         <activity
             android:name=".Activitys.FollowOrderActivity"
-            android:label="@string/title_activity_folow_order"/>
+            android:label="@string/title_activity_follow_order"/>
         <activity android:name=".Activitys.Pets.RegisterPetActivity" />
         <activity android:name=".Activitys.Pets.AllPetsActivity" />
 

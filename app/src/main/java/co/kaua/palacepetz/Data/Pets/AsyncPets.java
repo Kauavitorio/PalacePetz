@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import co.kaua.palacepetz.Activitys.Pets.RegisterPetActivity;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Pets_Adapter;
+import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.Products.RecyclerItemClickListener;
 import co.kaua.palacepetz.Methods.JsonHandler;
 
@@ -98,7 +99,9 @@ public class    AsyncPets extends AsyncTask {
                 context.startActivity(i);
             }
             @Override
-            public void onLongItemClick(View view, int position) {}
+            public void onLongItemClick(View view, int position) {
+                Warnings.DeletePetAlert(context, arrayListDto.get(position).getCd_animal(), id_user);
+            }
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {}
         }));

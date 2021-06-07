@@ -1,5 +1,6 @@
 package co.kaua.palacepetz.Adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -16,15 +17,31 @@ import androidx.cardview.widget.CardView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import co.kaua.palacepetz.Activitys.LoginActivity;
+import co.kaua.palacepetz.Activitys.Pets.AllPetsActivity;
 import co.kaua.palacepetz.Activitys.RegisterAddressActivity;
+import co.kaua.palacepetz.Data.Pets.DtoPets;
+import co.kaua.palacepetz.Data.Pets.PetsServices;
 import co.kaua.palacepetz.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class Warnings {
     private static Dialog WarningError, Warning_Email_Password, warning_emailNotVerified, warning_emailSend,
-            warning_badUsername, OrderConfirmation, LogOutDialog, EmployeeWarning, warning_badPetName;
+            warning_badUsername, OrderConfirmation, LogOutDialog, EmployeeWarning, warning_badPetName, PetWarning;
+    @SuppressLint("StaticFieldLeak")
+    private static LoadingDialog loadingDialog;
+
+    //  Retrofit
+    private final static Retrofit retrofitUser = new Retrofit.Builder()
+            .baseUrl("https://palacepetzapi.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
     public static void showWeHaveAProblem(Context context){
         WarningError = new Dialog(context);
@@ -221,5 +238,54 @@ public class Warnings {
 
         btnOk_InappropriateUsername.setOnClickListener(v -> warning_badPetName.dismiss());
         warning_badPetName.show();
+    }
+
+    //  Create Show Delete Pet
+    public static void DeletePetAlert(Activity context, int cd_animal, int id_user) {
+        PetWarning = new Dialog(context);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        PetWarning.setContentView(R.layout.adapter_comum_alert);
+        PetWarning.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = PetWarning.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = PetWarning.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = PetWarning.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = PetWarning.findViewById(R.id.txtPositiveBtn_alert);
+        txtMsg_alert.setText(context.getString(R.string.want_delete_this_pet));
+        txtPositiveBtn_alert.setText(context.getString(R.string.yes));
+
+        PositiveBtn_alert.setOnClickListener(v -> {
+            loadingDialog = new LoadingDialog(context);
+            loadingDialog.startLoading();
+            PetsServices petsServices = retrofitUser.create(PetsServices.class);
+            Call<DtoPets> call = petsServices.DeletePet(cd_animal, id_user);
+            call.enqueue(new Callback<DtoPets>() {
+                @Override
+                public void onResponse(@NonNull Call<DtoPets> call, @NonNull Response<DtoPets> response) {
+                    loadingDialog.dimissDialog();
+                    PetWarning.dismiss();
+                    if (response.code() == 200){
+                        context.finish();
+                        Intent i = new Intent(context, AllPetsActivity.class);
+                        i.putExtra("id_user", id_user);
+                        context.startActivity(i);
+                        PetWarning.dismiss();
+                    }else
+                        showWeHaveAProblem(context);
+                }
+                @Override
+                public void onFailure(@NonNull Call<DtoPets> call, @NonNull Throwable t) {
+                    loadingDialog.dimissDialog();
+                    showWeHaveAProblem(context);
+                    PetWarning.dismiss();
+                }
+            });
+
+        });
+
+        txtCancel_alert.setOnClickListener(v -> PetWarning.dismiss());
+
+        PetWarning.show();
     }
 }
