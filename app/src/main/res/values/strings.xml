@@ -266,4 +266,8 @@
     <string name="edit_pet">Edit my pet</string>
     <string name="want_delete_this_pet">Do you really want to delete this pet?</string>
     <string name="no_pet_registered">You don\'t even have any pets registered yet.</string>
+    <string name="see_all_products">See All Products</string>
+    <string name="see_my_shoppingCart">See My Cart</string>
+    <string name="schedule_a_service">Schedule a service</string>
+    <string name="manage_Fountain">Manage Fountain</string>
 </resources>

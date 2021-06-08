@@ -59,8 +59,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *  @author Kaua Vitorio
  **/
 
-@SuppressWarnings("FieldCanBeLocal")
+@SuppressWarnings({"FieldCanBeLocal", "StaticFieldLeak"})
 public class MainActivity extends AppCompatActivity {
+
     //  Screen items
     private CardView base_QuantityItemsCart_main;
     private LottieAnimationView btnMenu_Main;
@@ -70,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
     private static FragmentTransaction transaction;
     private TextView txt_QuantityCart_main;
     private Animation CartAnim;
-    Dialog warning_update;
-    int Count = 0;
+    private static Dialog warning_update;
+    private int Count = 0;
     private static MainActivity instance;
 
     //  Fragments Arguments
@@ -79,20 +80,20 @@ public class MainActivity extends AppCompatActivity {
     private Bundle bundle;
 
     //  User information
-    private int _IdUser;
-    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, _Password;
+    private static int _IdUser;
+    private static String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, _Password;
 
     //  Set preferences
     private SharedPreferences mPrefs;
     private static final String PREFS_NAME = "myPrefs";
 
     //  Firebase / Retrofit
-    final Retrofit retrofitUser = new Retrofit.Builder()
+    private final Retrofit retrofitUser = new Retrofit.Builder()
             .baseUrl("https://palacepetzapi.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    final Retrofit retrofitMobile = new Retrofit.Builder()
+    private final Retrofit retrofitMobile = new Retrofit.Builder()
             .baseUrl("https://palacepetzapi.herokuapp.com/mobile/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
@@ -105,9 +106,10 @@ public class MainActivity extends AppCompatActivity {
         Ids();
         instance = this;
 
-        //  Verification of user preference information
+        //  Get all SharedPreferences
         mPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences sp = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        bundle = getIntent().getExtras();
         if (sp.contains("pref_email") && sp.contains("pref_password")){
             _IdUser = sp.getInt("pref_id_user", 0);
             name_user = sp.getString("pref_name_user", "not found");
@@ -121,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
             img_user = sp.getString("pref_img_user", null);
             _Password = sp.getString("pref_password", "not found");
         }else{
-            bundle = getIntent().getExtras();
             _IdUser = bundle.getInt("id_user");
             name_user = bundle.getString("name_user");
             _Email = bundle.getString("email_user");
@@ -134,27 +135,56 @@ public class MainActivity extends AppCompatActivity {
             img_user = bundle.getString("img_user");
             _Password = bundle.getString("password");
         }
+        if(bundle.getInt("shortcut") != 0){
+            if (_IdUser != 0) {
+                switch (bundle.getInt("shortcut")){
+                    case 10:
+                        OpenAllProducts();
+                        break;
+                    case 20:
+                        OpenShoppingCart();
+                        break;
+                    case 30:
+                        OpenServices();
+                        break;
+                    case 40:
+                        MainFragment mainFragment = new MainFragment();
+                        args = new Bundle();
+                        args.putString("email_user", _Email);
+                        args.putInt("id_user", _IdUser);
+                        mainFragment.setArguments(args);
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frameLayoutMain, mainFragment);
+                        transaction.commit();
+                        OpenFountain();
+                        break;
+                    case 50:
+                        OpenMyCards();
+                        break;
+                }
+            }else{
+                Intent login = new Intent(MainActivity.this, LoginActivity.class);
+                login.putExtra("shortcut", bundle.getInt("shortcut"));
+                startActivity(login);
+                finish();
+            }
+        }else{
+            MainFragment mainFragment = new MainFragment();
+            args = new Bundle();
+            args.putString("email_user", _Email);
+            args.putInt("id_user", _IdUser);
+            mainFragment.setArguments(args);
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameLayoutMain, mainFragment);
+            transaction.commit();
+        }
+
         if (address_user == null || address_user.equals(""))
             ShowAddressAlert();
         if (img_user == null || img_user.equals(""))
             Log.d("UserStatus", "Not User image");
         else
             Picasso.get().load(img_user).into(icon_ProfileUser_main);
-
-        //  Set items gone
-        base_QuantityItemsCart_main.setVisibility(View.GONE);
-
-        //  Get all SharedPreferences
-        mPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-
-        MainFragment mainFragment = new MainFragment();
-        args = new Bundle();
-        args.putString("email_user", _Email);
-        args.putInt("id_user", _IdUser);
-        mainFragment.setArguments(args);
-        transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameLayoutMain, mainFragment);
-        transaction.commit();
 
         icon_ProfileUser_main.setOnClickListener(v -> {
             getWindow().setNavigationBarColor(getColor(R.color.background_top));
@@ -174,18 +204,34 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //  Click to open ShoppingCart Fragment
-        Btn_container_ShoppingCart.setOnClickListener(v -> {
-            ShoppingCartFragment shoppingCartFragment = new ShoppingCartFragment();
-            args = new Bundle();
-            args.putString("email_user", _Email);
-            args.putInt("id_user", _IdUser);
-            shoppingCartFragment.setArguments(args);
-            transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frameLayoutMain, shoppingCartFragment);
-            transaction.commit();
-        });
+        Btn_container_ShoppingCart.setOnClickListener(v -> OpenShoppingCart());
+
+        //  Set items gone
+        base_QuantityItemsCart_main.setVisibility(View.GONE);
 
         CreatingMenuSheet();
+    }
+
+    private void OpenMyCards() {
+        MyCardsFragment myCardsFragment = new MyCardsFragment();
+        args = new Bundle();
+        args.putString("email_user", _Email);
+        args.putInt("id_user", _IdUser);
+        myCardsFragment.setArguments(args);
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayoutMain, myCardsFragment);
+        transaction.commit();
+    }
+
+    private void OpenAllProducts() {
+        AllProductsFragment products = new AllProductsFragment();
+        args = new Bundle();
+        args.putString("email_user", _Email);
+        args.putInt("id_user", _IdUser);
+        products.setArguments(args);
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayoutMain, products);
+        transaction.commit();
     }
 
     int cardSize = 9999;
@@ -226,14 +272,7 @@ public class MainActivity extends AppCompatActivity {
     }
     
     public void ReOpenCart(){
-        ShoppingCartFragment shoppingCartFragment = new ShoppingCartFragment();
-        args = new Bundle();
-        args.putString("email_user", _Email);
-        args.putInt("id_user", _IdUser);
-        shoppingCartFragment.setArguments(args);
-        transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameLayoutMain, shoppingCartFragment);
-        transaction.commit();
+        OpenShoppingCart();
     }
 
     private void Ids() {
@@ -288,21 +327,13 @@ public class MainActivity extends AppCompatActivity {
 
             //  Show All Products fragment
             products.setOnClickListener(v1 -> {
-                AllProductsFragment allProductsFragment = new AllProductsFragment();
-                args = new Bundle();
-                args.putString("email_user", _Email);
-                args.putInt("id_user", _IdUser);
-                allProductsFragment.setArguments(args);
-                transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayoutMain, allProductsFragment);
-                transaction.commit();
+                openAllProducts();
                 bottomSheetDialog.dismiss();
             });
 
             //  Show Palace Fountain Fragment
             palaceFountain.setOnClickListener(v1 -> {
-                Intent goTo_DevicePresentation = new Intent(this, DevicePresentationActivity.class);
-                startActivity(goTo_DevicePresentation);
+                OpenFountain();
                 bottomSheetDialog.dismiss();
             });
 
@@ -321,26 +352,12 @@ public class MainActivity extends AppCompatActivity {
 
             //  Show My Cards Fragment
             myCards.setOnClickListener(v1 -> {
-                MyCardsFragment myCardsFragment = new MyCardsFragment();
-                args = new Bundle();
-                args.putString("email_user", _Email);
-                args.putInt("id_user", _IdUser);
-                myCardsFragment.setArguments(args);
-                transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayoutMain, myCardsFragment);
-                transaction.commit();
+                OpenMyCards();
                 bottomSheetDialog.dismiss();
             });
 
             services.setOnClickListener(v1 -> {
-                ServicesFragment servicesFragment = new ServicesFragment();
-                args = new Bundle();
-                args.putString("email_user", _Email);
-                args.putInt("id_user", _IdUser);
-                servicesFragment.setArguments(args);
-                transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayoutMain, servicesFragment);
-                transaction.commit();
+                OpenServices();
                 bottomSheetDialog.dismiss();
             });
 
@@ -350,6 +367,44 @@ public class MainActivity extends AppCompatActivity {
             bottomSheetDialog.setContentView(sheetView);
             bottomSheetDialog.show();
         });
+    }
+
+    private void OpenFountain() {
+        Intent goTo_DevicePresentation = new Intent(this, DevicePresentationActivity.class);
+        startActivity(goTo_DevicePresentation);
+    }
+
+    private void OpenServices() {
+        ServicesFragment servicesFragment = new ServicesFragment();
+        args = new Bundle();
+        args.putString("email_user", _Email);
+        args.putInt("id_user", _IdUser);
+        servicesFragment.setArguments(args);
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayoutMain, servicesFragment);
+        transaction.commit();
+    }
+
+    private void openAllProducts() {
+        AllProductsFragment allProductsFragment = new AllProductsFragment();
+        args = new Bundle();
+        args.putString("email_user", _Email);
+        args.putInt("id_user", _IdUser);
+        allProductsFragment.setArguments(args);
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayoutMain, allProductsFragment);
+        transaction.commit();
+    }
+
+    private void OpenShoppingCart() {
+        ShoppingCartFragment shoppingCartFragment = new ShoppingCartFragment();
+        args = new Bundle();
+        args.putString("email_user", _Email);
+        args.putInt("id_user", _IdUser);
+        shoppingCartFragment.setArguments(args);
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayoutMain, shoppingCartFragment);
+        transaction.commit();
     }
 
     public static MainActivity getInstance() {
