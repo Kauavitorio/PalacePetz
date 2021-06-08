@@ -7,16 +7,65 @@
     android:background="@drawable/background"
     tools:context=".Activitys.Pets.AllPetsActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- Base Container -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <!-- RecyclerView All Pets -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RecyclerAllPets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Container No Pets -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_noPets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_myorder_adapter"
+            android:padding="15dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="visible"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Animation -->
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/anim_doggyErrorOrder"
+                android:layout_width="250dp"
+                android:layout_height="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/error_doggy" />
+
+            <!-- Text No Orders -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:maxWidth="300dp"
+                android:text="@string/no_pet_registered"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/anim_doggyErrorOrder" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Card btn Register Pet -->
         <androidx.cardview.widget.CardView
@@ -26,11 +75,12 @@
             android:layout_marginTop="20dp"
             app:cardBackgroundColor="#27B5FF"
             app:cardCornerRadius="25dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/RecyclerAllPets">
+            app:layout_constraintTop_toBottomOf="@+id/containerInfoPets">
 
             <!-- Text Register Pet -->
             <TextView
@@ -43,6 +93,6 @@
 
         </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </ScrollView>

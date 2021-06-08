@@ -18,14 +18,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PalacePetz">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
             android:name=".Activitys.FollowOrderActivity"
-            android:label="@string/title_activity_folow_order"/>
+            android:label="@string/title_activity_follow_order" />
         <activity android:name=".Activitys.Pets.RegisterPetActivity" />
         <activity android:name=".Activitys.Pets.AllPetsActivity" />
 

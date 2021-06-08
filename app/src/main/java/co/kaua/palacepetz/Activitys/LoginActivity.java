@@ -61,11 +61,12 @@ public class LoginActivity extends AppCompatActivity {
 
     //  Tools
     private LoadingDialog loadingDialog;
-    private InputMethodManager imm;
+    private static InputMethodManager imm;
 
     //  Set preferences
-    SharedPreferences mPrefs;
+    private SharedPreferences mPrefs;
     private static final String PREFS_NAME = "myPrefs";
+    private int SHORTCUT_ID = 0;
 
     //  Fountain info
     boolean isDevicePre;
@@ -90,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         if (!(bundle == null)){
             _Email = bundle.getString("email_user");
             password = bundle.getString("password_user");
+            SHORTCUT_ID = bundle.getInt("shortcut");
             editLogin_emailUser.setText(_Email);
             editLogin_passwordUser.setText(password);
         }
@@ -197,6 +199,15 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = mPrefs.edit();
                                 editor.putString("pref_email", email);
                                 editor.putString("pref_password", password);
+                                editor.putString("pref_name_user", name_user);
+                                editor.putInt("pref_id_user", id_user);
+                                editor.putString("pref_cpf_user", cpf_user);
+                                editor.putString("pref_address_user", address_user);
+                                editor.putString("pref_complement", complement);
+                                editor.putString("pref_zipcode", zipcode);
+                                editor.putString("pref_birth_date", birth_date);
+                                editor.putString("pref_phone_user", phone_user);
+                                editor.putString("pref_img_user", img_user);
                                 editor.putBoolean("pref_check", boollsChecked);
                                 editor.putBoolean("isDevicePre", isDevicePre);
                                 editor.apply();
@@ -264,6 +275,7 @@ public class LoginActivity extends AppCompatActivity {
         goTo_Main.putExtra("birth_date", birth_date);
         goTo_Main.putExtra("img_user", img_user);
         goTo_Main.putExtra("password", password);
+        goTo_Main.putExtra("shortcut", SHORTCUT_ID);
         goTo_Main.putExtra("AddressAlert", true);
         startActivity(goTo_Main);
         finish();

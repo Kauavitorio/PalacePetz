@@ -68,8 +68,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         numberFormat.setMaximumFractionDigits(2);
 
         Bundle bundle = getIntent().getExtras();
-        _Email = bundle.getString("email_user");
-        _IdUser = bundle.getInt("id_user");
+        DtoUser userInfo = MainActivity.getInstance().GetUserBaseInformation();
+        _Email = userInfo.getEmail();
+        _IdUser = userInfo.getId_user();
         cd_prod = bundle.getInt("cd_prod");
         if (bundle.getString("nm_product") == null){
             DtoUser user = MainActivity.getInstance().GetUserBaseInformation();

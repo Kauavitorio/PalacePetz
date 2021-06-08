@@ -22,6 +22,7 @@ public abstract class MaskEditUtil {
     public static final String FORMAT_HOUR = "##:##";
     public static final String FORMAT_NUMCARD = "#### #### #### ####";
     public static final String FORMAT_DATAVALI = "##/##";
+    public static final String FORMAT_WEIGHT = "## KG";
 
     /**
      * Método que deve ser chamado para realizar a formatação
