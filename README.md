@@ -41,6 +41,10 @@ Sdk 25 - Android 7.1.1 (Nougat)
 
 See also the list of [contributors](https://github.com/Kauavitorio/PalacePetz/contributors) who participated in this project.
 
+<a href = "https://github.com/Kauavitorio/PalacePetz/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=Kauavitorio/PalacePetz"/>
+</a>
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
