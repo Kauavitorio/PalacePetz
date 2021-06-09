@@ -160,7 +160,7 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
         asyncShoppingCart.execute();
     }
 
-    private void Ids(View view) {
+    private void Ids(@NonNull View view) {
         btn_seeProducts_ShoppingCart = view.findViewById(R.id.btn_seeProducts_ShoppingCart);
         container_noItemsOnCart = view.findViewById(R.id.container_noItemsOnCart);
         RecyclerViewCart = view.findViewById(R.id.RecyclerViewCart);
@@ -169,6 +169,7 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
         txt_total_shoppingCart = view.findViewById(R.id.txt_total_shoppingCart);
         txt_OrderNow_ShoppingCart = view.findViewById(R.id.txt_OrderNow_ShoppingCart);
         btnBuy_shoppingCart = view.findViewById(R.id.btnBuy_shoppingCart);
+        txt_total_shoppingCart.setText(requireContext().getString(R.string.loading));
     }
 
     @Override
@@ -176,6 +177,7 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
         super.onResume();
         if (CountToReload != 0){
             CountToReload = 0;
+            requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_menu_sheet));
             MainActivity mainActivity = (MainActivity) getContext();
             assert mainActivity != null;
             mainActivity.CheckShoppingCart();
@@ -187,24 +189,20 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
     public void onPause() {
         super.onPause();
         CountToReload = 1;
+        requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_top));
     }
 
     @Override
     public boolean onBackPressed() {
-        if (_Email != null) {
-            //action not popBackStack
-            requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_top));
-            //action not popBackStack
-            MainFragment mainFragment = new MainFragment();
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            Bundle args = new Bundle();
-            args.putString("email_user", _Email);
-            mainFragment.setArguments(args);
-            transaction.replace(R.id.frameLayoutMain, mainFragment);
-            transaction.commit();
-            return true;
-        } else {
-            return false;
-        }
+        //action not popBackStack
+        requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_top));
+        MainFragment mainFragment = new MainFragment();
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putString("email_user", _Email);
+        mainFragment.setArguments(args);
+        transaction.replace(R.id.frameLayoutMain, mainFragment);
+        transaction.commit();
+        return true;
     }
 }
