@@ -75,52 +75,43 @@ public class SplashScreen extends AppCompatActivity {
     private void launchShortcuts() {
         ShortcutManager mShortcutManager = getSystemService(ShortcutManager.class);
 
-        //  Intent for go to Products
-        Intent intent_Products = new Intent(this, MainActivity.class);
-        intent_Products.putExtra("shortcut", 10);
-        intent_Products.setAction(Intent.ACTION_VIEW);
-
-        //  Intent for go to shopping Cart
-        Intent intent_Cart = new Intent(this, MainActivity.class);
-        intent_Cart.putExtra("shortcut", 20);
-        intent_Cart.setAction(Intent.ACTION_VIEW);
-
-        //  Intent for go to Services
-        Intent intent_Services = new Intent(this, MainActivity.class);
-        intent_Services.putExtra("shortcut", 30);
-        intent_Services.setAction(Intent.ACTION_VIEW);
-
-        //  Intent for go to Services
-        Intent intent_Fountain = new Intent(this, MainActivity.class);
-        intent_Fountain.putExtra("shortcut", 40);
-        intent_Fountain.setAction(Intent.ACTION_VIEW);
-
-        ShortcutInfo mShortcutProduct = CreateShortCut(intent_Products, getString(R.string.products),
+        //  ShortCut All Products
+        ShortcutInfo mShortcutProduct = CreateShortCut(CreateIntent(10), getString(R.string.products),
                 getString(R.string.see_all_products), R.drawable.products_sheetmenu, 10);
 
-        ShortcutInfo mShortcutShoppingCart = CreateShortCut(intent_Cart, getString(R.string.my_shopping_cart),
+        //  ShortCut Shopping Cart
+        ShortcutInfo mShortcutShoppingCart = CreateShortCut(CreateIntent(20), getString(R.string.my_shopping_cart),
                 getString(R.string.see_my_shoppingCart), R.mipmap.ic_shopping_cart, 20);
 
-        ShortcutInfo mShortcutServices = CreateShortCut(intent_Services, getString(R.string.services),
+        //  ShortCut Services
+        ShortcutInfo mShortcutServices = CreateShortCut(CreateIntent(30), getString(R.string.services),
                 getString(R.string.schedule_a_service), R.drawable.ic_consultation, 30);
 
-        ShortcutInfo mShortcutPalaceFountain = CreateShortCut(intent_Fountain, getString(R.string.palaceFountain),
+        //  ShortCut Palace Fountain
+        ShortcutInfo mShortcutPalaceFountain = CreateShortCut(CreateIntent(40), getString(R.string.palaceFountain),
                 getString(R.string.manage_Fountain), R.drawable.fountain_sheetmenu, 40);
 
-        ShortcutInfo mShortcutCards = CreateShortCut(intent_Services, getString(R.string.myCards),
+        //  ShortCut Cards
+        ShortcutInfo mShortcutCards = CreateShortCut(CreateIntent(50), getString(R.string.myCards),
                 getString(R.string.myCards), R.drawable.cards_icon, 50);
 
         mShortcutManager.setDynamicShortcuts(Arrays.asList(mShortcutProduct, mShortcutShoppingCart, mShortcutServices, mShortcutCards, mShortcutPalaceFountain));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
-    public ShortcutInfo CreateShortCut(Intent intent, String ShortLabel, String LongLabel, int icon, int id) {
+    private ShortcutInfo CreateShortCut(Intent intent, String ShortLabel, String LongLabel, int icon, int id) {
         return new ShortcutInfo.Builder(this, "Shortcut_Services_" + id)
                 .setShortLabel(ShortLabel)
                 .setLongLabel(LongLabel)
                 .setIcon(Icon.createWithResource(this, icon))
                 .setIntent(intent)
                 .build();
+    }
+
+    private Intent CreateIntent(int shortCutId){
+         return new Intent(this, MainActivity.class)
+        .putExtra("shortcut", shortCutId)
+        .setAction(Intent.ACTION_VIEW);
     }
 
     public void verifyIfUsersLogged() {
