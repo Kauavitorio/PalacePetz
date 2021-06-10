@@ -205,18 +205,14 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
 
     @Override
     public boolean onBackPressed() {
-        if (_Email != null) {
-            //action not popBackStack
-            MainFragment mainFragment = new MainFragment();
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            Bundle args = new Bundle();
-            args.putString("email_user", _Email);
-            mainFragment.setArguments(args);
-            transaction.replace(R.id.frameLayoutMain, mainFragment);
-            transaction.commit();
-            return true;
-        } else {
-            return false;
-        }
+        //action not popBackStack
+        MainFragment mainFragment = new MainFragment();
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putString("email_user", _Email);
+        mainFragment.setArguments(args);
+        transaction.replace(R.id.frameLayoutMain, mainFragment);
+        transaction.commit();
+        return true;
     }
 }

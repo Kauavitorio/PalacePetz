@@ -121,14 +121,7 @@ public class SplashScreen extends AppCompatActivity {
         if (sp.contains("pref_email") && sp.contains("pref_password"))
             timer.postDelayed(this::GoToMain, MAIN_TIMER);
         else
-            timer.postDelayed(this::GoToLogin,2800);
-    }
-
-    private void GoToLogin() {
-        Intent goto_login = new Intent(SplashScreen.this, LoginActivity.class);
-        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),R.anim.move_to_left, R.anim.move_to_right);
-        ActivityCompat.startActivity(SplashScreen.this, goto_login, activityOptionsCompat.toBundle());
-        finish();
+            timer.postDelayed(this::GoToMain,2500);
     }
 
     private void GoToMain(){

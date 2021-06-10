@@ -15,9 +15,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import co.kaua.palacepetz.Activitys.Services.ScheduleAppointmentActivity;
 import co.kaua.palacepetz.Activitys.Services.ScheduleBathAndTosaActivity;
+import co.kaua.palacepetz.Adapters.IOnBackPressed;
 import co.kaua.palacepetz.R;
 
-public class ServicesFragment extends Fragment {
+public class ServicesFragment extends Fragment implements IOnBackPressed {
     private ConstraintLayout btn_consultation_services, btn_bath_services;
 
     private Bundle args;
@@ -61,5 +62,19 @@ public class ServicesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        //action not popBackStack
+        requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_top));
+        MainFragment mainFragment = new MainFragment();
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putString("email_user", _Email);
+        mainFragment.setArguments(args);
+        transaction.replace(R.id.frameLayoutMain, mainFragment);
+        transaction.commit();
+        return true;
     }
 }
