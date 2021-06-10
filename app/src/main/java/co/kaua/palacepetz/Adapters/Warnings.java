@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import co.kaua.palacepetz.Activitys.LoginActivity;
+import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Activitys.Pets.AllPetsActivity;
 import co.kaua.palacepetz.Activitys.RegisterAddressActivity;
 import co.kaua.palacepetz.Data.Pets.DtoPets;
@@ -28,12 +29,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static android.content.Context.MODE_PRIVATE;
-
 @SuppressWarnings("FieldCanBeLocal")
-public class Warnings {
+public class Warnings extends MainActivity {
     private static Dialog WarningError, Warning_Email_Password, warning_emailNotVerified, warning_emailSend,
-            warning_badUsername, OrderConfirmation, LogOutDialog, EmployeeWarning, warning_badPetName, PetWarning;
+            warning_badUsername, OrderConfirmation, LogOutDialog, EmployeeWarning, warning_badPetName, PetWarning, NeedLoginWarning;
     @SuppressLint("StaticFieldLeak")
     private static LoadingDialog loadingDialog;
 
@@ -287,5 +286,74 @@ public class Warnings {
         txtCancel_alert.setOnClickListener(v -> PetWarning.dismiss());
 
         PetWarning.show();
+    }
+
+    //  Create Show Need Login Message
+    public static void NeedLoginAlert(Activity context) {
+        NeedLoginWarning = new Dialog(context);
+        SharedPreferences mPrefs;
+        mPrefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        NeedLoginWarning.setContentView(R.layout.adapter_comum_alert);
+        NeedLoginWarning.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = NeedLoginWarning.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = NeedLoginWarning.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = NeedLoginWarning.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = NeedLoginWarning.findViewById(R.id.txtPositiveBtn_alert);
+        PositiveBtn_alert.setElevation(20);
+
+        txtMsg_alert.setText(context.getString(R.string.need_login_msg));
+        txtCancel_alert.setText(context.getString(R.string.no));
+        txtPositiveBtn_alert.setText(context.getString(R.string.yes));
+
+        PositiveBtn_alert.setOnClickListener(v -> {
+            PositiveBtn_alert.setElevation(0);
+            mPrefs.edit().clear().apply();
+            Intent login = new Intent(context, LoginActivity.class);
+            context.startActivity(login);
+            context.finish();
+            NeedLoginWarning.dismiss();
+        });
+
+        txtCancel_alert.setOnClickListener(c -> NeedLoginWarning.dismiss());
+
+        NeedLoginWarning.show();
+    }
+
+    //  Create Show Need Login Message but with shortCut
+    public static void NeedLoginWithShortCutAlert(Activity context, int shortCutId) {
+        NeedLoginWarning = new Dialog(context);
+        SharedPreferences mPrefs;
+        mPrefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        NeedLoginWarning.setContentView(R.layout.adapter_comum_alert);
+        NeedLoginWarning.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = NeedLoginWarning.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = NeedLoginWarning.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = NeedLoginWarning.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = NeedLoginWarning.findViewById(R.id.txtPositiveBtn_alert);
+        PositiveBtn_alert.setElevation(20);
+
+        txtMsg_alert.setText(context.getString(R.string.need_login_msg));
+        txtCancel_alert.setText(context.getString(R.string.no));
+        txtPositiveBtn_alert.setText(context.getString(R.string.yes));
+
+        PositiveBtn_alert.setOnClickListener(v -> {
+            PositiveBtn_alert.setElevation(0);
+            mPrefs.edit().clear().apply();
+            Intent login = new Intent(context, LoginActivity.class);
+            login.putExtra("shortcut", shortCutId);
+            context.startActivity(login);
+            context.finish();
+            NeedLoginWarning.dismiss();
+        });
+
+        txtCancel_alert.setOnClickListener(c -> NeedLoginWarning.dismiss());
+
+        NeedLoginWarning.show();
     }
 }

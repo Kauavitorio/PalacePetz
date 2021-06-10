@@ -14,7 +14,6 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -44,7 +43,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
     //  Login items
-    private CheckBox checkbox_rememberMe;
     private EditText editLogin_emailUser, editLogin_passwordUser;
     private LottieAnimationView progressDogLogin;
     private TextView txt_SingInLogin;
@@ -141,7 +139,6 @@ public class LoginActivity extends AppCompatActivity {
         cardBtn_SingIn = findViewById(R.id.cardBtn_SingIn);
         txt_forgot_your_password = findViewById(R.id.txt_forgot_your_password);
         txt_SingUp = findViewById(R.id.txt_SingUp);
-        checkbox_rememberMe = findViewById(R.id.checkbox_rememberMe);
         editLogin_emailUser = findViewById(R.id.editLogin_emailUser);
         editLogin_passwordUser = findViewById(R.id.editLogin_passwordUser);
         progressDogLogin = findViewById(R.id.progressDogLogin);
@@ -157,7 +154,6 @@ public class LoginActivity extends AppCompatActivity {
             String emailPref = sp.getString("pref_email", "not found");
             String PassPref = sp.getString("pref_password", "not found");
             isDevicePre = sp.getBoolean("isDevicePre", false);
-            checkbox_rememberMe.setChecked(sp.getBoolean("pref_check", true));
             DoLogin(emailPref, PassPref);
         }
     }
@@ -193,31 +189,23 @@ public class LoginActivity extends AppCompatActivity {
                             birth_date = response.body().getBirth_date();
                             phone_user = response.body().getPhone_user();
                             img_user = response.body().getImg_user();
-                            if (checkbox_rememberMe.isChecked()){
-                                mPrefs.edit().clear().apply();
-                                boolean boollsChecked = checkbox_rememberMe.isChecked();
-                                SharedPreferences.Editor editor = mPrefs.edit();
-                                editor.putString("pref_email", email);
-                                editor.putString("pref_password", password);
-                                editor.putString("pref_name_user", name_user);
-                                editor.putInt("pref_id_user", id_user);
-                                editor.putString("pref_cpf_user", cpf_user);
-                                editor.putString("pref_address_user", address_user);
-                                editor.putString("pref_complement", complement);
-                                editor.putString("pref_zipcode", zipcode);
-                                editor.putString("pref_birth_date", birth_date);
-                                editor.putString("pref_phone_user", phone_user);
-                                editor.putString("pref_img_user", img_user);
-                                editor.putBoolean("pref_check", boollsChecked);
-                                editor.putBoolean("isDevicePre", isDevicePre);
-                                editor.apply();
-                                GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
-                                        zipcode, phone_user, birth_date, img_user, password);
-                            }else{
-                                mPrefs.edit().clear().apply();
-                                GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
-                                        zipcode, phone_user, birth_date, img_user, password);
-                            }
+                            mPrefs.edit().clear().apply();
+                            SharedPreferences.Editor editor = mPrefs.edit();
+                            editor.putString("pref_email", email);
+                            editor.putString("pref_password", password);
+                            editor.putString("pref_name_user", name_user);
+                            editor.putInt("pref_id_user", id_user);
+                            editor.putString("pref_cpf_user", cpf_user);
+                            editor.putString("pref_address_user", address_user);
+                            editor.putString("pref_complement", complement);
+                            editor.putString("pref_zipcode", zipcode);
+                            editor.putString("pref_birth_date", birth_date);
+                            editor.putString("pref_phone_user", phone_user);
+                            editor.putString("pref_img_user", img_user);
+                            editor.putBoolean("isDevicePre", isDevicePre);
+                            editor.apply();
+                            GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
+                                    zipcode, phone_user, birth_date, img_user, password);
                         }else{
                             Warnings.EmployeeAlert(LoginActivity.this);
                             editLogin_emailUser.setText(null);

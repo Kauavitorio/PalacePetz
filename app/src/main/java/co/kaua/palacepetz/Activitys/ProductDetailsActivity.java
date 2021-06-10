@@ -73,9 +73,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         _IdUser = userInfo.getId_user();
         cd_prod = bundle.getInt("cd_prod");
         if (bundle.getString("nm_product") == null){
-            DtoUser user = MainActivity.getInstance().GetUserBaseInformation();
-            _IdUser = user.getId_user();
-            _Email = user.getEmail();
             loadingDialog = new LoadingDialog(ProductDetailsActivity.this);
             loadingDialog.startLoading();
             ProductsServices productsServices = CartRetrofit.create(ProductsServices.class);
@@ -156,53 +153,51 @@ public class ProductDetailsActivity extends AppCompatActivity {
         arrowGoBack_ProductDetails.setOnClickListener(v -> finish());
 
         cardBtn_AddToCart.setOnClickListener(v -> {
-            loadingDialog = new LoadingDialog(ProductDetailsActivity.this);
-            loadingDialog.startLoading();
-            DtoShoppingCart cartItems = new DtoShoppingCart(cd_prod, _IdUser, qt_prod, String.valueOf(unit_prod_price), String.valueOf(full_prod_price), String.valueOf(full_prod_price));
-            CartServices cartServices = CartRetrofit.create(CartServices.class);
-            Call<DtoShoppingCart> cartCall = cartServices.insertItemOnCart(cartItems);
-            cartCall.enqueue(new Callback<DtoShoppingCart>() {
-                @Override
-                public void onResponse(@NonNull Call<DtoShoppingCart> call, @NonNull Response<DtoShoppingCart> response) {
-                    if(response.code() == 201){
-                        loadingDialog.dimissDialog();
-                        Toast.makeText(ProductDetailsActivity.this, getString(R.string.product_successfully_inserted), Toast.LENGTH_LONG).show();
-                        finish();
-                    }else if(response.code() == 409){
-                        loadingDialog.dimissDialog();
-                        Toast.makeText(ProductDetailsActivity.this, getString(R.string.product_into_your_cart), Toast.LENGTH_LONG).show();
+            if (_IdUser != 0){
+                loadingDialog = new LoadingDialog(ProductDetailsActivity.this);
+                loadingDialog.startLoading();
+                DtoShoppingCart cartItems = new DtoShoppingCart(cd_prod, _IdUser, qt_prod, String.valueOf(unit_prod_price), String.valueOf(full_prod_price), String.valueOf(full_prod_price));
+                CartServices cartServices = CartRetrofit.create(CartServices.class);
+                Call<DtoShoppingCart> cartCall = cartServices.insertItemOnCart(cartItems);
+                cartCall.enqueue(new Callback<DtoShoppingCart>() {
+                    @Override
+                    public void onResponse(@NonNull Call<DtoShoppingCart> call, @NonNull Response<DtoShoppingCart> response) {
+                        if(response.code() == 201){
+                            loadingDialog.dimissDialog();
+                            Toast.makeText(ProductDetailsActivity.this, getString(R.string.product_successfully_inserted), Toast.LENGTH_LONG).show();
+                            finish();
+                        }else if(response.code() == 409){
+                            loadingDialog.dimissDialog();
+                            Toast.makeText(ProductDetailsActivity.this, getString(R.string.product_into_your_cart), Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            loadingDialog.dimissDialog();
+                            Warnings.showWeHaveAProblem(ProductDetailsActivity.this);
+                        }
                     }
-                    else{
+                    @Override
+                    public void onFailure(@NonNull Call<DtoShoppingCart> call, @NonNull Throwable t) {
                         loadingDialog.dimissDialog();
                         Warnings.showWeHaveAProblem(ProductDetailsActivity.this);
                     }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<DtoShoppingCart> call, @NonNull Throwable t) {
-                    loadingDialog.dimissDialog();
-                    Warnings.showWeHaveAProblem(ProductDetailsActivity.this);
-                }
-            });
+                });
+            }else
+                Warnings.NeedLoginAlert(ProductDetailsActivity.this);
         });
     }
 
     private void SaveOnHistoric() {
-        ProductsServices services = CartRetrofit.create(ProductsServices.class);
-        Call<DtoProducts> call = services.saveOnHistoric(_IdUser, cd_prod);
-        call.enqueue(new Callback<DtoProducts>() {
-            @Override
-            public void onResponse(@NonNull Call<DtoProducts> call, @NonNull Response<DtoProducts> response) {
-                if (response.isSuccessful())
-                    Log.d("Historic", "Successfully saved");
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<DtoProducts> call, @NonNull Throwable t) {
-                Log.d("Historic", "Error on save");
-            }
-        });
-
+        if (_IdUser != 0 ){
+            ProductsServices services = CartRetrofit.create(ProductsServices.class);
+            Call<DtoProducts> call = services.saveOnHistoric(_IdUser, cd_prod);
+            call.enqueue(new Callback<DtoProducts>() {
+                @Override
+                public void onResponse(@NonNull Call<DtoProducts> call, @NonNull Response<DtoProducts> response) {
+                    if (response.isSuccessful()) Log.d("Historic", "Successfully saved"); }
+                @Override
+                public void onFailure(@NonNull Call<DtoProducts> call, @NonNull Throwable t) { Log.d("Historic", "Error on save"); }
+            });
+        }
     }
 
     @SuppressLint("SetTextI18n")

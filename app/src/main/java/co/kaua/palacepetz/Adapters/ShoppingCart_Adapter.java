@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +35,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @SuppressLint("SetTextI18n")
 public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adapter.MyHolderProducts> {
-    ArrayList<DtoShoppingCart> dtoProductsArrayList;
-    Activity context;
+    private final ArrayList<DtoShoppingCart> dtoProductsArrayList;
+    private final Activity context;
     static int selectedItem = 1000000000;
     static int productAmount = 0;
     static int subOrPlus = 0;
@@ -43,7 +45,9 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
     static float TotalPrice;
     float valueGet;
     TextView txtTotal, txtOrderNow;
-    private LoadingDialog loadingDialog;
+    private final LoadingDialog loadingDialog;
+    // Allows to remember the last item shown on screen
+    private int lastPosition = -1;
     RecyclerView recyclerShoppingCart;
     SwipeRefreshLayout SwipeRefreshShoppingCart;
     final Retrofit cartUser = new Retrofit.Builder()
@@ -73,6 +77,10 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
     @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     @Override
     public void onBindViewHolder(@NonNull MyHolderProducts holder, int position) {
+
+        // Here you apply the animation when the view is bound
+        setAnimation(holder.itemView, position);
+
         Picasso.get().load(dtoProductsArrayList.get(position).getImage_prod()).into(holder.img_prod_shoppingCart);
         holder.txt_name_prod_shoppingCart.setText(dtoProductsArrayList.get(position).getNm_product());
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("pt", "BR"));
@@ -134,6 +142,17 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
         }
     }
 
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     private void PlusAmount(@NonNull MyHolderProducts holder) {
         subOrPlus = 10000;
@@ -172,16 +191,10 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
         Call<DtoShoppingCart> call = cartServices.UpdateCartWithNewAmount(cd_prod, productAmount, totalPrice, SubTotal, _IdUser);
         call.enqueue(new Callback<DtoShoppingCart>() {
             @Override
-            public void onResponse(@NonNull Call<DtoShoppingCart> call, @NonNull Response<DtoShoppingCart> response) {
-
-            }
-
+            public void onResponse(@NonNull Call<DtoShoppingCart> call, @NonNull Response<DtoShoppingCart> response) {}
             @Override
-            public void onFailure(@NonNull Call<DtoShoppingCart> call, @NonNull Throwable t) {
-
-            }
+            public void onFailure(@NonNull Call<DtoShoppingCart> call, @NonNull Throwable t) {}
         });
-
     }
 
     private void updatePrice(@NonNull MyHolderProducts holder, float TotalPrice) {

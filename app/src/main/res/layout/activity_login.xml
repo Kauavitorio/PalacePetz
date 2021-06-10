@@ -111,20 +111,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- CheckBox Remember Me -->
-        <CheckBox
-            android:id="@+id/checkbox_rememberMe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="50dp"
-            android:buttonTint="@color/gradient_end_color"
-            android:text="@string/remember_me"
-            android:textColor="#000"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="10sp"
-            android:layout_marginStart="35sp"
-            app:layout_constraintTop_toBottomOf="@+id/password_text_input_layout" />
-
         <!-- Card Sing In -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardBtn_SingIn"
@@ -135,7 +121,7 @@
             android:layout_marginTop="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkbox_rememberMe">
+            app:layout_constraintTop_toBottomOf="@+id/password_text_input_layout">
 
             <!-- Container  -->
             <androidx.constraintlayout.widget.ConstraintLayout

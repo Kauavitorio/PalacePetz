@@ -12,7 +12,7 @@
         android:minWidth="350dp"
         android:minHeight="113dp"
         app:cardBackgroundColor="@color/background_adapter_shoppingCart"
-        app:cardCornerRadius="40dp"
+        app:cardCornerRadius="30dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"

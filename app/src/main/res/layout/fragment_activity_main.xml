@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <!-- ShortCut Consultation -->
+                <!-- ShortCut Services -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btn_services_shortCut"
                     android:layout_width="208dp"
@@ -87,6 +87,66 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <!-- ShortCut Products -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btn_allProducts_shortCut"
+                    android:layout_width="208dp"
+                    android:layout_height="105dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btn_services_shortCut"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Container Main -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="188dp"
+                        android:layout_height="89dp"
+                        android:background="@drawable/bg_shortcuts_main"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <!-- Img ShortCut -->
+                        <ImageView
+                            android:layout_width="41dp"
+                            android:layout_height="41dp"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/products_sheetmenu"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Card Btn Products -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="208dp"
+                        android:layout_height="39dp"
+                        app:cardBackgroundColor="#44BFFF"
+                        app:cardCornerRadius="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <!-- Btn Text -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/products"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <!-- ShortCut CARDS -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btn_cards_shortCut"
@@ -96,7 +156,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btn_services_shortCut"
+                    app:layout_constraintStart_toEndOf="@+id/btn_allProducts_shortCut"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <!-- Container Main -->
