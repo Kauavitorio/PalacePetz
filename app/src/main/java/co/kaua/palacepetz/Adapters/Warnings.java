@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import co.kaua.palacepetz.Activitys.EditProfileActivity;
 import co.kaua.palacepetz.Activitys.LoginActivity;
 import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Activitys.Pets.AllPetsActivity;
@@ -355,5 +356,53 @@ public class Warnings extends MainActivity {
         txtCancel_alert.setOnClickListener(c -> NeedLoginWarning.dismiss());
 
         NeedLoginWarning.show();
+    }
+
+    //  Create Show Register Birth Message
+    public static void RegisterBirthAlert(Activity context) {
+        PetWarning = new Dialog(context);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        PetWarning.setContentView(R.layout.adapter_comum_alert);
+        PetWarning.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = PetWarning.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = PetWarning.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = PetWarning.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = PetWarning.findViewById(R.id.txtPositiveBtn_alert);
+        PositiveBtn_alert.setElevation(20);
+
+        txtMsg_alert.setText(context.getString(R.string.need_register_birth));
+        txtCancel_alert.setText(context.getString(R.string.no));
+        txtPositiveBtn_alert.setText(context.getString(R.string.yes));
+
+        PositiveBtn_alert.setOnClickListener(v -> context.finish());
+
+        txtCancel_alert.setOnClickListener(c -> PetWarning.dismiss());
+
+        PetWarning.show();
+    }
+
+    //  Create Show Age Alert Message
+    public static void AgeAlert(Activity context) {
+        PetWarning = new Dialog(context);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        PetWarning.setContentView(R.layout.adapter_comum_alert);
+        PetWarning.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = PetWarning.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = PetWarning.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = PetWarning.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = PetWarning.findViewById(R.id.txtPositiveBtn_alert);
+        PositiveBtn_alert.setElevation(20);
+        txtCancel_alert.setVisibility(View.GONE);
+
+        txtMsg_alert.setText(context.getString(R.string.to_register_a_pet_need_be_biggest_18));
+        txtPositiveBtn_alert.setText(context.getString(R.string.ok));
+
+        PositiveBtn_alert.setOnClickListener(v -> PetWarning.dismiss());
+
+        PetWarning.show();
     }
 }

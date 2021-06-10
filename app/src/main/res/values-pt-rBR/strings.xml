@@ -224,4 +224,6 @@
     <string name="schedule_a_service">Agendar um serviço</string>
     <string name="manage_Fountain">Gerenciar fonte</string>
     <string name="need_login_msg">Para que você possa ter acesso a essa aba é necessário estar logado.\nGostaria de realizar seu login?</string>
+    <string name="need_register_birth">Para que você possa registrar um animal de estimação é necessário registrar sua data de aniversário, pois para ter um animal é necessário ser maior de idade.\nGostaria de registrar sua data de aniversário?</string>
+    <string name="to_register_a_pet_need_be_biggest_18">Apenas maiores de 18 anos pode registrar um animal.</string>
 </resources>

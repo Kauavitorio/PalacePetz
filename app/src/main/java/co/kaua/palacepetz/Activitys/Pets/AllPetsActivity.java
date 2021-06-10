@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.Calendar;
+
 import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
@@ -34,6 +36,7 @@ public class AllPetsActivity extends AppCompatActivity {
 
     //  User information
     private int id_user;
+    private String birth_date;
 
     //  Retrofit
     final Retrofit retrofitUser = new Retrofit.Builder()
@@ -50,11 +53,20 @@ public class AllPetsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         id_user = bundle.getInt("id_user");
+        birth_date = bundle.getString("birth_date");
 
         btnRegisterPet.setOnClickListener(v -> {
-            Intent goTo_registerPet = new Intent(this, RegisterPetActivity.class);
-            goTo_registerPet.putExtra("id_user", id_user);
-            startActivity(goTo_registerPet);
+            if (birth_date != null){
+                String[] splitBirth = birth_date.split("/");
+                int User_age = Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(splitBirth[2]);
+                if (User_age >= 18 ){
+                    Intent goTo_registerPet = new Intent(this, RegisterPetActivity.class);
+                    goTo_registerPet.putExtra("id_user", id_user);
+                    startActivity(goTo_registerPet);
+                }else
+                    Warnings.AgeAlert(AllPetsActivity.this);
+            }else
+                Warnings.RegisterBirthAlert(AllPetsActivity.this);
         });
     }
 
