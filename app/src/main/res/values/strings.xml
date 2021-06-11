@@ -277,4 +277,10 @@
     <string name="your_are_welcome">You\'re welcome!</string>
     <string name="firstTime_desc">How is your first access, choose a way to continue.</string>
     <string name="continue_without_account">CONTINUE WITHOUT ACCOUNT</string>
+    <string name="shortCut">ShortCuts</string>
+    <string name="search_with_dots">Search…</string>
+    <string name="highlights">Highlights</string>
+    <string name="hello">Hello,</string>
+    <string name="search_cant_be_null">The survey cannot be empty, please fill in the field.</string>
+    <string name="product_not_fount">Something wrong here…\nThe informed product was not found, we apologize for the inconvenience.</string>
 </resources>

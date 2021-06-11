@@ -21,17 +21,24 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
+import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.Products.AsyncFilterProducts_BiggestPrice;
 import co.kaua.palacepetz.Data.Products.AsyncFilterProducts_LowestPrice;
+import co.kaua.palacepetz.Data.Products.AsyncFilterProducts_Name;
 import co.kaua.palacepetz.Data.Products.AsyncFilterProducts_Species;
 import co.kaua.palacepetz.Data.Products.AsyncPopularProducts;
 import co.kaua.palacepetz.Data.Products.AsyncProducts;
 import co.kaua.palacepetz.Data.Products.DtoProducts;
+import co.kaua.palacepetz.Data.Products.ProductsServices;
 import co.kaua.palacepetz.Data.category.AsyncCategory;
 import co.kaua.palacepetz.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class AllProductsFragment extends Fragment implements IOnBackPressed {
     //  Fragment Tools
@@ -52,6 +59,11 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
     private CardView card_filter_lowestPrice, card_filter_biggestPrice, card_filter_popular, card_filter_clearFilters;
     ArrayList<DtoProducts> arrayListDto = new ArrayList<>();
 
+    private final Retrofit retrofitProduct = new Retrofit.Builder()
+            .baseUrl("https://palacepetzapi.herokuapp.com/products/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,8 +73,11 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         assert args != null;
         _Email = args.getString("email_user");
         _IdUser = args.getInt("id_user");
+        if (args.getString("search") != null){
+            loadProductsWithSearch(args.getString("search"));
+        }else
+            loadAllProducts();
         loadCategorys();
-        loadAllProducts();
 
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
         //There are multiple variations of this, but this is the basic variant.
@@ -148,6 +163,34 @@ public class AllProductsFragment extends Fragment implements IOnBackPressed {
         card_filter_clearFilters.setOnClickListener(v -> loadAllProducts());
 
         return view;
+    }
+
+    private void loadProductsWithSearch(String nm_product) {
+
+        ProductsServices services = retrofitProduct.create(ProductsServices.class);
+        Call<DtoProducts> call = services.getFilterName(nm_product);
+        call.enqueue(new Callback<DtoProducts>() {
+            @Override
+            public void onResponse(@NonNull Call<DtoProducts> call, @NonNull Response<DtoProducts> response) {
+                if (response.code() == 200){
+                    card_filter_clearFilters.setVisibility(View.GONE);
+                    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
+                    recyclerView_Products.setLayoutManager(layoutManager);
+                    arrayListDto.clear();
+                    AsyncFilterProducts_Name async = new AsyncFilterProducts_Name(recyclerView_Products, SwipeRefreshProducts, anim_loading_allProducts, arrayListDto, getActivity(), nm_product);
+                    //noinspection unchecked
+                    async.execute();
+                }else if(response.code() == 204){
+                    loadAllProducts();
+                    Warnings.ProductNotFoundAlert(getContext());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DtoProducts> call, @NonNull Throwable t) {
+                Warnings.showWeHaveAProblem(getContext());
+            }
+        });
     }
 
     private void FilterBySpecies(String specie) {

@@ -15,8 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-
-import co.kaua.palacepetz.Activitys.EditProfileActivity;
 import co.kaua.palacepetz.Activitys.LoginActivity;
 import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Activitys.Pets.AllPetsActivity;
@@ -36,6 +34,9 @@ public class Warnings extends MainActivity {
             warning_badUsername, OrderConfirmation, LogOutDialog, EmployeeWarning, warning_badPetName, PetWarning, NeedLoginWarning;
     @SuppressLint("StaticFieldLeak")
     private static LoadingDialog loadingDialog;
+
+    //  Set preferences
+    private static SharedPreferences mPrefs;
 
     //  Retrofit
     private final static Retrofit retrofitUser = new Retrofit.Builder()
@@ -173,10 +174,7 @@ public class Warnings extends MainActivity {
     //  Create Show Logout Message
     public static void LogoutDialog(Activity context, @NonNull BottomSheetDialog bottomSheetDialog) {
         LogOutDialog = new Dialog(context);
-
-        //  Set preferences
-        SharedPreferences mPrefs;
-        mPrefs = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
+        loadingDialog = new LoadingDialog(context);
 
         TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
         CardView PositiveBtn_alert;
@@ -190,6 +188,8 @@ public class Warnings extends MainActivity {
         txtPositiveBtn_alert.setText(context.getString(R.string.yes));
 
         PositiveBtn_alert.setOnClickListener(v -> {
+            loadingDialog.startLoading();
+            mPrefs = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
             mPrefs.edit().clear().apply();
             Intent goBack_toLogin = new Intent(context, LoginActivity.class);
             context.startActivity(goBack_toLogin);
@@ -404,5 +404,28 @@ public class Warnings extends MainActivity {
         PositiveBtn_alert.setOnClickListener(v -> PetWarning.dismiss());
 
         PetWarning.show();
+    }
+
+    //  Create Show Product Not Fount Message
+    public static void ProductNotFoundAlert(Context context) {
+        WarningError = new Dialog(context);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        WarningError.setContentView(R.layout.adapter_comum_alert);
+        WarningError.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = WarningError.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = WarningError.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = WarningError.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = WarningError.findViewById(R.id.txtPositiveBtn_alert);
+        PositiveBtn_alert.setElevation(20);
+        txtCancel_alert.setVisibility(View.GONE);
+
+        txtMsg_alert.setText(context.getString(R.string.product_not_fount));
+        txtPositiveBtn_alert.setText(context.getString(R.string.ok));
+
+        PositiveBtn_alert.setOnClickListener(v -> WarningError.dismiss());
+
+        WarningError.show();
     }
 }

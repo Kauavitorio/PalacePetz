@@ -27,68 +27,39 @@
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_rawRes="@raw/menu_anim" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/icon_ProfileUser_main"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/default_profile_image"
-            android:visibility="visible"
-            app:civ_border_color="@color/black"
-            app:civ_border_width="1dp"
-            android:layout_marginStart="7dp"
-            app:layout_constraintEnd_toStartOf="@+id/Btn_container_ShoppingCart"
-            app:layout_constraintStart_toEndOf="@+id/btnMenu_Main"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="RedundantNamespace" />
-
-        <!-- Container Shopping Cart -->
+        <!-- Container User Image -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/Btn_container_ShoppingCart"
+            android:id="@+id/Btn_container_UserImage"
             android:layout_width="60dp"
             android:layout_height="60dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="45dp">
 
-            <!-- Card Quantity Shopping Cart -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/icon_ProfileUser_main"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/default_profile_image"
+                android:visibility="visible"
+                app:civ_border_color="@color/black"
+                app:civ_border_width="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RedundantNamespace" />
+
+            <!-- Card Shopping Cart Info -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/base_QuantityItemsCart_main"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 app:cardBackgroundColor="@color/cards_background"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" >
-
-                <!-- Container -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <!-- Text Quantity Shopping Cart -->
-                    <TextView
-                        android:id="@+id/txt_QuantityCart_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/one"
-                        android:textColor="@color/hint"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/animCat_Main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:lottie_autoPlay="true"
-                app:lottie_rawRes="@raw/empty_cart" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

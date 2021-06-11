@@ -230,4 +230,10 @@
     <string name="your_are_welcome">SEJA BEM-VINDO!</string>
     <string name="firstTime_desc">Como é o seu primeiro acesso, escolha uma forma para prosseguir.</string>
     <string name="continue_without_account">CONTINUAR SEM CONTA</string>
+    <string name="shortCut">Atalhos</string>
+    <string name="search_with_dots">Pesquisar…</string>
+    <string name="highlights">Destaques</string>
+    <string name="hello">Olá,</string>
+    <string name="search_cant_be_null">A pesquisa não pode ser vazia, por favor preencher o campo.</string>
+    <string name="product_not_fount">Algo de errado aqui…\nO produto informado não foi encontrado, pedimos desculpa pelo inconveniente.</string>
 </resources>
