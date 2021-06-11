@@ -288,8 +288,8 @@
                 <!-- Banner Rações -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_racoes_main"
-                    android:layout_width="170dp"
-                    android:layout_height="250dp"
+                    android:layout_width="160dp"
+                    android:layout_height="230dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -303,8 +303,8 @@
                 <!-- Banner Accessories -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_acss_main"
-                    android:layout_width="170dp"
-                    android:layout_height="250dp"
+                    android:layout_width="160dp"
+                    android:layout_height="230dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -318,8 +318,8 @@
                 <!-- Banner Medicines -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_med_main"
-                    android:layout_width="170dp"
-                    android:layout_height="250dp"
+                    android:layout_width="160dp"
+                    android:layout_height="230dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"

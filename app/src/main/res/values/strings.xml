@@ -273,4 +273,5 @@
     <string name="need_login_msg">To access this function it is necessary to be logged in.\nWould you like to login?</string>
     <string name="need_register_birth">In order for you to register a pet, you must register your birthday, as you must be of legal age to have a pet.\nWould you like to register your birthday?</string>
     <string name="to_register_a_pet_need_be_biggest_18">Only people over 18 years old can register an animal.</string>
+    <string name="version">Version</string>
 </resources>

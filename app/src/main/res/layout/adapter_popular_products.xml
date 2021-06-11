@@ -10,9 +10,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_popularProducts"
         android:layout_width="320dp"
-        android:layout_height="170dp"
+        android:layout_height="160dp"
         android:background="@drawable/background_racoes"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,6 +23,7 @@
         <ImageView
             android:id="@+id/img_popularProduct"
             android:layout_width="120dp"
+            android:layout_marginEnd="5dp"
             android:layout_height="match_parent"
             android:src="@drawable/img_banner_acss_main"
             app:layout_constraintEnd_toEndOf="parent"
