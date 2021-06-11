@@ -1,6 +1,5 @@
 package co.kaua.palacepetz.Fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +24,7 @@ import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.Products.AsyncPopularProductsMain;
 import co.kaua.palacepetz.Data.Products.AsyncProducts_SearchMain;
 import co.kaua.palacepetz.Data.Products.DtoProducts;
+import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Methods.CheckSearch;
 import co.kaua.palacepetz.R;
 
@@ -68,7 +68,8 @@ public class MainFragment extends Fragment {
         SuggestionsSearch.addAll(Arrays.asList(SuggestionsString));
 
         assert args != null;
-        _IdUser = args.getInt("id_user");
+        DtoUser user = MainActivity.getInstance().GetUserBaseInformation();
+        _IdUser = user.getId_user();
         createShortCutsClick();
         AsyncProducts_SearchMain asyncProductsSearchMain = new AsyncProducts_SearchMain(_IdUser, getActivity());
         asyncProductsSearchMain.execute();

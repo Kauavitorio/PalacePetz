@@ -74,7 +74,12 @@ public class Products_Adapter extends RecyclerView.Adapter<Products_Adapter.MyHo
         setAnimation(holder.itemView, position);
 
         if (position == selectedItem){
-            Animation anim = AnimationUtils.loadAnimation(context,R.anim.anim_select_product);
+            Animation anim;
+            if (position % 2 == 0)
+                anim = AnimationUtils.loadAnimation(context,R.anim.anim_select_product);
+            else
+                anim = AnimationUtils.loadAnimation(context,R.anim.anim_select_product_odd);
+
             holder.container_allProduct.setAnimation(anim);
             selectedItem = 9999;
             Handler handler = new Handler();

@@ -16,7 +16,7 @@ import co.kaua.palacepetz.Methods.JsonHandler;
 @SuppressWarnings({"rawtypes", "deprecation", "unchecked"})
 @SuppressLint("StaticFieldLeak")
 public class AsyncProducts_SearchMain extends AsyncTask {
-    ArrayList<String> arrayListDto;
+    ArrayList<String> arrayListDto = new ArrayList<>();
     Activity context;
     int _IdUser;
 
@@ -34,7 +34,6 @@ public class AsyncProducts_SearchMain extends AsyncTask {
     protected Object doInBackground(Object[] objects) {
         String json =  JsonHandler.getJson("https://palacepetzapi.herokuapp.com/products/list/");
         try {
-            arrayListDto = new ArrayList<>();
             JSONObject jsonObject = new JSONObject(json);
             JSONArray jsonArray = jsonObject.getJSONArray("Search");
             for (int i = 0; i < jsonArray.length() ; i++) {

@@ -643,12 +643,14 @@ public class MainActivity extends AppCompatActivity {
                         zipcode = response.body().getZipcode();
                         phone_user = response.body().getPhone_user();
                         birth_date = response.body().getBirth_date();
-                        img_user = response.body().getImg_user();
+                        if (!response.body().getImg_user().equals(img_user)){
+                            img_user = response.body().getImg_user();
+                            if (img_user == null || img_user.equals(""))
+                                Log.d("UserStatus", "Not User image");
+                            else
+                                Picasso.get().load(img_user).into(icon_ProfileUser_main);
+                        }
                         TryUpdatePreferences();
-                        if (img_user == null || img_user.equals(""))
-                            Log.d("UserStatus", "Not User image");
-                        else
-                            Picasso.get().load(img_user).into(icon_ProfileUser_main);
                     }else if (response.code() == 401){
                         Toast.makeText(MainActivity.this, getString(R.string.we_verify_yourEmailOrPassword), Toast.LENGTH_LONG).show();
                         Intent goTo_login = new Intent(MainActivity.this, LoginActivity.class);

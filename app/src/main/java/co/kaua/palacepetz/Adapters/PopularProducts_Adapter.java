@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +26,8 @@ import co.kaua.palacepetz.R;
 public class PopularProducts_Adapter extends RecyclerView.Adapter<PopularProducts_Adapter.MyHolderProducts> {
     ArrayList<DtoProducts> dtoProductsArrayList;
     Context context;
+    // Allows to remember the last item shown on screen
+    private int lastPosition = -1;
 
     public PopularProducts_Adapter(ArrayList<DtoProducts> dtoProductsArrayList, Context context) {
         this.dtoProductsArrayList = dtoProductsArrayList;
@@ -40,6 +44,15 @@ public class PopularProducts_Adapter extends RecyclerView.Adapter<PopularProduct
     @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     @Override
     public void onBindViewHolder(@NonNull MyHolderProducts holder, int position) {
+
+
+        if (position % 2 == 0)
+            // Here you apply the animation when the view is bound
+            setAnimation2(holder.itemView, position);
+        else
+            // Here you apply the animation when the view is bound
+            setAnimation(holder.itemView, position);
+
         Picasso.get().load(dtoProductsArrayList.get(position).getImage_prod()).into(holder.img_popularProduct);
         holder.txt_nameProd_popular.setText(dtoProductsArrayList.get(position).getNm_product());
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("pt", "BR"));
@@ -73,6 +86,28 @@ public class PopularProducts_Adapter extends RecyclerView.Adapter<PopularProduct
                 shortDesc.append(splitDesc[i]);
             }
             holder.txt_desc_popularProduct.setText(shortDesc + "...");
+        }
+    }
+
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.move_to_left_popular);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
+
+    private void setAnimation2(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.move_to_right_popular);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
         }
     }
 
