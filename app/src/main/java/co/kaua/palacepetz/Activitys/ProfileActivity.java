@@ -105,6 +105,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnSeeMyAnimals.setOnClickListener(v -> {
             Intent goTo_AllPets = new Intent(this, AllPetsActivity.class);
             goTo_AllPets.putExtra("id_user", id_user);
+            goTo_AllPets.putExtra("birth_date", birth_date);
             startActivity(goTo_AllPets);
         });
     }
@@ -118,7 +119,6 @@ public class ProfileActivity extends AppCompatActivity {
         complement = user.getComplement();
         zipcode = user.getZipcode();
         phone_user = user.getPhone_user();
-        birth_date = user.getBirth_date();
         img_user = user.getImg_user();
         if (img_user == null || img_user.equals(""))
             Log.d("UserStatus", "Not User image");

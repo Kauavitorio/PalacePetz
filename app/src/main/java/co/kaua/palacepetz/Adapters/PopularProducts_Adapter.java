@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +26,8 @@ import co.kaua.palacepetz.R;
 public class PopularProducts_Adapter extends RecyclerView.Adapter<PopularProducts_Adapter.MyHolderProducts> {
     ArrayList<DtoProducts> dtoProductsArrayList;
     Context context;
+    // Allows to remember the last item shown on screen
+    private int lastPosition = -1;
 
     public PopularProducts_Adapter(ArrayList<DtoProducts> dtoProductsArrayList, Context context) {
         this.dtoProductsArrayList = dtoProductsArrayList;
@@ -40,13 +44,21 @@ public class PopularProducts_Adapter extends RecyclerView.Adapter<PopularProduct
     @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     @Override
     public void onBindViewHolder(@NonNull MyHolderProducts holder, int position) {
+
+
+        if (position % 2 == 0)
+            // Here you apply the animation when the view is bound
+            setAnimation2(holder.itemView, position);
+        else
+            // Here you apply the animation when the view is bound
+            setAnimation(holder.itemView, position);
+
         Picasso.get().load(dtoProductsArrayList.get(position).getImage_prod()).into(holder.img_popularProduct);
         holder.txt_nameProd_popular.setText(dtoProductsArrayList.get(position).getNm_product());
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("pt", "BR"));
         numberFormat.setMaximumFractionDigits(2);
         holder.txt_price_popularProduct.setText("R$ " + numberFormat.format(dtoProductsArrayList.get(position).getProduct_price()));
         holder.container_popularProducts.setElevation(10);
-        holder.imgStarPopularProd.setElevation(21);
         switch (dtoProductsArrayList.get(position).getNm_category()){
             case  "Alimentos":
                 holder.container_popularProducts.setBackground( context.getDrawable(R.drawable.background_racoes) );
@@ -65,15 +77,37 @@ public class PopularProducts_Adapter extends RecyclerView.Adapter<PopularProduct
             holder.container_popularProducts.setBackground( context.getDrawable(R.drawable.background_low_stock) );
 
         String fullDesc = dtoProductsArrayList.get(position).getDescription();
-        if (fullDesc.length() <= 60)
+        if (fullDesc.length() <= 63)
             holder.txt_desc_popularProduct.setText(fullDesc);
         else{
             StringBuilder shortDesc = new StringBuilder();
             String[] splitDesc = fullDesc.split("");
-            for (int i = 0; i < 61; i++){
+            for (int i = 0; i < 64; i++){
                 shortDesc.append(splitDesc[i]);
             }
             holder.txt_desc_popularProduct.setText(shortDesc + "...");
+        }
+    }
+
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.move_to_left_popular);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
+
+    private void setAnimation2(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.move_to_right_popular);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
         }
     }
 
@@ -84,7 +118,7 @@ public class PopularProducts_Adapter extends RecyclerView.Adapter<PopularProduct
 
     static class MyHolderProducts extends RecyclerView.ViewHolder{
         TextView txt_nameProd_popular, txt_desc_popularProduct, txt_price_popularProduct;
-        ImageView img_popularProduct, imgStarPopularProd;
+        ImageView img_popularProduct;
         ConstraintLayout container_popularProducts;
 
         public MyHolderProducts(@NonNull View itemView) {
@@ -93,7 +127,6 @@ public class PopularProducts_Adapter extends RecyclerView.Adapter<PopularProduct
             txt_desc_popularProduct = itemView.findViewById(R.id.txt_desc_popularProduct);
             txt_price_popularProduct = itemView.findViewById(R.id.txt_price_popularProduct);
             img_popularProduct = itemView.findViewById(R.id.img_popularProduct);
-            imgStarPopularProd = itemView.findViewById(R.id.imgStarPopularProd);
             container_popularProducts = itemView.findViewById(R.id.container_popularProducts);
         }
     }

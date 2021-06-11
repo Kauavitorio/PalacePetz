@@ -83,16 +83,18 @@ public class EditProfileActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(this);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        id_user = bundle.getInt("id_user");
-        FullName = bundle.getString("name_user");
-        _Email = bundle.getString("email_user");
-        cpf_user = bundle.getString("cpf_user");
-        address_user = bundle.getString("address_user");
-        complement = bundle.getString("complement");
-        zipcode = bundle.getString("zipcode");
-        phone_user = bundle.getString("phone_user");
-        birth_date = bundle.getString("birth_date");
-        img_user = bundle.getString("img_user");
+        if(bundle != null){
+            id_user = bundle.getInt("id_user");
+            FullName = bundle.getString("name_user");
+            _Email = bundle.getString("email_user");
+            cpf_user = bundle.getString("cpf_user");
+            address_user = bundle.getString("address_user");
+            complement = bundle.getString("complement");
+            zipcode = bundle.getString("zipcode");
+            phone_user = bundle.getString("phone_user");
+            birth_date = bundle.getString("birth_date");
+            img_user = bundle.getString("img_user");
+        }
         SetEditNamesChange();
         loadUserInfo();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

@@ -10,9 +10,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_popularProducts"
         android:layout_width="320dp"
-        android:layout_height="170dp"
+        android:layout_height="wrap_content"
+        android:maxHeight="165dp"
+        android:minWidth="165dp"
         android:background="@drawable/background_racoes"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,9 +25,11 @@
         <ImageView
             android:id="@+id/img_popularProduct"
             android:layout_width="120dp"
-            android:layout_height="match_parent"
+            android:layout_height="155dp"
+            android:layout_marginStart="10dp"
             android:src="@drawable/img_banner_acss_main"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
 
         <!-- Text Product Name -->
@@ -33,14 +37,15 @@
             android:id="@+id/txt_nameProd_popular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:maxWidth="165dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/segoe_ui_bold"
             android:text="@string/product_name"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/img_popularProduct"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Text Description -->
@@ -48,13 +53,12 @@
             android:id="@+id/txt_desc_popularProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:maxWidth="170dp"
-            android:maxLength="64"
+            android:layout_marginStart="10dp"
+            android:maxWidth="165dp"
+            android:maxLength="66"
             android:text="@string/description"
             android:textColor="@color/hint"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_popularProduct"
             app:layout_constraintTop_toBottomOf="@+id/txt_nameProd_popular" />
 
         <!-- Text Price Popular Product -->
@@ -62,23 +66,14 @@
             android:id="@+id/txt_price_popularProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginBottom="18dp"
             android:text="@string/price"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/img_popularProduct" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/imgStarPopularProd"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_star"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
