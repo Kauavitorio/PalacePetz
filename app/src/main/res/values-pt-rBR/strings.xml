@@ -227,4 +227,7 @@
     <string name="need_register_birth">Para que você possa registrar um animal de estimação é necessário registrar sua data de aniversário, pois para ter um animal é necessário ser maior de idade.\nGostaria de registrar sua data de aniversário?</string>
     <string name="to_register_a_pet_need_be_biggest_18">Apenas maiores de 18 anos pode registrar um animal.</string>
     <string name="version">Versão</string>
+    <string name="your_are_welcome">SEJA BEM-VINDO!</string>
+    <string name="firstTime_desc">Como é o seu primeiro acesso, escolha uma forma para prosseguir.</string>
+    <string name="continue_without_account">CONTINUAR SEM CONTA</string>
 </resources>

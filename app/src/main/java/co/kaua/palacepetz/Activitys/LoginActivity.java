@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Ids();
+        getWindow().setStatusBarColor(getColor(R.color.background_bottom));
         cardBtn_SingIn.setElevation(20);
         verifyIfUsersLogged();
         Intent intent = getIntent();
@@ -204,6 +205,10 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("pref_img_user", img_user);
                             editor.putBoolean("isDevicePre", isDevicePre);
                             editor.apply();
+                            SharedPreferences prefsFirst = getSharedPreferences("First_See", MODE_PRIVATE);
+                            SharedPreferences.Editor prefsFirstIntro = prefsFirst.edit();
+                            prefsFirstIntro.putBoolean("viewed", true);
+                            prefsFirstIntro.apply();
                             GoToMain(id_user, name_user, emailUser, cpf_user, address_user, complement,
                                     zipcode, phone_user, birth_date, img_user, password);
                         }else{

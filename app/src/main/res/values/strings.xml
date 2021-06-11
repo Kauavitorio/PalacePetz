@@ -274,4 +274,7 @@
     <string name="need_register_birth">In order for you to register a pet, you must register your birthday, as you must be of legal age to have a pet.\nWould you like to register your birthday?</string>
     <string name="to_register_a_pet_need_be_biggest_18">Only people over 18 years old can register an animal.</string>
     <string name="version">Version</string>
+    <string name="your_are_welcome">You\'re welcome!</string>
+    <string name="firstTime_desc">How is your first access, choose a way to continue.</string>
+    <string name="continue_without_account">CONTINUE WITHOUT ACCOUNT</string>
 </resources>
