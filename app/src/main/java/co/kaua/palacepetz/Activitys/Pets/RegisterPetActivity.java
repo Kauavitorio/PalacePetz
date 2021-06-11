@@ -7,12 +7,15 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -22,27 +25,36 @@ import com.squareup.picasso.Picasso;
 import java.util.Objects;
 
 import co.kaua.palacepetz.Adapters.LoadingDialog;
+import co.kaua.palacepetz.Adapters.Warnings;
+import co.kaua.palacepetz.Data.Pets.DtoPets;
+import co.kaua.palacepetz.Data.Pets.PetsServices;
 import co.kaua.palacepetz.Firebase.ConfFirebase;
 import co.kaua.palacepetz.Methods.Userpermissions;
 import co.kaua.palacepetz.R;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterPetActivity extends AppCompatActivity {
     private LottieAnimationView arrowGoBackRegisterPet;
     private CircleImageView icon_RegisterPet_PetImage;
+    private TextView txt_title_register_pet, txtRegisterNewPet;
     private CardView btnUploadPetImage, cardBtn_RegisterPet;
-    private EditText Register_PetName;
+    private EditText Register_PetName, Register_PetAge, Register_PetWeight, Register_PetSpecies, Register_PetBreed;
     private final String[] permissions = { Manifest.permission.READ_EXTERNAL_STORAGE };
-
+    private InputMethodManager imm;
 
     //  User information
     private int id_user;
-    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user;
 
     //  Pet Info
-    private String petName, img_pet;
+    private String petName = "", img_pet = "", breed_animal, age_animal, weight_animal, species_animal;
+
+    //  Pet to edit
+    int cd_animal;
 
     //  Firebase | Retrofit
     StorageReference storageReference;
@@ -60,8 +72,27 @@ public class RegisterPetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_pet);
         Ids();
 
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
         Bundle bundle = getIntent().getExtras();
         id_user = bundle.getInt("id_user");
+        cd_animal = bundle.getInt("cd_animal");
+        if(cd_animal != 0){
+            txtRegisterNewPet.setText(R.string.ok);
+            txt_title_register_pet.setText(R.string.edit_pet);
+            petName = bundle.getString("petName");
+            img_pet = bundle.getString("img_pet");
+            breed_animal = bundle.getString("breed_animal");
+            age_animal = bundle.getString("age_animal");
+            weight_animal = bundle.getString("weight_animal").replace(" ", "");
+            species_animal = bundle.getString("species_animal");
+            Register_PetName.setText(petName);
+            Picasso.get().load(img_pet).into(icon_RegisterPet_PetImage);
+            Register_PetBreed.setText(breed_animal);
+            Register_PetAge.setText(age_animal);
+            Register_PetWeight.setText(weight_animal);
+            Register_PetSpecies.setText(species_animal);
+        }
 
         arrowGoBackRegisterPet.setOnClickListener(v -> finish());
 
@@ -70,13 +101,91 @@ public class RegisterPetActivity extends AppCompatActivity {
         icon_RegisterPet_PetImage.setOnClickListener(v -> OpenGallery());
 
         cardBtn_RegisterPet.setOnClickListener(v -> {
-            petName = Register_PetName.getText().toString();
+            cardBtn_RegisterPet.setElevation(0);
+            petName = Register_PetName.getText().toString().trim();
+            breed_animal = Register_PetBreed.getText().toString().trim();
+            age_animal = Register_PetAge.getText().toString();
+            weight_animal = Register_PetWeight.getText().toString().trim() + " " + getString(R.string.kg);
+            species_animal = Register_PetSpecies.getText().toString().trim();
+            if (petName.replace(" ", "").equals("") || petName.length() <= 0)
+                showError(Register_PetName, getString(R.string.need_to_insert_petName));
+            else if(breed_animal.replace(" ", "").equals("") || breed_animal.length() <= 0)
+                showError(Register_PetBreed, getString(R.string.need_to_insert_petBreed));
+            else if(age_animal.replace(" ", "").equals("") || age_animal.length() <= 0)
+                showError(Register_PetAge, getString(R.string.need_to_insert_petAge));
+            else if(weight_animal.replace(" ", "").equals("") || weight_animal.length() <= 0)
+                showError(Register_PetWeight, getString(R.string.need_to_insert_petWeight));
+            else if(species_animal.replace(" ", "").equals("") || species_animal.length() <= 0)
+                showError(Register_PetSpecies, getString(R.string.need_to_insert_petSpecies));
+            else{
+                loadingDialog = new LoadingDialog(RegisterPetActivity.this);
+                loadingDialog.startLoading();
+                if(cd_animal != 0){
+                    PetsServices petsServices = userRetrofit.create(PetsServices.class);
+                    DtoPets dtoPets = new DtoPets(cd_animal, petName, breed_animal, age_animal, weight_animal, species_animal, img_pet, id_user);
+                    Call<DtoPets> call  = petsServices.updatePet(dtoPets);
+                    call.enqueue(new Callback<DtoPets>() {
+                        @Override
+                        public void onResponse(@NonNull Call<DtoPets> call, @NonNull Response<DtoPets> response) {
+                            loadingDialog.dimissDialog();
+                            if (response.code() == 200)
+                                finish();
+                            else if(response.code() == 406){
+                                Warnings.show_BadPetName_Warning(RegisterPetActivity.this);
+                            }else{
+                                finish();
+                                Warnings.showWeHaveAProblem(RegisterPetActivity.this);
+                            }
+                        }
+                        @Override
+                        public void onFailure(@NonNull Call<DtoPets> call, @NonNull Throwable t) {
+                            loadingDialog.dimissDialog();
+                            finish();
+                            Warnings.showWeHaveAProblem(RegisterPetActivity.this);
+                        }
+                    });
+                }else{
+                    PetsServices petsServices = userRetrofit.create(PetsServices.class);
+                    DtoPets dtoPets = new DtoPets(petName, breed_animal, age_animal, weight_animal, species_animal, img_pet, id_user);
+                    Call<DtoPets> call  = petsServices.insertNewPet(dtoPets);
+                    call.enqueue(new Callback<DtoPets>() {
+                        @Override
+                        public void onResponse(@NonNull Call<DtoPets> call, @NonNull Response<DtoPets> response) {
+                            loadingDialog.dimissDialog();
+                            if (response.code() == 201)
+                                finish();
+                            else if(response.code() == 406){
+                                Warnings.show_BadPetName_Warning(RegisterPetActivity.this);
+                            }else if(response.code() == 409){
+                                Toast.makeText(RegisterPetActivity.this, getString(R.string.this_pet_is_already_registered), Toast.LENGTH_SHORT).show();
+                            }else{
+                                finish();
+                                Warnings.showWeHaveAProblem(RegisterPetActivity.this);
+                            }
+                        }
+                        @Override
+                        public void onFailure(@NonNull Call<DtoPets> call, @NonNull Throwable t) {
+                            loadingDialog.dimissDialog();
+                            finish();
+                            Warnings.showWeHaveAProblem(RegisterPetActivity.this);
+                        }
+                    });
+                }
+            }
         });
+    }
+
+    private void showError(@NonNull EditText editText, String error){
+        editText.setError(error);
+        editText.requestFocus();
+        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+        cardBtn_RegisterPet.setElevation(20);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        loadingDialog = new LoadingDialog(RegisterPetActivity.this);
         storageReference = ConfFirebase.getFirebaseStorage().child("user").child("pets").child("User_" + id_user + "_" + petName);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri filePath = data.getData();
@@ -95,6 +204,7 @@ public class RegisterPetActivity extends AppCompatActivity {
                         return storageReference .getDownloadUrl();
                     }).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
+                            loadingDialog.dimissDialog();
                             Uri downloadUri = task.getResult();
                             img_pet = downloadUri+"";
                             Picasso.get().load(img_pet).into(icon_RegisterPet_PetImage);
@@ -128,8 +238,9 @@ public class RegisterPetActivity extends AppCompatActivity {
     }
 
     private void OpenGallery() {
+        petName = Register_PetName.getText().toString().trim();
         //noinspection ConstantConditions
-        if (petName.equals(" ") || petName.length() <= 0 || petName == null)
+        if (petName.equals(" ") || petName.length() <= 0 || petName == null || petName.trim().equals(" ") || petName.replace(" ", "").length() <= 0)
             Toast.makeText(this, getString(R.string.first_insert_petName), Toast.LENGTH_SHORT).show();
         else{
             Userpermissions.validatePermissions(permissions, RegisterPetActivity.this, 1);
@@ -138,6 +249,7 @@ public class RegisterPetActivity extends AppCompatActivity {
                 Intent openGallery = new Intent();
                 openGallery.setType("image/*");
                 openGallery.setAction(Intent.ACTION_PICK);
+                //noinspection deprecation
                 startActivityForResult(Intent.createChooser(openGallery, "Select Image"), PICK_IMAGE_REQUEST);
             }
         }
@@ -150,5 +262,12 @@ public class RegisterPetActivity extends AppCompatActivity {
         btnUploadPetImage = findViewById(R.id.btnUploadPetImage);
         cardBtn_RegisterPet = findViewById(R.id.cardBtn_RegisterPet);
         Register_PetName = findViewById(R.id.Register_PetName);
+        Register_PetAge = findViewById(R.id.Register_PetAge);
+        Register_PetWeight = findViewById(R.id.Register_PetWeight);
+        Register_PetSpecies = findViewById(R.id.Register_PetSpecies);
+        Register_PetBreed = findViewById(R.id.Register_PetBreed);
+        txt_title_register_pet = findViewById(R.id.txt_title_register_pet);
+        txtRegisterNewPet = findViewById(R.id.txtRegisterNewPet);
+        cardBtn_RegisterPet.setElevation(20);
     }
 }

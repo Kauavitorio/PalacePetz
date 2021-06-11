@@ -83,7 +83,6 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         spinner_paymentForm.setAdapter(adapterPaymentFormList);
     }
 
-
     private void Ids() {
         ScheduleAppoint_date = findViewById(R.id.ScheduleAppoint_date);
         ScheduleAppoint_time = findViewById(R.id.ScheduleAppoint_time);

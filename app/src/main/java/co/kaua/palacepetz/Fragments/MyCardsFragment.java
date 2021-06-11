@@ -25,8 +25,6 @@ import co.kaua.palacepetz.R;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +32,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings("ALL")
 public class MyCardsFragment extends Fragment implements IOnBackPressed {
     //  Screen Items
     private RecyclerView recyclerView_Cards;
@@ -135,7 +133,7 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
         transaction.commit();
     }
 
-    private void Ids(View view) {
+    private void Ids(@NonNull View view) {
         recyclerView_Cards = view.findViewById(R.id.recyclerView_Cards);
         cardContainer_AddCard = view.findViewById(R.id.cardContainer_AddCard);
         BtnMyCard_AddCard = view.findViewById(R.id.BtnMyCard_AddCard);
@@ -146,12 +144,15 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
 
     @Override
     public boolean onBackPressed() {
-        if (_Email != null) {
-            //action not popBackStack
-            return true;
-        } else {
-            Toast.makeText(getContext(), "False em", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+        //action not popBackStack
+        requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_top));
+        MainFragment mainFragment = new MainFragment();
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putString("email_user", _Email);
+        mainFragment.setArguments(args);
+        transaction.replace(R.id.frameLayoutMain, mainFragment);
+        transaction.commit();
+        return true;
     }
 }

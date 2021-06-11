@@ -105,20 +105,15 @@ public class MyOrdersFragment extends Fragment implements IOnBackPressed {
 
     @Override
     public boolean onBackPressed() {
-        if (_Email != null) {
-            //action not popBackStack
-            requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_top));
-            MainFragment mainFragment = new MainFragment();
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            Bundle args = new Bundle();
-            args.putString("email_user", _Email);
-            args.putInt("id_user", _IdUser);
-            mainFragment.setArguments(args);
-            transaction.replace(R.id.frameLayoutMain, mainFragment);
-            transaction.commit();
-            return true;
-        } else {
-            return false;
-        }
+        //action not popBackStack
+        requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_top));
+        MainFragment mainFragment = new MainFragment();
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putInt("id_user", _IdUser);
+        mainFragment.setArguments(args);
+        transaction.replace(R.id.frameLayoutMain, mainFragment);
+        transaction.commit();
+        return true;
     }
 }

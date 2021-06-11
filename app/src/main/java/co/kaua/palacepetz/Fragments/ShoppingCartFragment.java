@@ -2,12 +2,10 @@ package co.kaua.palacepetz.Fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,10 +31,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Objects;
 
 public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
     //  Screen Items
@@ -90,7 +85,10 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
             transaction.commit();
         });
 
-        swipe_recycler_shoppingCart.setOnRefreshListener(this::LoadCart);
+        swipe_recycler_shoppingCart.setOnRefreshListener(() -> {
+            CheckShoppingCart();
+            swipe_recycler_shoppingCart.setRefreshing(false);
+        });
 
         btnBuy_shoppingCart.setOnClickListener(v -> {
             btnBuy_shoppingCart.setElevation(0);
@@ -120,6 +118,9 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
     public void CheckShoppingCart(){
         loadingDialog = new LoadingDialog(getActivity());
         loadingDialog.startLoading();
+        MainActivity main = (MainActivity) getContext();
+        assert main != null;
+        main.CheckShoppingCart();
         CartServices services = retrofitCart.create(CartServices.class);
         Call<DtoShoppingCart> cartCall = services.getCartUser(_IdUser);
         cartCall.enqueue(new Callback<DtoShoppingCart>() {
@@ -159,7 +160,7 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
         asyncShoppingCart.execute();
     }
 
-    private void Ids(View view) {
+    private void Ids(@NonNull View view) {
         btn_seeProducts_ShoppingCart = view.findViewById(R.id.btn_seeProducts_ShoppingCart);
         container_noItemsOnCart = view.findViewById(R.id.container_noItemsOnCart);
         RecyclerViewCart = view.findViewById(R.id.RecyclerViewCart);
@@ -168,6 +169,7 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
         txt_total_shoppingCart = view.findViewById(R.id.txt_total_shoppingCart);
         txt_OrderNow_ShoppingCart = view.findViewById(R.id.txt_OrderNow_ShoppingCart);
         btnBuy_shoppingCart = view.findViewById(R.id.btnBuy_shoppingCart);
+        txt_total_shoppingCart.setText(requireContext().getString(R.string.loading));
     }
 
     @Override
@@ -175,6 +177,7 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
         super.onResume();
         if (CountToReload != 0){
             CountToReload = 0;
+            requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_menu_sheet));
             MainActivity mainActivity = (MainActivity) getContext();
             assert mainActivity != null;
             mainActivity.CheckShoppingCart();
@@ -186,24 +189,20 @@ public class ShoppingCartFragment extends Fragment implements IOnBackPressed {
     public void onPause() {
         super.onPause();
         CountToReload = 1;
+        requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_top));
     }
 
     @Override
     public boolean onBackPressed() {
-        if (_Email != null) {
-            //action not popBackStack
-            requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_top));
-            //action not popBackStack
-            MainFragment mainFragment = new MainFragment();
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            Bundle args = new Bundle();
-            args.putString("email_user", _Email);
-            mainFragment.setArguments(args);
-            transaction.replace(R.id.frameLayoutMain, mainFragment);
-            transaction.commit();
-            return true;
-        } else {
-            return false;
-        }
+        //action not popBackStack
+        requireActivity().getWindow().setNavigationBarColor(requireActivity().getColor(R.color.background_top));
+        MainFragment mainFragment = new MainFragment();
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putString("email_user", _Email);
+        mainFragment.setArguments(args);
+        transaction.replace(R.id.frameLayoutMain, mainFragment);
+        transaction.commit();
+        return true;
     }
 }

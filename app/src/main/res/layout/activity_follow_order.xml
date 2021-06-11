@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    tools:context=".Activitys.RegisterAddressActivity">
+
+    <!-- Btn Go Back -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnExitFollow"
+        android:layout_width="50dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="@color/background_bottom"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Arrow Back -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_rawRes="@raw/arrow_back" />
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Map Fragment -->
+    <fragment
+        android:id="@+id/map_follow_order"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideLine_followOrder"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".Activitys.RegisterAddressActivity"
+        tools:ignore="FragmentTagUsage" />
+
+    <!-- Container Information -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="310dp"
+        android:background="@drawable/background_followorder_adapter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingStart="50dp"
+        android:paddingBottom="30dp"
+        tools:ignore="RtlSymmetry">
+
+        <!-- Image Bag -->
+        <ImageView
+            android:id="@+id/imageViewbag_followorder"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/bag_followorder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <!-- Text Order Code -->
+        <LinearLayout
+            android:id="@+id/linearLayout_orderCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintStart_toEndOf="@+id/imageViewbag_followorder"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txt_OrderCode"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/order"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+
+        <!-- Progress Bars -->
+        <LinearLayout
+            android:id="@+id/linearLayout_progress_followorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/imageViewmap_followorder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewbag_followorder">
+
+            <ProgressBar
+                android:id="@+id/progress_state01"
+                style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginBottom="10dp"
+                android:progressDrawable="@drawable/progress_set_followorder" />
+
+            <ProgressBar
+                android:id="@+id/progress_state02"
+                style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginBottom="10dp"
+                android:progressDrawable="@drawable/progress_set_followorder" />
+
+            <ProgressBar
+                android:id="@+id/progress_state03"
+                style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginBottom="10dp"
+                android:progressDrawable="@drawable/progress_set_followorder" />
+
+            <ProgressBar
+                android:id="@+id/progress_state04"
+                style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginBottom="10dp"
+                android:progressDrawable="@drawable/progress_set_followorder" />
+
+            <ProgressBar
+                android:id="@+id/progress_state05"
+                style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginBottom="10dp"
+                android:progressDrawable="@drawable/progress_set_followorder" />
+
+            <ProgressBar
+                android:id="@+id/progress_state06"
+                style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:progressDrawable="@drawable/progress_set_followorder" />
+
+        </LinearLayout>
+
+        <!-- Container Delivery Time -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout_address_followorder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout_progress_followorder"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_orderCode">
+
+            <TextView
+                android:id="@+id/txtBase_deliveryforecast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delivery_time"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_deliveryForecast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*****"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtBase_deliveryforecast"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/animation_delivery_followorder"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txtBase_deliveryforecast"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/chronometer"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Img Map -->
+        <ImageView
+            android:id="@+id/imageViewmap_followorder"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/map_followorder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <!-- Text Address -->
+        <LinearLayout
+            android:id="@+id/linearLayout_address_followorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="20dp"
+            android:maxWidth="200dp"
+            android:maxHeight="60dp"
+            android:minWidth="200dp"
+            android:minHeight="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewmap_followorder"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_progress_followorder">
+
+            <TextView
+                android:id="@+id/txt_address_followOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="200dp"
+                android:maxHeight="60dp"
+                android:minWidth="200dp"
+                android:minHeight="20dp"
+                android:text="@string/address"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- guide Line -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLine_followOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="564dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

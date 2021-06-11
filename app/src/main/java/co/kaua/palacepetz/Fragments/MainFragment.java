@@ -15,15 +15,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.Products.AsyncPopularProductsMain;
 import co.kaua.palacepetz.Data.Products.DtoProducts;
 import co.kaua.palacepetz.R;
 
 import java.util.ArrayList;
-import java.util.Objects;
+
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
 
 public class MainFragment extends Fragment {
-    private ConstraintLayout btn_services_shortCut, btn_cards_shortCut, btn_myOrders_shortCut;
+    private ConstraintLayout btn_services_shortCut, btn_allProducts_shortCut, btn_cards_shortCut, btn_myOrders_shortCut;
     private RecyclerView RecyclerPopularProducts;
     private LottieAnimationView loadingPopularProducts;
     private final ArrayList<DtoProducts> arrayListDto = new ArrayList<>();
@@ -33,7 +40,6 @@ public class MainFragment extends Fragment {
     private static FragmentTransaction transaction;
 
     //  User information
-    private static String _Email;
     private static int _IdUser;
 
     @Nullable
@@ -43,14 +49,13 @@ public class MainFragment extends Fragment {
         Ids();
         args = getArguments();
         assert args != null;
-        _Email = args.getString("email_user");
         _IdUser = args.getInt("id_user");
         createShortCutsClick();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         RecyclerPopularProducts.setLayoutManager(layoutManager);
         arrayListDto.clear();
-        AsyncPopularProductsMain async = new AsyncPopularProductsMain(RecyclerPopularProducts, loadingPopularProducts, arrayListDto, _IdUser, _Email, getActivity());
+        AsyncPopularProductsMain async = new AsyncPopularProductsMain(RecyclerPopularProducts, loadingPopularProducts, arrayListDto, _IdUser, getActivity());
         //noinspection unchecked
         async.execute();
 
@@ -58,12 +63,10 @@ public class MainFragment extends Fragment {
     }
 
     private void createShortCutsClick() {
-
         //  Ser click
         btn_services_shortCut.setOnClickListener(v -> {
             ServicesFragment servicesFragment = new ServicesFragment();
             args = new Bundle();
-            args.putString("email_user", _Email);
             args.putInt("id_user", _IdUser);
             servicesFragment.setArguments(args);
             transaction = requireActivity().getSupportFragmentManager().beginTransaction();
@@ -73,19 +76,41 @@ public class MainFragment extends Fragment {
 
         //  My Cards click
         btn_cards_shortCut.setOnClickListener(v -> {
-            MyCardsFragment myCardsFragment = new MyCardsFragment();
-            args = new Bundle();
-            args.putString("email_user", _Email);
-            args.putInt("id_user", _IdUser);
-            myCardsFragment.setArguments(args);
-            transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frameLayoutMain, myCardsFragment);
-            transaction.commit();
+            if(_IdUser != 0){
+                MyCardsFragment myCardsFragment = new MyCardsFragment();
+                args = new Bundle();
+                args.putInt("id_user", _IdUser);
+                myCardsFragment.setArguments(args);
+                transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayoutMain, myCardsFragment);
+                transaction.commit();
+            }else
+                Warnings.NeedLoginAlert(requireActivity());
         });
 
         //  My Orders click
         btn_myOrders_shortCut.setOnClickListener(v -> {
+            if (_IdUser != 0){
+                MyOrdersFragment myOrdersFragment = new MyOrdersFragment();
+                args = new Bundle();
+                args.putInt("id_user", _IdUser);
+                myOrdersFragment.setArguments(args);
+                transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayoutMain, myOrdersFragment);
+                transaction.commit();
+            }else
+                Warnings.NeedLoginAlert(requireActivity());
+        });
 
+        //  All Products
+        btn_allProducts_shortCut.setOnClickListener(v -> {
+            AllProductsFragment productsFragment = new AllProductsFragment();
+            args = new Bundle();
+            args.putInt("id_user", _IdUser);
+            productsFragment.setArguments(args);
+            transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameLayoutMain, productsFragment);
+            transaction.commit();
         });
     }
 
@@ -95,6 +120,7 @@ public class MainFragment extends Fragment {
         btn_myOrders_shortCut = view.findViewById(R.id.btn_myOrders_shortCut);
         RecyclerPopularProducts = view.findViewById(R.id.RecyclerPopularProducts);
         loadingPopularProducts = view.findViewById(R.id.loadingPopularProducts);
+        btn_allProducts_shortCut = view.findViewById(R.id.btn_allProducts_shortCut);
     }
 
     @Override

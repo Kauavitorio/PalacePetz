@@ -1,23 +1,46 @@
 package co.kaua.palacepetz.Adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.view.View;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
-import co.kaua.palacepetz.Activitys.CreateAccountActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import co.kaua.palacepetz.Activitys.LoginActivity;
 import co.kaua.palacepetz.Activitys.MainActivity;
+import co.kaua.palacepetz.Activitys.Pets.AllPetsActivity;
 import co.kaua.palacepetz.Activitys.RegisterAddressActivity;
+import co.kaua.palacepetz.Data.Pets.DtoPets;
+import co.kaua.palacepetz.Data.Pets.PetsServices;
 import co.kaua.palacepetz.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Warnings {
+@SuppressWarnings("FieldCanBeLocal")
+public class Warnings extends MainActivity {
     private static Dialog WarningError, Warning_Email_Password, warning_emailNotVerified, warning_emailSend,
-            warning_badUsername, OrderConfirmation;
+            warning_badUsername, OrderConfirmation, LogOutDialog, EmployeeWarning, warning_badPetName, PetWarning, NeedLoginWarning;
+    @SuppressLint("StaticFieldLeak")
+    private static LoadingDialog loadingDialog;
+
+    //  Retrofit
+    private final static Retrofit retrofitUser = new Retrofit.Builder()
+            .baseUrl("https://palacepetzapi.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
     public static void showWeHaveAProblem(Context context){
         WarningError = new Dialog(context);
@@ -144,5 +167,193 @@ public class Warnings {
         btnOk_OrderConfirmation.setOnClickListener(v -> OrderConfirmation.dismiss());
 
         OrderConfirmation.show();
+    }
+
+    //  Create Show Logout Message
+    public static void LogoutDialog(Activity context, @NonNull BottomSheetDialog bottomSheetDialog) {
+        LogOutDialog = new Dialog(context);
+
+        //  Set preferences
+        SharedPreferences mPrefs;
+        mPrefs = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        LogOutDialog.setContentView(R.layout.adapter_comum_alert);
+        LogOutDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = LogOutDialog.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = LogOutDialog.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = LogOutDialog.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = LogOutDialog.findViewById(R.id.txtPositiveBtn_alert);
+        txtMsg_alert.setText(context.getString(R.string.really_want_logOut));
+        txtPositiveBtn_alert.setText(context.getString(R.string.yes));
+
+        PositiveBtn_alert.setOnClickListener(v -> {
+            mPrefs.edit().clear().apply();
+            Intent goBack_toLogin = new Intent(context, LoginActivity.class);
+            context.startActivity(goBack_toLogin);
+            context.finish();
+        });
+
+        txtCancel_alert.setOnClickListener(v -> LogOutDialog.dismiss());
+
+        bottomSheetDialog.dismiss();
+        LogOutDialog.show();
+    }
+
+    //  Create Show Logout Message
+    public static void EmployeeAlert(Activity context) {
+        EmployeeWarning = new Dialog(context);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        EmployeeWarning.setContentView(R.layout.adapter_comum_alert);
+        EmployeeWarning.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = EmployeeWarning.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = EmployeeWarning.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = EmployeeWarning.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = EmployeeWarning.findViewById(R.id.txtPositiveBtn_alert);
+        txtMsg_alert.setText(context.getString(R.string.employee_warning));
+        txtPositiveBtn_alert.setText(context.getString(R.string.ok));
+        txtCancel_alert.setVisibility(View.GONE);
+
+        PositiveBtn_alert.setOnClickListener(v -> EmployeeWarning.dismiss());
+
+        EmployeeWarning.show();
+    }
+
+    //  Create Method for show alert of bad pet Name
+    public static void show_BadPetName_Warning(Context context){
+        warning_badPetName = new Dialog(context);
+        CardView btnOk_InappropriateUsername;
+        TextView txt_wehaveAProblemAlert;
+        warning_badPetName.setContentView(R.layout.adapter_warning_badusername);
+        warning_badPetName.setCancelable(false);
+        btnOk_InappropriateUsername = warning_badPetName.findViewById(R.id.btnOk_InappropriateUsername);
+        txt_wehaveAProblemAlert = warning_badPetName.findViewById(R.id.txt_wehaveAProblemAlert);
+        txt_wehaveAProblemAlert.setText(R.string.inappropriatePetName);
+
+        warning_badPetName.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        btnOk_InappropriateUsername.setOnClickListener(v -> warning_badPetName.dismiss());
+        warning_badPetName.show();
+    }
+
+    //  Create Show Delete Pet
+    public static void DeletePetAlert(Activity context, int cd_animal, int id_user) {
+        PetWarning = new Dialog(context);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        PetWarning.setContentView(R.layout.adapter_comum_alert);
+        PetWarning.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = PetWarning.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = PetWarning.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = PetWarning.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = PetWarning.findViewById(R.id.txtPositiveBtn_alert);
+        txtMsg_alert.setText(context.getString(R.string.want_delete_this_pet));
+        txtPositiveBtn_alert.setText(context.getString(R.string.yes));
+
+        PositiveBtn_alert.setOnClickListener(v -> {
+            loadingDialog = new LoadingDialog(context);
+            loadingDialog.startLoading();
+            PetsServices petsServices = retrofitUser.create(PetsServices.class);
+            Call<DtoPets> call = petsServices.DeletePet(cd_animal, id_user);
+            call.enqueue(new Callback<DtoPets>() {
+                @Override
+                public void onResponse(@NonNull Call<DtoPets> call, @NonNull Response<DtoPets> response) {
+                    loadingDialog.dimissDialog();
+                    PetWarning.dismiss();
+                    if (response.code() == 200){
+                        context.finish();
+                        Intent i = new Intent(context, AllPetsActivity.class);
+                        i.putExtra("id_user", id_user);
+                        context.startActivity(i);
+                        PetWarning.dismiss();
+                    }else
+                        showWeHaveAProblem(context);
+                }
+                @Override
+                public void onFailure(@NonNull Call<DtoPets> call, @NonNull Throwable t) {
+                    loadingDialog.dimissDialog();
+                    showWeHaveAProblem(context);
+                    PetWarning.dismiss();
+                }
+            });
+
+        });
+
+        txtCancel_alert.setOnClickListener(v -> PetWarning.dismiss());
+
+        PetWarning.show();
+    }
+
+    //  Create Show Need Login Message
+    public static void NeedLoginAlert(Activity context) {
+        NeedLoginWarning = new Dialog(context);
+        SharedPreferences mPrefs;
+        mPrefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        NeedLoginWarning.setContentView(R.layout.adapter_comum_alert);
+        NeedLoginWarning.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = NeedLoginWarning.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = NeedLoginWarning.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = NeedLoginWarning.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = NeedLoginWarning.findViewById(R.id.txtPositiveBtn_alert);
+        PositiveBtn_alert.setElevation(20);
+
+        txtMsg_alert.setText(context.getString(R.string.need_login_msg));
+        txtCancel_alert.setText(context.getString(R.string.no));
+        txtPositiveBtn_alert.setText(context.getString(R.string.yes));
+
+        PositiveBtn_alert.setOnClickListener(v -> {
+            PositiveBtn_alert.setElevation(0);
+            mPrefs.edit().clear().apply();
+            Intent login = new Intent(context, LoginActivity.class);
+            context.startActivity(login);
+            context.finish();
+            NeedLoginWarning.dismiss();
+        });
+
+        txtCancel_alert.setOnClickListener(c -> NeedLoginWarning.dismiss());
+
+        NeedLoginWarning.show();
+    }
+
+    //  Create Show Need Login Message but with shortCut
+    public static void NeedLoginWithShortCutAlert(Activity context, int shortCutId) {
+        NeedLoginWarning = new Dialog(context);
+        SharedPreferences mPrefs;
+        mPrefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        NeedLoginWarning.setContentView(R.layout.adapter_comum_alert);
+        NeedLoginWarning.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = NeedLoginWarning.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = NeedLoginWarning.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = NeedLoginWarning.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = NeedLoginWarning.findViewById(R.id.txtPositiveBtn_alert);
+        PositiveBtn_alert.setElevation(20);
+
+        txtMsg_alert.setText(context.getString(R.string.need_login_msg));
+        txtCancel_alert.setText(context.getString(R.string.no));
+        txtPositiveBtn_alert.setText(context.getString(R.string.yes));
+
+        PositiveBtn_alert.setOnClickListener(v -> {
+            PositiveBtn_alert.setElevation(0);
+            mPrefs.edit().clear().apply();
+            Intent login = new Intent(context, LoginActivity.class);
+            login.putExtra("shortcut", shortCutId);
+            context.startActivity(login);
+            context.finish();
+            NeedLoginWarning.dismiss();
+        });
+
+        txtCancel_alert.setOnClickListener(c -> NeedLoginWarning.dismiss());
+
+        NeedLoginWarning.show();
     }
 }

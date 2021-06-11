@@ -27,15 +27,13 @@ public class AsyncPopularProductsMain extends AsyncTask {
     private final ArrayList<DtoProducts> arrayListDto;
     private final Activity context;
     private final RecyclerView recyclerProducts;
-    private final String email_user;
     private final int _IdUser;
     private PopularProducts_Adapter products_adapter;
     private final LottieAnimationView loadingPopularProducts;
 
-    public AsyncPopularProductsMain(RecyclerView recyclerProducts, LottieAnimationView loadingPopularProducts, ArrayList<DtoProducts> arrayListDto, int _IdUser, String email_user, Activity context) {
+    public AsyncPopularProductsMain(RecyclerView recyclerProducts, LottieAnimationView loadingPopularProducts, ArrayList<DtoProducts> arrayListDto, int _IdUser, Activity context) {
         this.recyclerProducts = recyclerProducts;
         this.context = context;
-        this.email_user = email_user;
         this._IdUser = _IdUser;
         this.arrayListDto = arrayListDto;
         this.loadingPopularProducts = loadingPopularProducts;
@@ -103,7 +101,6 @@ public class AsyncPopularProductsMain extends AsyncTask {
                         goToDetails.putExtra("product_price", arrayListDto.get(position).getProduct_price());
                         goToDetails.putExtra("amount", arrayListDto.get(position).getAmount());
                         goToDetails.putExtra("id_user", _IdUser);
-                        goToDetails.putExtra("email_user", email_user);
                         context.startActivity(goToDetails);
                     }
 
