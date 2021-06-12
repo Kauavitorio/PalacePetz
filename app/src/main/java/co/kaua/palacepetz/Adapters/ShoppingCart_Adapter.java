@@ -85,8 +85,10 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
         holder.txt_name_prod_shoppingCart.setText(dtoProductsArrayList.get(position).getNm_product());
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("pt", "BR"));
         numberFormat.setMaximumFractionDigits(2);
-        holder.txtQt_prod_shoppingCart_ad.setText(dtoProductsArrayList.get(position).getProduct_amount() + "");
+        holder.txtQt_prod_shoppingCart_ad.setText((dtoProductsArrayList.get(position).getProduct_amount() < 10 ? "0" : "") + dtoProductsArrayList.get(position).getProduct_amount() + "");
         productAmount = dtoProductsArrayList.get(position).getProduct_amount();
+        holder.txt_unit_price_prod_shoppingCart.setText("R$ " + dtoProductsArrayList.get(position).getProduct_price()
+                + " (" + context.getString(R.string.unitary) + ")");
         holder.txt_full_price_prod_shoppingCart.setText("R$ " + numberFormat.format(Float.parseFloat(dtoProductsArrayList.get(position).getTotalPrice())));
         holder.card_adapter_shoppingCart.setElevation(15);
         UpdatePriceTexts(numberFormat);
@@ -114,13 +116,11 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
                                     if (response.code() == 200){
                                         loadingDialog.dimissDialog();
                                         MainActivity mainActivity = (MainActivity) context;
-                                        assert mainActivity != null;
                                         mainActivity.CheckShoppingCart();
                                         mainActivity.ReOpenCart();
                                     }else if(response.code() == 417){
                                         loadingDialog.dimissDialog();
                                         MainActivity mainActivity = (MainActivity) context;
-                                        assert mainActivity != null;
                                         mainActivity.CheckShoppingCart();
                                         mainActivity.ReOpenCart();
                                     }else{
@@ -162,7 +162,7 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
             productAmount = dtoProductsArrayList.get(holder.getAdapterPosition()).getProduct_amount();
             productAmount++;
             dtoProductsArrayList.get(holder.getAdapterPosition()).setProduct_amount(productAmount);
-            holder.txtQt_prod_shoppingCart_ad.setText(productAmount + "");
+            holder.txtQt_prod_shoppingCart_ad.setText((productAmount < 10 ? "0" : "") + productAmount + "");
             TotalPrice = Float.parseFloat(dtoProductsArrayList.get(holder.getAdapterPosition()).getProduct_price()) * productAmount;
             dtoProductsArrayList.get(holder.getAdapterPosition()).setTotalPrice(String.valueOf(TotalPrice));
             updatePrice(holder, TotalPrice);
@@ -178,7 +178,7 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
             productAmount = dtoProductsArrayList.get(holder.getAdapterPosition()).getProduct_amount();
             productAmount--;
             dtoProductsArrayList.get(holder.getAdapterPosition()).setProduct_amount(productAmount);
-            holder.txtQt_prod_shoppingCart_ad.setText(productAmount + "");
+            holder.txtQt_prod_shoppingCart_ad.setText((productAmount < 10 ? "0" : "") + productAmount + "");
             TotalPrice = Float.parseFloat(dtoProductsArrayList.get(holder.getAdapterPosition()).getProduct_price()) * productAmount;
             dtoProductsArrayList.get(holder.getAdapterPosition()).setTotalPrice(String.valueOf(TotalPrice));
             updatePrice(holder, TotalPrice);
@@ -220,15 +220,16 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
     }
 
     class MyHolderProducts extends RecyclerView.ViewHolder{
-        TextView txt_name_prod_shoppingCart, txt_full_price_prod_shoppingCart;
+        TextView txt_name_prod_shoppingCart, txt_full_price_prod_shoppingCart, txt_unit_price_prod_shoppingCart, btnLessQT_Prod_shoppingCart_ad, btnPlusQT_Prod_shoppingCart_ad;
         ImageView img_prod_shoppingCart;
         TextView txtQt_prod_shoppingCart_ad;
-        CardView card_adapter_shoppingCart, btnLessQT_Prod_shoppingCart_ad, btnPlusQT_Prod_shoppingCart_ad;
+        CardView card_adapter_shoppingCart;
 
         public MyHolderProducts(@NonNull View itemView) {
             super(itemView);
             txt_name_prod_shoppingCart = itemView.findViewById(R.id.txt_name_prod_shoppingCart);
             txt_full_price_prod_shoppingCart = itemView.findViewById(R.id.txt_full_price_prod_shoppingCart);
+            txt_unit_price_prod_shoppingCart = itemView.findViewById(R.id.txt_unit_price_prod_shoppingCart);
             img_prod_shoppingCart = itemView.findViewById(R.id.img_prod_shoppingCart);
             txtQt_prod_shoppingCart_ad = itemView.findViewById(R.id.txtQt_prod_shoppingCart_ad);
             card_adapter_shoppingCart = itemView.findViewById(R.id.card_adapter_shoppingCart);
