@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:minWidth="280dp"
         android:minHeight="200dp"
-        android:maxHeight="280dp"
+        android:maxHeight="300dp"
         app:cardCornerRadius="20dp">
 
         <!-- Container -->
@@ -20,7 +20,7 @@
             android:minWidth="280dp"
             android:minHeight="200dp"
             android:maxHeight="280dp"
-            android:padding="5dp">
+            android:padding="8dp">
 
             <!-- Title Text -->
             <TextView

@@ -38,10 +38,6 @@ public class SplashScreen extends AppCompatActivity {
     //  Create timer
     private final Handler timer = new Handler();
 
-    //  Set preferences
-    SharedPreferences mPrefs;
-    private static final String PREFS_NAME = "myPrefs";
-
     final String email = "usermobile@palacepetz.com";
     final String password = "mobile123456";
     private int MAIN_TIMER = 500;

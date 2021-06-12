@@ -4,7 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background_bottom">#88D6FF</color>
     <color name="background_top">#CFEDFD</color>
-    <color name="hint">#444B54</color>
+    <color name="hint">#EB444B54</color>
     <color name="cards_background">#F89B28</color>
     <color name="titles">#444B54</color>
     <color name="background_menu_sheet">#444B54</color>

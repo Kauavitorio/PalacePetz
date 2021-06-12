@@ -1,10 +1,12 @@
 package co.kaua.palacepetz.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
@@ -30,6 +32,7 @@ import co.kaua.palacepetz.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório
@@ -49,7 +52,7 @@ public class MainFragment extends Fragment {
     private Bundle args;
     private View view;
     private static FragmentTransaction transaction;
-    private final ArrayList<String> SuggestionsSearch = new ArrayList<>();
+    private ArrayList<String> SuggestionsSearch = new ArrayList<>();
     private String[] SuggestionsString;
     private static MainFragment instance;
 
@@ -86,10 +89,12 @@ public class MainFragment extends Fragment {
 
     public static MainFragment getInstance() { return instance; }
 
-    public void UpdateSearch(ArrayList<String> list){
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void UpdateSearch(@NonNull ArrayList<String> list){
         SuggestionsSearch.clear();
         SuggestionsSearch.addAll(Arrays.asList(SuggestionsString));
         SuggestionsSearch.addAll(list);
+        edit_search.setDropDownBackgroundDrawable(getContext().getDrawable(R.drawable.background_adapter_pets));
         edit_search.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, SuggestionsSearch));
     }
 
@@ -153,6 +158,8 @@ public class MainFragment extends Fragment {
             }
             return false;
         });
+
+        edit_search.setOnItemClickListener((parent, view, position, id) -> DoSearch((String) parent.getItemAtPosition(position)));
     }
 
     private void DoSearch(@NonNull String searchText) {

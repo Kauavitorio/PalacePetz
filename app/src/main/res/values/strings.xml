@@ -20,7 +20,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="sing_in">Sing in</string>
-    <string name="forgot_your_password_recover">Forgot your password? <u>Recover.</u></string>
+    <string name="forgot_your_password_recover">Forgot your password?</string>
     <string name="sing_up"><u>Sing up</u></string>
     <string name="remember_me">Remember me</string>
     <string name="create_account">Create Account</string>
@@ -32,7 +32,7 @@
     <string name="haveAccount_signIn">Already have an account? <u>Sign in.</u></string>
     <string name="necessary_to_insert_the_last_name">Necessary to insert the last name</string>
     <string name="necessary_to_insert_the_First_name">Necessary to insert the first name</string>
-    <string name="email_required">Email required</string>
+    <string name="email_required">Email or username is required</string>
     <string name="informed_email_is_invalid">Informed email is invalid</string>
     <string name="password_required">Password required</string>
     <string name="password_cannot_contain_spaces">Password cannot contain spaces</string>
@@ -283,4 +283,9 @@
     <string name="hello">Hello,</string>
     <string name="search_cant_be_null">The survey cannot be empty, please fill in the field.</string>
     <string name="product_not_fount">Something wrong here…\nThe informed product was not found, we apologize for the inconvenience.</string>
+    <string name="login_types">Email or username</string>
+    <string name="dont_have_an_account">Don\'t have an account? <b>Register</b></string>
+    <string name="sign_up">Sing up</string>
+    <string name="login_text">Let\'s sign you in.</string>
+    <string name="unitary">Unitary</string>
 </resources>
