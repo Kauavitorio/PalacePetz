@@ -288,4 +288,8 @@
     <string name="sign_up">Sing up</string>
     <string name="login_text">Let\'s sign you in.</string>
     <string name="unitary">Unitary</string>
+    <string name="comfort_and_agility">Comfort and agility</string>
+    <string name="technology">Technology</string>
+    <string name="desc_fountain_technology">PalaceFountain has a micro computer capable of maintaining direct communication with your device, sending and receiving information on how to add water, with a water pump capable of pumping 80 to 120 liters per hour.</string>
+    <string name="desc_fountain_comfort">With PalaceFountain you can add water to your pet without having to leave the couch.</string>
 </resources>

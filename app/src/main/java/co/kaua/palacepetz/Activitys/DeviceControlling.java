@@ -10,7 +10,6 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -25,7 +24,6 @@ import java.util.UUID;
 
 import com.airbnb.lottie.LottieAnimationView;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
-import co.kaua.palacepetz.Iot.ActivityHelper;
 import co.kaua.palacepetz.R;
 
 /**
@@ -54,8 +52,8 @@ public class DeviceControlling extends AppCompatActivity {
     final static String passPutWater = "92"; // Password to device put water
     final static String lightOn = "79";//off
     final static String lightOFF = "78";//off
-    final static String offDisconect = "000";//off
-    final static String onConnectBlue = "001";//off
+    final static String offDisconnect = "000"; //off
+    final static String onConnectBlue = "001"; //on
     SharedPreferences prefs;
 
 
@@ -172,7 +170,7 @@ public class DeviceControlling extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         try {
-            mBTSocket.getOutputStream().write(offDisconect.getBytes());
+            mBTSocket.getOutputStream().write(offDisconnect.getBytes());
             finish();
             if (mBTSocket != null && mIsBluetoothConnected) {
                 new DisConnectBT().execute();

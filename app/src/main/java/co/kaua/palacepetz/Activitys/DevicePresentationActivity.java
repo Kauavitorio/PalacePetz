@@ -75,8 +75,8 @@ public class DevicePresentationActivity extends AppCompatActivity {
         // fill list screen
         final List<DevicePresentation> mList = new ArrayList<>();
         mList.add(new DevicePresentation("Palace Fountain", getString(R.string.text_one_devicePresentation) ,R.drawable.device_presentation_palace_fountain));
-        mList.add(new DevicePresentation("Conforto e agilidade","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.device_presentation_dog_bread));
-        mList.add(new DevicePresentation("Tecnologia","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.device_presentation_with_chicken));
+        mList.add(new DevicePresentation(getString(R.string.comfort_and_agility),getString(R.string.desc_fountain_comfort),R.drawable.device_presentation_dog_bread));
+        mList.add(new DevicePresentation(getString(R.string.technology),  getString(R.string.desc_fountain_technology), R.drawable.device_presentation_with_chicken));
 
         // setup viewpager
         screenPager = findViewById(R.id.screen_viewpager);
@@ -110,14 +110,9 @@ public class DevicePresentationActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
+            public void onTabUnselected(TabLayout.Tab tab) {}
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
 
         // Get Started button click listener

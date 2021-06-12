@@ -241,4 +241,8 @@
     <string name="login_text">Vamos fazer seu login.</string>
     <string name="sign_up">Criar Conta</string>
     <string name="unitary">Unitário</string>
+    <string name="comfort_and_agility">Conforto e agilidade</string>
+    <string name="technology">Tecnologia</string>
+    <string name="desc_fountain_technology">A PalaceFountain conta com um micro computador capas de manter comunicação direta com seu dispositivo, lhe enviando e recebendo informações como colocar água, com uma bomba d`água capas de bombear 80 a 120 litros por hora .</string>
+    <string name="desc_fountain_comfort">Com PalaceFountain você poderá colocar água para seu pet sem precisar sair do sofá ..</string>
 </resources>

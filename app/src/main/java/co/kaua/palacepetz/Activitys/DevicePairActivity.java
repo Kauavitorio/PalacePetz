@@ -9,7 +9,6 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,6 +40,7 @@ import co.kaua.palacepetz.R;
  *  @author Kaua Vitorio
  **/
 
+@SuppressWarnings("deprecation")
 public class DevicePairActivity extends AppCompatActivity {
     private ListView listView;
     private BluetoothAdapter mBTAdapter;
@@ -61,7 +61,6 @@ public class DevicePairActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pair_device);
         setTheme(R.style.DevicePresentation);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         listView = findViewById(R.id.listView_devices);
 
         if (savedInstanceState != null) {
@@ -110,16 +109,6 @@ public class DevicePairActivity extends AppCompatActivity {
                 Log.d(TAG, "UUID: " + uuid);
                 String bufSize = prefs.getString("prefTextBuffer", "Null");
                 mBufferSize = Integer.parseInt(bufSize);
-                String orientation = prefs.getString("prefOrientation", "Null");
-                Log.d(TAG, "Orientation: " + orientation);
-                switch (orientation) {
-                    case "Landscape":
-                    case "Portrait":
-                    case "Auto":
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                        break;
-                }
-                break;
             default:
                 break;
         }
@@ -130,9 +119,7 @@ public class DevicePairActivity extends AppCompatActivity {
     private void initList(List<BluetoothDevice> objects) {
         final MyAdapter adapter = new MyAdapter(getApplicationContext(), R.layout.adapter_list_devices, R.id.lstContent, objects);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            adapter.setSelectedIndex(position);
-        });
+        listView.setOnItemClickListener((parent, view, position, id) -> adapter.setSelectedIndex(position));
     }
 
     /**
