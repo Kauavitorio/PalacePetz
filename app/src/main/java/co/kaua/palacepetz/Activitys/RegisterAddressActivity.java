@@ -19,7 +19,6 @@ import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,6 +39,7 @@ import co.kaua.palacepetz.Data.Address.ZipCodeService;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Methods.MaskEditUtil;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.Methods.Userpermissions;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
@@ -146,7 +146,7 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
             @Override
             public void afterTextChanged(Editable s) {
                 if (editRegisterAddress_CepUser.getText().length() == 9) {
-                    Toast.makeText(RegisterAddressActivity.this, R.string.loading, Toast.LENGTH_SHORT).show();
+                    ToastHelper.toast(RegisterAddressActivity.this, getString(R.string.loading));
                     zipcode = editRegisterAddress_CepUser.getText().toString();
                     ZipCodeService zipCodeService = retrofitZipCode.create(ZipCodeService.class);
                     Call<DtoZipCode> zipcodeCall = zipCodeService.getAddress(zipcode);
@@ -168,14 +168,13 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
                                 editRegisterAddress_StreetUser.setEnabled(true);
                                 editRegisterAddress_NumberUser.setEnabled(true);
                                 editRegisterAddress_ComplementUser.setEnabled(true);
-                            } else {
-                                Toast.makeText(RegisterAddressActivity.this, getString(R.string.error_in_get_your_address), Toast.LENGTH_SHORT).show();
-                            }
+                            } else
+                                ToastHelper.toast(RegisterAddressActivity.this, getString(R.string.error_in_get_your_address));
                         }
 
                         @Override
                         public void onFailure(@NonNull Call<DtoZipCode> call, @NonNull Throwable t) {
-                            Toast.makeText(RegisterAddressActivity.this, getString(R.string.error_in_get_your_address), Toast.LENGTH_SHORT).show();
+                            ToastHelper.toast(RegisterAddressActivity.this, getString(R.string.error_in_get_your_address));
                             Log.d("NetWorkError", t.getMessage());
                         }
                     });
@@ -211,7 +210,7 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
             @Override
             public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
                 if (response.code() == 202 || response.isSuccessful()){
-                    Toast.makeText(RegisterAddressActivity.this, getString(R.string.your_address_updated_successfully ), Toast.LENGTH_SHORT).show();
+                    ToastHelper.toast(RegisterAddressActivity.this, getString(R.string.your_address_updated_successfully));
                     GoBack_toMain();
                 }else if(response.code() == 404){
                     loadingDialog.dimissDialog();
@@ -262,13 +261,12 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
                 latitude = address.getLatitude();
                 longitude = address.getLongitude();
                 // Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            } else {
+            } else
                 // Display appropriate message when Geocoder services are not available
-                Toast.makeText(this, getString(R.string.zipCode_is_invalid), Toast.LENGTH_SHORT).show();
-            }
+                ToastHelper.toast(RegisterAddressActivity.this, getString(R.string.zipCode_is_invalid));
         } catch (Exception e) {
             // handle exception
-            Toast.makeText(this, getString(R.string.error_in_get_your_address), Toast.LENGTH_SHORT).show();
+            ToastHelper.toast(RegisterAddressActivity.this, getString(R.string.error_in_get_your_address));
             Log.d("AddressUpdate", e.toString());
         }
     }

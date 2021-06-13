@@ -10,7 +10,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -26,6 +25,7 @@ import java.util.Locale;
 import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Data.ShoppingCart.CartServices;
 import co.kaua.palacepetz.Data.ShoppingCart.DtoShoppingCart;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -157,7 +157,7 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
     private void PlusAmount(@NonNull MyHolderProducts holder) {
         subOrPlus = 10000;
         if (productAmount == 20 || productAmount == dtoProductsArrayList.get(holder.getAdapterPosition()).getAmount())
-            Toast.makeText(context, context.getString(R.string.maximum_amount_reached), Toast.LENGTH_SHORT).show();
+            ToastHelper.toast(context, context.getString(R.string.maximum_amount_reached));
         else{
             productAmount = dtoProductsArrayList.get(holder.getAdapterPosition()).getProduct_amount();
             productAmount++;
@@ -173,7 +173,7 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
     private void LessAmount(@NonNull MyHolderProducts holder) {
         subOrPlus = 10000;
         if (productAmount == 1)
-            Toast.makeText(context, context.getString(R.string.one_is_the_minumum_quantity), Toast.LENGTH_SHORT).show();
+            ToastHelper.toast(context, context.getString(R.string.one_is_the_minumum_quantity));
         else{
             productAmount = dtoProductsArrayList.get(holder.getAdapterPosition()).getProduct_amount();
             productAmount--;

@@ -22,7 +22,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -44,6 +43,7 @@ import co.kaua.palacepetz.Fragments.MyCardsFragment;
 import co.kaua.palacepetz.Fragments.MyOrdersFragment;
 import co.kaua.palacepetz.Fragments.ServicesFragment;
 import co.kaua.palacepetz.Fragments.ShoppingCartFragment;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -583,27 +583,32 @@ public class MainActivity extends AppCompatActivity {
                         assert response.body() != null;
                         if ( versionCode < response.body().getVersionCode()){
                             if (Count != 1){
-                                CardView btnUpdateNow, btnUpdateLater;
-                                warning_update.setContentView(R.layout.adapter_appneedupdate);
-                                warning_update.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                warning_update.setCancelable(false);
-                                btnUpdateNow = warning_update.findViewById(R.id.btnUpdateNow);
-                                btnUpdateLater = warning_update.findViewById(R.id.btnUpdateLater);
+                                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetTheme);
+                                //  Creating View for SheetMenu
+                                bottomSheetDialog.setCancelable(false);
+                                View sheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.adapter_appneedupdate,
+                                        findViewById(R.id.sheet_app_update_menu));
+                                TextView txt_version_app = sheetView.findViewById(R.id.txt_version_app);
+                                String newVersionToUpdate = response.body().getVersionName();
+                                txt_version_app.setText(getString(R.string.have_new_version, newVersionToUpdate));
 
-                                btnUpdateNow.setOnClickListener(v -> {
+                                sheetView.findViewById(R.id.btn_update_now).setOnClickListener(v -> {
                                     String url = "https://play.google.com/store/apps/details?id=co.kaua.palacepetz";
                                     Intent i = new Intent(Intent.ACTION_VIEW);
                                     i.setData(Uri.parse(url));
                                     startActivity(i);
-                                    warning_update.dismiss();
+                                    Count = 1;
+                                    bottomSheetDialog.dismiss();
+                                });
+
+                                sheetView.findViewById(R.id.btn_update_later).setOnClickListener(v -> {
+                                    bottomSheetDialog.dismiss();
                                     Count = 1;
                                 });
 
-                                btnUpdateLater.setOnClickListener(v -> {
-                                    warning_update.dismiss();
-                                    Count = 1;
-                                });
-                                warning_update.show();
+
+                                bottomSheetDialog.setContentView(sheetView);
+                                bottomSheetDialog.show();
                                 Log.d("MobileVersion", "Need update: " + versionCode);
                             }
                         }
@@ -652,7 +657,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         TryUpdatePreferences();
                     }else if (response.code() == 401){
-                        Toast.makeText(MainActivity.this, getString(R.string.we_verify_yourEmailOrPassword), Toast.LENGTH_LONG).show();
+                        ToastHelper.toast(MainActivity.this, getString(R.string.we_verify_yourEmailOrPassword));
                         Intent goTo_login = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(goTo_login);
                         finish();

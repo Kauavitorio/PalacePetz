@@ -18,12 +18,14 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
+import co.kaua.palacepetz.Activitys.Pets.RegisterPetActivity;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Firebase.ConfFirebase;
 import co.kaua.palacepetz.Methods.MaskEditUtil;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -131,8 +133,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                     Log.w("UserStatus", "Create User With Email: failure\n", task.getException());
                                     loadingDialog.dimissDialog();
                                     cardBtn_SingUp.setEnabled(true);
-                                    Toast.makeText(CreateAccountActivity.this, R.string.authFailed_thisEmail,
-                                            Toast.LENGTH_SHORT).show();
+                                    ToastHelper.toast(CreateAccountActivity.this, getString(R.string.authFailed_thisEmail));
                                 }
                             });
                         }else if(response.code() == 406){
@@ -143,7 +144,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         }else if (response.code() == 409){
                             loadingDialog.dimissDialog();
                             cardBtn_SingUp.setElevation(20);
-                            Toast.makeText(CreateAccountActivity.this, R.string.authFailed_thisEmail, Toast.LENGTH_SHORT).show();
+                            ToastHelper.toast(CreateAccountActivity.this, getString(R.string.authFailed_thisEmail));
                             cardBtn_SingUp.setEnabled(true);
                         }else{
                             cardBtn_SingUp.setEnabled(true);

@@ -14,7 +14,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +28,7 @@ import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.Cards.CardService;
 import co.kaua.palacepetz.Data.Cards.DtoCard;
 import co.kaua.palacepetz.Methods.MaskEditUtil;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -111,9 +111,9 @@ public class CardRegistrationFragment extends Fragment implements IOnBackPressed
         //  When click will try to insert new card on User Account
         cardBtn_addCard_registration.setOnClickListener(v -> {
             cardBtn_addCard_registration.setElevation(0);
-            if (card_flag == null || card_flag.equals(" ")){
-                Toast.makeText(getActivity() , R.string.no_flag_selected, Toast.LENGTH_SHORT).show();
-            }else if (card_number == null || card_number.length() < 19){
+            if (card_flag == null || card_flag.equals(" "))
+                ToastHelper.toast(requireActivity(), getString(R.string.no_flag_selected));
+            else if (card_number == null || card_number.length() < 19){
                 showError(edit_cardNumber_cardRegister, getString(R.string.cardNumber_wrongInsert));
             } else if (card_shelfLife == null || card_shelfLife.length() < 5) {
                 showError(edit_shelf_life_cardRegister, getString(R.string.shelfLife_incorrectly));
@@ -135,11 +135,11 @@ public class CardRegistrationFragment extends Fragment implements IOnBackPressed
                             goTo_allCard();
                         }else if(response.code() == 207){
                             loadingDialog.dimissDialog();
-                            Toast.makeText(getContext(), R.string.you_have_moreOf_theree_cards, Toast.LENGTH_SHORT).show();
+                            ToastHelper.toast(requireActivity(), getString(R.string.you_have_moreOf_theree_cards));
                             goTo_allCard();
                         }else if(response.code() == 409){
                             loadingDialog.dimissDialog();
-                            Toast.makeText(getContext(), R.string.card_already_inserted, Toast.LENGTH_SHORT).show();
+                            ToastHelper.toast(requireActivity(), getString(R.string.card_already_inserted));
                         }else{
                             loadingDialog.dimissDialog();
                             Warnings.showWeHaveAProblem(getContext());

@@ -6,10 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,11 +26,11 @@ import co.kaua.palacepetz.Data.Products.AsyncProducts_SearchMain;
 import co.kaua.palacepetz.Data.Products.DtoProducts;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Methods.CheckSearch;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório
@@ -182,7 +180,7 @@ public class MainFragment extends Fragment {
                 transaction.commit();
             }
         }else
-            Toast.makeText(getContext(), getString(R.string.search_cant_be_null), Toast.LENGTH_SHORT).show();
+            ToastHelper.toast(requireActivity(), getString(R.string.search_cant_be_null));
     }
 
     private void Ids() {
