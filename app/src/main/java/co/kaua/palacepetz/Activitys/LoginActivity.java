@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -25,15 +27,13 @@ import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Firebase.ConfFirebase;
-import co.kaua.palacepetz.Methods.MaskEditUtil;
+import co.kaua.palacepetz.Methods.ValidateCPF;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static co.kaua.palacepetz.Methods.ValidateCPF.isValidCPF;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório
@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //  User information
     private int id_user, user_type;
-    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, password;
+    private String name_user, Email_Username, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, password;
 
     //  Next Activity
     private TextView txt_forgot_your_password;
@@ -89,10 +89,10 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (!(bundle == null)){
-            _Email = bundle.getString("email_user");
+            Email_Username = bundle.getString("email_user");
             password = bundle.getString("password_user");
             SHORTCUT_ID = bundle.getInt("shortcut");
-            editLogin_emailUser.setText(_Email);
+            editLogin_emailUser.setText(Email_Username);
             editLogin_passwordUser.setText(password);
         }
 
@@ -102,14 +102,26 @@ public class LoginActivity extends AppCompatActivity {
         cardBtn_SingIn.setOnClickListener(v -> {
             if (editLogin_emailUser.getText().length() == 0)
                 showError(editLogin_emailUser, getString(R.string.email_required));
-            else if(editLogin_passwordUser.getText().length() == 0)
-                showError(editLogin_passwordUser, getString(R.string.password_required));
+            /*else if(editLogin_passwordUser.getText().length() == 0)
+                showError(editLogin_passwordUser, getString(R.string.password_required));*/
             else {
-                _Email = editLogin_emailUser.getText().toString().trim();
-                password = editLogin_passwordUser.getText().toString().trim();
                 cardBtn_SingIn.setElevation(0);
                 cardBtn_SingIn.setEnabled(false);
-                DoLogin(_Email, password);
+                Email_Username = editLogin_emailUser.getText().toString().trim();
+                password = editLogin_passwordUser.getText().toString().trim();
+                try {
+                    if (ValidateCPF.isValidCPF(Email_Username)){
+                        StringBuilder sb = new StringBuilder(Email_Username.trim().replace(".", "").replace("-", ""));
+                        sb = sb.insert(3,".");
+                        sb = sb.insert(7,".");
+                        sb = sb.insert(11,"-");
+                        Email_Username = sb + "";
+                    }
+                    DoLogin(Email_Username + "", password);
+                }catch (Exception ex){
+                    DoLogin(Email_Username, password);
+                    Log.d("Login", ex.toString());
+                }
             }
         });
 
@@ -165,6 +177,8 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
                     if (response.code() == 200){
+                        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                        notificationManager.cancel(1);
                         // Obtain the FirebaseAnalytics instance.
                         mFirebaseAnalytics = ConfFirebase.getFirebaseAnalytics(LoginActivity.this);
                         Bundle bundle = new Bundle();
