@@ -156,8 +156,15 @@ public class ShoppingCart_Adapter extends RecyclerView.Adapter<ShoppingCart_Adap
     @SuppressLint("SetTextI18n")
     private void PlusAmount(@NonNull MyHolderProducts holder) {
         subOrPlus = 10000;
+
+        String toastAlert;
+        if (dtoProductsArrayList.get(holder.getAdapterPosition()).getAmount() < 20)
+            toastAlert = context.getString(R.string.maximum_amount_reached_no_stock, dtoProductsArrayList.get(holder.getAdapterPosition()).getAmount() + "");
+        else
+            toastAlert = context.getString(R.string.maximum_amount_reached);
+
         if (productAmount == 20 || productAmount == dtoProductsArrayList.get(holder.getAdapterPosition()).getAmount())
-            ToastHelper.toast(context, context.getString(R.string.maximum_amount_reached));
+            ToastHelper.toast(context, toastAlert);
         else{
             productAmount = dtoProductsArrayList.get(holder.getAdapterPosition()).getProduct_amount();
             productAmount++;

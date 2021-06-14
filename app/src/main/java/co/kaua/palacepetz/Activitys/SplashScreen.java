@@ -49,13 +49,15 @@ public class SplashScreen extends AppCompatActivity {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         base_animation_splash = findViewById(R.id.base_animation_splash);
-        launchShortcuts();
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1)
+            launchShortcuts();
+
         StartApi();
 
         //  Set Containers on Screen

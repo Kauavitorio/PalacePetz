@@ -196,10 +196,8 @@
         android:layout_height="85dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
         app:cardBackgroundColor="@color/selected_menu_sheet"
         app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BtnMyShoppingCartSheetMenu">
 
@@ -248,10 +246,8 @@
         android:layout_height="85dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
         app:cardBackgroundColor="@color/selected_menu_sheet"
         app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BtnFountainsSheetUserMenu">
 
@@ -283,6 +279,58 @@
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/segoe_ui"
                 android:text="@string/myCards"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Btn LogOut -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/BtnLogOutSheetMenu"
+        android:layout_width="150dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        app:cardBackgroundColor="@color/selected_menu_sheet"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BtnMyOrdersSheetUserMenu">
+
+        <!-- Container LogOut -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Img LogOut -->
+            <ImageView
+                android:id="@+id/Img_BtnLogOutSheetMenu"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/logout_sheetmenu"
+                app:layout_constraintBottom_toTopOf="@+id/txt_sheet_LogOut"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <!-- Text LogOut -->
+            <TextView
+                android:id="@+id/txt_sheet_LogOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/segoe_ui"
+                android:text="@string/logout"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"

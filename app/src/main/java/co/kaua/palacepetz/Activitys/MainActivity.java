@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
     private BottomSheetDialog bottomSheetDialog;
     private static FragmentTransaction transaction;
     private Animation CartAnim;
-    private static Dialog warning_update;
     private int Count = 0;
     private static MainActivity instance;
 
@@ -289,25 +288,9 @@ public class MainActivity extends AppCompatActivity {
 
             CardView home = sheetView.findViewById(R.id.BtnHomeSheetMenu);
             CardView products = sheetView.findViewById(R.id.BtnProductsSheetMenu);
-            CardView palaceFountain = sheetView.findViewById(R.id.BtnFountainsSheetMenu);
-            CardView myOrders = sheetView.findViewById(R.id.BtnMyOrdersSheetMenu);
-            CardView myCards = sheetView.findViewById(R.id.BtnMyCardsSheetMenu);
             CardView historic = sheetView.findViewById(R.id.BtnHistoricSheetMenu);
             CardView services = sheetView.findViewById(R.id.BtnServicesSheetMenu);
-            TextView txt_logout = sheetView.findViewById(R.id.txt_sheet_LogOut);
-            ImageView img_logout = sheetView.findViewById(R.id.Img_BtnLogOutSheetMenu);
-            if (_IdUser == 0){
-                txt_logout.setText(R.string.login);
-                img_logout.setImageResource(R.drawable.ic_albatross);
-                sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> {
-                    bottomSheetDialog.dismiss();
-                    Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(login);
-                    finish();
-                });
-            }else
-                //  When click in this linear will to Show LogOut Message
-                sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> Warnings.LogoutDialog(MainActivity.this, bottomSheetDialog));
+
 
             //  Show Main Fragment
             home.setOnClickListener(v1 -> {
@@ -332,27 +315,6 @@ public class MainActivity extends AppCompatActivity {
             //  Show All Products fragment
             products.setOnClickListener(v1 -> {
                 OpenAllProducts();
-                bottomSheetDialog.dismiss();
-            });
-
-            //  Show Palace Fountain Fragment
-            palaceFountain.setOnClickListener(v1 -> {
-                OpenFountain();
-                bottomSheetDialog.dismiss();
-            });
-
-            //  Show My Orders Fragment
-            myOrders.setOnClickListener(v1 -> {
-                bottomSheetDialog.dismiss();
-                if (_IdUser != 0)
-                    OpenMyOrders();
-                else
-                    Warnings.NeedLoginAlert(MainActivity.this);
-            });
-
-            //  Show My Cards Fragment
-            myCards.setOnClickListener(v1 -> {
-                OpenMyCards();
                 bottomSheetDialog.dismiss();
             });
 
@@ -390,6 +352,20 @@ public class MainActivity extends AppCompatActivity {
                 TextView txt_nameUser = sheetView.findViewById(R.id.txt_nmUser_Sheet);
                 CardView container_shoppingAmount = sheetView.findViewById(R.id.base_QuantityItemsCart_sheet);
                 TextView txt_QuantityCart_sheet = sheetView.findViewById(R.id.txt_QuantityCart_sheet);
+                TextView txt_logout = sheetView.findViewById(R.id.txt_sheet_LogOut);
+                ImageView img_logout = sheetView.findViewById(R.id.Img_BtnLogOutSheetMenu);
+                if (_IdUser == 0){
+                    txt_logout.setText(R.string.login);
+                    img_logout.setImageResource(R.drawable.ic_albatross);
+                    sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> {
+                        bottomSheetDialog.dismiss();
+                        Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(login);
+                        finish();
+                    });
+                }else
+                    //  When click in this linear will to Show LogOut Message
+                    sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> Warnings.LogoutDialog(MainActivity.this, bottomSheetDialog));
 
                 txt_nameUser.setText(getString(R.string.hello) + " " + name_user);
 
@@ -572,7 +548,6 @@ public class MainActivity extends AppCompatActivity {
 
         //  Mobile Information
         int versionCode = BuildConfig.VERSION_CODE;
-        warning_update = new Dialog(this);
         MobileServices services = retrofitMobile.create(MobileServices.class);
         Call<DtoVersion> call = services.getMobileVersion();
         call.enqueue(new Callback<DtoVersion>() {

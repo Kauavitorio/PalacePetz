@@ -64,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/ex_numberCard_card"
                         android:textColor="#fff"
-                        android:textSize="23sp"
+                        android:textSize="22sp"
                         android:textStyle="bold"
                         android:letterSpacing="0.1"
                         android:layout_marginTop="10dp"

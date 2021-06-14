@@ -128,7 +128,7 @@
     <string name="optionFourDeliveryMethod" >4 - PetShop ira busca o animal | Receber na residencia</string>
     <string name="add_to_cart">ADICIONAR AO CARRINHO</string>
     <string name="one_is_the_minumum_quantity">1 é a quantidade mínima</string>
-    <string name="maximum_amount_reached">Quantidade máxima atingida</string>
+    <string name="maximum_amount_reached">Quantidade máxima atingida, só é possível adicionar ao carrinho 20 unidades de um produto.</string>
     <string name="see_my_pets">Ver meus animais</string>
     <string name="authFailed_thisEmail">Falha na autenticação!\nEste e-mail já está registrado.</string>
     <string name="hello_emailSend">Olá, seu usuário foi cadastrado com sucesso :)\nMandamos um email de verificação para o email cadastrado, por favor confirmar no email antes de se logar</string>
@@ -236,7 +236,7 @@
     <string name="hello">Olá,</string>
     <string name="search_cant_be_null">A pesquisa não pode ser vazia, por favor preencher o campo.</string>
     <string name="product_not_fount">Algo de errado aqui…\nO produto informado não foi encontrado, pedimos desculpa pelo inconveniente.</string>
-    <string name="login_types">Email ou nome de usuário</string>
+    <string name="login_types">Email, cpf ou nome de usuário</string>
     <string name="dont_have_an_account">Não tem uma conta? <b>Registre-se</b></string>
     <string name="login_text">Vamos fazer seu login.</string>
     <string name="sign_up">Criar Conta</string>
@@ -245,4 +245,9 @@
     <string name="technology">Tecnologia</string>
     <string name="desc_fountain_technology">A PalaceFountain conta com um micro computador capas de manter comunicação direta com seu dispositivo, lhe enviando e recebendo informações como colocar água, com uma bomba d`água capas de bombear 80 a 120 litros por hora .</string>
     <string name="desc_fountain_comfort">Com PalaceFountain você poderá colocar água para seu pet sem precisar sair do sofá ..</string>
+    <string name="shipping">Frete: Gratis</string>
+    <string name="your_account_was_created">Sua conta foi criada!</string>
+    <string name="open_email">Abrir email</string>
+    <string name="please_confirmEmail">Por favor, confirme no e-mail antes de fazer o login.</string>
+    <string name="maximum_amount_reached_no_stock">Quantidade máxima atingida, nosso estoque é de %1$s desse produto.</string>
 </resources>

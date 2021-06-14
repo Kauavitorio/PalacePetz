@@ -45,6 +45,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private float full_prod_price = unit_prod_price;
     private LoadingDialog loadingDialog;
     int cd_prod;
+    private String ToastAlert;
     String image_prod, nm_product, description;
 
     //  User information
@@ -64,6 +65,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_details);
         setTheme(R.style.DevicePresentation);
         Ids();
+        ToastAlert = getString(R.string.maximum_amount_reached);
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("pt", "BR"));
         numberFormat.setMaximumFractionDigits(2);
 
@@ -129,6 +131,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         }
 
+        if (qt_prodGet < 20)
+            ToastAlert = getString(R.string.maximum_amount_reached_no_stock, qt_prodGet + "");
+
 
         btnLessQT_Prod.setOnClickListener(v -> {
             if (qt_prod == 1)
@@ -142,7 +147,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         btnPlusQT_Prod.setOnClickListener(v -> {
             if (qt_prod == qt_prodGet || qt_prod == 20)
-                ToastHelper.toast(ProductDetailsActivity.this, getString(R.string.maximum_amount_reached));
+                ToastHelper.toast(ProductDetailsActivity.this, ToastAlert);
             else {
                 qt_prod++;
                 setNewPrice(numberFormat);
