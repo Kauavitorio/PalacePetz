@@ -40,7 +40,7 @@ import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Methods.MaskEditUtil;
 import co.kaua.palacepetz.Methods.ToastHelper;
-import co.kaua.palacepetz.Methods.Userpermissions;
+import co.kaua.palacepetz.Methods.UserPermissions;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -89,7 +89,7 @@ public class RegisterAddressActivity extends FragmentActivity implements OnMapRe
         setContentView(R.layout.activity_register_address);
         Ids();
         loadingDialog = new LoadingDialog(this);
-        Userpermissions.validatePermissions(permissions, RegisterAddressActivity.this, 1);
+        UserPermissions.validatePermissions(permissions, RegisterAddressActivity.this, 1);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

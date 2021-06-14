@@ -28,7 +28,7 @@ import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Methods.ToastHelper;
-import co.kaua.palacepetz.Methods.Userpermissions;
+import co.kaua.palacepetz.Methods.UserPermissions;
 
 import co.kaua.palacepetz.Firebase.ConfFirebase;
 import co.kaua.palacepetz.R;
@@ -90,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity {
         loadUserInfo();
 
         icon_ProfileUser_profile.setOnClickListener(v -> {
-            Userpermissions.validatePermissions(permissions, ProfileActivity.this, 1);
+            UserPermissions.validatePermissions(permissions, ProfileActivity.this, 1);
             int GalleryPermission = ContextCompat.checkSelfPermission(ProfileActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
             if (GalleryPermission == PackageManager.PERMISSION_GRANTED)
                 OpenGallery();

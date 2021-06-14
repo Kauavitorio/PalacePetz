@@ -29,7 +29,7 @@ import co.kaua.palacepetz.Data.Pets.DtoPets;
 import co.kaua.palacepetz.Data.Pets.PetsServices;
 import co.kaua.palacepetz.Firebase.ConfFirebase;
 import co.kaua.palacepetz.Methods.ToastHelper;
-import co.kaua.palacepetz.Methods.Userpermissions;
+import co.kaua.palacepetz.Methods.UserPermissions;
 import co.kaua.palacepetz.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -249,7 +249,7 @@ public class RegisterPetActivity extends AppCompatActivity {
         if (petName.equals(" ") || petName.length() <= 0 || petName == null || petName.trim().equals(" ") || petName.replace(" ", "").length() <= 0)
             ToastHelper.toast(RegisterPetActivity.this, getString(R.string.first_insert_petName));
         else{
-            Userpermissions.validatePermissions(permissions, RegisterPetActivity.this, 1);
+            UserPermissions.validatePermissions(permissions, RegisterPetActivity.this, 1);
             int GalleryPermission = ContextCompat.checkSelfPermission(RegisterPetActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
             if (GalleryPermission == PackageManager.PERMISSION_GRANTED) {
                 Intent openGallery = new Intent();

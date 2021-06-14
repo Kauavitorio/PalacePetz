@@ -34,7 +34,7 @@ import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Methods.ToastHelper;
-import co.kaua.palacepetz.Methods.Userpermissions;
+import co.kaua.palacepetz.Methods.UserPermissions;
 import co.kaua.palacepetz.Firebase.ConfFirebase;
 import co.kaua.palacepetz.Methods.MaskEditUtil;
 import co.kaua.palacepetz.R;
@@ -120,7 +120,7 @@ public class EditProfileActivity extends AppCompatActivity {
         editProfile__birth_dateUser.addTextChangedListener(MaskEditUtil.mask(editProfile__birth_dateUser, MaskEditUtil.FORMAT_DATE));
 
         icon_ProfileUser_EditProfile.setOnClickListener(v -> {
-            Userpermissions.validatePermissions(permissions, EditProfileActivity.this, 1);
+            UserPermissions.validatePermissions(permissions, EditProfileActivity.this, 1);
             int GalleryPermission = ContextCompat.checkSelfPermission(EditProfileActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
             if (GalleryPermission == PackageManager.PERMISSION_GRANTED)
                 OpenGallery();
