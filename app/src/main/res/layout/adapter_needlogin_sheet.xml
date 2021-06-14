@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/sheet_app_update_menu"
+    android:id="@+id/sheet_need_login_menu"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="20dp"
@@ -17,14 +17,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:maxWidth="350dp"
-        android:text="@string/have_new_version"
+        android:text="@string/need_login_msg"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp" />
 
-    <!-- Btn Update Now -->
+    <!-- Btn Login Now -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/btn_update_now"
+        android:id="@+id/btn_loginYes_now"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -36,21 +36,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Text Ok -->
+        <!-- Text Yes -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/updatenow"
+            android:text="@string/yes"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
 
-    <!-- Btn Update Later -->
+    <!-- Btn No -->
     <LinearLayout
-        android:id="@+id/btn_update_later"
+        android:id="@+id/btn_loginNo_later"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -70,7 +70,7 @@
             android:textColor="@color/edittext_base"
             android:textSize="17sp"
             android:fontFamily="@font/segoe_ui_bold"
-            android:text="@string/updatelater"/>
+            android:text="@string/no"/>
 
     </LinearLayout>
 

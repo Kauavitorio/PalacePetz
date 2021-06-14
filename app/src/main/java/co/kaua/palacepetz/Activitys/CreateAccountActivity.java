@@ -1,11 +1,13 @@
 package co.kaua.palacepetz.Activitys;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,12 +20,16 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
+import co.kaua.palacepetz.Activitys.Pets.RegisterPetActivity;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
+import co.kaua.palacepetz.BuildConfig;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Firebase.ConfFirebase;
 import co.kaua.palacepetz.Methods.MaskEditUtil;
+import co.kaua.palacepetz.Methods.Notifications;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -118,23 +124,16 @@ public class CreateAccountActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
                         if(response.code() == 201 || response.code() == 200){
+
+                            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O)
+                                Notifications.show(CreateAccountActivity.this);
+
                             Log.d("UserStatus", "User successfully registered with the API");
-                            mAuth = ConfFirebase.getFirebaseAuth();
-                            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    Log.d("UserStatus", "Create User With Email: success");
-                                    Log.d("UserStatus", "Email sent.");
-                                    Warnings.show_WeSendEmail_Warning(CreateAccountActivity.this, email, password);
-                                    cardBtn_SingUp.setElevation(20);
-                                }else{
-                                    // If sign in fails, display a message to the user.
-                                    Log.w("UserStatus", "Create User With Email: failure\n", task.getException());
-                                    loadingDialog.dimissDialog();
-                                    cardBtn_SingUp.setEnabled(true);
-                                    Toast.makeText(CreateAccountActivity.this, R.string.authFailed_thisEmail,
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            Log.d("UserStatus", "Create User With Email: success");
+                            Log.d("UserStatus", "Email sent.");
+                            Warnings.show_WeSendEmail_Warning(CreateAccountActivity.this, email, password);
+                            cardBtn_SingUp.setElevation(20);
+                            loadingDialog.dimissDialog();
                         }else if(response.code() == 406){
                             loadingDialog.dimissDialog();
                             cardBtn_SingUp.setElevation(20);
@@ -143,7 +142,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         }else if (response.code() == 409){
                             loadingDialog.dimissDialog();
                             cardBtn_SingUp.setElevation(20);
-                            Toast.makeText(CreateAccountActivity.this, R.string.authFailed_thisEmail, Toast.LENGTH_SHORT).show();
+                            ToastHelper.toast(CreateAccountActivity.this, getString(R.string.authFailed_thisEmail));
                             cardBtn_SingUp.setEnabled(true);
                         }else{
                             cardBtn_SingUp.setEnabled(true);

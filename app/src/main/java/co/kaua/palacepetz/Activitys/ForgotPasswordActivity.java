@@ -10,7 +10,6 @@ import android.util.Patterns;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
@@ -18,6 +17,7 @@ import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,7 +76,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
                         if (response.code() == 200 || response.code() == 404){
                             loadingDialog.dimissDialog();
-                            Toast.makeText(ForgotPasswordActivity.this, getString(R.string.weve_sent_youanEmail_password), Toast.LENGTH_LONG).show();
+                            ToastHelper.toast(ForgotPasswordActivity.this, getString(R.string.weve_sent_youanEmail_password));
                             finish();
                         }else{
                             loadingDialog.dimissDialog();

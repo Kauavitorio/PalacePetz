@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,8 +31,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class Warnings extends MainActivity {
-    private static Dialog WarningError, Warning_Email_Password, warning_emailNotVerified, warning_emailSend,
-            warning_badUsername, OrderConfirmation, LogOutDialog, EmployeeWarning, warning_badPetName, PetWarning, NeedLoginWarning;
+    private static Dialog WarningError, Warning_Email_Password,
+            warning_badUsername, LogOutDialog, EmployeeWarning, warning_badPetName, PetWarning, NeedLoginWarning;
     @SuppressLint("StaticFieldLeak")
     private static LoadingDialog loadingDialog;
 
@@ -73,37 +74,39 @@ public class Warnings extends MainActivity {
     }
 
     //  Create Method for show alert of email not verified
-    public static void showEmailIsNotVerified(Context context) {
-        warning_emailNotVerified = new Dialog(context);
+    public static void showEmailIsNotVerified(Activity context) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetTheme);
+        //  Creating View for SheetMenu
+        View sheetView = LayoutInflater.from(context).inflate(R.layout.adapter_emailnotverified,
+                context.findViewById(R.id.sheet_email_not_verified));
 
-        CardView btnIWillConfirmLogin;
-        warning_emailNotVerified.setContentView(R.layout.adapter_emailnotverified);
-        warning_emailNotVerified.setCancelable(false);
-        warning_emailNotVerified.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        btnIWillConfirmLogin = warning_emailNotVerified.findViewById(R.id.btnIwillConfirmLogin);
+        sheetView.findViewById(R.id.btnOk_WillConfirm).setOnClickListener(v -> bottomSheetDialog.dismiss());
 
 
-        btnIWillConfirmLogin.setOnClickListener(v -> warning_emailNotVerified.dismiss());
-        warning_emailNotVerified.show();
+        bottomSheetDialog.setContentView(sheetView);
+        bottomSheetDialog.show();
     }
 
     //  Create Method for show alert of email send
     public static void show_WeSendEmail_Warning(Activity activity, String email, String password){
-        warning_emailSend = new Dialog(activity);
-        CardView btnIWillConfirm;
-        warning_emailSend.setContentView(R.layout.adapter_wesendemail);
-        warning_emailSend.setCancelable(false);
-        btnIWillConfirm = warning_emailSend.findViewById(R.id.btnIWillConfirm);
-        warning_emailSend.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity, R.style.BottomSheetTheme);
+        //  Creating View for SheetMenu
+        bottomSheetDialog.setCancelable(false);
+        View sheetView = LayoutInflater.from(activity).inflate(R.layout.adapter_wesendemail,
+                activity.findViewById(R.id.sheet_wesendemail_menu));
 
-        btnIWillConfirm.setOnClickListener(v -> {
+        sheetView.findViewById(R.id.btnIWillConfirm_mainSheet).setOnClickListener(v -> {
             Intent goTo_SingIn = new Intent(activity, LoginActivity.class);
             goTo_SingIn.putExtra("email_user", email);
             goTo_SingIn.putExtra("password_user", password);
             activity.startActivity(goTo_SingIn);
             activity.finish();
+            bottomSheetDialog.dismiss();
         });
-        warning_emailSend.show();
+
+
+        bottomSheetDialog.setContentView(sheetView);
+        bottomSheetDialog.show();
     }
 
     //  Create Method for show alert of bad username
@@ -154,21 +157,6 @@ public class Warnings extends MainActivity {
         btn_registerLatter_purchase.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
-    }
-
-    public static void showOrderConfirmation(Context context){
-        OrderConfirmation = new Dialog(context);
-
-        CardView btnOk_OrderConfirmation;
-        OrderConfirmation.setContentView(R.layout.adapter_order_confirm);
-        OrderConfirmation.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        btnOk_OrderConfirmation = OrderConfirmation.findViewById(R.id.btnOk_OrderConfirmation);
-        btnOk_OrderConfirmation.setElevation(10);
-        OrderConfirmation.setCancelable(false);
-
-        btnOk_OrderConfirmation.setOnClickListener(v -> OrderConfirmation.dismiss());
-
-        OrderConfirmation.show();
     }
 
     //  Create Show Logout Message
@@ -291,36 +279,25 @@ public class Warnings extends MainActivity {
 
     //  Create Show Need Login Message
     public static void NeedLoginAlert(Activity context) {
-        NeedLoginWarning = new Dialog(context);
-        SharedPreferences mPrefs;
-        mPrefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetTheme);
+        //  Creating View for SheetMenu
+        View sheetView = LayoutInflater.from(context).inflate(R.layout.adapter_needlogin_sheet,
+                context.findViewById(R.id.sheet_need_login_menu));
 
-        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
-        CardView PositiveBtn_alert;
-        NeedLoginWarning.setContentView(R.layout.adapter_comum_alert);
-        NeedLoginWarning.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        txtMsg_alert = NeedLoginWarning.findViewById(R.id.txtMsg_alert);
-        txtCancel_alert = NeedLoginWarning.findViewById(R.id.txtCancel_alert);
-        PositiveBtn_alert = NeedLoginWarning.findViewById(R.id.PositiveBtn_alert);
-        txtPositiveBtn_alert = NeedLoginWarning.findViewById(R.id.txtPositiveBtn_alert);
-        PositiveBtn_alert.setElevation(20);
-
-        txtMsg_alert.setText(context.getString(R.string.need_login_msg));
-        txtCancel_alert.setText(context.getString(R.string.no));
-        txtPositiveBtn_alert.setText(context.getString(R.string.yes));
-
-        PositiveBtn_alert.setOnClickListener(v -> {
-            PositiveBtn_alert.setElevation(0);
+        sheetView.findViewById(R.id.btn_loginYes_now).setOnClickListener(v -> {
+            SharedPreferences mPrefs;
+            mPrefs = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
             mPrefs.edit().clear().apply();
             Intent login = new Intent(context, LoginActivity.class);
             context.startActivity(login);
             context.finish();
-            NeedLoginWarning.dismiss();
+            bottomSheetDialog.dismiss();
         });
 
-        txtCancel_alert.setOnClickListener(c -> NeedLoginWarning.dismiss());
+        sheetView.findViewById(R.id.btn_loginNo_later).setOnClickListener(v -> bottomSheetDialog.dismiss());
 
-        NeedLoginWarning.show();
+        bottomSheetDialog.setContentView(sheetView);
+        bottomSheetDialog.show();
     }
 
     //  Create Show Need Login Message but with shortCut

@@ -17,7 +17,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +26,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -46,6 +47,7 @@ import co.kaua.palacepetz.Data.Purchase.Async_PurchaseCard;
 import co.kaua.palacepetz.Data.Purchase.DtoPurchase;
 import co.kaua.palacepetz.Data.Purchase.PurchaseServices;
 import co.kaua.palacepetz.Data.User.DtoUser;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -164,7 +166,13 @@ public class FinishPurchaseFragment extends Fragment implements IOnBackPressed {
                                 assert mainActivity != null;
                                 mainActivity.CheckShoppingCart();
 
-                                Warnings.showOrderConfirmation(getContext());
+                                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetTheme);
+                                //  Creating View for SheetMenu
+                                View sheetView = LayoutInflater.from(requireContext()).inflate(R.layout.adapter_order_confirm,
+                                        getActivity().findViewById(R.id.sheet_order_confirm));
+                                sheetView.findViewById(R.id.btnOk_OrderConfirmation).setOnClickListener(v -> bottomSheetDialog.dismiss());
+                                bottomSheetDialog.setContentView(sheetView);
+                                bottomSheetDialog.show();
                             }else{
                                 loadingDialog.dimissDialog();
                                 Warnings.showWeHaveAProblem(getContext());
@@ -177,10 +185,10 @@ public class FinishPurchaseFragment extends Fragment implements IOnBackPressed {
                         }
                     });
                 }else
-                    Toast.makeText(getContext(), getString(R.string.necessary_select_a_creditCard), Toast.LENGTH_SHORT).show();
+                    ToastHelper.toast(requireActivity(), getString(R.string.necessary_select_a_creditCard));
             }catch (Exception ex){
                 Log.d("FinishPurchase", ex.toString());
-                Toast.makeText(getContext(), getString(R.string.necessary_select_a_creditCard), Toast.LENGTH_SHORT).show();
+                ToastHelper.toast(requireActivity(), getString(R.string.necessary_select_a_creditCard));
             }
         });
 
@@ -200,7 +208,7 @@ public class FinishPurchaseFragment extends Fragment implements IOnBackPressed {
 
         btnApply_Coupon.setOnClickListener(v -> {
             if (editText_coupon.getText().toString().length() <= 0)
-                Toast.makeText(getContext(), getString(R.string.coupon_can_not_be_null), Toast.LENGTH_SHORT).show();
+                ToastHelper.toast(requireActivity(), getString(R.string.coupon_can_not_be_null));
             else{
                 //  Verification of user preference information
                 mPrefs = requireContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -248,7 +256,7 @@ public class FinishPurchaseFragment extends Fragment implements IOnBackPressed {
                     loadingDialog.dimissDialog();
                     assert response.body() != null;
                     Discounts = Double.parseDouble(response.body().getDiscount_total());
-                    Toast.makeText(getContext(), getString(R.string.coupon_successfully_apply), Toast.LENGTH_SHORT).show();
+                    ToastHelper.toast(requireActivity(), getString(R.string.coupon_successfully_apply));
                     loadText();
 
                     mPrefs.edit().clear().apply();
@@ -259,17 +267,17 @@ public class FinishPurchaseFragment extends Fragment implements IOnBackPressed {
                     couponDialog.dismiss();
                 }else if(response.code() == 401){
                     loadingDialog.dimissDialog();
-                    Toast.makeText(getContext(), getString(R.string.coupon_used_before), Toast.LENGTH_LONG).show();
+                    ToastHelper.toast(requireActivity(), getString(R.string.coupon_used_before));
                     couponDialog.dismiss();
                 }
                 else if(response.code() == 204){
                     loadingDialog.dimissDialog();
-                    Toast.makeText(getContext(), getString(R.string.coupon_not_exist), Toast.LENGTH_SHORT).show();
+                    ToastHelper.toast(requireActivity(), getString(R.string.coupon_not_exist));
                     couponDialog.dismiss();
                 }
                 else if (response.code() == 423){
                     loadingDialog.dimissDialog();
-                    Toast.makeText(getContext(), getString(R.string.expired_coupon), Toast.LENGTH_SHORT).show();
+                    ToastHelper.toast(requireActivity(), getString(R.string.expired_coupon));
                     couponDialog.dismiss();
                 }
                 else{

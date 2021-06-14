@@ -25,6 +25,8 @@
                 android:layout_width="300dp"
                 android:layout_height="51dp"
                 android:hint="@string/search_with_dots"
+                android:scrollbarSize="4dp"
+                android:scrollbarThumbVertical="@drawable/custom_scroll_style_vertical"
                 android:drawableEnd="@drawable/ic_search"
                 android:background="@drawable/bg_edittext_search_main"
                 android:imeOptions="actionSearch"
@@ -305,7 +307,8 @@
             android:id="@+id/RecyclerPopularProducts"
             android:layout_width="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"/>
 
     </LinearLayout>
 

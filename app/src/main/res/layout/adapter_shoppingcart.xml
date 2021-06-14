@@ -9,12 +9,11 @@
         android:id="@+id/card_adapter_shoppingCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="350dp"
-        android:minHeight="113dp"
+        android:minWidth="300dp"
         app:cardBackgroundColor="@color/background_adapter_shoppingCart"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="20dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,9 +21,10 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="350dp"
-            android:minHeight="113dp">
+            android:layout_height="match_parent"
+            android:minWidth="335dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/img_prod_shoppingCart"
@@ -40,115 +40,132 @@
                 android:id="@+id/txt_name_prod_shoppingCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="190dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="5dp"
+                android:maxWidth="145dp"
                 android:text="@string/product_name"
                 android:textColor="#000"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/img_prod_shoppingCart"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_unit_price_prod_shoppingCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:maxWidth="190dp"
+                android:text="@string/price"
+                android:textColor="@color/hint"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@+id/img_prod_shoppingCart"
+                app:layout_constraintTop_toBottomOf="@+id/txt_name_prod_shoppingCart" />
 
             <TextView
                 android:id="@+id/txt_full_price_prod_shoppingCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="9dp"
+                android:layout_marginTop="10dp"
+                android:maxWidth="190dp"
                 android:text="@string/price"
-                android:textColor="#000"
-                android:textSize="18sp"
+                android:textColor="@color/cards_background"
+                android:textSize="17sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/img_prod_shoppingCart"
-                app:layout_constraintTop_toBottomOf="@+id/txt_name_prod_shoppingCart" />
+                app:layout_constraintTop_toBottomOf="@+id/txt_unit_price_prod_shoppingCart"
+                app:layout_constraintVertical_bias="1.0" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/btnLessQT_Prod_shoppingCart_ad"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                app:cardBackgroundColor="@color/edittext_base"
-                app:cardCornerRadius="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txt_full_price_prod_shoppingCart"
-                app:layout_constraintTop_toBottomOf="@+id/txt_name_prod_shoppingCart">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="3dp"
-                        android:text="@string/less"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="TooDeepLayout" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/txtQt_prod_shoppingCart_ad"
+            <!-- Container Products Amount -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnPlusQT_Prod_shoppingCart_ad"
-                app:layout_constraintStart_toEndOf="@+id/btnLessQT_Prod_shoppingCart_ad"
-                app:layout_constraintTop_toBottomOf="@+id/txt_name_prod_shoppingCart"
-                tools:ignore="HardcodedText" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/btnPlusQT_Prod_shoppingCart_ad"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                app:cardBackgroundColor="@color/edittext_base"
-                app:cardCornerRadius="50dp"
+                android:minWidth="30dp"
+                android:minHeight="110dp"
+                android:padding="1dp"
+                android:layout_marginEnd="20dp"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_name_prod_shoppingCart">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <!-- Btn Less -->
+                <TextView
+                    android:id="@+id/btnPlusQT_Prod_shoppingCart_ad"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="3dp"
+                    android:text="@string/plus"
+                    android:textAlignment="center"
+                    android:textColor="@color/hint"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TooDeepLayout" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/plus"
-                        android:layout_marginBottom="5dp"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <!-- Base Amount -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="35dp"
+                    android:minWidth="35dp"
+                    app:cardBackgroundColor="@color/background_bottom"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/btnLessQT_Prod_shoppingCart_ad"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnPlusQT_Prod_shoppingCart_ad">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!-- Container Amount -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp">
 
+                        <!-- Product Amount -->
+                        <TextView
+                            android:id="@+id/txtQt_prod_shoppingCart_ad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:text="10"
+                            android:textColor="@color/white"
+                            android:textSize="19sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="HardcodedText" />
 
-            </androidx.cardview.widget.CardView>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- Btn Plus -->
+                <TextView
+                    android:id="@+id/btnLessQT_Prod_shoppingCart_ad"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/hint"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="@string/less"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

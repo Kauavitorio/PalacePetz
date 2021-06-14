@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.storage.StorageReference;
@@ -29,6 +28,7 @@ import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.Pets.DtoPets;
 import co.kaua.palacepetz.Data.Pets.PetsServices;
 import co.kaua.palacepetz.Firebase.ConfFirebase;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.Methods.Userpermissions;
 import co.kaua.palacepetz.R;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -156,9 +156,9 @@ public class RegisterPetActivity extends AppCompatActivity {
                                 finish();
                             else if(response.code() == 406){
                                 Warnings.show_BadPetName_Warning(RegisterPetActivity.this);
-                            }else if(response.code() == 409){
-                                Toast.makeText(RegisterPetActivity.this, getString(R.string.this_pet_is_already_registered), Toast.LENGTH_SHORT).show();
-                            }else{
+                            }else if(response.code() == 409)
+                                ToastHelper.toast(RegisterPetActivity.this, getString(R.string.this_pet_is_already_registered));
+                            else{
                                 finish();
                                 Warnings.showWeHaveAProblem(RegisterPetActivity.this);
                             }
@@ -198,7 +198,7 @@ public class RegisterPetActivity extends AppCompatActivity {
                     storageReference .putFile(filePath).continueWithTask(task -> {
                         if (!task.isSuccessful()) {
                             loadingDialog.dimissDialog();
-                            Toast.makeText(RegisterPetActivity.this, R.string.couldnt_insert , Toast.LENGTH_SHORT).show();
+                            ToastHelper.toast(RegisterPetActivity.this, getString(R.string.couldnt_insert));
                             Log.d("ProfileUpload", Objects.requireNonNull(task.getException()).toString());
                         }
                         return storageReference .getDownloadUrl();
@@ -209,17 +209,16 @@ public class RegisterPetActivity extends AppCompatActivity {
                             img_pet = downloadUri+"";
                             Picasso.get().load(img_pet).into(icon_RegisterPet_PetImage);
                         } else {
-                            Toast.makeText(this, getString(R.string.uploadFailed), Toast.LENGTH_SHORT).show();
+                            ToastHelper.toast(RegisterPetActivity.this, getString(R.string.uploadFailed));
                             Log.d("ProfileUpload", Objects.requireNonNull(task.getException()).getMessage());
                             loadingDialog.dimissDialog();
                         }
                     });
                 }
-                else {
-                    Toast.makeText(RegisterPetActivity.this, R.string.select_an_image, Toast.LENGTH_SHORT).show();
-                }
+                else
+                    ToastHelper.toast(RegisterPetActivity.this, getString(R.string.select_an_image));
             } catch (Exception ex) {
-                Toast.makeText(this, getString(R.string.weHaveAProblem), Toast.LENGTH_SHORT).show();
+                ToastHelper.toast(RegisterPetActivity.this, getString(R.string.weHaveAProblem));
                 Log.d("ProfileUpload", ex.toString());
             }
         }
@@ -241,7 +240,7 @@ public class RegisterPetActivity extends AppCompatActivity {
         petName = Register_PetName.getText().toString().trim();
         //noinspection ConstantConditions
         if (petName.equals(" ") || petName.length() <= 0 || petName == null || petName.trim().equals(" ") || petName.replace(" ", "").length() <= 0)
-            Toast.makeText(this, getString(R.string.first_insert_petName), Toast.LENGTH_SHORT).show();
+            ToastHelper.toast(RegisterPetActivity.this, getString(R.string.first_insert_petName));
         else{
             Userpermissions.validatePermissions(permissions, RegisterPetActivity.this, 1);
             int GalleryPermission = ContextCompat.checkSelfPermission(RegisterPetActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);

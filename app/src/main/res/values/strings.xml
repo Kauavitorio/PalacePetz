@@ -20,7 +20,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="sing_in">Sing in</string>
-    <string name="forgot_your_password_recover">Forgot your password? <u>Recover.</u></string>
+    <string name="forgot_your_password_recover">Forgot your password?</string>
     <string name="sing_up"><u>Sing up</u></string>
     <string name="remember_me">Remember me</string>
     <string name="create_account">Create Account</string>
@@ -32,7 +32,7 @@
     <string name="haveAccount_signIn">Already have an account? <u>Sign in.</u></string>
     <string name="necessary_to_insert_the_last_name">Necessary to insert the last name</string>
     <string name="necessary_to_insert_the_First_name">Necessary to insert the first name</string>
-    <string name="email_required">Email required</string>
+    <string name="email_required">Email or username is required</string>
     <string name="informed_email_is_invalid">Informed email is invalid</string>
     <string name="password_required">Password required</string>
     <string name="password_cannot_contain_spaces">Password cannot contain spaces</string>
@@ -186,7 +186,7 @@
     <string name="optionFourDeliveryMethod">4 - PetShop will fetch the animal | Receive at the residence</string>
     <string name="add_to_cart">ADD TO CART</string>
     <string name="one_is_the_minumum_quantity">1 is the minimum quantity</string>
-    <string name="maximum_amount_reached">Maximum amount reached</string>
+    <string name="maximum_amount_reached">Maximum quantity reached, it is only possible to add in your cart 20 units of a product.</string>
     <string name="see_my_pets">See my pets</string>
     <string name="inappropriateUserName">We found that the name entered for your user is inappropriate, please change it.</string>
     <string name="birth_date">Birth Date</string>
@@ -195,7 +195,7 @@
     <string name="qrcode">QrCode</string>
     <string name="you_have_moreOf_theree_cards">You have more than 3 cards registered</string>
     <string name="card_already_inserted">Card already inserted</string>
-    <string name="have_new_version">We have a new application update available, to ensure better experience in our application we recommend that you update.</string>
+    <string name="have_new_version">We have a new application update available (%1$s), to ensure better experience in our application we recommend that you update.</string>
     <string name="updatenow">Update Now</string>
     <string name="updatelater">Update Later</string>
     <string name="register_pet">Register Pet</string>
@@ -283,4 +283,18 @@
     <string name="hello">Hello,</string>
     <string name="search_cant_be_null">The survey cannot be empty, please fill in the field.</string>
     <string name="product_not_fount">Something wrong here…\nThe informed product was not found, we apologize for the inconvenience.</string>
+    <string name="login_types">Email, cpf or username</string>
+    <string name="dont_have_an_account">Don\'t have an account? <b>Register</b></string>
+    <string name="sign_up">Sing up</string>
+    <string name="login_text">Let\'s sign you in.</string>
+    <string name="unitary">Unitary</string>
+    <string name="comfort_and_agility">Comfort and agility</string>
+    <string name="technology">Technology</string>
+    <string name="desc_fountain_technology">PalaceFountain has a micro computer capable of maintaining direct communication with your device, sending and receiving information on how to add water, with a water pump capable of pumping 80 to 120 liters per hour.</string>
+    <string name="desc_fountain_comfort">With PalaceFountain you can add water to your pet without having to leave the couch.</string>
+    <string name="shipping">Shipping: FREE</string>
+    <string name="your_account_was_created">Your account was created!</string>
+    <string name="open_email">Open email</string>
+    <string name="please_confirmEmail">Please confirm in the email before logging in.</string>
+    <string name="maximum_amount_reached_no_stock">Maximum quantity reached, in our stock we only have %1$s of this product.</string>
 </resources>
