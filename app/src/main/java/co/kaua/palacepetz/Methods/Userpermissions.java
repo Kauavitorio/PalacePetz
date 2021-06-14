@@ -9,6 +9,13 @@ import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
+
 public class Userpermissions {
 
     public static void validatePermissions(String[] permissoes, Activity activity, int requestCode){

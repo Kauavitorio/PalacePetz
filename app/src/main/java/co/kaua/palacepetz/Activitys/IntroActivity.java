@@ -12,6 +12,13 @@ import android.widget.LinearLayout;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.R;
 
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
+
 @SuppressWarnings("FieldCanBeLocal")
 public class IntroActivity extends AppCompatActivity {
     private LinearLayout btn_continue_without_account;

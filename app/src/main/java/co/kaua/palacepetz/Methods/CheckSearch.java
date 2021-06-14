@@ -7,6 +7,13 @@ import androidx.annotation.NonNull;
 import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.R;
 
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
+
 public class CheckSearch {
 
     public static void DoSearchCut(@NonNull String searchText, @NonNull Context context){

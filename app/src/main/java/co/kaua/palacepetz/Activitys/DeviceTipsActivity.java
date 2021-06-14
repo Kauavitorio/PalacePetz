@@ -10,6 +10,13 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.snackbar.Snackbar;
 import co.kaua.palacepetz.R;
 
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
+
 public class DeviceTipsActivity extends AppCompatActivity {
     private ConstraintLayout btnContinue_Tips;
     private LottieAnimationView arrowGoBackDeviceTips;

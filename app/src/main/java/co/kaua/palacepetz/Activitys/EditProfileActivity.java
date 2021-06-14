@@ -48,6 +48,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static co.kaua.palacepetz.Methods.ValidateCPF.isValidCPF;
 
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
+
 public class EditProfileActivity extends AppCompatActivity {
     private TextView txt_userName_EditProfile, txt_email_EditProfile;
     private EditText editProfile_FirstNameUser, editProfile__LastNameUser, editProfile__CPFUser,

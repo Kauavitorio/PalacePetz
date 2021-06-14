@@ -38,6 +38,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
+
 public class RegisterPetActivity extends AppCompatActivity {
     private LottieAnimationView arrowGoBackRegisterPet;
     private CircleImageView icon_RegisterPet_PetImage;
