@@ -13,7 +13,7 @@
     <string name="email">Email</string>
     <string name="password">Senha</string>
     <string name="sing_in">Entrar</string>
-    <string name="forgot_your_password_recover">Esqueceu a senha? <u>Recupere.</u></string>
+    <string name="forgot_your_password_recover">Esqueceu a senha?</string>
     <string name="sing_up"><u>Criar Conta.</u></string>
     <string name="remember_me">Lembre de mim</string>
     <string name="create_account">CRIAR CONTA</string>
@@ -25,7 +25,7 @@
     <string name="haveAccount_signIn">Já tem uma conta? <u>Entrar.</u></string>
     <string name="necessary_to_insert_the_last_name">Necessário inserir o sobrenome</string>
     <string name="necessary_to_insert_the_First_name">Necessário inserir o primeiro nome</string>
-    <string name="email_required">Necessário inserir um email</string>
+    <string name="email_required">E-mail ou nome de usuário é obrigatório</string>
     <string name="informed_email_is_invalid">Email informado é invalido</string>
     <string name="password_required">Senha requerida</string>
     <string name="password_cannot_contain_spaces">Senhas não podem conter espaços</string>
@@ -128,7 +128,7 @@
     <string name="optionFourDeliveryMethod" >4 - PetShop ira busca o animal | Receber na residencia</string>
     <string name="add_to_cart">ADICIONAR AO CARRINHO</string>
     <string name="one_is_the_minumum_quantity">1 é a quantidade mínima</string>
-    <string name="maximum_amount_reached">Quantidade máxima atingida</string>
+    <string name="maximum_amount_reached">Quantidade máxima atingida, só é possível adicionar ao carrinho 20 unidades de um produto.</string>
     <string name="see_my_pets">Ver meus animais</string>
     <string name="authFailed_thisEmail">Falha na autenticação!\nEste e-mail já está registrado.</string>
     <string name="hello_emailSend">Olá, seu usuário foi cadastrado com sucesso :)\nMandamos um email de verificação para o email cadastrado, por favor confirmar no email antes de se logar</string>
@@ -152,7 +152,7 @@
     <string name="qrcode">QrCode</string>
     <string name="you_have_moreOf_theree_cards">Você tem mais de 3 cartões registrados</string>
     <string name="card_already_inserted">O cartão informado já foi registrado</string>
-    <string name="have_new_version">Tem uma nova atualização disponível, para garantir melhor experiência em nosso aplicativo recomendamos que atualize.</string>
+    <string name="have_new_version">Tem uma nova atualização disponível (%1$s), para garantir melhor experiência em nosso aplicativo recomendamos que atualize.</string>
     <string name="updatenow">Atualizar Agora</string>
     <string name="updatelater">Atualizar Depois</string>
     <string name="register_pet">Registrar Pet</string>
@@ -224,4 +224,30 @@
     <string name="schedule_a_service">Agendar um serviço</string>
     <string name="manage_Fountain">Gerenciar fonte</string>
     <string name="need_login_msg">Para que você possa ter acesso a essa aba é necessário estar logado.\nGostaria de realizar seu login?</string>
+    <string name="need_register_birth">Para que você possa registrar um animal de estimação é necessário registrar sua data de aniversário, pois para ter um animal é necessário ser maior de idade.\nGostaria de registrar sua data de aniversário?</string>
+    <string name="to_register_a_pet_need_be_biggest_18">Apenas maiores de 18 anos pode registrar um animal.</string>
+    <string name="version">Versão</string>
+    <string name="your_are_welcome">SEJA BEM-VINDO!</string>
+    <string name="firstTime_desc">Como é o seu primeiro acesso, escolha uma forma para prosseguir.</string>
+    <string name="continue_without_account">CONTINUAR SEM CONTA</string>
+    <string name="shortCut">Atalhos</string>
+    <string name="search_with_dots">Pesquisar…</string>
+    <string name="highlights">Destaques</string>
+    <string name="hello">Olá,</string>
+    <string name="search_cant_be_null">A pesquisa não pode ser vazia, por favor preencher o campo.</string>
+    <string name="product_not_fount">Algo de errado aqui…\nO produto informado não foi encontrado, pedimos desculpa pelo inconveniente.</string>
+    <string name="login_types">Email, cpf ou nome de usuário</string>
+    <string name="dont_have_an_account">Não tem uma conta? <b>Registre-se</b></string>
+    <string name="login_text">Vamos fazer seu login.</string>
+    <string name="sign_up">Criar Conta</string>
+    <string name="unitary">Unitário</string>
+    <string name="comfort_and_agility">Conforto e agilidade</string>
+    <string name="technology">Tecnologia</string>
+    <string name="desc_fountain_technology">A PalaceFountain conta com um micro computador capas de manter comunicação direta com seu dispositivo, lhe enviando e recebendo informações como colocar água, com uma bomba d`água capas de bombear 80 a 120 litros por hora .</string>
+    <string name="desc_fountain_comfort">Com PalaceFountain você poderá colocar água para seu pet sem precisar sair do sofá ..</string>
+    <string name="shipping">Frete: Gratis</string>
+    <string name="your_account_was_created">Sua conta foi criada!</string>
+    <string name="open_email">Abrir email</string>
+    <string name="please_confirmEmail">Por favor, confirme no e-mail antes de fazer o login.</string>
+    <string name="maximum_amount_reached_no_stock">Quantidade máxima atingida, nosso estoque é de %1$s desse produto.</string>
 </resources>

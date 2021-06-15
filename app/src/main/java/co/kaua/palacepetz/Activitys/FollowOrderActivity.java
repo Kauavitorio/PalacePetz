@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,6 +24,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.List;
 import co.kaua.palacepetz.Data.User.DtoUser;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 import co.kaua.palacepetz.databinding.ActivityFollowOrderBinding;
 
@@ -149,13 +149,12 @@ public class FollowOrderActivity extends FragmentActivity implements OnMapReadyC
                         address.getLatitude(), address.getLongitude());
                 latitude = address.getLatitude();
                 longitude = address.getLongitude();
-            } else {
+            } else
                 // Display appropriate message when Geocoder services are not available
-                Toast.makeText(this, getString(R.string.zipCode_is_invalid), Toast.LENGTH_SHORT).show();
-            }
+                ToastHelper.toast(FollowOrderActivity.this, getString(R.string.zipCode_is_invalid));
         } catch (Exception e) {
             // handle exception
-            Toast.makeText(this, getString(R.string.error_in_get_your_address), Toast.LENGTH_SHORT).show();
+            ToastHelper.toast(FollowOrderActivity.this, getString(R.string.error_in_get_your_address));
             Log.d("AddressUpdate", e.toString());
         }
     }

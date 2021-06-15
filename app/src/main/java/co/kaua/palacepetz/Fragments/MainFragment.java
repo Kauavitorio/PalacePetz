@@ -1,9 +1,13 @@
 package co.kaua.palacepetz.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,12 +19,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.Products.AsyncPopularProductsMain;
+import co.kaua.palacepetz.Data.Products.AsyncProducts_SearchMain;
 import co.kaua.palacepetz.Data.Products.DtoProducts;
+import co.kaua.palacepetz.Data.User.DtoUser;
+import co.kaua.palacepetz.Methods.CheckSearch;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *  Copyright (c) 2021 Kauã Vitório
@@ -29,8 +39,10 @@ import java.util.ArrayList;
  *  @author Kaua Vitorio
  **/
 
+@SuppressWarnings({"ConstantConditions", "StaticFieldLeak", "unchecked"})
 public class MainFragment extends Fragment {
     private ConstraintLayout btn_services_shortCut, btn_allProducts_shortCut, btn_cards_shortCut, btn_myOrders_shortCut;
+    private AutoCompleteTextView edit_search;
     private RecyclerView RecyclerPopularProducts;
     private LottieAnimationView loadingPopularProducts;
     private final ArrayList<DtoProducts> arrayListDto = new ArrayList<>();
@@ -38,6 +50,9 @@ public class MainFragment extends Fragment {
     private Bundle args;
     private View view;
     private static FragmentTransaction transaction;
+    private ArrayList<String> SuggestionsSearch = new ArrayList<>();
+    private String[] SuggestionsString;
+    private static MainFragment instance;
 
     //  User information
     private static int _IdUser;
@@ -47,10 +62,18 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_activity_main, container, false);
         Ids();
-        args = getArguments();
+        instance = this;
+        SuggestionsString = new String[] { getContext().getString(R.string.services), getContext().getString(R.string.myCards),
+                getContext().getString(R.string.my_shopping_cart), getContext().getString(R.string.myOrders), getContext().getString(R.string.products),
+                getContext().getString(R.string.palaceFountain), getContext().getString(R.string.edit_address), getString(R.string.editProfile)};
+        SuggestionsSearch.addAll(Arrays.asList(SuggestionsString));
+
         assert args != null;
-        _IdUser = args.getInt("id_user");
+        DtoUser user = MainActivity.getInstance().GetUserBaseInformation();
+        _IdUser = user.getId_user();
         createShortCutsClick();
+        AsyncProducts_SearchMain asyncProductsSearchMain = new AsyncProducts_SearchMain(_IdUser, getActivity());
+        asyncProductsSearchMain.execute();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         RecyclerPopularProducts.setLayoutManager(layoutManager);
@@ -60,6 +83,17 @@ public class MainFragment extends Fragment {
         async.execute();
 
         return view;
+    }
+
+    public static MainFragment getInstance() { return instance; }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void UpdateSearch(@NonNull ArrayList<String> list){
+        SuggestionsSearch.clear();
+        SuggestionsSearch.addAll(Arrays.asList(SuggestionsString));
+        SuggestionsSearch.addAll(list);
+        edit_search.setDropDownBackgroundDrawable(getContext().getDrawable(R.drawable.background_adapter_pets));
+        edit_search.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, SuggestionsSearch));
     }
 
     private void createShortCutsClick() {
@@ -107,24 +141,67 @@ public class MainFragment extends Fragment {
             AllProductsFragment productsFragment = new AllProductsFragment();
             args = new Bundle();
             args.putInt("id_user", _IdUser);
+            args.putString("search", null);
             productsFragment.setArguments(args);
             transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frameLayoutMain, productsFragment);
             transaction.commit();
         });
+
+        edit_search.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, SuggestionsSearch));
+        edit_search.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                DoSearch(edit_search.getText().toString().trim());
+                return true;
+            }
+            return false;
+        });
+
+        edit_search.setOnItemClickListener((parent, view, position, id) -> DoSearch((String) parent.getItemAtPosition(position)));
+    }
+
+    private void DoSearch(@NonNull String searchText) {
+        if (!searchText.equals("") || searchText.replace(" ", "").length() > 0){
+            edit_search.setText("");
+            if (    searchText.equals(getContext().getString(R.string.services)) || searchText.equals(getContext().getString(R.string.myCards)) ||
+                    searchText.equals(getContext().getString(R.string.my_shopping_cart)) || searchText.equals(getContext().getString(R.string.myOrders)) ||
+                    searchText.equals(getContext().getString(R.string.products)) || searchText.equals(getContext().getString(R.string.palaceFountain)) ||
+                    searchText.equals(getContext().getString(R.string.edit_address)) || searchText.equals(getString(R.string.editProfile)))
+
+                CheckSearch.DoSearchCut(searchText, getContext());
+            else{
+                AllProductsFragment productsFragment = new AllProductsFragment();
+                args = new Bundle();
+                args.putInt("id_user", _IdUser);
+                args.putString("search", searchText);
+                productsFragment.setArguments(args);
+                transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayoutMain, productsFragment);
+                transaction.commit();
+            }
+        }else
+            ToastHelper.toast(requireActivity(), getString(R.string.search_cant_be_null));
     }
 
     private void Ids() {
+        args = getArguments();
+        edit_search = view.findViewById(R.id.edit_Search_Main);
         btn_services_shortCut = view.findViewById(R.id.btn_services_shortCut);
         btn_cards_shortCut = view.findViewById(R.id.btn_cards_shortCut);
         btn_myOrders_shortCut = view.findViewById(R.id.btn_myOrders_shortCut);
         RecyclerPopularProducts = view.findViewById(R.id.RecyclerPopularProducts);
         loadingPopularProducts = view.findViewById(R.id.loadingPopularProducts);
         btn_allProducts_shortCut = view.findViewById(R.id.btn_allProducts_shortCut);
+        btn_services_shortCut.setElevation(20);
+        btn_cards_shortCut.setElevation(20);
+        btn_myOrders_shortCut.setElevation(20);
+        btn_allProducts_shortCut.setElevation(20);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        MainActivity main = (MainActivity) getContext();
+        main.CheckShoppingCart();
     }
 }

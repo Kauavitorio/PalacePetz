@@ -19,7 +19,6 @@ import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.storage.StorageReference;
@@ -34,6 +33,7 @@ import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.Methods.Userpermissions;
 import co.kaua.palacepetz.Firebase.ConfFirebase;
 import co.kaua.palacepetz.Methods.MaskEditUtil;
@@ -83,16 +83,18 @@ public class EditProfileActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(this);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        id_user = bundle.getInt("id_user");
-        FullName = bundle.getString("name_user");
-        _Email = bundle.getString("email_user");
-        cpf_user = bundle.getString("cpf_user");
-        address_user = bundle.getString("address_user");
-        complement = bundle.getString("complement");
-        zipcode = bundle.getString("zipcode");
-        phone_user = bundle.getString("phone_user");
-        birth_date = bundle.getString("birth_date");
-        img_user = bundle.getString("img_user");
+        if(bundle != null){
+            id_user = bundle.getInt("id_user");
+            FullName = bundle.getString("name_user");
+            _Email = bundle.getString("email_user");
+            cpf_user = bundle.getString("cpf_user");
+            address_user = bundle.getString("address_user");
+            complement = bundle.getString("complement");
+            zipcode = bundle.getString("zipcode");
+            phone_user = bundle.getString("phone_user");
+            birth_date = bundle.getString("birth_date");
+            img_user = bundle.getString("img_user");
+        }
         SetEditNamesChange();
         loadUserInfo();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -169,7 +171,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     storageReference .putFile(filePath).continueWithTask(task -> {
                         if (!task.isSuccessful()) {
                             loadingDialog.dimissDialog();
-                            Toast.makeText(EditProfileActivity.this, R.string.couldnt_insert , Toast.LENGTH_SHORT).show();
+                            ToastHelper.toast(EditProfileActivity.this, getString(R.string.couldnt_insert));
                             Log.d("ProfileUpload", Objects.requireNonNull(task.getException()).toString());
                         }
                         return storageReference .getDownloadUrl();
@@ -179,15 +181,14 @@ public class EditProfileActivity extends AppCompatActivity {
                             img_user = downloadUri+"";
                             UpdateUserImage(id_user, img_user);
                         } else {
-                            Toast.makeText(this, getString(R.string.uploadFailed), Toast.LENGTH_SHORT).show();
+                            ToastHelper.toast(EditProfileActivity.this, getString(R.string.uploadFailed));
                             Log.d("ProfileUpload", Objects.requireNonNull(task.getException()).getMessage());
                             loadingDialog.dimissDialog();
                         }
                     });
                 }
-                else {
-                    Toast.makeText(EditProfileActivity.this, R.string.select_an_image, Toast.LENGTH_SHORT).show();
-                }
+                else
+                    ToastHelper.toast(EditProfileActivity.this, getString(R.string.select_an_image));
             } catch (Exception ex) {
                 Warnings.showWeHaveAProblem(EditProfileActivity.this);
                 Log.d("ProfileUpload", ex.toString());

@@ -22,7 +22,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -44,6 +43,7 @@ import co.kaua.palacepetz.Fragments.MyCardsFragment;
 import co.kaua.palacepetz.Fragments.MyOrdersFragment;
 import co.kaua.palacepetz.Fragments.ServicesFragment;
 import co.kaua.palacepetz.Fragments.ShoppingCartFragment;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -68,11 +68,8 @@ public class MainActivity extends AppCompatActivity {
     private LottieAnimationView btnMenu_Main;
     private CircleImageView icon_ProfileUser_main;
     private BottomSheetDialog bottomSheetDialog;
-    private ConstraintLayout Btn_container_ShoppingCart;
     private static FragmentTransaction transaction;
-    private TextView txt_QuantityCart_main;
     private Animation CartAnim;
-    private static Dialog warning_update;
     private int Count = 0;
     private static MainActivity instance;
 
@@ -188,33 +185,11 @@ public class MainActivity extends AppCompatActivity {
         *
         * */
 
-        icon_ProfileUser_main.setOnClickListener(v -> {
-            if (_IdUser != 0){
-            getWindow().setNavigationBarColor(getColor(R.color.background_top));
-            Intent goTo_profile = new Intent(MainActivity.this, ProfileActivity.class);
-            goTo_profile.putExtra("id_user", _IdUser);
-            goTo_profile.putExtra("name_user", name_user);
-            goTo_profile.putExtra("email_user", _Email);
-            goTo_profile.putExtra("cpf_user", cpf_user);
-            goTo_profile.putExtra("address_user", address_user);
-            goTo_profile.putExtra("complement", complement);
-            goTo_profile.putExtra("zipcode", zipcode);
-            goTo_profile.putExtra("phone_user", phone_user);
-            goTo_profile.putExtra("birth_date", birth_date);
-            goTo_profile.putExtra("img_user", img_user);
-            goTo_profile.putExtra("password", _Password);
-            startActivity(goTo_profile);
-            }else
-                Warnings.NeedLoginAlert(MainActivity.this);
-        });
-
-        //  Click to open ShoppingCart Fragment
-        Btn_container_ShoppingCart.setOnClickListener(v -> OpenShoppingCart());
-
         //  Set items gone
         base_QuantityItemsCart_main.setVisibility(View.GONE);
 
         CreatingMenuSheet();
+        CreateMenuSheetUser();
     }
 
     private void LoadMainFragment() {
@@ -227,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void OpenMyCards() {
+    public final void OpenMyCards() {
         if (_IdUser != 0){
         MyCardsFragment myCardsFragment = new MyCardsFragment();
         args = new Bundle();
@@ -241,28 +216,36 @@ public class MainActivity extends AppCompatActivity {
             Warnings.NeedLoginAlert(MainActivity.this);
     }
 
-    private void OpenAllProducts() {
-        AllProductsFragment products = new AllProductsFragment();
-        args = new Bundle();
-        args.putString("email_user", _Email);
-        args.putInt("id_user", _IdUser);
-        products.setArguments(args);
-        transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameLayoutMain, products);
-        transaction.commit();
+    public final void OpenAddressEdit(){
+        if (_IdUser != 0){
+            Intent goTo_AddressRegister = new Intent(MainActivity.this, RegisterAddressActivity.class);
+            goTo_AddressRegister.putExtra("id_user", _IdUser);
+            goTo_AddressRegister.putExtra("name_user", name_user);
+            goTo_AddressRegister.putExtra("email_user", _Email);
+            goTo_AddressRegister.putExtra("cpf_user", cpf_user);
+            goTo_AddressRegister.putExtra("address_user", address_user);
+            goTo_AddressRegister.putExtra("complement", complement);
+            goTo_AddressRegister.putExtra("zipcode", zipcode);
+            goTo_AddressRegister.putExtra("phone_user", phone_user);
+            goTo_AddressRegister.putExtra("birth_date", birth_date);
+            goTo_AddressRegister.putExtra("img_user", img_user);
+            startActivity(goTo_AddressRegister);
+        }else
+            Warnings.NeedLoginAlert(MainActivity.this);
     }
 
-    int cardSize = 9999;
+    int cardSize = 0;
     @SuppressLint("SetTextI18n")
     public void CheckShoppingCart(){
         if (_IdUser != 0){
-            if (!txt_QuantityCart_main.getText().toString().equals("0")){
-                if(!txt_QuantityCart_main.getText().toString().equals(String.valueOf(cardSize))){
-                    base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
-                    CartAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.cart_size_animation_gone);
-                    base_QuantityItemsCart_main.setAnimation(CartAnim);
-                }
+            if (cardSize != 0){
+                base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
+                CartAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.cart_size_animation_gone);
+                base_QuantityItemsCart_main.setAnimation(CartAnim);
             }
+            else
+                base_QuantityItemsCart_main.setVisibility(View.GONE);
+
             CartServices services = retrofitUser.create(CartServices.class);
             Call<DtoShoppingCart> cartCall = services.getCarSizetUser(_IdUser);
             cartCall.enqueue(new Callback<DtoShoppingCart>() {
@@ -271,18 +254,11 @@ public class MainActivity extends AppCompatActivity {
                     if (response.code() == 200){
                         assert response.body() != null;
                         cardSize = response.body().getLength();
-                        if(!String.valueOf(cardSize).equals(txt_QuantityCart_main.getText().toString())){
-                            if (response.body().getLength() > 0){
-                                base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
-                                CartAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.cart_size_animation_gone);
-                                base_QuantityItemsCart_main.setAnimation(CartAnim);
-                                CartAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.cart_size_animation);
-                                base_QuantityItemsCart_main.setAnimation(CartAnim);
-                            }
-                            else
-                                base_QuantityItemsCart_main.setVisibility(View.GONE);
+                        if (cardSize != 0){
+                            base_QuantityItemsCart_main.setVisibility(View.VISIBLE);
+                            CartAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.cart_size_animation_gone);
+                            base_QuantityItemsCart_main.setAnimation(CartAnim);
                         }
-                        txt_QuantityCart_main.setText(response.body().getLength() + "");
                     }
                 }
                 @Override
@@ -298,8 +274,6 @@ public class MainActivity extends AppCompatActivity {
     private void Ids() {
         btnMenu_Main = findViewById(R.id.btnMenu_Main);
         icon_ProfileUser_main = findViewById(R.id.icon_ProfileUser_main);
-        Btn_container_ShoppingCart = findViewById(R.id.Btn_container_ShoppingCart);
-        txt_QuantityCart_main = findViewById(R.id.txt_QuantityCart_main);
         base_QuantityItemsCart_main = findViewById(R.id.base_QuantityItemsCart_main);
     }
 
@@ -314,25 +288,9 @@ public class MainActivity extends AppCompatActivity {
 
             CardView home = sheetView.findViewById(R.id.BtnHomeSheetMenu);
             CardView products = sheetView.findViewById(R.id.BtnProductsSheetMenu);
-            CardView palaceFountain = sheetView.findViewById(R.id.BtnFountainsSheetMenu);
-            CardView myOrders = sheetView.findViewById(R.id.BtnMyOrdersSheetMenu);
-            CardView myCards = sheetView.findViewById(R.id.BtnMyCardsSheetMenu);
             CardView historic = sheetView.findViewById(R.id.BtnHistoricSheetMenu);
             CardView services = sheetView.findViewById(R.id.BtnServicesSheetMenu);
-            TextView txt_logout = sheetView.findViewById(R.id.txt_sheet_LogOut);
-            ImageView img_logout = sheetView.findViewById(R.id.Img_BtnLogOutSheetMenu);
-            if (_IdUser == 0){
-                txt_logout.setText(R.string.login);
-                img_logout.setImageResource(R.drawable.ic_albatross);
-                sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> {
-                    bottomSheetDialog.dismiss();
-                    Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(login);
-                    finish();
-                });
-            }else
-                //  When click in this linear will to Show LogOut Message
-                sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> Warnings.LogoutDialog(MainActivity.this, bottomSheetDialog));
+
 
             //  Show Main Fragment
             home.setOnClickListener(v1 -> {
@@ -356,35 +314,7 @@ public class MainActivity extends AppCompatActivity {
 
             //  Show All Products fragment
             products.setOnClickListener(v1 -> {
-                openAllProducts();
-                bottomSheetDialog.dismiss();
-            });
-
-            //  Show Palace Fountain Fragment
-            palaceFountain.setOnClickListener(v1 -> {
-                OpenFountain();
-                bottomSheetDialog.dismiss();
-            });
-
-            //  Show My Orders Fragment
-            myOrders.setOnClickListener(v1 -> {
-                bottomSheetDialog.dismiss();
-                if (_IdUser != 0){
-                MyOrdersFragment myOrdersFragment = new MyOrdersFragment();
-                args = new Bundle();
-                args.putString("email_user", _Email);
-                args.putInt("id_user", _IdUser);
-                myOrdersFragment.setArguments(args);
-                transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayoutMain, myOrdersFragment);
-                transaction.commit();
-                }else
-                    Warnings.NeedLoginAlert(MainActivity.this);
-            });
-
-            //  Show My Cards Fragment
-            myCards.setOnClickListener(v1 -> {
-                OpenMyCards();
+                OpenAllProducts();
                 bottomSheetDialog.dismiss();
             });
 
@@ -398,7 +328,120 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void OpenFountain() {
+    public final void OpenMyOrders() {
+        MyOrdersFragment myOrdersFragment = new MyOrdersFragment();
+        args = new Bundle();
+        args.putInt("id_user", _IdUser);
+        myOrdersFragment.setArguments(args);
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayoutMain, myOrdersFragment);
+        transaction.commit();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void CreateMenuSheetUser(){
+        icon_ProfileUser_main.setOnClickListener(v -> {
+            if (_IdUser != 0){
+                getWindow().setNavigationBarColor(getColor(R.color.background_top));
+                bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetTheme);
+                //  Creating View for SheetMenu
+                View sheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.adapter_menu_sheet_user,
+                        findViewById(R.id.menu_sheet_user));
+
+                //  Item  user adaptation
+                TextView txt_nameUser = sheetView.findViewById(R.id.txt_nmUser_Sheet);
+                CardView container_shoppingAmount = sheetView.findViewById(R.id.base_QuantityItemsCart_sheet);
+                TextView txt_QuantityCart_sheet = sheetView.findViewById(R.id.txt_QuantityCart_sheet);
+                TextView txt_logout = sheetView.findViewById(R.id.txt_sheet_LogOut);
+                ImageView img_logout = sheetView.findViewById(R.id.Img_BtnLogOutSheetMenu);
+                if (_IdUser == 0){
+                    txt_logout.setText(R.string.login);
+                    img_logout.setImageResource(R.drawable.ic_albatross);
+                    sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> {
+                        bottomSheetDialog.dismiss();
+                        Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(login);
+                        finish();
+                    });
+                }else
+                    //  When click in this linear will to Show LogOut Message
+                    sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> Warnings.LogoutDialog(MainActivity.this, bottomSheetDialog));
+
+                txt_nameUser.setText(getString(R.string.hello) + " " + name_user);
+
+                if (cardSize != 0){
+                    container_shoppingAmount.setVisibility(View.VISIBLE);
+                    CartAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.cart_size_animation);
+                    container_shoppingAmount.setAnimation(CartAnim);
+                    txt_QuantityCart_sheet.setText(cardSize + "");
+                }else
+                    container_shoppingAmount.setVisibility(View.GONE);
+
+                if (img_user == null || img_user.equals(""))
+                    Log.d("UserStatus", "Not User image");
+                else
+                    Picasso.get().load(img_user).into( (CircleImageView) sheetView.findViewById(R.id.icon_ProfileUser_sheetMenu));
+
+                //  Interactive items
+                ConstraintLayout btn_user_profile_sheet = sheetView.findViewById(R.id.btn_user_profile_sheet);
+                CardView BtnFountainsSheetUserMenu = sheetView.findViewById(R.id.BtnFountainsSheetUserMenu);
+                ConstraintLayout BtnMyShoppingCartSheetMenu = sheetView.findViewById(R.id.BtnMyShoppingCartSheetMenu);
+                CardView BtnMyCardsSheetUserMenu = sheetView.findViewById(R.id.BtnMyCardsSheetUserMenu);
+                CardView BtnMyOrdersSheetUserMenu = sheetView.findViewById(R.id.BtnMyOrdersSheetUserMenu);
+
+                btn_user_profile_sheet.setOnClickListener(v1 -> {
+                    OpenProfile();
+                    bottomSheetDialog.dismiss();
+                });
+
+                BtnFountainsSheetUserMenu.setOnClickListener(v1 -> {
+                    OpenFountain();
+                    bottomSheetDialog.dismiss();
+                });
+
+                BtnMyShoppingCartSheetMenu.setOnClickListener(v1 -> {
+                    OpenShoppingCart();
+                    bottomSheetDialog.dismiss();
+                });
+
+                BtnMyCardsSheetUserMenu.setOnClickListener(v1 -> {
+                    OpenShoppingCart();
+                    bottomSheetDialog.dismiss();
+                });
+
+                BtnMyOrdersSheetUserMenu.setOnClickListener(v1 -> {
+                    OpenMyOrders();
+                    bottomSheetDialog.dismiss();
+                });
+
+                bottomSheetDialog.setContentView(sheetView);
+                bottomSheetDialog.show();
+            }else
+                Warnings.NeedLoginAlert(MainActivity.this);
+        });
+    }
+
+    public final void OpenProfile() {
+        if (_IdUser != 0){
+            getWindow().setNavigationBarColor(getColor(R.color.background_top));
+            Intent goTo_profile = new Intent(MainActivity.this, ProfileActivity.class);
+            goTo_profile.putExtra("id_user", _IdUser);
+            goTo_profile.putExtra("name_user", name_user);
+            goTo_profile.putExtra("email_user", _Email);
+            goTo_profile.putExtra("cpf_user", cpf_user);
+            goTo_profile.putExtra("address_user", address_user);
+            goTo_profile.putExtra("complement", complement);
+            goTo_profile.putExtra("zipcode", zipcode);
+            goTo_profile.putExtra("phone_user", phone_user);
+            goTo_profile.putExtra("birth_date", birth_date);
+            goTo_profile.putExtra("img_user", img_user);
+            goTo_profile.putExtra("password", _Password);
+            startActivity(goTo_profile);
+        }else
+            Warnings.NeedLoginAlert(MainActivity.this);
+    }
+
+    public final void OpenFountain() {
         if (_IdUser != 0){
         Intent goTo_DevicePresentation = new Intent(this, DevicePresentationActivity.class);
         startActivity(goTo_DevicePresentation);
@@ -406,7 +449,7 @@ public class MainActivity extends AppCompatActivity {
             Warnings.NeedLoginAlert(MainActivity.this);
     }
 
-    private void OpenServices() {
+    public final void OpenServices() {
         ServicesFragment servicesFragment = new ServicesFragment();
         args = new Bundle();
         args.putInt("id_user", _IdUser);
@@ -416,17 +459,18 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void openAllProducts() {
+    public final void OpenAllProducts() {
         AllProductsFragment allProductsFragment = new AllProductsFragment();
         args = new Bundle();
         args.putInt("id_user", _IdUser);
+        args.putString("search", null);
         allProductsFragment.setArguments(args);
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameLayoutMain, allProductsFragment);
         transaction.commit();
     }
 
-    private void OpenShoppingCart() {
+    public final void OpenShoppingCart() {
         if (_IdUser != 0){
             ShoppingCartFragment shoppingCartFragment = new ShoppingCartFragment();
             args = new Bundle();
@@ -504,7 +548,6 @@ public class MainActivity extends AppCompatActivity {
 
         //  Mobile Information
         int versionCode = BuildConfig.VERSION_CODE;
-        warning_update = new Dialog(this);
         MobileServices services = retrofitMobile.create(MobileServices.class);
         Call<DtoVersion> call = services.getMobileVersion();
         call.enqueue(new Callback<DtoVersion>() {
@@ -515,27 +558,32 @@ public class MainActivity extends AppCompatActivity {
                         assert response.body() != null;
                         if ( versionCode < response.body().getVersionCode()){
                             if (Count != 1){
-                                CardView btnUpdateNow, btnUpdateLater;
-                                warning_update.setContentView(R.layout.adapter_appneedupdate);
-                                warning_update.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                warning_update.setCancelable(false);
-                                btnUpdateNow = warning_update.findViewById(R.id.btnUpdateNow);
-                                btnUpdateLater = warning_update.findViewById(R.id.btnUpdateLater);
+                                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetTheme);
+                                //  Creating View for SheetMenu
+                                bottomSheetDialog.setCancelable(false);
+                                View sheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.adapter_appneedupdate,
+                                        findViewById(R.id.sheet_app_update_menu));
+                                TextView txt_version_app = sheetView.findViewById(R.id.txt_version_app);
+                                String newVersionToUpdate = response.body().getVersionName();
+                                txt_version_app.setText(getString(R.string.have_new_version, newVersionToUpdate));
 
-                                btnUpdateNow.setOnClickListener(v -> {
+                                sheetView.findViewById(R.id.btn_update_now).setOnClickListener(v -> {
                                     String url = "https://play.google.com/store/apps/details?id=co.kaua.palacepetz";
                                     Intent i = new Intent(Intent.ACTION_VIEW);
                                     i.setData(Uri.parse(url));
                                     startActivity(i);
-                                    warning_update.dismiss();
+                                    Count = 1;
+                                    bottomSheetDialog.dismiss();
+                                });
+
+                                sheetView.findViewById(R.id.btn_update_later).setOnClickListener(v -> {
+                                    bottomSheetDialog.dismiss();
                                     Count = 1;
                                 });
 
-                                btnUpdateLater.setOnClickListener(v -> {
-                                    warning_update.dismiss();
-                                    Count = 1;
-                                });
-                                warning_update.show();
+
+                                bottomSheetDialog.setContentView(sheetView);
+                                bottomSheetDialog.show();
                                 Log.d("MobileVersion", "Need update: " + versionCode);
                             }
                         }
@@ -575,14 +623,16 @@ public class MainActivity extends AppCompatActivity {
                         zipcode = response.body().getZipcode();
                         phone_user = response.body().getPhone_user();
                         birth_date = response.body().getBirth_date();
-                        img_user = response.body().getImg_user();
+                        if (!response.body().getImg_user().equals(img_user)){
+                            img_user = response.body().getImg_user();
+                            if (img_user == null || img_user.equals(""))
+                                Log.d("UserStatus", "Not User image");
+                            else
+                                Picasso.get().load(img_user).into(icon_ProfileUser_main);
+                        }
                         TryUpdatePreferences();
-                        if (img_user == null || img_user.equals(""))
-                            Log.d("UserStatus", "Not User image");
-                        else
-                            Picasso.get().load(img_user).into(icon_ProfileUser_main);
                     }else if (response.code() == 401){
-                        Toast.makeText(MainActivity.this, getString(R.string.we_verify_yourEmailOrPassword), Toast.LENGTH_LONG).show();
+                        ToastHelper.toast(MainActivity.this, getString(R.string.we_verify_yourEmailOrPassword));
                         Intent goTo_login = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(goTo_login);
                         finish();

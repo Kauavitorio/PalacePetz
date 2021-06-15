@@ -1,95 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="350dp"
-    app:cardCornerRadius="20dp"
-    app:cardBackgroundColor="#63C8FF"
-    android:layout_height="wrap_content">
+    android:id="@+id/sheet_app_update_menu"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:background="@drawable/background_order_confirm_sheet"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- Main Text -->
+    <TextView
+        android:id="@+id/txt_version_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:maxWidth="350dp"
+        android:text="@string/have_new_version"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <!-- Btn Update Now -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_update_now"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#00FFFFFF"
-        android:padding="10dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:minWidth="130dp"
+        android:minHeight="50dp"
+        app:cardBackgroundColor="@color/edittext_base"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Txt Title -->
+        <!-- Text Ok -->
         <TextView
-            android:id="@+id/txttile_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/have_new_version"
-            android:textColor="#000"
-            android:textSize="17sp"
+            android:layout_gravity="center"
+            android:text="@string/updatenow"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Btn Update Later -->
+    <LinearLayout
+        android:id="@+id/btn_update_later"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:minWidth="130dp"
+        android:minHeight="50dp"
+        android:background="@drawable/background_continue_intro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/edittext_base"
+            android:textSize="17sp"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:text="@string/updatelater"/>
 
-        <!--Btn Update Now -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btnUpdateNow"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
-            app:cardCornerRadius="20dp"
-            app:cardBackgroundColor="#80AFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnUpdateLater"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txttile_update">
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/updatenow"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:textColor="#AD000000"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.cardview.widget.CardView>
-
-        <!--Btn Register After-->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btnUpdateLater"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="#FFBF8E"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txttile_update">
-
-            <!--Text Register after-->
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/updatelater"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:textColor="#AD000000"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.cardview.widget.CardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.cardview.widget.CardView>
+</LinearLayout>

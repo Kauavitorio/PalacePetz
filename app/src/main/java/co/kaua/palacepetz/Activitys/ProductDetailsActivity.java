@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.squareup.picasso.Picasso;
@@ -24,6 +23,7 @@ import co.kaua.palacepetz.Data.Products.ProductsServices;
 import co.kaua.palacepetz.Data.ShoppingCart.CartServices;
 import co.kaua.palacepetz.Data.ShoppingCart.DtoShoppingCart;
 import co.kaua.palacepetz.Data.User.DtoUser;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +45,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private float full_prod_price = unit_prod_price;
     private LoadingDialog loadingDialog;
     int cd_prod;
+    private String ToastAlert;
     String image_prod, nm_product, description;
 
     //  User information
@@ -64,6 +65,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_details);
         setTheme(R.style.DevicePresentation);
         Ids();
+        ToastAlert = getString(R.string.maximum_amount_reached);
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("pt", "BR"));
         numberFormat.setMaximumFractionDigits(2);
 
@@ -129,11 +131,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         }
 
+        if (qt_prodGet < 20)
+            ToastAlert = getString(R.string.maximum_amount_reached_no_stock, qt_prodGet + "");
+
 
         btnLessQT_Prod.setOnClickListener(v -> {
-            if (qt_prod == 1){
-                Toast.makeText(this, R.string.one_is_the_minumum_quantity, Toast.LENGTH_SHORT).show();
-            }else{
+            if (qt_prod == 1)
+                ToastHelper.toast(ProductDetailsActivity.this, getString(R.string.one_is_the_minumum_quantity));
+            else{
                 qt_prod--;
                 setNewPrice(numberFormat);
                 RefreshQtText();
@@ -141,9 +146,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
 
         btnPlusQT_Prod.setOnClickListener(v -> {
-            if (qt_prod == qt_prodGet || qt_prod == 20){
-                Toast.makeText(this, R.string.maximum_amount_reached, Toast.LENGTH_SHORT).show();
-            }else {
+            if (qt_prod == qt_prodGet || qt_prod == 20)
+                ToastHelper.toast(ProductDetailsActivity.this, ToastAlert);
+            else {
                 qt_prod++;
                 setNewPrice(numberFormat);
                 RefreshQtText();
@@ -164,11 +169,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     public void onResponse(@NonNull Call<DtoShoppingCart> call, @NonNull Response<DtoShoppingCart> response) {
                         if(response.code() == 201){
                             loadingDialog.dimissDialog();
-                            Toast.makeText(ProductDetailsActivity.this, getString(R.string.product_successfully_inserted), Toast.LENGTH_LONG).show();
+                            ToastHelper.toast(ProductDetailsActivity.this, getString(R.string.product_successfully_inserted));
                             finish();
                         }else if(response.code() == 409){
                             loadingDialog.dimissDialog();
-                            Toast.makeText(ProductDetailsActivity.this, getString(R.string.product_into_your_cart), Toast.LENGTH_LONG).show();
+                            ToastHelper.toast(ProductDetailsActivity.this, getString(R.string.product_into_your_cart));
                         }
                         else{
                             loadingDialog.dimissDialog();

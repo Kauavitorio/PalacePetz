@@ -38,13 +38,9 @@ public class SplashScreen extends AppCompatActivity {
     //  Create timer
     private final Handler timer = new Handler();
 
-    //  Set preferences
-    SharedPreferences mPrefs;
-    private static final String PREFS_NAME = "myPrefs";
-
     final String email = "usermobile@palacepetz.com";
     final String password = "mobile123456";
-    private int MAIN_TIMER = 1000;
+    private int MAIN_TIMER = 500;
 
     //  Firebase
     FirebaseAuth auth;
@@ -53,13 +49,15 @@ public class SplashScreen extends AppCompatActivity {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         base_animation_splash = findViewById(R.id.base_animation_splash);
-        launchShortcuts();
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1)
+            launchShortcuts();
+
         StartApi();
 
         //  Set Containers on Screen
@@ -67,7 +65,7 @@ public class SplashScreen extends AppCompatActivity {
         auth = ConfFirebase.getFirebaseAuth();
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             Log.d("FirstLogin", "First login is ok");
-            verifyIfUsersLogged();
+            timer.postDelayed(this::verifyIfUsersLogged, 500);
         });
     }
 
@@ -100,7 +98,7 @@ public class SplashScreen extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     private ShortcutInfo CreateShortCut(Intent intent, String ShortLabel, String LongLabel, int icon, int id) {
-        return new ShortcutInfo.Builder(this, "Shortcut_Services_" + id)
+        return new ShortcutInfo.Builder(this, "Shortcut_" + id)
                 .setShortLabel(ShortLabel)
                 .setLongLabel(LongLabel)
                 .setIcon(Icon.createWithResource(this, icon))
@@ -116,12 +114,11 @@ public class SplashScreen extends AppCompatActivity {
 
     public void verifyIfUsersLogged() {
         //  Verification of user preference information
-        mPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences sp = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        if (sp.contains("pref_email") && sp.contains("pref_password"))
+        SharedPreferences sp_First = getSharedPreferences("First_See", MODE_PRIVATE);
+        if (sp_First.contains("viewed"))
             timer.postDelayed(this::GoToMain, MAIN_TIMER);
         else
-            timer.postDelayed(this::GoToMain,2500);
+            timer.postDelayed(this::GoToIntro, 2000);
     }
 
     private void GoToMain(){
@@ -129,6 +126,14 @@ public class SplashScreen extends AppCompatActivity {
         goto_main.putExtra("shortcut", 0);
         ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),R.anim.move_to_left, R.anim.move_to_right);
         ActivityCompat.startActivity(SplashScreen.this, goto_main, activityOptionsCompat.toBundle());
+        finish();
+    }
+
+    private void GoToIntro(){
+        Intent goto_intro = new Intent(SplashScreen.this, IntroActivity.class);
+        goto_intro.putExtra("shortcut", 0);
+        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),R.anim.move_to_left, R.anim.move_to_right);
+        ActivityCompat.startActivity(SplashScreen.this, goto_intro, activityOptionsCompat.toBundle());
         finish();
     }
 

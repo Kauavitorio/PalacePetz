@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +20,7 @@ import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Data.Cards.AsyncCards;
 import co.kaua.palacepetz.Data.Cards.CardService;
 import co.kaua.palacepetz.Data.Cards.DtoCard;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -117,7 +117,7 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
             @Override
             public void onFailure(@NotNull Call<DtoCard> call, @NotNull Throwable t) {
                 loadingDialog.dimissDialog();
-                Toast.makeText(getActivity(), R.string.weHaveAProblem, Toast.LENGTH_SHORT).show();
+                ToastHelper.toast(requireActivity(), getString(R.string.weHaveAProblem));
             }
         });
     }

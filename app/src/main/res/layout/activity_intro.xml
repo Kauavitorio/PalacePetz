@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    android:fillViewport="true"
+    tools:context=".Activitys.IntroActivity">
+
+    <!-- Main Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Container Top -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout_top_intro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="318dp"
+            android:maxHeight="318dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:background="@drawable/container_top_intro"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- Text You are welcome -->
+                <TextView
+                    android:id="@+id/txt_you_are_welcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:text="@string/your_are_welcome"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:src="@drawable/dog_intro"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Container Middle -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout_center_intro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="150dp"
+            android:maxHeight="150dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout_bottom_intro"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout_top_intro">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/segoe_ui"
+                android:maxWidth="300dp"
+                android:text="@string/firstTime_desc"
+                android:textAlignment="center"
+                android:textColor="@color/hint"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Container Bottom Buttons -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout_bottom_intro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="200dp"
+            android:maxHeight="300dp"
+            android:layout_gravity="bottom"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_login_intro"
+                android:layout_width="274dp"
+                android:layout_height="65dp"
+                app:cardBackgroundColor="@color/edittext_base"
+                app:cardCornerRadius="10dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/btn_continue_without_account"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="@string/sing_in"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Btn Continue WithOut Account -->
+            <LinearLayout
+                android:id="@+id/btn_continue_without_account"
+                android:layout_width="274dp"
+                android:layout_height="65dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_continue_intro"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/edittext_base"
+                    android:textSize="17sp"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:text="@string/continue_without_account"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</ScrollView>
