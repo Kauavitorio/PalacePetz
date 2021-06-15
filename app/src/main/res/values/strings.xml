@@ -29,7 +29,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="minimum_eight_characters">Minimum 8 characters</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
-    <string name="haveAccount_signIn">Already have an account? <u>Sign in.</u></string>
+    <string name="haveAccount_signIn">Already have an account? <b>Sign in.</b></string>
     <string name="necessary_to_insert_the_last_name">Necessary to insert the last name</string>
     <string name="necessary_to_insert_the_First_name">Necessary to insert the first name</string>
     <string name="email_required">Email or username is required</string>
@@ -297,4 +297,6 @@
     <string name="open_email">Open email</string>
     <string name="please_confirmEmail">Please confirm in the email before logging in.</string>
     <string name="maximum_amount_reached_no_stock">Maximum quantity reached, in our stock we only have %1$s of this product.</string>
+    <string name="help">Help</string>
+    <string name="authFailed_thisCpf">Authentication failed!\nThis CPF is already registered.</string>
 </resources>

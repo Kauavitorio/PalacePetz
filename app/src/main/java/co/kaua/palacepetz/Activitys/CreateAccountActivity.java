@@ -144,6 +144,11 @@ public class CreateAccountActivity extends AppCompatActivity {
                             cardBtn_SingUp.setElevation(20);
                             ToastHelper.toast(CreateAccountActivity.this, getString(R.string.authFailed_thisEmail));
                             cardBtn_SingUp.setEnabled(true);
+                        }else if (response.code() == 412){
+                            loadingDialog.dimissDialog();
+                            cardBtn_SingUp.setElevation(20);
+                            ToastHelper.toast(CreateAccountActivity.this, getString(R.string.authFailed_thisCpf));
+                            cardBtn_SingUp.setEnabled(true);
                         }else{
                             cardBtn_SingUp.setEnabled(true);
                             loadingDialog.dimissDialog();

@@ -25,6 +25,8 @@ public class CheckSearch {
         String palaceFountain = context.getString(R.string.palaceFountain);
         String edit_address = context.getString(R.string.edit_address);
         String editProfile = context.getString(R.string.editProfile);
+        String help = context.getString(R.string.help);
+
         if (searchText.equals(services))
             MainActivity.getInstance().OpenServices();
 
@@ -48,5 +50,8 @@ public class CheckSearch {
 
         else if(searchText.equals(editProfile))
             MainActivity.getInstance().OpenProfile();
+
+        else if(searchText.equals(help))
+            MainActivity.getInstance().OpenHelp();
     }
 }

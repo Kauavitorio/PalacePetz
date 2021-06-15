@@ -65,7 +65,7 @@ public class MainFragment extends Fragment {
         instance = this;
         SuggestionsString = new String[] { getContext().getString(R.string.services), getContext().getString(R.string.myCards),
                 getContext().getString(R.string.my_shopping_cart), getContext().getString(R.string.myOrders), getContext().getString(R.string.products),
-                getContext().getString(R.string.palaceFountain), getContext().getString(R.string.edit_address), getString(R.string.editProfile)};
+                getContext().getString(R.string.palaceFountain), getContext().getString(R.string.edit_address), getString(R.string.editProfile), getContext().getString(R.string.help)};
         SuggestionsSearch.addAll(Arrays.asList(SuggestionsString));
 
         assert args != null;

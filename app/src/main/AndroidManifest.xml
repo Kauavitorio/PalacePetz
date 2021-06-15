@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PalacePetz">
-        <activity android:name=".Activitys.IntroActivity"></activity>
+        <activity android:name=".Activitys.Help.HelpActivity"></activity>
+        <activity android:name=".Activitys.IntroActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

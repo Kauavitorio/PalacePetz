@@ -22,7 +22,7 @@
     <string name="confirm_password">Confirmar Senha</string>
     <string name="minimum_eight_characters">Mínimo 8 caracteres</string>
     <string name="passwords_do_not_match">As senhas não conferem</string>
-    <string name="haveAccount_signIn">Já tem uma conta? <u>Entrar.</u></string>
+    <string name="haveAccount_signIn">Já tem uma conta? <b>Entrar.</b></string>
     <string name="necessary_to_insert_the_last_name">Necessário inserir o sobrenome</string>
     <string name="necessary_to_insert_the_First_name">Necessário inserir o primeiro nome</string>
     <string name="email_required">E-mail ou nome de usuário é obrigatório</string>
@@ -250,4 +250,6 @@
     <string name="open_email">Abrir email</string>
     <string name="please_confirmEmail">Por favor, confirme no e-mail antes de fazer o login.</string>
     <string name="maximum_amount_reached_no_stock">Quantidade máxima atingida, nosso estoque é de %1$s desse produto.</string>
+    <string name="help">Ajuda</string>
+    <string name="authFailed_thisCpf">Falha na autenticação!\nEste CPF já está registrado.</string>
 </resources>
