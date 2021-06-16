@@ -332,19 +332,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public final void OpenMyOrders() {
-        MyOrdersFragment myOrdersFragment = new MyOrdersFragment();
-        args = new Bundle();
-        args.putInt("id_user", _IdUser);
-        myOrdersFragment.setArguments(args);
-        transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameLayoutMain, myOrdersFragment);
-        transaction.commit();
+        if (_IdUser != 0){
+            MyOrdersFragment myOrdersFragment = new MyOrdersFragment();
+            args = new Bundle();
+            args.putInt("id_user", _IdUser);
+            myOrdersFragment.setArguments(args);
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameLayoutMain, myOrdersFragment);
+            transaction.commit();
+        }else
+            Warnings.NeedLoginAlert(MainActivity.this);
     }
 
     @SuppressLint("SetTextI18n")
     private void CreateMenuSheetUser(){
         icon_ProfileUser_main.setOnClickListener(v -> {
-            if (_IdUser != 0){
                 getWindow().setNavigationBarColor(getColor(R.color.background_top));
                 bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetTheme);
                 //  Creating View for SheetMenu
@@ -370,7 +372,10 @@ public class MainActivity extends AppCompatActivity {
                     //  When click in this linear will to Show LogOut Message
                     sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> Warnings.LogoutDialog(MainActivity.this, bottomSheetDialog));
 
+                if (_IdUser != 0)
                 txt_nameUser.setText(getString(R.string.hello) + " " + name_user);
+                else
+                txt_nameUser.setText(getString(R.string.hello)+ " " + getString(R.string.anonymous_user));
 
                 if (cardSize != 0){
                     container_shoppingAmount.setVisibility(View.VISIBLE);
@@ -430,8 +435,6 @@ public class MainActivity extends AppCompatActivity {
 
                 bottomSheetDialog.setContentView(sheetView);
                 bottomSheetDialog.show();
-            }else
-                Warnings.NeedLoginAlert(MainActivity.this);
         });
     }
 
