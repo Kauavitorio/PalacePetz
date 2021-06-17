@@ -287,4 +287,14 @@
     <string name="desc_delete_account">Você pode excluir sua conta PalacePetz a qualquer momento. Se você mudar de ideia, talvez não consiga recuperá-lo.\n\nEntre em contato com um funcionário para que possamos excluir sua conta.</string>
     <string name="test_water_pump">Testar bomba de água</string>
     <string name="cancel_water">Desligar Água</string>
+    <string name="who_are_we">Quem somos nós?</string>
+    <string name="desc_who_are_we" >A PalacePetz foi criada pelo amor que os proprietários têm pelos animais. Visando um bom tratameto aos bichinhos de estimaçãom, não só com produtos, mas auxiliando no cuidado com consultas veterinárias.</string>
+    <string name="desc_policy_and_terms">A proteção dos seus dados é muito importante para a Palace.\nRespeitamos a sua privacidade em nossa missão de proporcionar um serviço cada vez melhor!\n\n• Os dados que você cadastra em nossas plataformas <b>são tratados de forma segura.</b>\n\n• <b>Limitamos o tratamento</b> dos dados para as suas devidas finalidades e em <b>conformidade com a lei.</b>\n\n• Você poderá tirar suas dúvidas e solicitar informações a qualquer momento através da aba Ajuda em nossas plataformas.</string>
+    <string name="waiting_for_be_approved">seu pedido está esperando para ser aprovado</string>
+    <string name="we_are_preparing_your_order">estamos preparando seu pedido</string>
+    <string name="your_order_is_on_its_way">seu pedido está a caminho</string>
+    <string name="your_order_has_been_delivered">seu pedido foi entregue</string>
+    <string name="your_order_has_already_been_completed">seu pedido já foi concluído</string>
+    <string name="desc_work_at_palace">Infelizmente no momento não temos vagas disponíveis, mas se você quiser futuramente  ser um colaborador da palace petz, você pode enviar seu currículo para este e-mail palacepetz.shop@gmail.com e assim que novas vagas estiverem disponíveis entraremos em contato</string>
+    <string name="desc_be_a_supplier">No momento nosso estoque está lotado e não temos vagas para novos fornecedores, porém você pode oferecer os serviços de sua empresa enviando um e-mail para palacepetz.shop@gmail.com e assin que houver a necessidade de novos ou mais produtos um dos nossos gerentes podem contatar sua empresa.</string>
 </resources>

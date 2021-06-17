@@ -24,7 +24,13 @@ public class SheetMenu_Help extends HelpActivity{
 
     public static void ShowWorkAtPalaceSheet(Activity activity){
         BottomSheetDialog bottomSheetDialog = GenerateBaseSheet(activity, activity.getString(R.string.i_want_to_work_at_palace),
-                activity.getString(R.string.desc_do_not_receive_discount));
+                activity.getString(R.string.desc_work_at_palace));
+        bottomSheetDialog.show();
+    }
+
+    public static void ShowBeASupplierSheet(Activity activity){
+        BottomSheetDialog bottomSheetDialog = GenerateBaseSheet(activity, activity.getString(R.string.i_want_to_be_a_supplier),
+                activity.getString(R.string.desc_be_a_supplier));
         bottomSheetDialog.show();
     }
 
@@ -38,64 +44,89 @@ public class SheetMenu_Help extends HelpActivity{
             Warnings.NeedLoginAlert(activity);
     }
 
-    public static class AccountSheet{
+    public static void ShowAccountSheet(Activity activity){
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity, R.style.BottomSheetTheme);
+        //  Creating View for SheetMenu
+        View sheetView = LayoutInflater.from(activity).inflate(R.layout.adapter_menu_sheet_account_help,
+                activity.findViewById(R.id.sheet_menu_account_help));
 
-        public static void ShowAccountSheet(Activity activity){
-            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity, R.style.BottomSheetTheme);
-            //  Creating View for SheetMenu
-            View sheetView = LayoutInflater.from(activity).inflate(R.layout.adapter_menu_sheet_account_help,
-                    activity.findViewById(R.id.sheet_menu_account_help));
+        //  Close sheet click
+        sheetView.findViewById(R.id.btn_close_sheet_account_help).setOnClickListener(v -> bottomSheetDialog.dismiss());
 
-            //  Close sheet click
-            sheetView.findViewById(R.id.btn_close_sheet_account_help).setOnClickListener(v -> bottomSheetDialog.dismiss());
+        //  Account Has Hacked click
+        sheetView.findViewById(R.id.btn_card_my_account_has_been_hacked_sheet_help).setOnClickListener(v -> {
+            BottomSheetDialog Dialog = GenerateBaseSheet(activity, activity.getString(R.string.my_account_has_been_hacked),
+                    activity.getString(R.string.desc_my_account_has_been_hacked));
+            Dialog.show();
+            bottomSheetDialog.dismiss();
+        });
 
-            //  Account Has Hacked click
-            sheetView.findViewById(R.id.btn_card_my_account_has_been_hacked_sheet_help).setOnClickListener(v -> {
-                BottomSheetDialog Dialog = GenerateBaseSheet(activity, activity.getString(R.string.my_account_has_been_hacked),
-                        activity.getString(R.string.desc_my_account_has_been_hacked));
-                Dialog.show();
-                bottomSheetDialog.dismiss();
-            });
+        //  Change Profile Data click
+        sheetView.findViewById(R.id.btn_card_i_want_to_change_account_data_sheet_help).setOnClickListener(v -> {
+            DtoUser user = MainActivity.getInstance().GetUserBaseInformation();
+            if (user.getId_user() != 0){
+                MainActivity.getInstance().OpenProfile();
+                activity.finish();
+            }
+            else
+                Warnings.NeedLoginAlert(activity);
+            bottomSheetDialog.dismiss();
+        });
 
-            //  Change Profile Data click
-            sheetView.findViewById(R.id.btn_card_i_want_to_change_account_data_sheet_help).setOnClickListener(v -> {
-                DtoUser user = MainActivity.getInstance().GetUserBaseInformation();
-                if (user.getId_user() != 0){
-                    MainActivity.getInstance().OpenProfile();
-                    activity.finish();
-                }
-                else
-                    Warnings.NeedLoginAlert(activity);
-                bottomSheetDialog.dismiss();
-            });
+        //  I want to delete my account click
+        sheetView.findViewById(R.id.btn_card_i_want_to_delete_my_account_sheet_help).setOnClickListener(v -> {
+            BottomSheetDialog Dialog = GenerateBaseSheet(activity, activity.getString(R.string.i_want_to_delete_my_account),
+                    activity.getString(R.string.desc_delete_account));
+            Dialog.show();
+            bottomSheetDialog.dismiss();
+        });
 
-            //  I want to delete my account click
-            sheetView.findViewById(R.id.btn_card_i_want_to_delete_my_account_sheet_help).setOnClickListener(v -> {
-                BottomSheetDialog Dialog = GenerateBaseSheet(activity, activity.getString(R.string.i_want_to_delete_my_account),
-                        activity.getString(R.string.desc_delete_account));
-                Dialog.show();
-                bottomSheetDialog.dismiss();
-            });
+        //  Change Password click
+        sheetView.findViewById(R.id.btn_card_change_my_password_help_sheet_account).setOnClickListener(v -> {
+            BottomSheetDialog Dialog = GenerateBaseSheet(activity, activity.getString(R.string.i_want_to_change_my_password),
+                    activity.getString(R.string.desc_i_want_to_change_my_password));
+            Dialog.show();
+            bottomSheetDialog.dismiss();
+        });
 
-            //  Change Password click
-            sheetView.findViewById(R.id.btn_card_change_my_password_help_sheet_account).setOnClickListener(v -> {
-                BottomSheetDialog Dialog = GenerateBaseSheet(activity, activity.getString(R.string.i_want_to_change_my_password),
-                        activity.getString(R.string.desc_i_want_to_change_my_password));
-                Dialog.show();
-                bottomSheetDialog.dismiss();
-            });
+        //  Security tips
+        sheetView.findViewById(R.id.btn_card_security_tips_sheet_account).setOnClickListener(v -> {
+            BottomSheetDialog Dialog = GenerateBaseSheet(activity, activity.getString(R.string.security_tips),
+                    activity.getString(R.string.desc_security_tips));
+            Dialog.show();
+            bottomSheetDialog.dismiss();
+        });
 
-            //  Security tips
-            sheetView.findViewById(R.id.btn_card_security_tips_sheet_account).setOnClickListener(v -> {
-                BottomSheetDialog Dialog = GenerateBaseSheet(activity, activity.getString(R.string.security_tips),
-                        activity.getString(R.string.desc_security_tips));
-                Dialog.show();
-                bottomSheetDialog.dismiss();
-            });
+        bottomSheetDialog.setContentView(sheetView);
+        bottomSheetDialog.show();
+    }
 
-            bottomSheetDialog.setContentView(sheetView);
-            bottomSheetDialog.show();
-        }
+    public static void ShowAboutPalaceSheet(Activity activity){
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity, R.style.BottomSheetTheme);
+        //  Creating View for SheetMenu
+        View sheetView = LayoutInflater.from(activity).inflate(R.layout.adapter_menu_sheet_about_palace_help,
+                activity.findViewById(R.id.sheet_menu_about_palace_help));
+
+        //  Close sheet click
+        sheetView.findViewById(R.id.btn_close_sheet_about_palace_help).setOnClickListener(v -> bottomSheetDialog.dismiss());
+
+        //  Account Has Hacked click
+        sheetView.findViewById(R.id.btn_card_who_are_we_help).setOnClickListener(v -> {
+            BottomSheetDialog Dialog = GenerateBaseSheet(activity, activity.getString(R.string.who_are_we),
+                    activity.getString(R.string.desc_who_are_we));
+            Dialog.show();
+            bottomSheetDialog.dismiss();
+        });
+
+
+        bottomSheetDialog.setContentView(sheetView);
+        bottomSheetDialog.show();
+    }
+
+    public static void ShowPolicyAndTermsSheet(Activity activity){
+        BottomSheetDialog bottomSheetDialog = GenerateBaseSheet(activity, activity.getString(R.string.policy_and_terms),
+                activity.getString(R.string.desc_policy_and_terms));
+        bottomSheetDialog.show();
     }
 
     @NonNull

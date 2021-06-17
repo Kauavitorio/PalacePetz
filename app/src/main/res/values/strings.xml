@@ -334,4 +334,14 @@
     <string name="desc_delete_account">You can delete your PalacePetz account at any time. If you change your mind, you might not be able to get it back.\n\nPlease contact an employee so we can delete your account.</string>
     <string name="test_water_pump">Test water pump</string>
     <string name="cancel_water">Cancel Water</string>
+    <string name="who_are_we">Who are we?</string>
+    <string name="desc_who_are_we" >PalacePetz was created by love the owners have by animals. aiming for a good treatment to the pets, not just with products, but assisting in the beware of appointments veterinary.</string>
+    <string name="desc_policy_and_terms">The protection of your data is very important to Palace.\nWe respect your privacy in our mission to provide an even better service!\n\n• The data you register on our platforms <b>is handled securely.</b>\n\n• <b>We limit the processing</b> of data to their proper purposes and in <b>accordance with the law.</b>\n\n• You can answer your questions and request information at any time through the Help tab on our platforms.</string>
+    <string name="waiting_for_be_approved">your order is waiting for be approved</string>
+    <string name="we_are_preparing_your_order">we are preparing your order</string>
+    <string name="your_order_is_on_its_way">your order is on its way</string>
+    <string name="your_order_has_been_delivered">your order has been delivered</string>
+    <string name="your_order_has_already_been_completed">your order has already been completed</string>
+    <string name="desc_work_at_palace">Unfortunately at the moment we have no vacancies available, but if you want to be a palace petz collaborator in the future, you can send your resume to this email palacepetz.shop@gmail.com and as soon as new vacancies are available we will contact you</string>
+    <string name="desc_be_a_supplier">At the moment our stock is full and we have no vacancies for new suppliers, but you can offer your company\'s services by sending an e-mail to palacepetz.shop@gmail.com and signing if there is a need for new or more products one of ours managers can contact your company.</string>
 </resources>
