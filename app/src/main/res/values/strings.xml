@@ -332,4 +332,6 @@
     <string name="desc_i_want_to_change_my_password">To change your password, simply log out of your account, go to the login screen and click on the option \"I forgot my password\"</string>
     <string name="desc_security_tips">• PalacePetz cares a lot about your security so here are some tips, PalacePetz will never ask for your personal information like cpf, password etc…\n\n• <b>Attention with fake email and SMS</b> - Check if the email sender is palacepetz.shop@gmail.com before replying to any contact and do not share your details via SMS or Whatsapp;\n\n<b>• Keep your app up to date:</b> The more recent your update, the more safe your device is. Lack of updates opens security holes that can be used by malicious people.</string>
     <string name="desc_delete_account">You can delete your PalacePetz account at any time. If you change your mind, you might not be able to get it back.\n\nPlease contact an employee so we can delete your account.</string>
+    <string name="test_water_pump">Test water pump</string>
+    <string name="cancel_water">Cancel Water</string>
 </resources>

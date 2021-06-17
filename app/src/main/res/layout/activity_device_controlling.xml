@@ -80,9 +80,9 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Btn PLACE RATION -->
+        <!-- Btn Cancel Water -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btn_PutRacao"
+            android:id="@+id/btn_CancelWater"
             android:layout_width="300dp"
             android:layout_height="85dp"
             android:background="@drawable/putracao_bg_controlling"
@@ -95,7 +95,35 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/put_racao"
+                android:text="@string/cancel_water"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Btn Test Water Pump -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_TestWaterPump"
+            android:layout_width="300dp"
+            android:layout_height="85dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/putracao_bg_controlling"
+            app:layout_constraintBottom_toTopOf="@+id/btn_Disconnect"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_CancelWater">
+
+            <!-- Text PLACE RATION -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/test_water_pump"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="26sp"
@@ -111,13 +139,11 @@
             android:id="@+id/btn_Disconnect"
             android:layout_width="300dp"
             android:layout_height="85dp"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/discornnect_bg_controlling"
             android:layout_marginBottom="40dp"
+            android:background="@drawable/discornnect_bg_controlling"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_PutRacao">
+            app:layout_constraintStart_toStartOf="parent">
 
             <!-- Text DISCONNECT -->
             <TextView

@@ -33,10 +33,11 @@ import co.kaua.palacepetz.R;
  * @author Kaua Vitorio
  **/
 
+@SuppressWarnings("deprecation")
 public class DeviceControlling extends AppCompatActivity {
 
     private static final String TAG = "BlueTest5-Controlling";
-    int mMaxChars = 50000;//Default//change this to string......
+    int mMaxChars = 50000;    //Default
     private UUID mDeviceUUID;
     private BluetoothSocket mBTSocket;
     private ReadInput mReadThread = null;
@@ -49,17 +50,17 @@ public class DeviceControlling extends AppCompatActivity {
     private BluetoothDevice mDevice;
 
     //  Bluetooth Commands
-    final static String passPutWater = "92"; // Password to device put water
-    final static String lightOn = "79";//off
-    final static String lightOFF = "78";//off
-    final static String offDisconnect = "000"; //off
-    final static String onConnectBlue = "001"; //on
+    final static String passPutWater = "10"; // Password to device put water
+    final static String passTestPump = "158"; // Password to device put water
+    final static String CancelWater = "12";  // cancel water
+    final static String offDisconnect = "000"; // System off
+    final static String onConnectBlue = "001"; // System on
     SharedPreferences prefs;
 
 
     LoadingDialog loadingDialog;
     LottieAnimationView arrowGoBackDeviceControlling, btnVoice_Controlling;
-    ConstraintLayout btn_PutWater, btn_PutRacao, btn_Disconnect;
+    ConstraintLayout btn_PutWater, btn_CancelWater, btn_Disconnect, btn_TestWaterPump;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +71,11 @@ public class DeviceControlling extends AppCompatActivity {
         //ActivityHelper.initialize(this);
         loadingDialog = new LoadingDialog(this);
         btn_PutWater = findViewById(R.id.btn_PutWater);
-        btn_PutRacao = findViewById(R.id.btn_PutRacao);
+        btn_CancelWater = findViewById(R.id.btn_CancelWater);
         btn_Disconnect = findViewById(R.id.btn_Disconnect);
         arrowGoBackDeviceControlling = findViewById(R.id.arrowGoBackDeviceControlling);
         btnVoice_Controlling = findViewById(R.id.btnVoice_Controlling);
+        btn_TestWaterPump = findViewById(R.id.btn_TestWaterPump);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         /*String orientation = prefs.getString("prefOrientation", "Null");
@@ -111,11 +113,55 @@ public class DeviceControlling extends AppCompatActivity {
             startActivityForResult(i, MEU_REQUEST_CODE);
         });
 
+        //  Test Pump click
+        btn_TestWaterPump.setOnClickListener(v -> {
+            try {
+                mBTSocket.getOutputStream().write(passTestPump.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        //  Cancel Water
+        btn_CancelWater.setOnClickListener(v -> {
+            try {
+                mBTSocket.getOutputStream().write(CancelWater.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+                finish();
+            }
+        });
+
+        //  Back click
+        arrowGoBackDeviceControlling.setOnClickListener(v -> {
+            try {
+                mBTSocket.getOutputStream().write(offDisconnect.getBytes());
+                finish();
+                if (mBTSocket != null && mIsBluetoothConnected)
+                    new DisConnectBT().execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                finish();
+            }
+        });
+
+        //  Disconnect click
+        btn_Disconnect.setOnClickListener(v -> {
+            try {
+                mBTSocket.getOutputStream().write(offDisconnect.getBytes());
+                finish();
+                if (mBTSocket != null && mIsBluetoothConnected)
+                    new DisConnectBT().execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                finish();
+            }
+        });
+
 
         btn_PutWater.setOnClickListener(v -> {
             try {
                 mBTSocket.getOutputStream().write(passPutWater.getBytes());
-                //onResume();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -142,22 +188,16 @@ public class DeviceControlling extends AppCompatActivity {
         if (requestCode == MEU_REQUEST_CODE
                 && resultCode == RESULT_OK) {
 
-            // Contém a lista com os resultados
+            // List of voce matches
             ArrayList matches =
                     data.getStringArrayListExtra(
                             RecognizerIntent.EXTRA_RESULTS);
             String VoiceResult = (String) matches.get(0);
             Toast.makeText(this, VoiceResult, Toast.LENGTH_SHORT).show();
-            if (VoiceResult.equals("put water") || VoiceResult.equals("Put Water") || VoiceResult.equals("Coloque Água") || VoiceResult.equals("coloque água")){
+            if (VoiceResult.equals("put water") || VoiceResult.equals("Put Water") || VoiceResult.equals("Coloque Água") || VoiceResult.equals("coloque água")
+                    || VoiceResult.equals("colocar água") || VoiceResult.equals("colocar agua")){
                 try {
-                    mBTSocket.getOutputStream().write(lightOn.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }else
-            if (VoiceResult.equals("remove water") || VoiceResult.equals("Remove Water") || VoiceResult.equals("Remova a Água") || VoiceResult.equals("remova a água")){
-                try {
-                    mBTSocket.getOutputStream().write(lightOFF.getBytes());
+                    mBTSocket.getOutputStream().write(passPutWater.getBytes());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -240,6 +280,7 @@ public class DeviceControlling extends AppCompatActivity {
         protected void onPreExecute() {
         }
 
+        @SuppressWarnings("StatementWithEmptyBody")
         @Override
         protected Void doInBackground(Void... params) {//cant inderstand these dotss
 
