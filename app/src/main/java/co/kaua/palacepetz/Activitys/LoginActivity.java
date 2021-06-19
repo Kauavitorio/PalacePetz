@@ -16,7 +16,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -102,8 +101,8 @@ public class LoginActivity extends AppCompatActivity {
         cardBtn_SingIn.setOnClickListener(v -> {
             if (editLogin_emailUser.getText().length() == 0)
                 showError(editLogin_emailUser, getString(R.string.email_required));
-            /*else if(editLogin_passwordUser.getText().length() == 0)
-                showError(editLogin_passwordUser, getString(R.string.password_required));*/
+            else if(editLogin_passwordUser.getText().length() == 0)
+                showError(editLogin_passwordUser, getString(R.string.password_required));
             else {
                 cardBtn_SingIn.setElevation(0);
                 cardBtn_SingIn.setEnabled(false);
