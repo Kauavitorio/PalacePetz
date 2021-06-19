@@ -25,7 +25,7 @@
     <string name="haveAccount_signIn">Já tem uma conta? <b>Entrar.</b></string>
     <string name="necessary_to_insert_the_last_name">Necessário inserir o sobrenome</string>
     <string name="necessary_to_insert_the_First_name">Necessário inserir o primeiro nome</string>
-    <string name="email_required">E-mail ou nome de usuário é obrigatório</string>
+    <string name="email_required">E-mail, cpf ou nome de usuário é obrigatório</string>
     <string name="informed_email_is_invalid">Email informado é invalido</string>
     <string name="password_required">Senha requerida</string>
     <string name="password_cannot_contain_spaces">Senhas não podem conter espaços</string>

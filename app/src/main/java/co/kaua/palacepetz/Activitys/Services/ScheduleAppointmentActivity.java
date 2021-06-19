@@ -1,5 +1,6 @@
 package co.kaua.palacepetz.Activitys.Services;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -18,11 +19,16 @@ import com.airbnb.lottie.LottieAnimationView;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import co.kaua.palacepetz.Activitys.MainActivity;
+import co.kaua.palacepetz.Data.Pets.AsyncPets_SearchScheduleAppointment;
+import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.R;
 
 public class ScheduleAppointmentActivity extends AppCompatActivity {
@@ -34,6 +40,8 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     private TextView txt_scheduleAppoint_date, txt_scheduleAppoint_time;
     private final Calendar myCalendar = Calendar.getInstance();
     private static DatePickerDialog.OnDateSetListener date;
+    private final ArrayList<String> PetsSearch = new ArrayList<>();
+    private static ScheduleAppointmentActivity instance;
 
     //  Spinner Lists
     private static String[] UserPets, VeterinaryList, PaymentFormList;
@@ -41,14 +49,19 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     //  Schedule Info
     String PetSelected, VeterinarySelected, TimeSelected, DateSelected, PaymentFormSelected, DescriptionInsert;
 
+    private int _IdUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_appointment);
         Ids();
+        instance = this;
         UserPets = new String[]{ getString(R.string.select_your_pet) };
         VeterinaryList = new String[]{ getString(R.string.select_a_veterinarian) };
         PaymentFormList = new String[]{ getString(R.string.select_payment_method) };
+        DtoUser dtoUser = MainActivity.getInstance().GetUserBaseInformation();
+        _IdUser = dtoUser.getId_user();
         SetSpinnerAdapter();
 
         //  Creating Calendar
@@ -71,10 +84,23 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         ScheduleAppoint_date.setOnClickListener(v -> ShowCalendar());
     }
 
+    public static ScheduleAppointmentActivity getInstance() { return instance; }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void UpdateSearch(@NonNull ArrayList<String> list){
+        PetsSearch.clear();
+        PetsSearch.addAll(Arrays.asList(UserPets));
+        PetsSearch.addAll(list);
+        spinner_animal.setPopupBackgroundDrawable(getDrawable(R.drawable.background_adapter_pets));
+        spinner_animal.setAdapter(new ArrayAdapter<>(ScheduleAppointmentActivity.this, android.R.layout.simple_list_item_1, PetsSearch));
+    }
+
+    @SuppressWarnings("unchecked")
     private void SetSpinnerAdapter() {
         //  Set User pet spinner Adapter
-        ArrayAdapter<String> adapterUserPet = new ArrayAdapter<>(ScheduleAppointmentActivity.this, android.R.layout.simple_spinner_dropdown_item, UserPets);
-        spinner_animal.setAdapter(adapterUserPet);
+        AsyncPets_SearchScheduleAppointment asyncPets = new AsyncPets_SearchScheduleAppointment(_IdUser, ScheduleAppointmentActivity.this);
+        asyncPets.execute();
+
         //  Set VeterinaryList spinner Adapter
         ArrayAdapter<String> adapterVeterinaryList = new ArrayAdapter<>(ScheduleAppointmentActivity.this, android.R.layout.simple_spinner_dropdown_item, VeterinaryList);
         spinner_veterinary.setAdapter(adapterVeterinaryList);
