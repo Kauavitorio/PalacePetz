@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sheet_menu_account_help"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:layout_gravity="center"
+    android:background="@drawable/bg_sheet_menu_help">
+
+    <!-- Container Header -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_header_help_sheet_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="5dp">
+
+        <!-- Btn Go Back -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btn_close_sheet_account_help"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            app:cardBackgroundColor="@color/hint"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Arrow Back -->
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:lottie_autoPlay="true"
+                app:lottie_rawRes="@raw/arrow_left_white" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Text Account -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/segoe_ui"
+            android:text="@string/account"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Container Category -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_category_help_ic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/container_common_questions_help">
+
+        <!-- Card my account has been hacked -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btn_card_my_account_has_been_hacked_sheet_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="325dp"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            app:cardBackgroundColor="@color/background_address_alert"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Container -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minWidth="325dp"
+                android:minHeight="55dp"
+                android:padding="5dp">
+
+                <!-- Text my account has been hacked -->
+                <TextView
+                    android:id="@+id/txt_title_account_card_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/segoe_ui"
+                    android:text="@string/my_account_has_been_hacked"
+                    android:textColor="@color/hint"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Card Open -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="15dp"
+                    app:cardBackgroundColor="@color/edittext_base"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Img Arrow Right -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_arrow_right"
+                        tools:ignore="ContentDescription" />
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Card I want to change account data -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btn_card_i_want_to_change_account_data_sheet_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="325dp"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            app:cardBackgroundColor="@color/background_address_alert"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_card_my_account_has_been_hacked_sheet_help">
+
+            <!-- Container -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minWidth="325dp"
+                android:minHeight="55dp"
+                android:padding="5dp">
+
+                <!-- Text I want to change account data -->
+                <TextView
+                    android:id="@+id/txt_title_about_palace_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/segoe_ui"
+                    android:text="@string/i_want_to_change_account_data"
+                    android:textColor="@color/hint"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Card Open Category -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="15dp"
+                    app:cardBackgroundColor="@color/edittext_base"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Img Arrow Right -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_arrow_right"
+                        tools:ignore="ContentDescription" />
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Card I want to delete my account -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btn_card_i_want_to_delete_my_account_sheet_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="325dp"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            app:cardBackgroundColor="@color/background_address_alert"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_card_i_want_to_change_account_data_sheet_help">
+
+            <!-- Container -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minWidth="325dp"
+                android:minHeight="55dp"
+                android:padding="5dp">
+
+                <!-- Text I want to delete my account -->
+                <TextView
+                    android:id="@+id/txt_title_about_palace_app_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/segoe_ui"
+                    android:text="@string/i_want_to_delete_my_account"
+                    android:textColor="@color/hint"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Card Open Category -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="15dp"
+                    app:cardBackgroundColor="@color/edittext_base"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Img Arrow Right -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_arrow_right"
+                        tools:ignore="ContentDescription" />
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Card I want to change my password -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btn_card_change_my_password_help_sheet_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:minWidth="325dp"
+            android:minHeight="55dp"
+            app:cardBackgroundColor="@color/background_address_alert"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_card_i_want_to_delete_my_account_sheet_help">
+
+            <!-- Container -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minWidth="325dp"
+                android:minHeight="55dp"
+                android:padding="5dp">
+
+                <!-- Text I want to change my password -->
+                <TextView
+                    android:id="@+id/txt_title_policy_and_terms_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/segoe_ui"
+                    android:text="@string/i_want_to_change_my_password"
+                    android:textColor="@color/hint"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TooManyViews" />
+
+                <!-- Card Open Category -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="15dp"
+                    app:cardBackgroundColor="@color/edittext_base"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Img Arrow Right -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_arrow_right"
+                        tools:ignore="ContentDescription" />
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Card Security Tips-->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btn_card_security_tips_sheet_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:minWidth="325dp"
+            android:minHeight="55dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="@color/background_address_alert"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_card_change_my_password_help_sheet_account">
+
+            <!-- Container -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minWidth="325dp"
+                android:minHeight="55dp"
+                android:padding="5dp">
+
+                <!-- Text Security Tips -->
+                <TextView
+                    android:id="@+id/txt_title_security_tips_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/segoe_ui"
+                    android:text="@string/security_tips"
+                    android:textColor="@color/hint"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TooManyViews" />
+
+                <!-- Card Open Category -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="15dp"
+                    app:cardBackgroundColor="@color/edittext_base"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Img Arrow Right -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_arrow_right"
+                        tools:ignore="ContentDescription" />
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

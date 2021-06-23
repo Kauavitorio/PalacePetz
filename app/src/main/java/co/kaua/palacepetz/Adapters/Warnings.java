@@ -20,6 +20,7 @@ import co.kaua.palacepetz.Activitys.LoginActivity;
 import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Activitys.Pets.AllPetsActivity;
 import co.kaua.palacepetz.Activitys.RegisterAddressActivity;
+import co.kaua.palacepetz.Activitys.Services.ScheduleAppointmentActivity;
 import co.kaua.palacepetz.Data.Pets.DtoPets;
 import co.kaua.palacepetz.Data.Pets.PetsServices;
 import co.kaua.palacepetz.R;
@@ -404,5 +405,15 @@ public class Warnings extends MainActivity {
         PositiveBtn_alert.setOnClickListener(v -> WarningError.dismiss());
 
         WarningError.show();
+    }
+
+    public static void showScheduleIsSuccessful(Activity activity) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity, R.style.BottomSheetTheme);
+        //  Creating View for SheetMenu
+        View sheetView = LayoutInflater.from(activity).inflate(R.layout.adapter_schedule_confirm,
+                activity.findViewById(R.id.sheet_schedule_confirm));
+        sheetView.findViewById(R.id.btnOk_OrderConfirmation).setOnClickListener(v -> bottomSheetDialog.dismiss());
+        bottomSheetDialog.setContentView(sheetView);
+        bottomSheetDialog.show();
     }
 }

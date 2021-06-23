@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import co.kaua.palacepetz.Activitys.Services.ScheduleAppointmentActivity;
 import co.kaua.palacepetz.Activitys.Services.ScheduleBathAndTosaActivity;
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
+import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.R;
 
 public class ServicesFragment extends Fragment implements IOnBackPressed {
@@ -26,7 +27,7 @@ public class ServicesFragment extends Fragment implements IOnBackPressed {
     private static FragmentTransaction transaction;
 
     //  User information
-    private static String _Email;
+    private static int _IdUser;
 
     @Nullable
     @Override
@@ -35,20 +36,26 @@ public class ServicesFragment extends Fragment implements IOnBackPressed {
         Ids();
         args = getArguments();
         assert args != null;
-        _Email = args.getString("email_user");
+        _IdUser = args.getInt("id_user");
 
         //  Consultation click
         btn_consultation_services.setOnClickListener(v -> {
-            Intent goTo_Schedule = new Intent(getActivity(), ScheduleAppointmentActivity.class);
-            goTo_Schedule.putExtra("email_user", _Email);
-            startActivity(goTo_Schedule);
+            if (_IdUser != 0){
+                Intent goTo_Schedule = new Intent(getActivity(), ScheduleAppointmentActivity.class);
+                goTo_Schedule.putExtra("email_user", _IdUser);
+                startActivity(goTo_Schedule);
+            }else
+                Warnings.NeedLoginAlert(requireActivity());
         });
 
         //  My Bath and Tosa click
         btn_bath_services.setOnClickListener(v -> {
-            Intent goTo_ScheduleBath = new Intent(getActivity(), ScheduleBathAndTosaActivity.class);
-            goTo_ScheduleBath.putExtra("email_user", _Email);
-            startActivity(goTo_ScheduleBath);
+            if (_IdUser != 0){
+                Intent goTo_ScheduleBath = new Intent(getActivity(), ScheduleBathAndTosaActivity.class);
+                goTo_ScheduleBath.putExtra("email_user", _IdUser);
+                startActivity(goTo_ScheduleBath);
+            }else
+                Warnings.NeedLoginAlert(requireActivity());
         });
 
         return view;
@@ -71,7 +78,7 @@ public class ServicesFragment extends Fragment implements IOnBackPressed {
         MainFragment mainFragment = new MainFragment();
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         Bundle args = new Bundle();
-        args.putString("email_user", _Email);
+        args.putInt("id_user", _IdUser);
         mainFragment.setArguments(args);
         transaction.replace(R.id.frameLayoutMain, mainFragment);
         transaction.commit();

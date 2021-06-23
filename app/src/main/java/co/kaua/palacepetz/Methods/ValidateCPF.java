@@ -1,5 +1,12 @@
 package co.kaua.palacepetz.Methods;
 
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
+
 public class ValidateCPF {
 
     private static final int[] WeightCPF = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};

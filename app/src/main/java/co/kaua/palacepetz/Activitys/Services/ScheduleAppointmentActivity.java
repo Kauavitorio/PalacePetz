@@ -1,5 +1,6 @@
 package co.kaua.palacepetz.Activitys.Services;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -8,6 +9,8 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -18,12 +21,28 @@ import com.airbnb.lottie.LottieAnimationView;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import co.kaua.palacepetz.Activitys.MainActivity;
+import co.kaua.palacepetz.Adapters.LoadingDialog;
+import co.kaua.palacepetz.Adapters.Warnings;
+import co.kaua.palacepetz.Data.Pets.AsyncPets_SearchScheduleAppointment;
+import co.kaua.palacepetz.Data.Schedule.DtoSchedule;
+import co.kaua.palacepetz.Data.Schedule.ScheduleServices;
+import co.kaua.palacepetz.Data.User.DtoUser;
+import co.kaua.palacepetz.Data.Veterinary.AsyncVeterinary_SearchScheduleAppointment;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ScheduleAppointmentActivity extends AppCompatActivity {
     private ConstraintLayout ScheduleAppoint_time, ScheduleAppoint_date;
@@ -34,22 +53,39 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     private TextView txt_scheduleAppoint_date, txt_scheduleAppoint_time;
     private final Calendar myCalendar = Calendar.getInstance();
     private static DatePickerDialog.OnDateSetListener date;
+    private final ArrayList<String> PetsSearch = new ArrayList<>();
+    private final ArrayList<String> VeterinarySearch = new ArrayList<>();
+    private static ScheduleAppointmentActivity instance;
+    private LoadingDialog loadingDialog;
 
     //  Spinner Lists
     private static String[] UserPets, VeterinaryList, PaymentFormList;
 
     //  Schedule Info
     String PetSelected, VeterinarySelected, TimeSelected, DateSelected, PaymentFormSelected, DescriptionInsert;
+    int payment_type;
+
+    private int _IdUser;
+
+    private final Retrofit retrofitSchedule = new Retrofit.Builder()
+            .baseUrl("https://palacepetzapi.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_appointment);
         Ids();
+        instance = this;
         UserPets = new String[]{ getString(R.string.select_your_pet) };
         VeterinaryList = new String[]{ getString(R.string.select_a_veterinarian) };
-        PaymentFormList = new String[]{ getString(R.string.select_payment_method) };
+        PaymentFormList = new String[]{ getString(R.string.select_payment_method),
+                getString(R.string.debit), getString(R.string.credit), getString(R.string.money) };
+        DtoUser dtoUser = MainActivity.getInstance().GetUserBaseInformation();
+        _IdUser = dtoUser.getId_user();
         SetSpinnerAdapter();
+        SetSpinnerClick();
 
         //  Creating Calendar
         date = (view, year, month, dayOfMonth) -> {
@@ -60,8 +96,43 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         };
 
         btnScheduleAppointment.setOnClickListener(v -> {
-            DescriptionInsert = edit_Description_consultation.getText().toString();
+            DescriptionInsert = edit_Description_consultation.getText().toString().trim();
+            if(PetSelected == null || PetSelected.length() <= 0 || PetSelected.equals(getString(R.string.select_your_pet)))
+                ToastHelper.toast(ScheduleAppointmentActivity.this, getString(R.string.pet_is_not_selected));
+            else if(VeterinarySelected == null || VeterinarySelected.length() <= 0 || VeterinarySelected.equals(getString(R.string.select_a_veterinarian)))
+                ToastHelper.toast(ScheduleAppointmentActivity.this, getString(R.string.veterinary_is_not_selected));
+            else if(TimeSelected == null || TimeSelected.length() <= 2)
+                ToastHelper.toast(ScheduleAppointmentActivity.this, getString(R.string.time_is_not_selected));
+            else if(DateSelected == null || DateSelected.length() <= 4)
+                ToastHelper.toast(ScheduleAppointmentActivity.this, getString(R.string.date_is_not_selected));
+            else if(PaymentFormSelected == null || PaymentFormSelected.length() <= 4 || PaymentFormSelected.equals(getString(R.string.select_payment_method)))
+                ToastHelper.toast(ScheduleAppointmentActivity.this, getString(R.string.date_is_not_selected));
+            else{
+                loadingDialog = new LoadingDialog(ScheduleAppointmentActivity.this);
+                loadingDialog.startLoading();
+                if (PaymentFormSelected.equals(getString(R.string.debit))) payment_type = 1;
+                else if (PaymentFormSelected.equals(getString(R.string.credit))) payment_type = 2;
+                else payment_type = 3;
 
+                DtoSchedule dtoSchedule = new DtoSchedule(_IdUser, PetSelected, VeterinarySelected, TimeSelected, DateSelected, payment_type, 1, DescriptionInsert);
+                ScheduleServices services = retrofitSchedule.create(ScheduleServices.class);
+                Call<DtoSchedule> call = services.CreateSchedule(dtoSchedule);
+                call.enqueue(new Callback<DtoSchedule>() {
+                    @Override
+                    public void onResponse(@NonNull Call<DtoSchedule> call, @NonNull Response<DtoSchedule> response) {
+                        loadingDialog.dimissDialog();
+                        if(response.code() == 201){
+                            Warnings.showScheduleIsSuccessful(ScheduleAppointmentActivity.this);
+                        }else
+                            Warnings.showWeHaveAProblem(ScheduleAppointmentActivity.this);
+                    }
+                    @Override
+                    public void onFailure(@NonNull Call<DtoSchedule> call, @NonNull Throwable t) {
+                        loadingDialog.dimissDialog();
+                        Warnings.showWeHaveAProblem(ScheduleAppointmentActivity.this);
+                    }
+                });
+            }
         });
 
         arrowGoBack_ScheduleConsultation.setOnClickListener(v -> finish());
@@ -71,15 +142,67 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         ScheduleAppoint_date.setOnClickListener(v -> ShowCalendar());
     }
 
+    private void SetSpinnerClick() {
+        spinner_animal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                PetSelected = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+        spinner_veterinary.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                VeterinarySelected = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+        spinner_paymentForm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { PaymentFormSelected = parent.getItemAtPosition(position).toString(); }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+
+    public static ScheduleAppointmentActivity getInstance() { return instance; }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void UpdateSearch(@NonNull ArrayList<String> list){
+        PetsSearch.clear();
+        PetsSearch.addAll(Arrays.asList(UserPets));
+        PetsSearch.addAll(list);
+        spinner_animal.setPopupBackgroundDrawable(getDrawable(R.drawable.background_adapter_pets));
+        spinner_animal.setAdapter(new ArrayAdapter<>(ScheduleAppointmentActivity.this, android.R.layout.simple_list_item_1, PetsSearch));
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void UpdateSearchVeterinary(@NonNull ArrayList<String> list){
+        VeterinarySearch.clear();
+        VeterinarySearch.addAll(Arrays.asList(VeterinaryList));
+        VeterinarySearch.addAll(list);
+        spinner_veterinary.setPopupBackgroundDrawable(getDrawable(R.drawable.background_adapter_pets));
+        spinner_veterinary.setAdapter(new ArrayAdapter<>(ScheduleAppointmentActivity.this, android.R.layout.simple_list_item_1, VeterinarySearch));
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressWarnings("unchecked")
     private void SetSpinnerAdapter() {
         //  Set User pet spinner Adapter
-        ArrayAdapter<String> adapterUserPet = new ArrayAdapter<>(ScheduleAppointmentActivity.this, android.R.layout.simple_spinner_dropdown_item, UserPets);
-        spinner_animal.setAdapter(adapterUserPet);
+        AsyncPets_SearchScheduleAppointment asyncPets = new AsyncPets_SearchScheduleAppointment(_IdUser, ScheduleAppointmentActivity.this);
+        asyncPets.execute();
+
         //  Set VeterinaryList spinner Adapter
-        ArrayAdapter<String> adapterVeterinaryList = new ArrayAdapter<>(ScheduleAppointmentActivity.this, android.R.layout.simple_spinner_dropdown_item, VeterinaryList);
-        spinner_veterinary.setAdapter(adapterVeterinaryList);
+        AsyncVeterinary_SearchScheduleAppointment async = new AsyncVeterinary_SearchScheduleAppointment(ScheduleAppointmentActivity.this);
+        async.execute();
+
         //  Set PaymentFormList spinner Adapter
         ArrayAdapter<String> adapterPaymentFormList = new ArrayAdapter<>(ScheduleAppointmentActivity.this, android.R.layout.simple_spinner_dropdown_item, PaymentFormList);
+        spinner_paymentForm.setPopupBackgroundDrawable(getDrawable(R.drawable.background_adapter_pets));
         spinner_paymentForm.setAdapter(adapterPaymentFormList);
     }
 

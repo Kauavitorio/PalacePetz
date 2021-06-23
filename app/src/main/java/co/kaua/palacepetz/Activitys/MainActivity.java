@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -27,6 +29,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 
+import co.kaua.palacepetz.Activitys.Help.HelpActivity;
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
 import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.BuildConfig;
@@ -110,9 +113,9 @@ public class MainActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         if (sp.contains("pref_email") && sp.contains("pref_password")){
             _IdUser = sp.getInt("pref_id_user", 0);
-            name_user = sp.getString("pref_name_user", "not found");
+            name_user = sp.getString("pref_name_user", null);
             _Email = sp.getString("pref_email", "not found");
-            cpf_user = sp.getString("pref_cpf_user", "not found");
+            cpf_user = sp.getString("pref_cpf_user", null);
             address_user = sp.getString("pref_address_user", null);
             complement = sp.getString("pref_complement", "not found");
             zipcode = sp.getString("pref_zipcode", "not found");
@@ -329,19 +332,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public final void OpenMyOrders() {
-        MyOrdersFragment myOrdersFragment = new MyOrdersFragment();
-        args = new Bundle();
-        args.putInt("id_user", _IdUser);
-        myOrdersFragment.setArguments(args);
-        transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameLayoutMain, myOrdersFragment);
-        transaction.commit();
+        if (_IdUser != 0){
+            MyOrdersFragment myOrdersFragment = new MyOrdersFragment();
+            args = new Bundle();
+            args.putInt("id_user", _IdUser);
+            myOrdersFragment.setArguments(args);
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameLayoutMain, myOrdersFragment);
+            transaction.commit();
+        }else
+            Warnings.NeedLoginAlert(MainActivity.this);
     }
 
     @SuppressLint("SetTextI18n")
     private void CreateMenuSheetUser(){
         icon_ProfileUser_main.setOnClickListener(v -> {
-            if (_IdUser != 0){
                 getWindow().setNavigationBarColor(getColor(R.color.background_top));
                 bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetTheme);
                 //  Creating View for SheetMenu
@@ -367,7 +372,10 @@ public class MainActivity extends AppCompatActivity {
                     //  When click in this linear will to Show LogOut Message
                     sheetView.findViewById(R.id.BtnLogOutSheetMenu).setOnClickListener(v1 -> Warnings.LogoutDialog(MainActivity.this, bottomSheetDialog));
 
+                if (_IdUser != 0)
                 txt_nameUser.setText(getString(R.string.hello) + " " + name_user);
+                else
+                txt_nameUser.setText(getString(R.string.hello)+ " " + getString(R.string.anonymous_user));
 
                 if (cardSize != 0){
                     container_shoppingAmount.setVisibility(View.VISIBLE);
@@ -389,36 +397,51 @@ public class MainActivity extends AppCompatActivity {
                 CardView BtnMyCardsSheetUserMenu = sheetView.findViewById(R.id.BtnMyCardsSheetUserMenu);
                 CardView BtnMyOrdersSheetUserMenu = sheetView.findViewById(R.id.BtnMyOrdersSheetUserMenu);
 
+                //  Click to open profile activity
                 btn_user_profile_sheet.setOnClickListener(v1 -> {
                     OpenProfile();
                     bottomSheetDialog.dismiss();
                 });
 
+                //  Click to open palace fountain (Iot)
                 BtnFountainsSheetUserMenu.setOnClickListener(v1 -> {
                     OpenFountain();
                     bottomSheetDialog.dismiss();
                 });
 
+                //  Click to open shopping cart
                 BtnMyShoppingCartSheetMenu.setOnClickListener(v1 -> {
                     OpenShoppingCart();
                     bottomSheetDialog.dismiss();
                 });
 
+                //  Click to open cards
                 BtnMyCardsSheetUserMenu.setOnClickListener(v1 -> {
                     OpenShoppingCart();
                     bottomSheetDialog.dismiss();
                 });
 
+                //  Click to open my orders
                 BtnMyOrdersSheetUserMenu.setOnClickListener(v1 -> {
                     OpenMyOrders();
                     bottomSheetDialog.dismiss();
                 });
 
+                //  Click to open help activity
+                sheetView.findViewById(R.id.BtnHelpSheetMenu).setOnClickListener(v1 -> {
+                    OpenHelp();
+                    bottomSheetDialog.dismiss();
+                });
+
                 bottomSheetDialog.setContentView(sheetView);
                 bottomSheetDialog.show();
-            }else
-                Warnings.NeedLoginAlert(MainActivity.this);
         });
+    }
+
+    public final void OpenHelp() {
+        Intent i = new Intent(MainActivity.this, HelpActivity.class);
+        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),R.anim.move_to_left, R.anim.move_to_right);
+        ActivityCompat.startActivity(MainActivity.this, i, activityOptionsCompat.toBundle());
     }
 
     public final void OpenProfile() {

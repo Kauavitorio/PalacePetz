@@ -7,6 +7,13 @@ import androidx.annotation.NonNull;
 import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.R;
 
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
+
 public class CheckSearch {
 
     public static void DoSearchCut(@NonNull String searchText, @NonNull Context context){
@@ -18,6 +25,8 @@ public class CheckSearch {
         String palaceFountain = context.getString(R.string.palaceFountain);
         String edit_address = context.getString(R.string.edit_address);
         String editProfile = context.getString(R.string.editProfile);
+        String help = context.getString(R.string.help);
+
         if (searchText.equals(services))
             MainActivity.getInstance().OpenServices();
 
@@ -41,5 +50,8 @@ public class CheckSearch {
 
         else if(searchText.equals(editProfile))
             MainActivity.getInstance().OpenProfile();
+
+        else if(searchText.equals(help))
+            MainActivity.getInstance().OpenHelp();
     }
 }

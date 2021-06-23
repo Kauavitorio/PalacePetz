@@ -28,6 +28,13 @@ import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 import co.kaua.palacepetz.databinding.ActivityFollowOrderBinding;
 
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
+
 @SuppressWarnings("ALL")
 public class FollowOrderActivity extends FragmentActivity implements OnMapReadyCallback {
 

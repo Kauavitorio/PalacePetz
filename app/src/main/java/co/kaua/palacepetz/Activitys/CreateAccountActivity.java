@@ -1,7 +1,6 @@
 package co.kaua.palacepetz.Activitys;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -16,17 +15,12 @@ import android.util.Patterns;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
 
-import co.kaua.palacepetz.Activitys.Pets.RegisterPetActivity;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
-import co.kaua.palacepetz.BuildConfig;
 import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.Data.User.UserServices;
-import co.kaua.palacepetz.Firebase.ConfFirebase;
 import co.kaua.palacepetz.Methods.MaskEditUtil;
 import co.kaua.palacepetz.Methods.Notifications;
 import co.kaua.palacepetz.Methods.ToastHelper;
@@ -41,6 +35,13 @@ import java.util.Objects;
 
 import static co.kaua.palacepetz.Methods.ValidateCPF.isValidCPF;
 
+/**
+ *  Copyright (c) 2021 Kauã Vitório
+ *  Official repository https://github.com/Kauavitorio/PalacePetz
+ *  Responsible developer: https://github.com/Kauavitorio
+ *  @author Kaua Vitorio
+ **/
+
 
 public class CreateAccountActivity extends AppCompatActivity {
     private EditText editLogin_FirstNameUserRegister, editLogin_LastNameUserRegister, editRegister_CpfUser,
@@ -54,8 +55,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     //  User Information to Sign Up
     private String firstName, lastName, email, cpf_user, password;
 
-    //  Retrofit / Firebase
-    private FirebaseAuth mAuth;
+    //  Retrofit
     private static final String BASE_URL = "https://palacepetzapi.herokuapp.com/";
     final Retrofit retrofitUser = new Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -143,6 +143,11 @@ public class CreateAccountActivity extends AppCompatActivity {
                             loadingDialog.dimissDialog();
                             cardBtn_SingUp.setElevation(20);
                             ToastHelper.toast(CreateAccountActivity.this, getString(R.string.authFailed_thisEmail));
+                            cardBtn_SingUp.setEnabled(true);
+                        }else if (response.code() == 412){
+                            loadingDialog.dimissDialog();
+                            cardBtn_SingUp.setElevation(20);
+                            ToastHelper.toast(CreateAccountActivity.this, getString(R.string.authFailed_thisCpf));
                             cardBtn_SingUp.setEnabled(true);
                         }else{
                             cardBtn_SingUp.setEnabled(true);

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/sheet_schedule_confirm"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:padding="20dp"
+    android:orientation="vertical"
+    android:background="@drawable/background_order_confirm_sheet"
+    android:layout_gravity="center"
+    android:layout_height="wrap_content">
+
+    <!-- Animation -->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/anim_orderConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/presto_cheers" />
+
+    <!-- Main Text -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:maxWidth="350dp"
+        android:text="@string/your_appointment_was_successful"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <!-- Btn OK -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnOk_OrderConfirmation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:minWidth="130dp"
+        android:minHeight="50dp"
+        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="@color/cards_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Text Ok -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/ok"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

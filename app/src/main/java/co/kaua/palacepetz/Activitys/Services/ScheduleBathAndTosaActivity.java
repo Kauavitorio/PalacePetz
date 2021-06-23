@@ -1,5 +1,6 @@
 package co.kaua.palacepetz.Activitys.Services;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -20,11 +21,16 @@ import com.airbnb.lottie.LottieAnimationView;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import co.kaua.palacepetz.Activitys.MainActivity;
+import co.kaua.palacepetz.Data.Pets.AsyncPets_SearchScheduleBath;
+import co.kaua.palacepetz.Data.User.DtoUser;
 import co.kaua.palacepetz.R;
 
 public class ScheduleBathAndTosaActivity extends AppCompatActivity {
@@ -36,6 +42,8 @@ public class ScheduleBathAndTosaActivity extends AppCompatActivity {
     private TextView txt_scheduleBath_time, txt_scheduleBath_date;
     private final Calendar myCalendar = Calendar.getInstance();
     private static DatePickerDialog.OnDateSetListener date;
+    private ArrayList<String> PetsSearch = new ArrayList<>();
+    private static ScheduleBathAndTosaActivity instance;
 
     //  Spinner Lists
     private static String[] UserPets, DeliveryMethod, PaymentFormList;
@@ -43,15 +51,20 @@ public class ScheduleBathAndTosaActivity extends AppCompatActivity {
     //  Schedule Info
     private String PetSelected, DeliveryMethodSelected, TimeSelected, DateSelected, PaymentFormSelected, DescriptionInsert;
 
+    private int _IdUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_bath_and_tosa);
         Ids();
+        instance = this;
         UserPets = new String[]{ getString(R.string.select_your_pet) };
         DeliveryMethod = new String[]{ getString(R.string.WITHDRAWAL_DELIVERY), getString(R.string.optionOneDeliveryMethod),
                 getString(R.string.optionTwoDeliveryMethod), getString(R.string.optionThreeDeliveryMethod), getString(R.string.optionFourDeliveryMethod) };
         PaymentFormList = new String[]{ getString(R.string.select_payment_method) };
+        DtoUser dtoUser = MainActivity.getInstance().GetUserBaseInformation();
+        _IdUser = dtoUser.getId_user();
         SetSpinnerAdapter();
         SetSpinnerSelected();
 
@@ -82,6 +95,15 @@ public class ScheduleBathAndTosaActivity extends AppCompatActivity {
         ScheduleBath_time.setOnClickListener(v -> ShowTimerDialog());
 
         ScheduleBath_date.setOnClickListener(v -> ShowCalendar());
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void UpdateSearch(@NonNull ArrayList<String> list){
+        PetsSearch.clear();
+        PetsSearch.addAll(Arrays.asList(UserPets));
+        PetsSearch.addAll(list);
+        spinner_animalBath.setPopupBackgroundDrawable(getDrawable(R.drawable.background_adapter_pets));
+        spinner_animalBath.setAdapter(new ArrayAdapter<>(ScheduleBathAndTosaActivity.this, android.R.layout.simple_list_item_1, PetsSearch));
     }
 
     private void SetSpinnerSelected() {
@@ -152,10 +174,14 @@ public class ScheduleBathAndTosaActivity extends AppCompatActivity {
         btnLayoutSpinnerDeliveryMethod = findViewById(R.id.btnLayoutSpinnerDeliveryMethod);
     }
 
+    public static ScheduleBathAndTosaActivity getInstance() { return instance; }
+
+    @SuppressWarnings("unchecked")
     private void SetSpinnerAdapter() {
         //  Set User pet spinner Adapter
-        ArrayAdapter<String> adapterUserPet = new ArrayAdapter<>(ScheduleBathAndTosaActivity.this, android.R.layout.simple_spinner_dropdown_item, UserPets);
-        spinner_animalBath.setAdapter(adapterUserPet);
+        AsyncPets_SearchScheduleBath asyncPets = new AsyncPets_SearchScheduleBath(_IdUser, ScheduleBathAndTosaActivity.this);
+        asyncPets.execute();
+
         //  Set VeterinaryList spinner Adapter
         ArrayAdapter<String> adapterDeliveryMethod = new ArrayAdapter<>(ScheduleBathAndTosaActivity.this, android.R.layout.simple_spinner_dropdown_item, DeliveryMethod);
         spinner_DeliveryMethod.setAdapter(adapterDeliveryMethod);

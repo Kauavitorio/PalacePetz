@@ -17,8 +17,8 @@ android {
         applicationId "co.kaua.palacepetz"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 16
-        versionName "1.4.5"
+        versionCode 18
+        versionName "1.5.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -42,6 +42,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 // Apply the Performance Monitoring plugin
 apply plugin: 'com.google.firebase.firebase-perf'
+
+// Apply the Crashlytics Gradle plugin
+apply plugin: 'com.google.firebase.crashlytics'
 
 dependencies {
 
@@ -69,6 +72,8 @@ dependencies {
 
     // Declare the dependency for the Performance Monitoring library
     implementation 'com.google.firebase:firebase-perf'
+
+    implementation 'com.google.firebase:firebase-crashlytics'
     /***** End Firebase Dependencies ******/
 
 
