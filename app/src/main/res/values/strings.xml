@@ -344,4 +344,12 @@
     <string name="your_order_has_already_been_completed">your order has already been completed</string>
     <string name="desc_work_at_palace">Unfortunately at the moment we have no vacancies available, but if you want to be a palace petz collaborator in the future, you can send your resume to this email palacepetz.shop@gmail.com and as soon as new vacancies are available we will contact you</string>
     <string name="desc_be_a_supplier">At the moment our stock is full and we have no vacancies for new suppliers, but you can offer your company\'s services by sending an e-mail to palacepetz.shop@gmail.com and signing if there is a need for new or more products one of ours managers can contact your company.</string>
+    <string name="debit">1 - Debit</string>
+    <string name="credit">2 - Credit</string>
+    <string name="money">3 - Money</string>
+    <string name="pet_is_not_selected">To make an appointment it is necessary to select a pet.</string>
+    <string name="veterinary_is_not_selected">To make an appointment it is necessary to select a veterinarian.</string>
+    <string name="time_is_not_selected">To make an appointment it is necessary to select a time.</string>
+    <string name="date_is_not_selected">To make an appointment, you must select a date.</string>
+    <string name="your_appointment_was_successful">Your appointment was successful.\nAny questions please contact us</string>
 </resources>

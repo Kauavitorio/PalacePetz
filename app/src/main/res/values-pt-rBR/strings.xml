@@ -297,4 +297,12 @@
     <string name="your_order_has_already_been_completed">seu pedido já foi concluído</string>
     <string name="desc_work_at_palace">Infelizmente no momento não temos vagas disponíveis, mas se você quiser futuramente  ser um colaborador da palace petz, você pode enviar seu currículo para este e-mail palacepetz.shop@gmail.com e assim que novas vagas estiverem disponíveis entraremos em contato</string>
     <string name="desc_be_a_supplier">No momento nosso estoque está lotado e não temos vagas para novos fornecedores, porém você pode oferecer os serviços de sua empresa enviando um e-mail para palacepetz.shop@gmail.com e assin que houver a necessidade de novos ou mais produtos um dos nossos gerentes podem contatar sua empresa.</string>
+    <string name="debit">1 - Débito</string>
+    <string name="credit">2 - Crédito</string>
+    <string name="money">3 - Dinheiro</string>
+    <string name="pet_is_not_selected">Para realizar um agendamento é necessario selecionar um animal de estimação.</string>
+    <string name="veterinary_is_not_selected">Para marcar uma consulta é necessário selecionar um veterinário.</string>
+    <string name="time_is_not_selected">Para marcar uma consulta é necessário selecionar um horário.</string>
+    <string name="date_is_not_selected">Para marcar uma consulta é necessário selecionar uma data.</string>
+    <string name="your_appointment_was_successful">Sua consulta foi bem-sucedida.\nQualquer dúvida entre em contato conosco</string>
 </resources>
