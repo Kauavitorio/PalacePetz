@@ -335,7 +335,7 @@
     <string name="test_water_pump">Test water pump</string>
     <string name="cancel_water">Cancel Water</string>
     <string name="who_are_we">Who are we?</string>
-    <string name="desc_who_are_we" >PalacePetz was created by love the owners have by animals. aiming for a good treatment to the pets, not just with products, but assisting in the beware of appointments veterinary.</string>
+    <string name="desc_who_are_we">PalacePetz was created by love the owners have by animals. aiming for a good treatment to the pets, not just with products, but assisting in the beware of appointments veterinary.</string>
     <string name="desc_policy_and_terms">The protection of your data is very important to Palace.\nWe respect your privacy in our mission to provide an even better service!\n\n• The data you register on our platforms <b>is handled securely.</b>\n\n• <b>We limit the processing</b> of data to their proper purposes and in <b>accordance with the law.</b>\n\n• You can answer your questions and request information at any time through the Help tab on our platforms.</string>
     <string name="waiting_for_be_approved">your order is waiting for be approved</string>
     <string name="we_are_preparing_your_order">we are preparing your order</string>
@@ -352,4 +352,10 @@
     <string name="time_is_not_selected">To make an appointment it is necessary to select a time.</string>
     <string name="date_is_not_selected">To make an appointment, you must select a date.</string>
     <string name="your_appointment_was_successful">Your appointment was successful.\nAny questions please contact us</string>
+    <string name="scheduled_services">Scheduled Services</string>
+    <string name="animal">Animal</string>
+    <string name="veterinary">Veterinary</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
+    <string name="all_appointments">All Appointments</string>
 </resources>

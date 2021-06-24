@@ -305,4 +305,10 @@
     <string name="time_is_not_selected">Para marcar uma consulta é necessário selecionar um horário.</string>
     <string name="date_is_not_selected">Para marcar uma consulta é necessário selecionar uma data.</string>
     <string name="your_appointment_was_successful">Sua consulta foi bem-sucedida.\nQualquer dúvida entre em contato conosco</string>
+    <string name="scheduled_services">Serviços Agendados</string>
+    <string name="animal">Animal</string>
+    <string name="veterinary">Veterinário</string>
+    <string name="time">Hora</string>
+    <string name="date">Data</string>
+    <string name="all_appointments">Todos Agendamentos</string>
 </resources>

@@ -101,8 +101,6 @@
             android:layout_width="340dp"
             android:layout_height="197dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_consultation_services">
@@ -168,6 +166,33 @@
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!-- Card Btn All Schedules -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btn_all_schedules"
+            android:layout_width="282dp"
+            android:layout_height="56dp"
+            app:cardBackgroundColor="#44BFFF"
+            app:cardCornerRadius="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_bath_services">
+
+            <!-- Btn Text -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/all_appointments"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

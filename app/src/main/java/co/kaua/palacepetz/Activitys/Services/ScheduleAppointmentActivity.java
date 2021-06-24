@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -122,6 +123,10 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
                     public void onResponse(@NonNull Call<DtoSchedule> call, @NonNull Response<DtoSchedule> response) {
                         loadingDialog.dimissDialog();
                         if(response.code() == 201){
+                            Intent servicesSchedule = new Intent(ScheduleAppointmentActivity.this, ScheduledServicesActivity.class);
+                            servicesSchedule.putExtra("id_user", _IdUser);
+                            startActivity(servicesSchedule);
+                            finish();
                             Warnings.showScheduleIsSuccessful(ScheduleAppointmentActivity.this);
                         }else
                             Warnings.showWeHaveAProblem(ScheduleAppointmentActivity.this);
