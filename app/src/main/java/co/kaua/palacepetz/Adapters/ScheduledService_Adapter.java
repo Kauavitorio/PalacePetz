@@ -15,19 +15,11 @@ import java.util.ArrayList;
 
 import co.kaua.palacepetz.Data.Schedule.DtoSchedule;
 import co.kaua.palacepetz.R;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ScheduledService_Adapter extends RecyclerView.Adapter<ScheduledService_Adapter.MyHolderSchedules> {
     ArrayList<DtoSchedule> dtoSchedule;
     Context context;
-    static int selectedItem = 0;
-
-    //  Retrofit
-    private final Retrofit retrofitSchedule = new Retrofit.Builder()
-            .baseUrl("https://palacepetzapi.herokuapp.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
+    static int selectedItem = 1000000000;
 
     public ScheduledService_Adapter(ArrayList<DtoSchedule> dtoSchedule, Context context) {
         this.dtoSchedule = dtoSchedule;
@@ -56,6 +48,11 @@ public class ScheduledService_Adapter extends RecyclerView.Adapter<ScheduledServ
         holder.txt_title_veterinary.setText(context.getString(R.string.veterinary) + ": " + dtoSchedule.get(position).getNm_veterinary());
         holder.txt_title_time.setText(context.getString(R.string.time) + ": " + dtoSchedule.get(position).getTime_schedule());
         holder.txt_title_date.setText(context.getString(R.string.date) + ": " + dtoSchedule.get(position).getDate_schedule());
+
+        if (position == selectedItem){
+            Warnings.CancelSchedule(context, dtoSchedule.get(position).getCd_schedule());
+            selectedItem = 100000000;
+        }
     }
 
     @Override

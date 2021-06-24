@@ -311,4 +311,12 @@
     <string name="time">Hora</string>
     <string name="date">Data</string>
     <string name="all_appointments">Todos Agendamentos</string>
+    <string name="really_want_cancel_this_schedule">Deseja realmente cancelar essa consulta?</string>
+    <string name="cancel_schedule">Cancelar Agendamento</string>
+    <string name="reason_for_cancellation">Qual o motivo do cancelamento?</string>
+    <string name="i_will_be_unavailable_for_the_day">Eu estarei indisponível no dia</string>
+    <string name="other_reasons">Outros motivos</string>
+    <string name="describe_the_reason_for_cancellation">Descreva o motivo do cancelamento</string>
+    <string name="appointment_canceled_successfully">Agendamento cancelado com sucesso</string>
+    <string name="i_cant_go_at_the_scheduled_time">Não consigo ir no horario agendado</string>
 </resources>

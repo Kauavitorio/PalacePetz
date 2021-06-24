@@ -125,9 +125,9 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
                         if(response.code() == 201){
                             Intent servicesSchedule = new Intent(ScheduleAppointmentActivity.this, ScheduledServicesActivity.class);
                             servicesSchedule.putExtra("id_user", _IdUser);
+                            servicesSchedule.putExtra("now", true);
                             startActivity(servicesSchedule);
                             finish();
-                            Warnings.showScheduleIsSuccessful(ScheduleAppointmentActivity.this);
                         }else
                             Warnings.showWeHaveAProblem(ScheduleAppointmentActivity.this);
                     }

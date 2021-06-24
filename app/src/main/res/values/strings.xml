@@ -358,4 +358,12 @@
     <string name="time">Time</string>
     <string name="date">Date</string>
     <string name="all_appointments">All Appointments</string>
+    <string name="really_want_cancel_this_schedule">Do you really want to cancel this schedule?</string>
+    <string name="cancel_schedule">Cancel Schedule</string>
+    <string name="reason_for_cancellation">What is the reason for the cancellation?</string>
+    <string name="i_will_be_unavailable_for_the_day">I will be unavailable for the day</string>
+    <string name="other_reasons">Other reasons</string>
+    <string name="describe_the_reason_for_cancellation">Describe the reason for cancellation</string>
+    <string name="appointment_canceled_successfully">Appointment canceled successfully</string>
+    <string name="i_cant_go_at_the_scheduled_time">I can\'t go at the scheduled time</string>
 </resources>

@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private Animation CartAnim;
     private int Count = 0;
     private static MainActivity instance;
+    private static DtoUser dtoUser;
 
     //  Fragments Arguments
     private static Bundle args;
@@ -132,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
                 Picasso.get().load(img_user).into(icon_ProfileUser_main);
         }else
             _IdUser = 0;
+
+        dtoUser.setId_user(_IdUser);
 
 
         if(bundle.getInt("shortcut") != 0){
@@ -275,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void Ids() {
+        dtoUser = new DtoUser();
         btnMenu_Main = findViewById(R.id.btnMenu_Main);
         icon_ProfileUser_main = findViewById(R.id.icon_ProfileUser_main);
         base_QuantityItemsCart_main = findViewById(R.id.base_QuantityItemsCart_main);
@@ -549,7 +553,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public DtoUser GetUserBaseInformation(){
-        DtoUser dtoUser = new DtoUser();
         dtoUser.setName_user(name_user);
         dtoUser.setEmail(_Email);
         dtoUser.setPassword(_Password);

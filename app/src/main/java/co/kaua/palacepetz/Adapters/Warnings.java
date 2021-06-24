@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,9 +21,13 @@ import co.kaua.palacepetz.Activitys.LoginActivity;
 import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Activitys.Pets.AllPetsActivity;
 import co.kaua.palacepetz.Activitys.RegisterAddressActivity;
-import co.kaua.palacepetz.Activitys.Services.ScheduleAppointmentActivity;
+import co.kaua.palacepetz.Activitys.Services.ScheduledServicesActivity;
 import co.kaua.palacepetz.Data.Pets.DtoPets;
 import co.kaua.palacepetz.Data.Pets.PetsServices;
+import co.kaua.palacepetz.Data.Schedule.DtoSchedule;
+import co.kaua.palacepetz.Data.Schedule.ScheduleServices;
+import co.kaua.palacepetz.Data.User.DtoUser;
+import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -415,5 +420,93 @@ public class Warnings extends MainActivity {
         sheetView.findViewById(R.id.btnOk_OrderConfirmation).setOnClickListener(v -> bottomSheetDialog.dismiss());
         bottomSheetDialog.setContentView(sheetView);
         bottomSheetDialog.show();
+    }
+
+    //  Cancel Schedule dialog
+    public static void CancelSchedule(Context context, int cd_schedule) {
+        LogOutDialog = new Dialog(context);
+        DtoUser user = MainActivity.getInstance().GetUserBaseInformation();
+        DtoSchedule schedule = new DtoSchedule(user.getId_user(), cd_schedule);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        LogOutDialog.setContentView(R.layout.adapter_comum_alert);
+        LogOutDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = LogOutDialog.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = LogOutDialog.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = LogOutDialog.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = LogOutDialog.findViewById(R.id.txtPositiveBtn_alert);
+        txtMsg_alert.setText(context.getString(R.string.really_want_cancel_this_schedule));
+        txtPositiveBtn_alert.setText(context.getString(R.string.yes));
+
+        PositiveBtn_alert.setOnClickListener(v -> {
+            LogOutDialog.dismiss();
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetTheme);
+            //  Creating View for SheetMenu
+            View sheetView = LayoutInflater.from(context).inflate(R.layout.adapter_menu_sheet_cancel_schedule_reason,
+                    ((Activity) context).findViewById(R.id.sheet_menu_cancel_schedule_reason));
+
+            sheetView.findViewById(R.id.btn_card_unavailable_for_the_day).setOnClickListener(v2 -> {
+                bottomSheetDialog.dismiss();
+                schedule.setDescription(context.getString(R.string.i_will_be_unavailable_for_the_day));
+                Action_CancelSchedule(context, schedule);
+            });
+
+            sheetView.findViewById(R.id.btn_card_i_cant_go_at_the_scheduled_time).setOnClickListener(v2 -> {
+                bottomSheetDialog.dismiss();
+                schedule.setDescription(context.getString(R.string.i_cant_go_at_the_scheduled_time));
+                Action_CancelSchedule(context, schedule);
+            });
+
+            sheetView.findViewById(R.id.btn_card_other_reasons).setOnClickListener(v2 -> {
+                bottomSheetDialog.dismiss();
+                //  Create Desc SheetMenu
+                BottomSheetDialog bottomSheetDialog_Desc = new BottomSheetDialog(context, R.style.BottomSheetTheme);
+                View sheetView_Desc = LayoutInflater.from(context).inflate(R.layout.adapter_menu_sheet_cancel_schedule_other_reason,
+                        ((Activity) context).findViewById(R.id.sheet_menu_cancel_schedule_other_reason));
+                EditText editText_reason_desc = sheetView_Desc.findViewById(R.id.editText_reason_desc);
+
+                sheetView_Desc.findViewById(R.id.btn_confirm_cancel_desc).setOnClickListener(v1 -> {
+                    bottomSheetDialog_Desc.dismiss();
+                    schedule.setDescription(editText_reason_desc.getText().toString().trim());
+                    Action_CancelSchedule(context, schedule);
+                });
+
+                bottomSheetDialog_Desc.setContentView(sheetView_Desc);
+                bottomSheetDialog_Desc.show();
+            });
+
+
+            bottomSheetDialog.setContentView(sheetView);
+            bottomSheetDialog.show();
+
+        });
+
+        txtCancel_alert.setOnClickListener(v -> LogOutDialog.dismiss());
+
+        LogOutDialog.show();
+    }
+
+    private static void Action_CancelSchedule(Context context, @NonNull DtoSchedule schedule){
+        loadingDialog = new LoadingDialog((Activity) context);
+        loadingDialog.startLoading();
+        ScheduleServices services = retrofitUser.create(ScheduleServices.class);
+        Call<DtoSchedule> call = services.CancelSchedule(schedule.getCd_schedule(), schedule.getId_user(), schedule.getDescription());
+        call.enqueue(new Callback<DtoSchedule>() {
+            @Override
+            public void onResponse(@NonNull Call<DtoSchedule> call, @NonNull Response<DtoSchedule> response) {
+                loadingDialog.dimissDialog();
+                if(response.code() == 200) {
+                    ToastHelper.toast((Activity) context, context.getString(R.string.appointment_canceled_successfully));
+                    ScheduledServicesActivity.LoadSchedules();
+                }
+                else Warnings.showWeHaveAProblem(context);
+            }
+            @Override
+            public void onFailure(@NonNull Call<DtoSchedule> call, @NonNull Throwable t) {
+                loadingDialog.dimissDialog();
+                Warnings.showWeHaveAProblem(context);
+            }
+        });
     }
 }

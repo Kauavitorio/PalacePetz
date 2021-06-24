@@ -18,6 +18,11 @@ public class DtoSchedule {
 
     public DtoSchedule(){}
 
+    public DtoSchedule(int id_user, int cd_schedule) {
+        this.id_user = id_user;
+        this.cd_schedule = cd_schedule;
+    }
+
     public String getNm_animal() {
         return nm_animal;
     }
