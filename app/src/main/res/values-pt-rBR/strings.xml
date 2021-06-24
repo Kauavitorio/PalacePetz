@@ -318,5 +318,6 @@
     <string name="other_reasons">Outros motivos</string>
     <string name="describe_the_reason_for_cancellation">Descreva o motivo do cancelamento</string>
     <string name="appointment_canceled_successfully">Agendamento cancelado com sucesso</string>
-    <string name="i_cant_go_at_the_scheduled_time">Não consigo ir no horario agendado</string>
+    <string name="i_cant_go_at_the_scheduled_time">Não consigo ir no horário agendado</string>
+    <string name="delivery_is_not_selected">Método de entrega não foi selecionado</string>
 </resources>

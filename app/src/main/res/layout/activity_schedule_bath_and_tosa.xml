@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/veterinary_consultation"
+            android:text="@string/bath_and_tosa"
             android:textColor="#3D444D"
             android:textSize="22sp"
             android:textStyle="bold"

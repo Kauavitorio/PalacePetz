@@ -16,6 +16,17 @@ public class DtoSchedule {
         this.description = description;
     }
 
+    public DtoSchedule (int id_user, String cd_animal, String time_schedule, String date_schedule, int payment_type, int service_type, int delivery, String description){
+        this.id_user = id_user;
+        this.cd_animal = cd_animal;
+        this.time_schedule = time_schedule;
+        this.delivery = delivery;
+        this.date_schedule = date_schedule;
+        this.service_type = service_type;
+        this.payment_type = payment_type;
+        this.description = description;
+    }
+
     public DtoSchedule(){}
 
     public DtoSchedule(int id_user, int cd_schedule) {

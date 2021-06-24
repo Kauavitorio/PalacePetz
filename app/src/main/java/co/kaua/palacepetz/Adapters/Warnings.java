@@ -468,7 +468,11 @@ public class Warnings extends MainActivity {
 
                 sheetView_Desc.findViewById(R.id.btn_confirm_cancel_desc).setOnClickListener(v1 -> {
                     bottomSheetDialog_Desc.dismiss();
-                    schedule.setDescription(editText_reason_desc.getText().toString().trim());
+                    String desc = editText_reason_desc.getText().toString().trim();
+                    if(desc.replace(" ", "").length() <= 0)
+                        schedule.setDescription("Motivo do cancelamento não foi informado.");
+                    else
+                        schedule.setDescription(desc);
                     Action_CancelSchedule(context, schedule);
                 });
 

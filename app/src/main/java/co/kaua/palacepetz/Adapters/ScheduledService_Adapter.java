@@ -39,13 +39,14 @@ public class ScheduledService_Adapter extends RecyclerView.Adapter<ScheduledServ
         switch (dtoSchedule.get(position).getService_type()){
             case 1:
                 holder.txt_title_service.setText(context.getString(R.string.veterinary_consultation));
+                holder.txt_title_veterinary.setText(context.getString(R.string.veterinary) + ": " + dtoSchedule.get(position).getNm_veterinary());
                 break;
             case 2:
                 holder.txt_title_service.setText(context.getString(R.string.bath_and_tosa));
+                holder.txt_title_veterinary.setVisibility(View.GONE);
                 break;
         }
         holder.txt_title_animal.setText(context.getString(R.string.animal) + ": " + dtoSchedule.get(position).getNm_animal());
-        holder.txt_title_veterinary.setText(context.getString(R.string.veterinary) + ": " + dtoSchedule.get(position).getNm_veterinary());
         holder.txt_title_time.setText(context.getString(R.string.time) + ": " + dtoSchedule.get(position).getTime_schedule());
         holder.txt_title_date.setText(context.getString(R.string.date) + ": " + dtoSchedule.get(position).getDate_schedule());
 
