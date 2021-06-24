@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +24,7 @@ import co.kaua.palacepetz.R;
 
 public class ServicesFragment extends Fragment implements IOnBackPressed {
     private ConstraintLayout btn_consultation_services, btn_bath_services;
-    private CardView btn_all_schedules;
+    private LinearLayout btn_all_schedules;
 
     private Bundle args;
     private View view;
