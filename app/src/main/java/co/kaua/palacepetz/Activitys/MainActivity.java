@@ -421,7 +421,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //  Click to open cards
                 BtnMyCardsSheetUserMenu.setOnClickListener(v1 -> {
-                    OpenShoppingCart();
+                    OpenMyCards();
                     bottomSheetDialog.dismiss();
                 });
 
