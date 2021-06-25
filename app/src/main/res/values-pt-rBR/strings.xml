@@ -320,4 +320,6 @@
     <string name="appointment_canceled_successfully">Agendamento cancelado com sucesso</string>
     <string name="i_cant_go_at_the_scheduled_time">Não consigo ir no horário agendado</string>
     <string name="delivery_is_not_selected">Método de entrega não foi selecionado</string>
+    <string name="fixed_price_consultation">Preço Fixo: 90,00</string>
+    <string name="fixed_price_bath">Preço Fixo: 60,00</string>
 </resources>

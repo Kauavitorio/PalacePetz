@@ -367,4 +367,6 @@
     <string name="appointment_canceled_successfully">Appointment canceled successfully</string>
     <string name="i_cant_go_at_the_scheduled_time">I can\'t go at the scheduled time</string>
     <string name="delivery_is_not_selected">Delivery method has not been selected</string>
+    <string name="fixed_price_consultation">Fixed Price: 90.00</string>
+    <string name="fixed_price_bath">Fixed Price: 60.00</string>
 </resources>
