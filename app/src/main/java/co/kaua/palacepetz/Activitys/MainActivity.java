@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private Bundle bundle;
 
     //  User information
-    private static int _IdUser;
+    private static int _IdUser, status;
     private static String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, _Password;
 
     //  Set preferences
@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         if (sp.contains("pref_email") && sp.contains("pref_password")){
             _IdUser = sp.getInt("pref_id_user", 0);
+            status = sp.getInt("pref_status", 0);
             name_user = sp.getString("pref_name_user", null);
             _Email = sp.getString("pref_email", null);
             cpf_user = sp.getString("pref_cpf_user", null);
@@ -175,21 +176,6 @@ public class MainActivity extends AppCompatActivity {
         }else{
             LoadMainFragment();
         }
-        /*
-        *
-            _IdUser = bundle.getInt("id_user");
-            name_user = bundle.getString("name_user");
-            _Email = bundle.getString("email_user");
-            cpf_user = bundle.getString("cpf_user");
-            address_user = bundle.getString("address_user");
-            complement = bundle.getString("complement");
-            zipcode = bundle.getString("zipcode");
-            phone_user = bundle.getString("phone_user");
-            birth_date = bundle.getString("birth_date");
-            img_user = bundle.getString("img_user");
-            _Password = bundle.getString("password");
-        *
-        * */
 
         //  Set items gone
         base_QuantityItemsCart_main.setVisibility(View.GONE);
@@ -649,6 +635,7 @@ public class MainActivity extends AppCompatActivity {
                         zipcode = response.body().getZipcode();
                         phone_user = response.body().getPhone_user();
                         birth_date = response.body().getBirth_date();
+                        status = response.body().getStatus();
                         if (!response.body().getImg_user().equals(img_user)){
                             img_user = response.body().getImg_user();
                             if (img_user == null || img_user.equals(""))
@@ -660,6 +647,11 @@ public class MainActivity extends AppCompatActivity {
                     }else if (response.code() == 401){
                         ToastHelper.toast(MainActivity.this, getString(R.string.we_verify_yourEmailOrPassword));
                         Intent goTo_login = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(goTo_login);
+                        finish();
+                    }else if (response.code() == 410){
+                        Intent goTo_login = new Intent(MainActivity.this, LoginActivity.class);
+                        goTo_login.putExtra("disable", true);
                         startActivity(goTo_login);
                         finish();
                     }

@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import co.kaua.palacepetz.Activitys.Help.HelpActivity;
 import co.kaua.palacepetz.Activitys.LoginActivity;
 import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Activitys.Pets.AllPetsActivity;
@@ -512,5 +514,19 @@ public class Warnings extends MainActivity {
                 Warnings.showWeHaveAProblem(context);
             }
         });
+    }
+
+    public static void showAccountDisable(@NonNull Context context){
+        mPrefs = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
+        mPrefs.edit().clear().apply();
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetTheme);
+        //  Creating View for SheetMenu
+        View sheetView = LayoutInflater.from(context).inflate(R.layout.adapter_sheet_account_disable,
+                ((Activity)context).findViewById(R.id.sheet_account_disable));
+        sheetView.findViewById(R.id.btnOk_account_disable).setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
+        });
+        bottomSheetDialog.setContentView(sheetView);
+        bottomSheetDialog.show();
     }
 }

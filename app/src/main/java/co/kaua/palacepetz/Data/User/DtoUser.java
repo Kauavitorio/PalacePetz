@@ -1,7 +1,7 @@
 package co.kaua.palacepetz.Data.User;
 
 public class DtoUser {
-    private int id_user, user_type;
+    private int id_user, user_type, status;
     private String name_user, email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, password;
 
     public DtoUser(String name_user, String email, String cpf_user, String password) {
@@ -44,6 +44,14 @@ public class DtoUser {
     }
 
     public DtoUser(){}
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getBirth_date() {
         return birth_date;
