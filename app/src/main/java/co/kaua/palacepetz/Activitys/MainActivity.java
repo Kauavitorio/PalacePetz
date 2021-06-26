@@ -115,15 +115,15 @@ public class MainActivity extends AppCompatActivity {
         if (sp.contains("pref_email") && sp.contains("pref_password")){
             _IdUser = sp.getInt("pref_id_user", 0);
             name_user = sp.getString("pref_name_user", null);
-            _Email = sp.getString("pref_email", "not found");
+            _Email = sp.getString("pref_email", null);
             cpf_user = sp.getString("pref_cpf_user", null);
             address_user = sp.getString("pref_address_user", null);
-            complement = sp.getString("pref_complement", "not found");
-            zipcode = sp.getString("pref_zipcode", "not found");
-            phone_user = sp.getString("pref_phone_user", "not found");
-            birth_date = sp.getString("pref_birth_date", "not found");
+            complement = sp.getString("pref_complement", null);
+            zipcode = sp.getString("pref_zipcode", null);
+            phone_user = sp.getString("pref_phone_user", null);
+            birth_date = sp.getString("pref_birth_date", null);
             img_user = sp.getString("pref_img_user", null);
-            _Password = sp.getString("pref_password", "not found");
+            _Password = sp.getString("pref_password", null);
 
             if (address_user == null || address_user.equals(""))
                 ShowAddressAlert();

@@ -36,7 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @SuppressWarnings({"unchecked", "FieldCanBeLocal"})
 public class AllPetsActivity extends AppCompatActivity {
-    CardView btnRegisterPet;
+    private CardView btnRegisterPet, btnBackPets;
     private LoadingDialog loadingDialog;
     private RecyclerView RecyclerAllPets;
     private ConstraintLayout container_noPets;
@@ -61,6 +61,8 @@ public class AllPetsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         id_user = bundle.getInt("id_user");
         birth_date = bundle.getString("birth_date");
+
+        btnBackPets.setOnClickListener(v -> finish());
 
         btnRegisterPet.setOnClickListener(v -> {
             if (birth_date != null){
@@ -127,5 +129,6 @@ public class AllPetsActivity extends AppCompatActivity {
         btnRegisterPet = findViewById(R.id.btnRegisterPet);
         RecyclerAllPets = findViewById(R.id.RecyclerAllPets);
         container_noPets = findViewById(R.id.container_noPets);
+        btnBackPets = findViewById(R.id.btnBackPets);
     }
 }
