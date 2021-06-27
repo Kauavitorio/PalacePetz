@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
@@ -35,6 +36,7 @@ public class MyOrdersFragment extends Fragment implements IOnBackPressed {
     private Bundle args;
     private RecyclerView recyclerView_MyOrders;
     private ConstraintLayout container_noOrder;
+    private SwipeRefreshLayout SwipeRefreshMyOrders;
     private LoadingDialog loadingDialog;
 
     //  User information
@@ -58,6 +60,8 @@ public class MyOrdersFragment extends Fragment implements IOnBackPressed {
         _IdUser = args.getInt("id_user");
         loadOrders();
 
+        SwipeRefreshMyOrders.setOnRefreshListener(this::loadOrders);
+
         return view;
     }
 
@@ -75,7 +79,7 @@ public class MyOrdersFragment extends Fragment implements IOnBackPressed {
                     loadingDialog.dimissDialog();
                     LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
                     recyclerView_MyOrders.setLayoutManager(linearLayout);
-                    AsyncOrders asyncOrders = new AsyncOrders(recyclerView_MyOrders, container_noOrder, getActivity(), _IdUser);
+                    AsyncOrders asyncOrders = new AsyncOrders(recyclerView_MyOrders, container_noOrder, getActivity(), SwipeRefreshMyOrders, _IdUser);
                     asyncOrders.execute();
                 }else if(response.code() == 404){
                     loadingDialog.dimissDialog();
@@ -98,6 +102,7 @@ public class MyOrdersFragment extends Fragment implements IOnBackPressed {
     private void Ids() {
         recyclerView_MyOrders = view.findViewById(R.id.recyclerView_MyOrders);
         container_noOrder = view.findViewById(R.id.container_noOrder);
+        SwipeRefreshMyOrders = view.findViewById(R.id.SwipeRefreshMyOrders);
         recyclerView_MyOrders.setVisibility(View.GONE);
         container_noOrder.setVisibility(View.VISIBLE);
     }

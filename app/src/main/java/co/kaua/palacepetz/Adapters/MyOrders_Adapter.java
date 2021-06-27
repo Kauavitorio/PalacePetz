@@ -44,7 +44,7 @@ public class MyOrders_Adapter extends RecyclerView.Adapter<MyOrders_Adapter.MyHo
         String[] cardNumber = dtoOrders.get(position).getPayment().split(" ");
         holder.txt_order_payment.setText(context.getString(R.string.payment) + ": •••• •••• •••• " + cardNumber[3]);
         holder.txt_order_status.setText(context.getString(R.string.status) + ": " + dtoOrders.get(position).getStatus());
-        if(dtoOrders.get(position).getStatus().equals("Aguardando aprovação")){
+        if(dtoOrders.get(position).getStatus().equals("Aguardando Aprovação")){
             holder.container_myOrders_adapter.setMinHeight(240);
             holder.btnTrackOrder.setVisibility(View.GONE);
         }

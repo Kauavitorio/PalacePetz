@@ -323,4 +323,5 @@
     <string name="fixed_price_consultation">Preço Fixo: 90,00</string>
     <string name="fixed_price_bath">Preço Fixo: 60,00</string>
     <string name="txt_desc_account_disable">Lamentamos o transtorno, mas sua conta está desativada, entre em contato com nosso suporte para entender o porquê</string>
+    <string name="delivered">Entregue</string>
 </resources>
