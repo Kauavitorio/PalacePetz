@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:minHeight="80dp">
 
+            <!-- Edit Search -->
             <AutoCompleteTextView
                 android:id="@+id/edit_Search_Main"
                 android:layout_width="300dp"
@@ -36,7 +37,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="Autofill" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -283,7 +283,7 @@
 
         </HorizontalScrollView>
 
-        <!-- Text ShortCut -->
+        <!-- Text Highlights -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

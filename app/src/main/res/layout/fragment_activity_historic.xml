@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
+    <!-- Header -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,6 +25,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Image Clear Historic -->
         <ImageView
             android:id="@+id/ic_clear_historic"
             android:layout_width="40dp"
@@ -34,61 +37,73 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Container Historic -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/SwipeRefreshHistoric"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Container -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/no_product_onHistoric"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/background_myorder_adapter"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ic_clear_historic"
-            android:padding="15dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <!-- Animation -->
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/anim_doggyErrorHistoric"
-                android:layout_width="250dp"
-                android:layout_height="200dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/error_doggy" />
-
-            <!-- Text No Historic -->
-            <TextView
+            <!-- Container No item on historic -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/no_product_onHistoric"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="300dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/txt_no_historic"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/background_myorder_adapter"
+                android:padding="15dp"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/anim_doggyErrorHistoric" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- Animation -->
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/anim_doggyErrorHistoric"
+                    android:layout_width="250dp"
+                    android:layout_height="200dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/error_doggy" />
+
+                <!-- Text No Historic -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:maxWidth="300dp"
+                    android:text="@string/txt_no_historic"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/anim_doggyErrorHistoric" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- RecyclerView Historic -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_Historic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- RecyclerView Historic -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_Historic"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_title_historic" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+</LinearLayout>

@@ -294,14 +294,14 @@ public class EditProfileActivity extends AppCompatActivity {
         userCall.enqueue(new Callback<DtoUser>() {
             @Override
             public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
+                loadingDialog.dimissDialog();
                 if (response.code() == 200){
-                    loadingDialog.dimissDialog();
                     Picasso.get().load(img_user).into(icon_ProfileUser_EditProfile);
                     GoBackToProfile();
-                }else{
-                    loadingDialog.dimissDialog();
+                }else if(response.code() == 406)
+                    Warnings.show_BadUsername_Warning(EditProfileActivity.this);
+                else
                     Warnings.showWeHaveAProblem(EditProfileActivity.this);
-                }
             }
             @Override
             public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
