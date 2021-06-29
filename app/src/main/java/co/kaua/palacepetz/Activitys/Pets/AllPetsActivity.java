@@ -65,7 +65,7 @@ public class AllPetsActivity extends AppCompatActivity {
         btnBackPets.setOnClickListener(v -> finish());
 
         btnRegisterPet.setOnClickListener(v -> {
-            if (birth_date != null){
+            if (birth_date != null && birth_date.length() > 8){
                 String[] splitBirth = birth_date.split("/");
                 int User_age = Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(splitBirth[2]);
                 if (User_age >= 18 ){
