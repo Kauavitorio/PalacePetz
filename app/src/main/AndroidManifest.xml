@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PalacePetz">
-        <activity android:name=".Activitys.Services.ScheduledServicesActivity"></activity>
+        <activity android:name=".Activitys.Developers"></activity>
+        <activity android:name=".Activitys.Services.ScheduledServicesActivity" />
         <activity android:name=".Activitys.Help.HelpActivity" />
         <activity android:name=".Activitys.IntroActivity" />
 

@@ -53,7 +53,7 @@ public class ScheduleBathAndTosaActivity extends AppCompatActivity {
     private TextView txt_scheduleBath_time, txt_scheduleBath_date;
     private final Calendar myCalendar = Calendar.getInstance();
     private static DatePickerDialog.OnDateSetListener date;
-    private ArrayList<String> PetsSearch = new ArrayList<>();
+    private final ArrayList<String> PetsSearch = new ArrayList<>();
     private static ScheduleBathAndTosaActivity instance;
     private LoadingDialog loadingDialog;
 
@@ -86,6 +86,7 @@ public class ScheduleBathAndTosaActivity extends AppCompatActivity {
         _IdUser = dtoUser.getId_user();
         SetSpinnerAdapter();
         SetSpinnerSelected();
+        Warnings.PaymentInThePlace(ScheduleBathAndTosaActivity.this);
 
         //  Creating Calendar
         date = (view, year, month, dayOfMonth) -> {

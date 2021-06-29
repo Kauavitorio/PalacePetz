@@ -87,6 +87,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         _IdUser = dtoUser.getId_user();
         SetSpinnerAdapter();
         SetSpinnerClick();
+        Warnings.PaymentInThePlace(ScheduleAppointmentActivity.this);
 
         //  Creating Calendar
         date = (view, year, month, dayOfMonth) -> {

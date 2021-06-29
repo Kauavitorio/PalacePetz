@@ -324,4 +324,11 @@
     <string name="fixed_price_bath">Preço Fixo: 60,00</string>
     <string name="txt_desc_account_disable">Lamentamos o transtorno, mas sua conta está desativada, entre em contato com nosso suporte para entender o porquê</string>
     <string name="delivered">Entregue</string>
+    <string name="txt_desc_developers">Olá, este aplicativo foi desenvolvido para um trabalho de conclusão de curso, portanto as informações apresentadas neste aplicativo não são reais, solicitamos que você não insira informações reais como número do cartão de crédito pois os itens neste aplicativo são apenas ilustrativos, para mais informações clique no botão "Desenvolvedores".</string>
+    <string name="developers">Desenvolvedores</string>
+    <string name="kaua_developer">Desenvolvedor Mobile | Back-End</string>
+    <string name="view_portfolio">Ver portfólio</string>
+    <string name="front_end_developer">Desenvolvedor Front-End</string>
+    <string name="notice_payment_at_the_time">Aviso, o pagamento de todos os atendimentos são realizados na hora do atendimento, não iremos solicitar nenhum pagamento antes.</string>
+    <string name="desc_pedro">Analista de Sistema, Infraestrutura e Banco de Dados</string>
 </resources>

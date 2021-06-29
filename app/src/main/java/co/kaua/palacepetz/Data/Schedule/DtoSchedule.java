@@ -5,12 +5,12 @@ public class DtoSchedule {
     private String cd_animal, cd_veterinary, date_schedule, time_schedule, description;
     private String nm_animal, nm_veterinary;
 
-    public DtoSchedule (int id_user, String cd_animal, String cd_veterinary, String time_schedule, String date_schedule, int payment_type, int service_type, String description){
+    public DtoSchedule (int id_user, String cd_animal, String cd_veterinary, String time_schedule_get, String date_schedule_get, int payment_type, int service_type, String description){
         this.id_user = id_user;
         this.cd_animal = cd_animal;
         this.cd_veterinary = cd_veterinary;
-        this.time_schedule = time_schedule;
-        this.date_schedule = date_schedule;
+        this.time_schedule = time_schedule_get;
+        this.date_schedule = date_schedule_get;
         this.service_type = service_type;
         this.payment_type = payment_type;
         this.description = description;

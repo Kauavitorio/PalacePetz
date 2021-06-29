@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
 
+import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.mobile.DtoVersion;
 import co.kaua.palacepetz.Data.mobile.MobileServices;
 import co.kaua.palacepetz.Firebase.ConfFirebase;
@@ -126,6 +127,8 @@ public class SplashScreen extends AppCompatActivity {
             timer.postDelayed(this::GoToMain, MAIN_TIMER);
         else
             timer.postDelayed(this::GoToIntro, 2000);
+
+        Warnings.ApplyDevelopersPref(SplashScreen.this, 0);
     }
 
     private void GoToMain(){

@@ -18,12 +18,14 @@ import androidx.cardview.widget.CardView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import co.kaua.palacepetz.Activitys.Developers;
 import co.kaua.palacepetz.Activitys.Help.HelpActivity;
 import co.kaua.palacepetz.Activitys.LoginActivity;
 import co.kaua.palacepetz.Activitys.MainActivity;
 import co.kaua.palacepetz.Activitys.Pets.AllPetsActivity;
 import co.kaua.palacepetz.Activitys.RegisterAddressActivity;
 import co.kaua.palacepetz.Activitys.Services.ScheduledServicesActivity;
+import co.kaua.palacepetz.Activitys.SplashScreen;
 import co.kaua.palacepetz.Data.Pets.DtoPets;
 import co.kaua.palacepetz.Data.Pets.PetsServices;
 import co.kaua.palacepetz.Data.Schedule.DtoSchedule;
@@ -528,5 +530,63 @@ public class Warnings extends MainActivity {
         });
         bottomSheetDialog.setContentView(sheetView);
         bottomSheetDialog.show();
+    }
+
+    public static void showDevelopers(@NonNull Context context){
+        //  Get all SharedPreferences
+        mPrefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        if(sp.getInt("pref_developers", 0) == 0){
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetTheme);
+            //  Creating View for SheetMenu
+            bottomSheetDialog.setCancelable(false);
+            View sheetView = LayoutInflater.from(context).inflate(R.layout.adapter_sheet_developers,
+                    ((Activity)context).findViewById(R.id.sheet_developers));
+
+            sheetView.findViewById(R.id.btnOk_Developers).setOnClickListener(v -> {
+                bottomSheetDialog.dismiss();
+                ApplyDevelopersPref(context, 1);
+            });
+
+            sheetView.findViewById(R.id.btnDevelopers).setOnClickListener(v -> {
+                Intent i = new Intent(context, Developers.class);
+                context.startActivity(i);
+                bottomSheetDialog.dismiss();
+                ApplyDevelopersPref(context, 1);
+            });
+
+            bottomSheetDialog.setContentView(sheetView);
+            bottomSheetDialog.show();
+        }
+    }
+
+    //  Create Show Payment In the place
+    public static void PaymentInThePlace(Context context) {
+        WarningError = new Dialog(context);
+
+        TextView txtMsg_alert, txtPositiveBtn_alert, txtCancel_alert;
+        CardView PositiveBtn_alert;
+        WarningError.setContentView(R.layout.adapter_comum_alert);
+        WarningError.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        txtMsg_alert = WarningError.findViewById(R.id.txtMsg_alert);
+        txtCancel_alert = WarningError.findViewById(R.id.txtCancel_alert);
+        PositiveBtn_alert = WarningError.findViewById(R.id.PositiveBtn_alert);
+        txtPositiveBtn_alert = WarningError.findViewById(R.id.txtPositiveBtn_alert);
+        PositiveBtn_alert.setElevation(20);
+        txtCancel_alert.setVisibility(View.GONE);
+
+        txtMsg_alert.setText(context.getString(R.string.notice_payment_at_the_time));
+        txtPositiveBtn_alert.setText(context.getString(R.string.ok));
+
+        PositiveBtn_alert.setOnClickListener(v -> WarningError.dismiss());
+
+        WarningError.show();
+    }
+
+    public static void ApplyDevelopersPref(@NonNull Context context, int status){
+        mPrefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putInt("pref_developers", status);
+        editor.apply();
     }
 }

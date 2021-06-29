@@ -371,4 +371,16 @@
     <string name="fixed_price_bath">Fixed Price: 60.00</string>
     <string name="txt_desc_account_disable">Sorry for the inconvenience but your account is disabled, please contact our support to understand why</string>
     <string name="delivered">Delivered</string>
+    <string name="txt_desc_developers">Hello, this application was developed for a course completion work, so the information presented in this application is not real, we ask that you do not enter real information such as credit card number as the items in this application are only illustrative, for more information click on \"Developers\" button.</string>
+    <string name="developers">Developers</string>
+    <string name="kaua_vitorio" translatable="false">Kauã Vitório</string>
+    <string name="matheus_leite" translatable="false">Matheus Leite</string>
+    <string name="pedro_morato" translatable="false">Pedro Morato</string>
+    <string name="danilo_oliveira" translatable="false">Danilo Oliveira</string>
+    <string name="ui_ux_designer" translatable="false">UI/UX Designer</string>
+    <string name="kaua_developer">Mobile | Back-End Developer</string>
+    <string name="view_portfolio">View portfolio</string>
+    <string name="front_end_developer">Front-End Developer</string>
+    <string name="notice_payment_at_the_time">Notice, the payment for all services is made at the time of the service, we will not request any payment before.</string>
+    <string name="desc_pedro">System, Infrastructure and Database Analyst</string>
 </resources>

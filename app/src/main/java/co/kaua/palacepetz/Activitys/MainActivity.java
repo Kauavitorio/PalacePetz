@@ -568,6 +568,10 @@ public class MainActivity extends AppCompatActivity {
                 switch (response.code()){
                     case 200:
                         assert response.body() != null;
+                        int developers = response.body().getDev_alert();
+                        if(developers == 1)
+                            Warnings.showDevelopers(MainActivity.this);
+
                         if ( versionCode < response.body().getVersionCode()){
                             if (Count != 1){
                                 BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetTheme);

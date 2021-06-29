@@ -93,11 +93,11 @@ public class HelpActivity extends AppCompatActivity {
                     txt_order_status.setText(response.body().getStatus());
                     String[] splitNm_User = nm_user.split(" ");
                     switch (response.body().getStatus()) {
-                        case "Aguardando aprovação":
+                        case "Aguardando Aprovação":
                             txt_status.setText(splitNm_User[0] + ", " + getString(R.string.waiting_for_be_approved));
                             base_order_status_help.setCardBackgroundColor(getColor(R.color.edittext_base));
                             break;
-                        case "Preparando produto":
+                        case "Preparando Produto":
                             txt_status.setText(splitNm_User[0] + ", " + getString(R.string.we_are_preparing_your_order));
                             base_order_status_help.setCardBackgroundColor(getColor(R.color.background_bottom));
                             break;
@@ -109,7 +109,7 @@ public class HelpActivity extends AppCompatActivity {
                             txt_status.setText(splitNm_User[0] + ", " + getString(R.string.your_order_has_been_delivered));
                             base_order_status_help.setCardBackgroundColor(getColor(R.color.elo));
                             break;
-                        case "Concluido":
+                        case "Concluído":
                             txt_status.setText(splitNm_User[0] + ", " + getString(R.string.your_order_has_already_been_completed));
                             base_order_status_help.setCardBackgroundColor(getColor(R.color.order_finish));
                             break;
