@@ -8,11 +8,11 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-To install and run that project you just need android studio and a mobile with android 7.1.1 or +.
+To install and run that project you just need android studio and a mobile with android 7.0 or +.
 
 ```c#
-This project run with minSdkVersion 23 but to shortcuts work is necessary run with minimum Sdk 25.
-Sdk 23 - Android 6.0 (Marshmallow)
+This project run with minSdkVersion 24 but to shortcuts work is necessary run with minimum Sdk 25.
+Sdk 24 - Android 7.0 (Marshmallow)
 Sdk 25 - Android 7.1.1 (Nougat)
 ```
 
