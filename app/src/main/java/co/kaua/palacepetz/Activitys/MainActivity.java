@@ -1,6 +1,7 @@
 package co.kaua.palacepetz.Activitys;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.squareup.picasso.Picasso;
 
 import co.kaua.palacepetz.Activitys.Help.HelpActivity;
@@ -46,6 +49,7 @@ import co.kaua.palacepetz.Fragments.MyCardsFragment;
 import co.kaua.palacepetz.Fragments.MyOrdersFragment;
 import co.kaua.palacepetz.Fragments.ServicesFragment;
 import co.kaua.palacepetz.Fragments.ShoppingCartFragment;
+import co.kaua.palacepetz.Methods.CaptureAct;
 import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     private Bundle bundle;
 
     //  User information
+    @SuppressWarnings("unused")
     private static int _IdUser, status;
     private static String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, _Password;
 
@@ -173,9 +178,8 @@ public class MainActivity extends AppCompatActivity {
                         OpenMyCards();
                     break;
             }
-        }else{
+        }else
             LoadMainFragment();
-        }
 
         //  Set items gone
         base_QuantityItemsCart_main.setVisibility(View.GONE);
@@ -283,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
             CardView products = sheetView.findViewById(R.id.BtnProductsSheetMenu);
             CardView historic = sheetView.findViewById(R.id.BtnHistoricSheetMenu);
             CardView services = sheetView.findViewById(R.id.BtnServicesSheetMenu);
-
+            CardView qrcode = sheetView.findViewById(R.id.BtnQrCode);
 
             //  Show Main Fragment
             home.setOnClickListener(v1 -> {
@@ -316,9 +320,47 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetDialog.dismiss();
             });
 
+            qrcode.setOnClickListener(v1 -> {
+                IntentIntegrator integrator = new IntentIntegrator(this);
+                integrator.setCaptureActivity(CaptureAct.class);
+                integrator.setOrientationLocked(false);
+                integrator.setBeepEnabled(false);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+                integrator.setPrompt(getString(R.string.scan_the_qr_code));
+                integrator.initiateScan();
+                bottomSheetDialog.dismiss();
+            });
+
             bottomSheetDialog.setContentView(sheetView);
             bottomSheetDialog.show();
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null){
+            if (result.getContents() != null){
+                String prodResult = result.getContents();
+                String[] cd_prodResult = prodResult.split("--");
+                try {
+                    if(cd_prodResult[2].toLowerCase().equals("p1a2") || cd_prodResult[2].toLowerCase().equals("palaceetz") || cd_prodResult[2].toLowerCase().equals("qrpalace")){
+                        int cd_prod = Integer.parseInt(cd_prodResult[1]);
+                        Intent i = new Intent(this, ProductDetailsActivity.class);
+                        i.putExtra("cd_prod", cd_prod);
+                        startActivity(i);
+                        Log.d("QrCodeStatus", "OK " + "\n QrCodeResult: " + prodResult);
+                    }else
+                        ToastHelper.toast(this, getString(R.string.desc_no_qr_not_palace));
+                }
+                catch (Exception ex){
+                    ToastHelper.toast(this, getString(R.string.desc_no_qr_not_palace));
+                    Log.d("QrCodeStatus", ex.toString() + "\n QrCodeResult: " + prodResult);
+                }
+            }else
+                ToastHelper.toast(this, getString(R.string.no_results));
+        }else
+            super.onActivityResult(requestCode, resultCode, data);
     }
 
     public final void OpenMyOrders() {
