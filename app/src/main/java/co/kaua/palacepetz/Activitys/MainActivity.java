@@ -1,6 +1,7 @@
 package co.kaua.palacepetz.Activitys;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.squareup.picasso.Picasso;
 
 import co.kaua.palacepetz.Activitys.Help.HelpActivity;
@@ -46,6 +49,7 @@ import co.kaua.palacepetz.Fragments.MyCardsFragment;
 import co.kaua.palacepetz.Fragments.MyOrdersFragment;
 import co.kaua.palacepetz.Fragments.ServicesFragment;
 import co.kaua.palacepetz.Fragments.ShoppingCartFragment;
+import co.kaua.palacepetz.Methods.CaptureAct;
 import co.kaua.palacepetz.Methods.ToastHelper;
 import co.kaua.palacepetz.R;
 
@@ -75,13 +79,15 @@ public class MainActivity extends AppCompatActivity {
     private Animation CartAnim;
     private int Count = 0;
     private static MainActivity instance;
+    private static DtoUser dtoUser;
 
     //  Fragments Arguments
     private static Bundle args;
     private Bundle bundle;
 
     //  User information
-    private static int _IdUser;
+    @SuppressWarnings("unused")
+    private static int _IdUser, status;
     private static String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, _Password;
 
     //  Set preferences
@@ -113,16 +119,17 @@ public class MainActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         if (sp.contains("pref_email") && sp.contains("pref_password")){
             _IdUser = sp.getInt("pref_id_user", 0);
+            status = sp.getInt("pref_status", 0);
             name_user = sp.getString("pref_name_user", null);
-            _Email = sp.getString("pref_email", "not found");
+            _Email = sp.getString("pref_email", null);
             cpf_user = sp.getString("pref_cpf_user", null);
             address_user = sp.getString("pref_address_user", null);
-            complement = sp.getString("pref_complement", "not found");
-            zipcode = sp.getString("pref_zipcode", "not found");
-            phone_user = sp.getString("pref_phone_user", "not found");
-            birth_date = sp.getString("pref_birth_date", "not found");
+            complement = sp.getString("pref_complement", null);
+            zipcode = sp.getString("pref_zipcode", null);
+            phone_user = sp.getString("pref_phone_user", null);
+            birth_date = sp.getString("pref_birth_date", null);
             img_user = sp.getString("pref_img_user", null);
-            _Password = sp.getString("pref_password", "not found");
+            _Password = sp.getString("pref_password", null);
 
             if (address_user == null || address_user.equals(""))
                 ShowAddressAlert();
@@ -132,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
                 Picasso.get().load(img_user).into(icon_ProfileUser_main);
         }else
             _IdUser = 0;
+
+        dtoUser.setId_user(_IdUser);
 
 
         if(bundle.getInt("shortcut") != 0){
@@ -169,24 +178,8 @@ public class MainActivity extends AppCompatActivity {
                         OpenMyCards();
                     break;
             }
-        }else{
+        }else
             LoadMainFragment();
-        }
-        /*
-        *
-            _IdUser = bundle.getInt("id_user");
-            name_user = bundle.getString("name_user");
-            _Email = bundle.getString("email_user");
-            cpf_user = bundle.getString("cpf_user");
-            address_user = bundle.getString("address_user");
-            complement = bundle.getString("complement");
-            zipcode = bundle.getString("zipcode");
-            phone_user = bundle.getString("phone_user");
-            birth_date = bundle.getString("birth_date");
-            img_user = bundle.getString("img_user");
-            _Password = bundle.getString("password");
-        *
-        * */
 
         //  Set items gone
         base_QuantityItemsCart_main.setVisibility(View.GONE);
@@ -275,6 +268,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void Ids() {
+        dtoUser = new DtoUser();
         btnMenu_Main = findViewById(R.id.btnMenu_Main);
         icon_ProfileUser_main = findViewById(R.id.icon_ProfileUser_main);
         base_QuantityItemsCart_main = findViewById(R.id.base_QuantityItemsCart_main);
@@ -293,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
             CardView products = sheetView.findViewById(R.id.BtnProductsSheetMenu);
             CardView historic = sheetView.findViewById(R.id.BtnHistoricSheetMenu);
             CardView services = sheetView.findViewById(R.id.BtnServicesSheetMenu);
-
+            CardView qrcode = sheetView.findViewById(R.id.BtnQrCode);
 
             //  Show Main Fragment
             home.setOnClickListener(v1 -> {
@@ -326,9 +320,47 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetDialog.dismiss();
             });
 
+            qrcode.setOnClickListener(v1 -> {
+                IntentIntegrator integrator = new IntentIntegrator(this);
+                integrator.setCaptureActivity(CaptureAct.class);
+                integrator.setOrientationLocked(false);
+                integrator.setBeepEnabled(false);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+                integrator.setPrompt(getString(R.string.scan_the_qr_code));
+                integrator.initiateScan();
+                bottomSheetDialog.dismiss();
+            });
+
             bottomSheetDialog.setContentView(sheetView);
             bottomSheetDialog.show();
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null){
+            if (result.getContents() != null){
+                String prodResult = result.getContents();
+                String[] cd_prodResult = prodResult.split("--");
+                try {
+                    if(cd_prodResult[2].toLowerCase().equals("p1a2") || cd_prodResult[2].toLowerCase().equals("palaceetz") || cd_prodResult[2].toLowerCase().equals("qrpalace")){
+                        int cd_prod = Integer.parseInt(cd_prodResult[1]);
+                        Intent i = new Intent(this, ProductDetailsActivity.class);
+                        i.putExtra("cd_prod", cd_prod);
+                        startActivity(i);
+                        Log.d("QrCodeStatus", "OK " + "\n QrCodeResult: " + prodResult);
+                    }else
+                        ToastHelper.toast(this, getString(R.string.desc_no_qr_not_palace));
+                }
+                catch (Exception ex){
+                    ToastHelper.toast(this, getString(R.string.desc_no_qr_not_palace));
+                    Log.d("QrCodeStatus", ex.toString() + "\n QrCodeResult: " + prodResult);
+                }
+            }else
+                ToastHelper.toast(this, getString(R.string.no_results));
+        }else
+            super.onActivityResult(requestCode, resultCode, data);
     }
 
     public final void OpenMyOrders() {
@@ -417,7 +449,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //  Click to open cards
                 BtnMyCardsSheetUserMenu.setOnClickListener(v1 -> {
-                    OpenShoppingCart();
+                    OpenMyCards();
                     bottomSheetDialog.dismiss();
                 });
 
@@ -549,7 +581,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public DtoUser GetUserBaseInformation(){
-        DtoUser dtoUser = new DtoUser();
         dtoUser.setName_user(name_user);
         dtoUser.setEmail(_Email);
         dtoUser.setPassword(_Password);
@@ -579,6 +610,10 @@ public class MainActivity extends AppCompatActivity {
                 switch (response.code()){
                     case 200:
                         assert response.body() != null;
+                        int developers = response.body().getDev_alert();
+                        if(developers == 1)
+                            Warnings.showDevelopers(MainActivity.this);
+
                         if ( versionCode < response.body().getVersionCode()){
                             if (Count != 1){
                                 BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetTheme);
@@ -646,6 +681,7 @@ public class MainActivity extends AppCompatActivity {
                         zipcode = response.body().getZipcode();
                         phone_user = response.body().getPhone_user();
                         birth_date = response.body().getBirth_date();
+                        status = response.body().getStatus();
                         if (!response.body().getImg_user().equals(img_user)){
                             img_user = response.body().getImg_user();
                             if (img_user == null || img_user.equals(""))
@@ -657,6 +693,11 @@ public class MainActivity extends AppCompatActivity {
                     }else if (response.code() == 401){
                         ToastHelper.toast(MainActivity.this, getString(R.string.we_verify_yourEmailOrPassword));
                         Intent goTo_login = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(goTo_login);
+                        finish();
+                    }else if (response.code() == 410){
+                        Intent goTo_login = new Intent(MainActivity.this, LoginActivity.class);
+                        goTo_login.putExtra("disable", true);
                         startActivity(goTo_login);
                         finish();
                     }

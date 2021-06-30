@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,12 +17,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import co.kaua.palacepetz.Activitys.Services.ScheduleAppointmentActivity;
 import co.kaua.palacepetz.Activitys.Services.ScheduleBathAndTosaActivity;
+import co.kaua.palacepetz.Activitys.Services.ScheduledServicesActivity;
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
 import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.R;
 
 public class ServicesFragment extends Fragment implements IOnBackPressed {
     private ConstraintLayout btn_consultation_services, btn_bath_services;
+    private LinearLayout btn_all_schedules;
 
     private Bundle args;
     private View view;
@@ -42,7 +46,7 @@ public class ServicesFragment extends Fragment implements IOnBackPressed {
         btn_consultation_services.setOnClickListener(v -> {
             if (_IdUser != 0){
                 Intent goTo_Schedule = new Intent(getActivity(), ScheduleAppointmentActivity.class);
-                goTo_Schedule.putExtra("email_user", _IdUser);
+                goTo_Schedule.putExtra("id_user", _IdUser);
                 startActivity(goTo_Schedule);
             }else
                 Warnings.NeedLoginAlert(requireActivity());
@@ -52,8 +56,18 @@ public class ServicesFragment extends Fragment implements IOnBackPressed {
         btn_bath_services.setOnClickListener(v -> {
             if (_IdUser != 0){
                 Intent goTo_ScheduleBath = new Intent(getActivity(), ScheduleBathAndTosaActivity.class);
-                goTo_ScheduleBath.putExtra("email_user", _IdUser);
+                goTo_ScheduleBath.putExtra("id_user", _IdUser);
                 startActivity(goTo_ScheduleBath);
+            }else
+                Warnings.NeedLoginAlert(requireActivity());
+        });
+
+        //  All Appointments click
+        btn_all_schedules.setOnClickListener(v -> {
+            if (_IdUser != 0){
+                Intent all_Appointments = new Intent(getActivity(), ScheduledServicesActivity.class);
+                all_Appointments.putExtra("id_user", _IdUser);
+                startActivity(all_Appointments);
             }else
                 Warnings.NeedLoginAlert(requireActivity());
         });
@@ -64,6 +78,7 @@ public class ServicesFragment extends Fragment implements IOnBackPressed {
     private void Ids() {
         btn_consultation_services = view.findViewById(R.id.btn_consultation_services);
         btn_bath_services = view.findViewById(R.id.btn_bath_services);
+        btn_all_schedules = view.findViewById(R.id.btn_all_schedules);
     }
 
     @Override

@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 
-
+import co.kaua.palacepetz.Activitys.Services.ScheduledServicesActivity;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.User.DtoUser;
@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     private LinearLayout txt_SingUpLogin;
 
     //  User information
-    private int id_user, user_type;
+    private int id_user, user_type, status;
     private String name_user, Email_Username, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user, password;
 
     //  Next Activity
@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (!(bundle == null)){
+
             Email_Username = bundle.getString("email_user");
             password = bundle.getString("password_user");
             SHORTCUT_ID = bundle.getInt("shortcut");
@@ -181,12 +182,14 @@ public class LoginActivity extends AppCompatActivity {
                         // Obtain the FirebaseAnalytics instance.
                         mFirebaseAnalytics = ConfFirebase.getFirebaseAnalytics(LoginActivity.this);
                         Bundle bundle = new Bundle();
+                        assert response.body() != null;
+                        name_user = response.body().getName_user();
+                        id_user = response.body().getId_user();
                         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id_user + "");
                         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name_user);
                         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "user");
                         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
                         String emailUser;
-                        assert response.body() != null;
                         user_type = response.body().getUser_type();
                         if(user_type == 0){
                             getWindow().setNavigationBarColor(getColor(R.color.background_top));
@@ -200,12 +203,14 @@ public class LoginActivity extends AppCompatActivity {
                             birth_date = response.body().getBirth_date();
                             phone_user = response.body().getPhone_user();
                             img_user = response.body().getImg_user();
+                            status = response.body().getStatus();
                             mPrefs.edit().clear().apply();
                             SharedPreferences.Editor editor = mPrefs.edit();
                             editor.putString("pref_email", email);
                             editor.putString("pref_password", password);
                             editor.putString("pref_name_user", name_user);
                             editor.putInt("pref_id_user", id_user);
+                            editor.putInt("pref_status", status);
                             editor.putString("pref_cpf_user", cpf_user);
                             editor.putString("pref_address_user", address_user);
                             editor.putString("pref_complement", complement);
@@ -229,6 +234,7 @@ public class LoginActivity extends AppCompatActivity {
                             cardBtn_SingIn.setEnabled(true);
                             loadingDialog.dimissDialog();
                         }
+
                     }else if(response.code() == 405){
                         cardBtn_SingIn.setEnabled(true);
                         cardBtn_SingIn.setElevation(20);
@@ -241,7 +247,14 @@ public class LoginActivity extends AppCompatActivity {
                         editLogin_passwordUser.setText(null);
                         cardBtn_SingIn.setEnabled(true);
                         Warnings.showWarning_Email_Password(LoginActivity.this);
-                    }else{
+                    }else if(response.code() == 410){
+                        mPrefs.edit().clear().apply();
+                        cardBtn_SingIn.setElevation(20);
+                        loadingDialog.dimissDialog();
+                        editLogin_passwordUser.setText(null);
+                        cardBtn_SingIn.setEnabled(true);
+                        Warnings.showAccountDisable(LoginActivity.this);
+                    } else{
                         loadingDialog.dimissDialog();
                         Warnings.showWeHaveAProblem(LoginActivity.this);
                     }

@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import co.kaua.palacepetz.Adapters.IOnBackPressed;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
@@ -35,6 +36,7 @@ public class HistoricFragment extends Fragment implements IOnBackPressed {
     private Bundle args;
     private ConstraintLayout no_product_onHistoric;
     private RecyclerView recyclerView_Historic;
+    private SwipeRefreshLayout SwipeRefreshHistoric;
     private LoadingDialog loadingDialog;
     private ImageView ic_clear_historic;
 
@@ -59,6 +61,7 @@ public class HistoricFragment extends Fragment implements IOnBackPressed {
         _IdUser = args.getInt("id_user");
         loadHistoric(_IdUser);
 
+        // Clear historic click
         ic_clear_historic.setOnClickListener(v -> {
             AlertDialog.Builder alert  = new AlertDialog.Builder(getContext())
                     .setTitle(R.string.clear_historic)
@@ -71,16 +74,13 @@ public class HistoricFragment extends Fragment implements IOnBackPressed {
                         call.enqueue(new Callback<DtoHistoric>() {
                             @Override
                             public void onResponse(@NonNull Call<DtoHistoric> call, @NonNull Response<DtoHistoric> response) {
+                                loadingDialog.dimissDialog();
                                 if (response.code() == 200){
-                                    loadingDialog.dimissDialog();
                                     recyclerView_Historic.setVisibility(View.GONE);
                                     no_product_onHistoric.setVisibility(View.VISIBLE);
-                                }else{
-                                    loadingDialog.dimissDialog();
+                                }else
                                     Warnings.showWeHaveAProblem(getContext());
-                                }
                             }
-
                             @Override
                             public void onFailure(@NonNull Call<DtoHistoric> call, @NonNull Throwable t) {
                                 loadingDialog.dimissDialog();
@@ -90,6 +90,14 @@ public class HistoricFragment extends Fragment implements IOnBackPressed {
                     })
                     .setNegativeButton(R.string.no, null);
             alert.show();
+        });
+
+        //  Refresh Swipe
+        SwipeRefreshHistoric.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadHistoric(_IdUser);
+            }
         });
 
         return view;
@@ -109,7 +117,7 @@ public class HistoricFragment extends Fragment implements IOnBackPressed {
                     no_product_onHistoric.setVisibility(View.GONE);
                     LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
                     recyclerView_Historic.setLayoutManager(linearLayout);
-                    AsyncHistoric asyncHistoric = new AsyncHistoric(recyclerView_Historic, no_product_onHistoric, requireActivity(), idUser);
+                    AsyncHistoric asyncHistoric = new AsyncHistoric(recyclerView_Historic, no_product_onHistoric, requireActivity(), SwipeRefreshHistoric, idUser);
                     asyncHistoric.execute();
                 }else if(response.code() == 206){
                     loadingDialog.dimissDialog();
@@ -131,6 +139,7 @@ public class HistoricFragment extends Fragment implements IOnBackPressed {
     private void Ids() {
         no_product_onHistoric = view.findViewById(R.id.no_product_onHistoric);
         recyclerView_Historic = view.findViewById(R.id.recyclerView_Historic);
+        SwipeRefreshHistoric = view.findViewById(R.id.SwipeRefreshHistoric);
         ic_clear_historic = view.findViewById(R.id.ic_clear_historic);
     }
 

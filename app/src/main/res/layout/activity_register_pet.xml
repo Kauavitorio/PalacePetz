@@ -191,7 +191,7 @@
                 android:layout_gravity="center"
                 android:text="@string/upload_animal_photo"
                 android:textColor="@color/white"
-                android:textSize="25sp" />
+                android:textSize="22sp" />
 
         </androidx.cardview.widget.CardView>
 

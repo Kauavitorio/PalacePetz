@@ -13,6 +13,27 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Btn Go Back -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnBackPets"
+            android:layout_width="50dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            app:cardBackgroundColor="@color/hint"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Arrow Back -->
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:lottie_autoPlay="true"
+                app:lottie_rawRes="@raw/arrow_left_white" />
+
+        </androidx.cardview.widget.CardView>
+
         <!-- RecyclerView All Pets -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RecyclerAllPets"

@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import co.kaua.palacepetz.Data.User.UserServices;
 import co.kaua.palacepetz.Methods.MaskEditUtil;
 import co.kaua.palacepetz.Methods.Notifications;
 import co.kaua.palacepetz.Methods.ToastHelper;
+import co.kaua.palacepetz.Methods.ValidateCPF;
 import co.kaua.palacepetz.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,6 +55,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private final LoadingDialog loadingDialog = new LoadingDialog(this);
 
     //  User Information to Sign Up
+    @SuppressWarnings("FieldCanBeLocal")
     private String firstName, lastName, email, cpf_user, password;
 
     //  Retrofit
@@ -70,6 +73,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         cardBtn_SingUp.setElevation(20);
         checking_password_have_minimum_characters();
         checking_if_all_password_is_equal();
+        setCpfListener();
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -82,88 +86,116 @@ public class CreateAccountActivity extends AppCompatActivity {
             finish();
         });
 
-        cardBtn_SingUp.setOnClickListener(v -> {
-            cardBtn_SingUp.setElevation(0);
-            password_base = editLogin_PasswordUserRegister.getText().toString();
-            password_confirm = editLogin_ConfirmPasswordUserRegister.getText().toString();
+        //  Edit btn go click
+        editLogin_ConfirmPasswordUserRegister.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_GO) {
+                SignUp();
+                return true;
+            }
+            return false;
+        });
 
+        cardBtn_SingUp.setOnClickListener(v -> SignUp());
+    }
+
+    private void SignUp() {
+        cardBtn_SingUp.setElevation(0);
+        imm.hideSoftInputFromWindow(editLogin_ConfirmPasswordUserRegister.getWindowToken(), 0);
+        password_base = editLogin_PasswordUserRegister.getText().toString();
+        password_confirm = editLogin_ConfirmPasswordUserRegister.getText().toString();
+
+        firstName = editLogin_FirstNameUserRegister.getText().toString().replaceAll(" ", "");
+        lastName = editLogin_LastNameUserRegister.getText().toString().replaceAll(" ", "");
+        email = editLogin_EmailUserRegister.getText().toString();
+        password = editLogin_PasswordUserRegister.getText().toString();
+
+        if (firstName.length() == 0 || editLogin_FirstNameUserRegister.getText().length() < 3)
+            showError(editLogin_FirstNameUserRegister, getString(R.string.necessary_to_insert_the_First_name));
+        else if(lastName.length() == 0 || editLogin_LastNameUserRegister.getText().length() < 3)
+            showError(editLogin_LastNameUserRegister, getString(R.string.necessary_to_insert_the_last_name));
+        else if(editLogin_EmailUserRegister.getText().length() == 0)
+            showError(editLogin_EmailUserRegister, getString(R.string.email_required));
+        else if(!Patterns.EMAIL_ADDRESS.matcher(editLogin_EmailUserRegister.getText()).matches())
+            showError(editLogin_EmailUserRegister, getString(R.string.informed_email_is_invalid));
+        else if(!isValidCPF(editRegister_CpfUser.getText().toString()))
+            showError(editRegister_CpfUser, getString(R.string.cpfinformedisInvalid));
+        else if(editLogin_PasswordUserRegister.getText().toString().indexOf(' ') >= 0)
+            showError(editLogin_PasswordUserRegister, getString(R.string.password_cannot_contain_spaces));
+        else if (!editLogin_PasswordUserRegister.getText().toString().matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$"))
+            showError(editLogin_PasswordUserRegister, getString(R.string.password_needs));
+        else if(!password_base.equals(password_confirm))
+            showError(editLogin_ConfirmPasswordUserRegister, getString(R.string.passwords_do_not_match));
+        else{
+            loadingDialog.startLoading();
+            cardBtn_SingUp.setEnabled(false);
             firstName = editLogin_FirstNameUserRegister.getText().toString().replaceAll(" ", "");
             lastName = editLogin_LastNameUserRegister.getText().toString().replaceAll(" ", "");
             email = editLogin_EmailUserRegister.getText().toString();
+            cpf_user = editRegister_CpfUser.getText().toString();
             password = editLogin_PasswordUserRegister.getText().toString();
+            String fullName_User = firstName + " " + lastName;
+            UserServices userServices = retrofitUser.create(UserServices.class);
+            DtoUser userInformation = new DtoUser(fullName_User, email, cpf_user, password);
+            Call<DtoUser> UserCall = userServices.registerNewUser(userInformation);
+            UserCall.enqueue(new Callback<DtoUser>() {
+                @Override
+                public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
+                    if(response.code() == 201 || response.code() == 200){
 
-            if (firstName.length() == 0 || editLogin_FirstNameUserRegister.getText().length() < 3){
-                showError(editLogin_FirstNameUserRegister, getString(R.string.necessary_to_insert_the_First_name));
-            }else if(lastName.length() == 0 || editLogin_LastNameUserRegister.getText().length() < 3){
-                showError(editLogin_LastNameUserRegister, getString(R.string.necessary_to_insert_the_last_name));
-            }else if(editLogin_EmailUserRegister.getText().length() == 0){
-                showError(editLogin_EmailUserRegister, getString(R.string.email_required));
-            }else if(!Patterns.EMAIL_ADDRESS.matcher(editLogin_EmailUserRegister.getText()).matches()){
-                showError(editLogin_EmailUserRegister, getString(R.string.informed_email_is_invalid));
-            }else if(!isValidCPF(editRegister_CpfUser.getText().toString())){
-                showError(editRegister_CpfUser, getString(R.string.cpfinformedisInvalid));
-            }else if(editLogin_PasswordUserRegister.getText().toString().indexOf(' ') >= 0){
-                showError(editLogin_PasswordUserRegister, getString(R.string.password_cannot_contain_spaces));
-            }else if (!editLogin_PasswordUserRegister.getText().toString().matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")){
-                showError(editLogin_PasswordUserRegister, getString(R.string.password_needs));
-            }else if(!password_base.equals(password_confirm)){
-                showError(editLogin_ConfirmPasswordUserRegister, getString(R.string.passwords_do_not_match));
-            }else{
-                loadingDialog.startLoading();
-                cardBtn_SingUp.setEnabled(false);
-                firstName = editLogin_FirstNameUserRegister.getText().toString().replaceAll(" ", "");
-                lastName = editLogin_LastNameUserRegister.getText().toString().replaceAll(" ", "");
-                email = editLogin_EmailUserRegister.getText().toString();
-                cpf_user = editRegister_CpfUser.getText().toString();
-                password = editLogin_PasswordUserRegister.getText().toString();
-                String fullName_User = firstName + " " + lastName;
-                UserServices userServices = retrofitUser.create(UserServices.class);
-                DtoUser userInformation = new DtoUser(fullName_User, email, cpf_user, password);
-                Call<DtoUser> UserCall = userServices.registerNewUser(userInformation);
-                UserCall.enqueue(new Callback<DtoUser>() {
-                    @Override
-                    public void onResponse(@NonNull Call<DtoUser> call, @NonNull Response<DtoUser> response) {
-                        if(response.code() == 201 || response.code() == 200){
+                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O)
+                            Notifications.show(CreateAccountActivity.this);
 
-                            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O)
-                                Notifications.show(CreateAccountActivity.this);
-
-                            Log.d("UserStatus", "User successfully registered with the API");
-                            Log.d("UserStatus", "Create User With Email: success");
-                            Log.d("UserStatus", "Email sent.");
-                            Warnings.show_WeSendEmail_Warning(CreateAccountActivity.this, email, password);
-                            cardBtn_SingUp.setElevation(20);
-                            loadingDialog.dimissDialog();
-                        }else if(response.code() == 406){
-                            loadingDialog.dimissDialog();
-                            cardBtn_SingUp.setElevation(20);
-                            cardBtn_SingUp.setEnabled(true);
-                            Warnings.show_BadUsername_Warning(CreateAccountActivity.this);
-                        }else if (response.code() == 409){
-                            loadingDialog.dimissDialog();
-                            cardBtn_SingUp.setElevation(20);
-                            ToastHelper.toast(CreateAccountActivity.this, getString(R.string.authFailed_thisEmail));
-                            cardBtn_SingUp.setEnabled(true);
-                        }else if (response.code() == 412){
-                            loadingDialog.dimissDialog();
-                            cardBtn_SingUp.setElevation(20);
-                            ToastHelper.toast(CreateAccountActivity.this, getString(R.string.authFailed_thisCpf));
-                            cardBtn_SingUp.setEnabled(true);
-                        }else{
-                            cardBtn_SingUp.setEnabled(true);
-                            loadingDialog.dimissDialog();
-                            cardBtn_SingUp.setElevation(20);
-                            Warnings.showWeHaveAProblem(CreateAccountActivity.this);
-                        }
-                    }
-                    @Override
-                    public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
-                        Warnings.showWeHaveAProblem(CreateAccountActivity.this);
+                        Log.d("UserStatus", "User successfully registered with the API");
+                        Log.d("UserStatus", "Create User With Email: success");
+                        Log.d("UserStatus", "Email sent.");
+                        Warnings.show_WeSendEmail_Warning(CreateAccountActivity.this, email, password);
+                        cardBtn_SingUp.setElevation(20);
+                        loadingDialog.dimissDialog();
+                    }else if(response.code() == 406){
                         loadingDialog.dimissDialog();
                         cardBtn_SingUp.setElevation(20);
                         cardBtn_SingUp.setEnabled(true);
+                        Warnings.show_BadUsername_Warning(CreateAccountActivity.this);
+                    }else if (response.code() == 409){
+                        loadingDialog.dimissDialog();
+                        cardBtn_SingUp.setElevation(20);
+                        ToastHelper.toast(CreateAccountActivity.this, getString(R.string.authFailed_thisEmail));
+                        cardBtn_SingUp.setEnabled(true);
+                    }else if (response.code() == 412){
+                        loadingDialog.dimissDialog();
+                        cardBtn_SingUp.setElevation(20);
+                        ToastHelper.toast(CreateAccountActivity.this, getString(R.string.authFailed_thisCpf));
+                        cardBtn_SingUp.setEnabled(true);
+                    }else{
+                        cardBtn_SingUp.setEnabled(true);
+                        loadingDialog.dimissDialog();
+                        cardBtn_SingUp.setElevation(20);
+                        Warnings.showWeHaveAProblem(CreateAccountActivity.this);
                     }
-                });
+                }
+                @Override
+                public void onFailure(@NonNull Call<DtoUser> call, @NonNull Throwable t) {
+                    Warnings.showWeHaveAProblem(CreateAccountActivity.this);
+                    loadingDialog.dimissDialog();
+                    cardBtn_SingUp.setElevation(20);
+                    cardBtn_SingUp.setEnabled(true);
+                }
+            });
+        }
+    }
+
+    private void setCpfListener() {
+        editRegister_CpfUser.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                String cpf_input = editRegister_CpfUser.getText().toString();
+                if (cpf_input.length() == 14)
+                    if(!ValidateCPF.isValidCPF(cpf_input))
+                        showError(editRegister_CpfUser, getString(R.string.cpfinformedisInvalid));
             }
         });
     }
@@ -179,7 +211,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         txt_haveAccount = findViewById(R.id.txt_haveAccount);
     }
 
-    private void showError(EditText editText, String error){
+    private void showError(@NonNull EditText editText, String error){
         editText.setError(error);
         editText.requestFocus();
         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);

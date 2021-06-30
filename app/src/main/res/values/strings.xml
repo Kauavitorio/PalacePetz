@@ -335,7 +335,7 @@
     <string name="test_water_pump">Test water pump</string>
     <string name="cancel_water">Cancel Water</string>
     <string name="who_are_we">Who are we?</string>
-    <string name="desc_who_are_we" >PalacePetz was created by love the owners have by animals. aiming for a good treatment to the pets, not just with products, but assisting in the beware of appointments veterinary.</string>
+    <string name="desc_who_are_we">PalacePetz was created by love the owners have by animals. aiming for a good treatment to the pets, not just with products, but assisting in the beware of appointments veterinary.</string>
     <string name="desc_policy_and_terms">The protection of your data is very important to Palace.\nWe respect your privacy in our mission to provide an even better service!\n\n• The data you register on our platforms <b>is handled securely.</b>\n\n• <b>We limit the processing</b> of data to their proper purposes and in <b>accordance with the law.</b>\n\n• You can answer your questions and request information at any time through the Help tab on our platforms.</string>
     <string name="waiting_for_be_approved">your order is waiting for be approved</string>
     <string name="we_are_preparing_your_order">we are preparing your order</string>
@@ -352,4 +352,38 @@
     <string name="time_is_not_selected">To make an appointment it is necessary to select a time.</string>
     <string name="date_is_not_selected">To make an appointment, you must select a date.</string>
     <string name="your_appointment_was_successful">Your appointment was successful.\nAny questions please contact us</string>
+    <string name="scheduled_services">Scheduled Services</string>
+    <string name="animal">Animal</string>
+    <string name="veterinary">Veterinary</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
+    <string name="all_appointments">All Appointments</string>
+    <string name="really_want_cancel_this_schedule">Do you really want to cancel this schedule?</string>
+    <string name="cancel_schedule">Cancel Schedule</string>
+    <string name="reason_for_cancellation">What is the reason for the cancellation?</string>
+    <string name="i_will_be_unavailable_for_the_day">I will be unavailable for the day</string>
+    <string name="other_reasons">Other reasons</string>
+    <string name="describe_the_reason_for_cancellation">Describe the reason for cancellation</string>
+    <string name="appointment_canceled_successfully">Appointment canceled successfully</string>
+    <string name="i_cant_go_at_the_scheduled_time">I can\'t go at the scheduled time</string>
+    <string name="delivery_is_not_selected">Delivery method has not been selected</string>
+    <string name="fixed_price_consultation">Fixed Price: 90.00</string>
+    <string name="fixed_price_bath">Fixed Price: 60.00</string>
+    <string name="txt_desc_account_disable">Sorry for the inconvenience but your account is disabled, please contact our support to understand why</string>
+    <string name="delivered">Delivered</string>
+    <string name="txt_desc_developers">Hello, this application was developed for a course completion work, so the information presented in this application is not real, we ask that you do not enter real information such as credit card number as the items in this application are only illustrative, for more information click on \"Developers\" button.</string>
+    <string name="developers">Developers</string>
+    <string name="kaua_vitorio" translatable="false">Kauã Vitório</string>
+    <string name="matheus_leite" translatable="false">Matheus Leite</string>
+    <string name="pedro_morato" translatable="false">Pedro Morato</string>
+    <string name="danilo_oliveira" translatable="false">Danilo Oliveira</string>
+    <string name="ui_ux_designer" translatable="false">UI/UX Designer</string>
+    <string name="kaua_developer">Mobile | Back-End Developer</string>
+    <string name="view_portfolio">View portfolio</string>
+    <string name="front_end_developer">Front-End Developer</string>
+    <string name="notice_payment_at_the_time">Notice, the payment for all services is made at the time of the service, we will not request any payment before.</string>
+    <string name="desc_pedro">System, Infrastructure and Database Analyst</string>
+    <string name="scan_the_qr_code">Scan the QR code</string>
+    <string name="desc_no_qr_not_palace">This QR code is not a PalacePetz product code.</string>
+    <string name="no_results">No results</string>
 </resources>

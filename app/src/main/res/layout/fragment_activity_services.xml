@@ -27,7 +27,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/btn_consultation_services"
             android:layout_width="340dp"
-            android:layout_height="197dp"
+            android:layout_height="217dp"
             android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
             <!-- Container Main -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="329dp"
-                android:layout_height="170dp"
+                android:layout_height="190dp"
                 android:background="@drawable/bg_shortcuts_main"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -56,6 +56,7 @@
 
                 <!-- Text VETERINARY CONSULTATION -->
                 <TextView
+                    android:id="@+id/txt_title_card_veterinary_consultation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/veterinary_consultation"
@@ -67,6 +68,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageViewconsultation" />
 
+                <!-- Text Price -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fixed_price_consultation"
+                    android:textSize="18sp"
+                    android:textColor="@color/hint"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_card_veterinary_consultation" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -76,7 +90,7 @@
                 android:layout_height="56dp"
                 app:cardBackgroundColor="#44BFFF"
                 app:cardCornerRadius="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -99,10 +113,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/btn_bath_services"
             android:layout_width="340dp"
-            android:layout_height="197dp"
+            android:layout_height="227dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_consultation_services">
@@ -110,7 +122,7 @@
             <!-- Container Main -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="329dp"
-                android:layout_height="170dp"
+                android:layout_height="190dp"
                 android:background="@drawable/bg_shortcuts_main"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -130,6 +142,7 @@
 
                 <!-- Text VETERINARY CONSULTATION -->
                 <TextView
+                    android:id="@+id/txt_title_card_bath"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -140,6 +153,19 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageViewbath" />
+
+                <!-- Text Price -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fixed_price_bath"
+                    android:textSize="18sp"
+                    android:textColor="@color/hint"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_card_bath" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -168,6 +194,31 @@
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Card Btn All Schedules -->
+        <LinearLayout
+            android:id="@+id/btn_all_schedules"
+            android:layout_width="282dp"
+            android:layout_height="56dp"
+            android:background="@drawable/background_continue_intro"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_bath_services">
+
+            <!-- Btn Text -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/all_appointments"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

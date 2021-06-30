@@ -3,16 +3,51 @@ package co.kaua.palacepetz.Data.Schedule;
 public class DtoSchedule {
     private int cd_schedule, id_user, payment_type, service_type, delivery, status;
     private String cd_animal, cd_veterinary, date_schedule, time_schedule, description;
+    private String nm_animal, nm_veterinary;
 
-    public DtoSchedule (int id_user, String cd_animal, String cd_veterinary, String time_schedule, String date_schedule, int payment_type, int service_type, String description){
+    public DtoSchedule (int id_user, String cd_animal, String cd_veterinary, String time_schedule_get, String date_schedule_get, int payment_type, int service_type, String description){
         this.id_user = id_user;
         this.cd_animal = cd_animal;
         this.cd_veterinary = cd_veterinary;
+        this.time_schedule = time_schedule_get;
+        this.date_schedule = date_schedule_get;
+        this.service_type = service_type;
+        this.payment_type = payment_type;
+        this.description = description;
+    }
+
+    public DtoSchedule (int id_user, String cd_animal, String time_schedule, String date_schedule, int payment_type, int service_type, int delivery, String description){
+        this.id_user = id_user;
+        this.cd_animal = cd_animal;
         this.time_schedule = time_schedule;
+        this.delivery = delivery;
         this.date_schedule = date_schedule;
         this.service_type = service_type;
         this.payment_type = payment_type;
         this.description = description;
+    }
+
+    public DtoSchedule(){}
+
+    public DtoSchedule(int id_user, int cd_schedule) {
+        this.id_user = id_user;
+        this.cd_schedule = cd_schedule;
+    }
+
+    public String getNm_animal() {
+        return nm_animal;
+    }
+
+    public void setNm_animal(String nm_animal) {
+        this.nm_animal = nm_animal;
+    }
+
+    public String getNm_veterinary() {
+        return nm_veterinary;
+    }
+
+    public void setNm_veterinary(String nm_veterinary) {
+        this.nm_veterinary = nm_veterinary;
     }
 
     public int getCd_schedule() {

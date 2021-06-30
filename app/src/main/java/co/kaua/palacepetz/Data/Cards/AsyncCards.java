@@ -17,6 +17,7 @@ import co.kaua.palacepetz.Adapters.Cards_Adapter;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.Warnings;
 import co.kaua.palacepetz.Data.Products.RecyclerItemClickListener;
+import co.kaua.palacepetz.Fragments.MyCardsFragment;
 import co.kaua.palacepetz.Methods.JsonHandler;
 import co.kaua.palacepetz.R;
 
@@ -118,8 +119,7 @@ public class AsyncCards extends AsyncTask {
                                         public void onResponse(Call<DtoCard> call, Response<DtoCard> response) {
                                             if (response.code() == 200){
                                                 arrayListDto.remove(position);
-                                                AsyncCards asyncCards = new AsyncCards(recyclerCards, container_noCard, contexto, id_user);
-                                                asyncCards.execute();
+                                                MyCardsFragment.getInstance().getCardsInformation();
                                                 loadingDialog.dimissDialog();
                                             }else if (response.code() == 417){
                                                 loadingDialog.dimissDialog();

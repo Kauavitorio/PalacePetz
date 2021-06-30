@@ -101,10 +101,10 @@ public class FollowOrderActivity extends FragmentActivity implements OnMapReadyC
 
     private void changeStatusBar() {
         switch (status) {
-            case "Aguardando aprovação":
+            case "Aguardando Aprovação":
                 _progress_state01.setProgress(100);
                 break;
-            case "Preparando produto":
+            case "Preparando Produto":
                 _progress_state01.setProgress(100);
                 _progress_state02.setProgress(100);
                 break;
@@ -119,14 +119,16 @@ public class FollowOrderActivity extends FragmentActivity implements OnMapReadyC
                 _progress_state03.setProgress(100);
                 _progress_state04.setProgress(100);
                 _progress_state05.setProgress(100);
+                txt_deliveryForecast.setText(getString(R.string.delivered));
                 break;
-            case "Concluido":
+            case "Concluído":
                 _progress_state01.setProgress(100);
                 _progress_state02.setProgress(100);
                 _progress_state03.setProgress(100);
                 _progress_state04.setProgress(100);
                 _progress_state05.setProgress(100);
                 _progress_state06.setProgress(100);
+                txt_deliveryForecast.setText(getString(R.string.delivered));
                 txt_OrderCode.setText(getString(R.string.order) + ": #" + cd_order + " (OK)");
                 break;
         }

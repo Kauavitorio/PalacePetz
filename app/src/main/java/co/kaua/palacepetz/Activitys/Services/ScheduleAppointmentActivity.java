@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -86,6 +87,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         _IdUser = dtoUser.getId_user();
         SetSpinnerAdapter();
         SetSpinnerClick();
+        Warnings.PaymentInThePlace(ScheduleAppointmentActivity.this);
 
         //  Creating Calendar
         date = (view, year, month, dayOfMonth) -> {
@@ -122,7 +124,11 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
                     public void onResponse(@NonNull Call<DtoSchedule> call, @NonNull Response<DtoSchedule> response) {
                         loadingDialog.dimissDialog();
                         if(response.code() == 201){
-                            Warnings.showScheduleIsSuccessful(ScheduleAppointmentActivity.this);
+                            Intent servicesSchedule = new Intent(ScheduleAppointmentActivity.this, ScheduledServicesActivity.class);
+                            servicesSchedule.putExtra("id_user", _IdUser);
+                            servicesSchedule.putExtra("now", true);
+                            startActivity(servicesSchedule);
+                            finish();
                         }else
                             Warnings.showWeHaveAProblem(ScheduleAppointmentActivity.this);
                     }

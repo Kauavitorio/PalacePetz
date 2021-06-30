@@ -2,24 +2,21 @@ package co.kaua.palacepetz.Data.MyOrders;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import co.kaua.palacepetz.Activitys.FollowOrderActivity;
 import co.kaua.palacepetz.Adapters.LoadingDialog;
 import co.kaua.palacepetz.Adapters.MyOrders_Adapter;
-import co.kaua.palacepetz.Data.Products.RecyclerItemClickListener;
 import co.kaua.palacepetz.Methods.JsonHandler;
 
 
@@ -30,20 +27,23 @@ public class AsyncOrders extends AsyncTask {
     Activity contexto;
     ConstraintLayout container_noOrder;
     RecyclerView recyclerOrders;
+    SwipeRefreshLayout SwipeRefreshMyOrder;
     int id_user;
     LoadingDialog loadingDialog;
 
-    public AsyncOrders(RecyclerView recyclerOrders, ConstraintLayout container_noOrder, Activity contexto, int id_user) {
+    public AsyncOrders(RecyclerView recyclerOrders, ConstraintLayout container_noOrder, Activity contexto, SwipeRefreshLayout SwipeRefresh, int id_user) {
         this.recyclerOrders = recyclerOrders;
         this.contexto = contexto;
         this.container_noOrder = container_noOrder;
         this.loadingDialog = new LoadingDialog(contexto);
+        this.SwipeRefreshMyOrder = SwipeRefresh;
         this.id_user = id_user;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        SwipeRefreshMyOrder.setRefreshing(true);
         recyclerOrders.setVisibility(View.GONE);
         container_noOrder.setVisibility(View.VISIBLE);
     }
@@ -86,26 +86,9 @@ public class AsyncOrders extends AsyncTask {
         super.onPostExecute(category_adapter);
         recyclerOrders.setVisibility(View.VISIBLE);
         container_noOrder.setVisibility(View.GONE);
+        SwipeRefreshMyOrder.setRefreshing(false);
         //noinspection rawtypes
         recyclerOrders.setAdapter((RecyclerView.Adapter) category_adapter);
         recyclerOrders.getRecycledViewPool().clear();
-
-        recyclerOrders.addOnItemTouchListener( new RecyclerItemClickListener(contexto,
-                recyclerOrders, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent goTo_followOrder = new Intent(contexto, FollowOrderActivity.class);
-                goTo_followOrder.putExtra("cd_order", arrayListDto.get(position).getCd_order());
-                goTo_followOrder.putExtra("status", arrayListDto.get(position).getStatus());
-                goTo_followOrder.putExtra("deliveryTime", arrayListDto.get(position).getDeliveryTime());
-                contexto.startActivity(goTo_followOrder);
-            }
-            @Override
-            public void onLongItemClick(View view, int position) {
-            }
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            }
-        }));
     }
 }

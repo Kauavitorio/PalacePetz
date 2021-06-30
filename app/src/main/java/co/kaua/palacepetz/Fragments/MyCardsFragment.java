@@ -1,5 +1,6 @@
 package co.kaua.palacepetz.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,22 +36,23 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 @SuppressWarnings("ALL")
 public class MyCardsFragment extends Fragment implements IOnBackPressed {
     //  Screen Items
-    private RecyclerView recyclerView_Cards;
-    private CardView cardContainer_AddCard, BtnMyCard_AddCard, BtnMyCard_AddNewCard;
-    private ConstraintLayout container_noCard;
+    private static RecyclerView recyclerView_Cards;
+    private static CardView cardContainer_AddCard, BtnMyCard_AddCard, BtnMyCard_AddNewCard;
+    private static ConstraintLayout container_noCard;
     private static FragmentTransaction transaction;
-    private LoadingDialog loadingDialog;
+    private static LoadingDialog loadingDialog;
 
     //  Fragments Arguments
     Bundle args;
+    private static MyCardsFragment instante;
 
     //  User information
-    private int id_user;
-    private String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user;
+    private static int id_user;
+    private static String name_user, _Email, cpf_user, address_user, complement, zipcode, phone_user, birth_date, img_user;
 
     //  Retrofit
-    String baseurl = "https://palacepetzapi.herokuapp.com/";
-    final Retrofit retrofitCard = new Retrofit.Builder()
+    static String baseurl = "https://palacepetzapi.herokuapp.com/";
+    static final Retrofit retrofitCard = new Retrofit.Builder()
             .baseUrl( baseurl + "user/cards/")
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
@@ -61,6 +63,7 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_activity_mycards, container, false);
         Ids(view);
+        instante = this;
         cardContainer_AddCard.setElevation(19);
         BtnMyCard_AddCard.setElevation(20);
         BtnMyCard_AddNewCard.setElevation(20);
@@ -89,8 +92,9 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
         return view;
     }
 
+    public static MyCardsFragment getInstance(){ return instante; }
 
-    private void getCardsInformation() {
+    public static void getCardsInformation() {
         loadingDialog.startLoading();
         CardService cardService = retrofitCard.create(CardService.class);
         Call<DtoCard> cardCall = cardService.getCardsOfUser(id_user);
@@ -103,9 +107,9 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
                     recyclerView_Cards.setVisibility(View.GONE);
                 }else if(response.code() == 200){
                     assert response.body() != null;
-                    LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
+                    LinearLayoutManager linearLayout = new LinearLayoutManager(getInstance().requireContext());
                     recyclerView_Cards.setLayoutManager(linearLayout);
-                    AsyncCards asyncCards = new AsyncCards(recyclerView_Cards, container_noCard, getActivity(), id_user);
+                    AsyncCards asyncCards = new AsyncCards(recyclerView_Cards, container_noCard, (Activity) getInstance().requireContext(), id_user);
                     asyncCards.execute();
                     if (response.body().getLength() < 3){
                         BtnMyCard_AddNewCard.setVisibility(View.VISIBLE);
@@ -117,7 +121,7 @@ public class MyCardsFragment extends Fragment implements IOnBackPressed {
             @Override
             public void onFailure(@NotNull Call<DtoCard> call, @NotNull Throwable t) {
                 loadingDialog.dimissDialog();
-                ToastHelper.toast(requireActivity(), getString(R.string.weHaveAProblem));
+                ToastHelper.toast((Activity) getInstance().requireContext(), getInstance().requireContext().getString(R.string.weHaveAProblem));
             }
         });
     }

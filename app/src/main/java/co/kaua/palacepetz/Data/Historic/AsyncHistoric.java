@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,20 +31,23 @@ public class AsyncHistoric extends AsyncTask {
     Activity contexto;
     ConstraintLayout constraintLayout_noHistoric;
     RecyclerView recyclerHistoric;
+    SwipeRefreshLayout SwipeRefreshHistoric;
     int id_user;
     LoadingDialog loadingDialog;
 
-    public AsyncHistoric(RecyclerView recyclerHistoric, ConstraintLayout constraintLayout_noHistoric, Activity contexto, int id_user) {
+    public AsyncHistoric(RecyclerView recyclerHistoric, ConstraintLayout constraintLayout_noHistoric, Activity contexto, SwipeRefreshLayout SwipeRefresh, int id_user) {
         this.recyclerHistoric = recyclerHistoric;
         this.contexto = contexto;
         this.constraintLayout_noHistoric = constraintLayout_noHistoric;
         this.loadingDialog = new LoadingDialog(contexto);
+        this.SwipeRefreshHistoric = SwipeRefresh;
         this.id_user = id_user;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        SwipeRefreshHistoric.setRefreshing(true);
         recyclerHistoric.setVisibility(View.GONE);
         constraintLayout_noHistoric.setVisibility(View.VISIBLE);
     }
@@ -82,6 +86,7 @@ public class AsyncHistoric extends AsyncTask {
         super.onPostExecute(category_adapter);
         recyclerHistoric.setVisibility(View.VISIBLE);
         constraintLayout_noHistoric.setVisibility(View.GONE);
+        SwipeRefreshHistoric.setRefreshing(false);
         //noinspection rawtypes
         recyclerHistoric.setAdapter((RecyclerView.Adapter) category_adapter);
         recyclerHistoric.getRecycledViewPool().clear();
