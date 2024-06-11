@@ -14,6 +14,7 @@ To install and run that project you just need android studio and a mobile with a
 This project run with minSdkVersion 24 but to shortcuts work is necessary run with minimum Sdk 25.
 Sdk 24 - Android 7.0 (Marshmallow)
 Sdk 25 - Android 7.1.1 (Nougat)
+Sdk 34 - Android 14 
 ```
 
 ### How to use
